@@ -2,6 +2,8 @@
 #define __SHADER_H__
 
 #include <iostream>
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 
 enum ObjectType
 {
@@ -29,6 +31,9 @@ public:
 
 private:
 	void CheckCompileErrors(unsigned int shader, ObjectType objectType);
+
+	unsigned int CreateShaderProgram(const char* source, GLenum shaderType);
+	std::string LoadTextFile(const char* filePath);
 };
 
 #endif

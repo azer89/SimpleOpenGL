@@ -9,13 +9,15 @@
 Shader::Shader(const char* vertexPath, const char* fragmentPath)
 {
 	// Retrieve the vertex/fragment source code from filePath
-	std::string vertexCode;
+	/*std::string vertexCode;
 	std::string fragmentCode;
 	std::ifstream vShaderFile;
-	std::ifstream fShaderFile;
+	std::ifstream fShaderFile;*/
+	auto vertexCode = LoadTextFile(vertexPath);
+	auto fragmentCode = LoadTextFile(fragmentPath);
 
 	// Ensure ifstream objects can throw exceptions:
-	vShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+	/*vShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 	fShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 	try
 	{
@@ -39,24 +41,27 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath)
 	catch (std::ifstream::failure& e)
 	{
 		std::cerr << "Error cannot read shader file: " << e.what() << std::endl;
-	}
-	const char* vShaderCode = vertexCode.c_str();
-	const char* fShaderCode = fragmentCode.c_str();
+	}*/
+	//const char* vShaderCode = vertexCode.c_str();
+	//const char* fShaderCode = fragmentCode.c_str();
 
-	// Compile shaders
-	unsigned int vertex, fragment;
+	// Shaders
+	//unsigned int vertex;
+	//unsigned int fragment;
 
 	// Vertex shader
-	vertex = glCreateShader(GL_VERTEX_SHADER);
+	/*vertex = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(vertex, 1, &vShaderCode, NULL);
 	glCompileShader(vertex);
-	CheckCompileErrors(vertex, ObjectType::ShaderObject);
+	CheckCompileErrors(vertex, ObjectType::ShaderObject);*/
+	auto vertex = CreateShaderProgram(vertexCode.c_str(), GL_VERTEX_SHADER);
 	
 	// Fragment Shader
-	fragment = glCreateShader(GL_FRAGMENT_SHADER);
+	/*fragment = glCreateShader(GL_FRAGMENT_SHADER);
 	glShaderSource(fragment, 1, &fShaderCode, NULL);
 	glCompileShader(fragment);
-	CheckCompileErrors(fragment, ObjectType::ShaderObject);
+	CheckCompileErrors(fragment, ObjectType::ShaderObject);*/
+	auto fragment = CreateShaderProgram(fragmentCode.c_str(), GL_FRAGMENT_SHADER);
 	
 	// Shader Program
 	ID = glCreateProgram();
@@ -93,6 +98,47 @@ void Shader::SetInt(const std::string& name, int value) const
 void Shader::SetFloat(const std::string& name, float value) const
 {
 	glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
+}
+
+unsigned int Shader::CreateShaderProgram(const char* source, GLenum shaderType)
+{
+	// Create shader
+	unsigned int shader = glCreateShader(shaderType);
+	glShaderSource(shader, 1, &source, NULL);
+	glCompileShader(shader);
+
+	// Check for shader compile errors
+	CheckCompileErrors(shader, ObjectType::ShaderObject);
+
+	return shader;
+}
+
+std::string Shader::LoadTextFile(const char* filePath)
+{
+	std::ifstream file;
+	// Ensure ifstream objects can throw exceptions:
+	file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+	try
+	{
+		// Open files
+		file.open(filePath);
+
+		// Read file's buffer contents into stream
+		std::stringstream sStream;
+		sStream << file.rdbuf();
+
+		// Close file handler
+		file.close();
+
+		auto str = sStream.str();
+
+		// Convert stream into string
+		return sStream.str().c_str();
+	}
+	catch (std::ifstream::failure& e)
+	{
+		std::cerr << "Error cannot read file: " << e.what() << std::endl;
+	}
 }
 
 void Shader::CheckCompileErrors(unsigned int shader, ObjectType objectType)
