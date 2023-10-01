@@ -21,10 +21,24 @@
     <ClCompile Include="MainGL.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainGL.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Shaders\shader.fragment">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\Shaders\shader.vertex">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
