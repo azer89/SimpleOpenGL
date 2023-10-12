@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -122,7 +122,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Program Files (x86)\Windows Kits\10\Lib\10.0.19041.0\um\x64\;C:\Users\azer\workspace\SimpleOpenGL\External\GLAD\x64\Debug\;C:\Users\azer\workspace\SimpleOpenGL\External\GLFW\lib-vc2022\;C:\Users\azer\workspace\SimpleOpenGL\External\TinyXML\x64\Debug\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>GLAD.lib;OpenGL32.Lib;glfw3.lib;glfw3_mt.lib;glfw3dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>GLAD.lib;OpenGL32.Lib;TinyXML.lib;glfw3.lib;glfw3_mt.lib;glfw3dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -141,7 +141,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Program Files (x86)\Windows Kits\10\Lib\10.0.19041.0\um\x64\;C:\Users\azer\workspace\SimpleOpenGL\External\GLAD\x64\Release\;C:\Users\azer\workspace\SimpleOpenGL\External\GLFW\lib-vc2022\;C:\Users\azer\workspace\SimpleOpenGL\External\TinyXML\x64\Release\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>GLAD.lib;OpenGL32.Lib;glfw3.lib;glfw3_mt.lib;glfw3dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>GLAD.lib;OpenGL32.Lib;TinyXML.lib;glfw3.lib;glfw3_mt.lib;glfw3dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -152,15 +152,16 @@
     <ClCompile Include="XMLReader.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AppSettings.h" />
+    <ClInclude Include="XMLReader.h" />
     <ClInclude Include="MainGL.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Texture.h" />
-    <ClInclude Include="XMLReader.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Shaders\shader.fragment" />
     <None Include="..\Shaders\shader.vertex" />
+    <None Include="..\Shaders\texture.fragment" />
+    <None Include="..\Shaders\texture.vertex" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

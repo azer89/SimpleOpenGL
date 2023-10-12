@@ -41,9 +41,6 @@
     <ClInclude Include="Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AppSettings.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="XMLReader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -53,6 +50,12 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="..\Shaders\shader.vertex">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\Shaders\texture.fragment">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\Shaders\texture.vertex">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

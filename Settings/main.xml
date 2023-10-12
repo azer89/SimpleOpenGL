@@ -1,0 +1,9 @@
+<App>
+  <General>
+		<ScreenWidth value="800"/>
+    <ScreenHeight value="600"/>
+    <ScreenTitle value="Simple OpenGL"/>
+    <VertexShaderFile value="C:/Users/azer/workspace/SimpleOpenGL/Shaders/colored_triangle.vertex"/>
+    <FragmentShaderFile value="C:/Users/azer/workspace/SimpleOpenGL/Shaders/colored_triangle.fragment"/>
+	</General>
+</App>
