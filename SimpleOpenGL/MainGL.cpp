@@ -1,5 +1,7 @@
 #include "MainGL.h"
 #include "Shader.h"
+#include "AppSettings.h"
+#include "XMLReader.h"
 
 #include <iostream>
 
@@ -8,6 +10,8 @@ void ProcessInput(GLFWwindow* window);
 
 int MainGL::MainLoop()
 {
+	XMLReader::LoadSettings();
+
 	// GLFW: initialize and configure
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -15,7 +19,7 @@ int MainGL::MainLoop()
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	// GLFW window creation
-	GLFWwindow* window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE, NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(800, 600, AppSettings::ScreenTitle.c_str(), NULL, NULL);
 	if (window == NULL)
 	{
 		std::cerr << "Failed to create GLFW window" << std::endl;
@@ -32,8 +36,14 @@ int MainGL::MainLoop()
 		return -1;
 	}
 
+	const char* vFile = AppSettings::VertexShaderFile.c_str();
+	const char* fFile = AppSettings::FragmentShaderFile.c_str();
+
+	std::cout << AppSettings::VertexShaderFile << '\n';
+	std::cout << AppSettings::FragmentShaderFile << '\n';
+
 	// Shader programs
-	Shader shader(VERTEX_SHADER_FILE, FRAGMENT_SHADER_FILE);
+	Shader shader(AppSettings::VertexShaderFile.c_str(), AppSettings::FragmentShaderFile.c_str());
 
 	// set up vertex data (and buffer(s)) and configure vertex attributes
 	float vertices[] = {

@@ -4,5 +4,4 @@
 
 Texture::Texture(const char* imageFilePath)
 {
-
 }

@@ -8,12 +8,6 @@
 class MainGL
 {
 private:
-	// Settings
-	const unsigned int SCREEN_WIDTH = 800;
-	const unsigned int SCREEN_HEIGHT = 600;
-	const char* SCREEN_TITLE = "Simple OpenGL";
-	const char* VERTEX_SHADER_FILE = "C:/Users/azer/workspace/SimpleOpenGL/Shaders/colored_triangle.vertex";
-	const char* FRAGMENT_SHADER_FILE = "C:/Users/azer/workspace/SimpleOpenGL/Shaders/colored_triangle.fragment";
 
 public:
 	int MainLoop();
