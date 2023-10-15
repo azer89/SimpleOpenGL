@@ -11,7 +11,7 @@ namespace AppSettings
 	extern std::string ScreenTitle;
 	extern std::string VertexShaderFile;
 	extern std::string FragmentShaderFile;
+	extern std::string TextureFile;
 };
-
 
 #endif

@@ -4,9 +4,7 @@
 #include <iostream>
 
 static class XMLReader
-{
-public:
-	
+{	
 public:
 	static void LoadSettings();
 };

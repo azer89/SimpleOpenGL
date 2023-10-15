@@ -160,10 +160,13 @@
     <ClInclude Include="Texture.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Shaders\shader.fragment" />
-    <None Include="..\Shaders\shader.vertex" />
+    <None Include="..\Shaders\colored_triangle.fragment" />
+    <None Include="..\Shaders\colored_triangle.vertex" />
     <None Include="..\Shaders\texture.fragment" />
     <None Include="..\Shaders\texture.vertex" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\Settings\main.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

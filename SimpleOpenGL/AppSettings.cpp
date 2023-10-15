@@ -7,3 +7,4 @@ int AppSettings::ScreenHeight = 0;
 std::string AppSettings::ScreenTitle = "";
 std::string AppSettings::VertexShaderFile = "";
 std::string AppSettings::FragmentShaderFile = "";
+std::string AppSettings::TextureFile = "";

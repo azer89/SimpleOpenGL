@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Resource Files\Shaders">
+      <UniqueIdentifier>{f93241e8-8e96-4dee-a7ff-2583684b451d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -52,17 +55,22 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Shaders\shader.fragment">
-      <Filter>Resource Files</Filter>
+    <None Include="..\Shaders\colored_triangle.fragment">
+      <Filter>Resource Files\Shaders</Filter>
     </None>
-    <None Include="..\Shaders\shader.vertex">
-      <Filter>Resource Files</Filter>
+    <None Include="..\Shaders\colored_triangle.vertex">
+      <Filter>Resource Files\Shaders</Filter>
     </None>
     <None Include="..\Shaders\texture.fragment">
-      <Filter>Resource Files</Filter>
+      <Filter>Resource Files\Shaders</Filter>
     </None>
     <None Include="..\Shaders\texture.vertex">
-      <Filter>Resource Files</Filter>
+      <Filter>Resource Files\Shaders</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\Settings\main.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
   </ItemGroup>
 </Project>

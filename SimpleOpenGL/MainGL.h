@@ -7,8 +7,6 @@
 
 class MainGL
 {
-private:
-
 public:
 	int MainLoop();
 

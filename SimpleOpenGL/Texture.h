@@ -3,10 +3,12 @@
 
 class Texture
 {
+private:
+	unsigned int ID;
+
 public:
 	Texture(const char* imageFilePath);
-
-private:
+	void Bind();
 };
 
 #endif
