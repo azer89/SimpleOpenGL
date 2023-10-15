@@ -34,15 +34,12 @@ int MainGL::MainLoop()
 	glfwMakeContextCurrent(window);
 	glfwSetFramebufferSizeCallback(window, FrameBufferSizeCallback);
 
-	// GLAD: load all OpenGL function pointers
+	// GLAD
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
 		std::cerr << "Failed to initialize GLAD" << std::endl;
 		return -1;
 	}
-
-	const char* vFile = AppSettings::VertexShaderFile.c_str();
-	const char* fFile = AppSettings::FragmentShaderFile.c_str();
 
 	// Shader programs
 	Shader shader(AppSettings::VertexShaderFile.c_str(), AppSettings::FragmentShaderFile.c_str());
@@ -74,15 +71,15 @@ int MainGL::MainLoop()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-	// position attribute
+	// Position attribute
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
-	// color attribute
+	// Color attribute
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
 
-	// texture coord attribute
+	// Texture coord attribute
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
 	glEnableVertexAttribArray(2);
 
@@ -116,26 +113,6 @@ int MainGL::MainLoop()
 	// GLFW: terminate, clearing all previously allocated GLFW resources.
 	glfwTerminate();
 	return 0;
-}
-
-unsigned int MainGL::CreateShaderProgram(const char* source, GLenum shaderType) const
-{
-	// Create shader
-	unsigned int shader = glCreateShader(shaderType);
-	glShaderSource(shader, 1, &source, NULL);
-	glCompileShader(shader);
-
-	// Check for shader compile errors
-	int success;
-	glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
-	if (!success)
-	{
-		char infoLog[512];
-		glGetShaderInfoLog(shader, 512, NULL, infoLog);
-		std::cerr << "Shader error\n" << infoLog << std::endl;
-	}
-
-	return shader;
 }
 
 // GLFW: whenever the window size changed (by OS or user resize) this callback function executes

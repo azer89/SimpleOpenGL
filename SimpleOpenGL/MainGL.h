@@ -11,7 +11,6 @@ public:
 	int MainLoop();
 
 private:
-	unsigned int CreateShaderProgram(const char* source, GLenum shaderType) const;
 };
 
 #endif
