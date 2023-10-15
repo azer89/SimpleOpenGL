@@ -116,7 +116,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\azer\workspace\SimpleOpenGL\External\GLAD\GLAD\include;C:\Users\azer\workspace\SimpleOpenGL\External\GLFW\include;C:\Users\azer\workspace\SimpleOpenGL\External\STB;C:\Users\azer\workspace\SimpleOpenGL\External\TinyXML\TinyXML</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\azer\workspace\SimpleOpenGL\External\GLAD\GLAD\include;C:\Users\azer\workspace\SimpleOpenGL\External\GLFW\include;C:\Users\azer\workspace\SimpleOpenGL\External\STB;C:\Users\azer\workspace\SimpleOpenGL\External\TinyXML\TinyXML;C:\Users\azer\workspace\SimpleOpenGL\External\GLM</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -133,7 +133,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\azer\workspace\SimpleOpenGL\External\GLAD\GLAD\include;C:\Users\azer\workspace\SimpleOpenGL\External\GLFW\include;C:\Users\azer\workspace\SimpleOpenGL\External\STB;C:\Users\azer\workspace\SimpleOpenGL\External\TinyXML\TinyXML</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\azer\workspace\SimpleOpenGL\External\GLAD\GLAD\include;C:\Users\azer\workspace\SimpleOpenGL\External\GLFW\include;C:\Users\azer\workspace\SimpleOpenGL\External\STB;C:\Users\azer\workspace\SimpleOpenGL\External\TinyXML\TinyXML;C:\Users\azer\workspace\SimpleOpenGL\External\GLM</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
