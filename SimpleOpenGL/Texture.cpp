@@ -11,8 +11,10 @@
 
 #include <iostream>
 
-Texture::Texture(const char* imageFilePath)
+Texture::Texture(const char* imageFilePath, GLenum textureIndex)
 {
+	this->textureIndex = textureIndex;
+
 	glGenTextures(1, &ID);
 	glBindTexture(GL_TEXTURE_2D, ID);
 	
@@ -42,5 +44,6 @@ Texture::Texture(const char* imageFilePath)
 
 void Texture::Bind()
 {
+	glActiveTexture(textureIndex);
 	glBindTexture(GL_TEXTURE_2D, ID);
 }

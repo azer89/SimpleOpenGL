@@ -11,6 +11,8 @@ public:
 	int MainLoop();
 
 private:
+	void FrameBufferSizeCallback(GLFWwindow* window, int width, int height);
+	void ProcessInput(GLFWwindow* window);
 };
 
 #endif

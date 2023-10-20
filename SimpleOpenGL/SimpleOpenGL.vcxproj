@@ -146,6 +146,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AppSettings.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="MainGL.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Shader.cpp" />
@@ -154,12 +155,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppSettings.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="XMLReader.h" />
     <ClInclude Include="MainGL.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Texture.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Shaders\camera.fragment" />
+    <None Include="..\Shaders\camera.vertex" />
     <None Include="..\Shaders\colored_triangle.fragment" />
     <None Include="..\Shaders\colored_triangle.vertex" />
     <None Include="..\Shaders\texture.fragment" />

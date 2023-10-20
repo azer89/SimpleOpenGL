@@ -6,9 +6,6 @@
 
 #include <iostream>
 
-void FrameBufferSizeCallback(GLFWwindow* window, int width, int height);
-void ProcessInput(GLFWwindow* window);
-
 int MainGL::MainLoop()
 {
 	XMLReader::LoadSettings();
@@ -20,19 +17,25 @@ int MainGL::MainLoop()
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	// GLFW window creation
-	GLFWwindow* window = glfwCreateWindow(AppSettings::ScreenWidth, 
+	GLFWwindow* glfwWindow = glfwCreateWindow(AppSettings::ScreenWidth,
 		AppSettings::ScreenHeight, 
 		AppSettings::ScreenTitle.c_str(), 
 		NULL, 
 		NULL);
-	if (window == NULL)
+	if (glfwWindow == NULL)
 	{
 		std::cerr << "Failed to create GLFW window" << std::endl;
 		glfwTerminate();
 		return -1;
 	}
-	glfwMakeContextCurrent(window);
-	glfwSetFramebufferSizeCallback(window, FrameBufferSizeCallback);
+	glfwMakeContextCurrent(glfwWindow);
+
+	glfwSetWindowUserPointer(glfwWindow, this);
+	auto func = [](GLFWwindow* window, int width, int height)
+	{
+		static_cast<MainGL*>(glfwGetWindowUserPointer(window))->FrameBufferSizeCallback(window, width, height);
+	};
+	glfwSetFramebufferSizeCallback(glfwWindow, func);
 
 	// GLAD
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
@@ -45,7 +48,7 @@ int MainGL::MainLoop()
 	Shader shader(AppSettings::VertexShaderFile.c_str(), AppSettings::FragmentShaderFile.c_str());
 
 	// Texture
-	Texture texture(AppSettings::TextureFile.c_str());
+	Texture texture(AppSettings::TextureFile.c_str(), GL_TEXTURE0);
 
 	float vertices[] = {
 		// positions          // colors           // texture coords
@@ -84,10 +87,10 @@ int MainGL::MainLoop()
 	glEnableVertexAttribArray(2);
 
 	// Render loop
-	while (!glfwWindowShouldClose(window))
+	while (!glfwWindowShouldClose(glfwWindow))
 	{
 		// Input
-		ProcessInput(window);
+		ProcessInput(glfwWindow);
 
 		// Render
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -100,7 +103,7 @@ int MainGL::MainLoop()
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 		// GLFW: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
-		glfwSwapBuffers(window);
+		glfwSwapBuffers(glfwWindow);
 		glfwPollEvents();
 	}
 
@@ -116,7 +119,7 @@ int MainGL::MainLoop()
 }
 
 // GLFW: whenever the window size changed (by OS or user resize) this callback function executes
-void FrameBufferSizeCallback(GLFWwindow* window, int width, int height)
+void MainGL::FrameBufferSizeCallback(GLFWwindow* window, int width, int height)
 {
 	// Make sure the viewport matches the new window dimensions; note that width and 
 	// height will be significantly larger than specified on retina displays.
@@ -124,7 +127,7 @@ void FrameBufferSizeCallback(GLFWwindow* window, int width, int height)
 }
 
 // Process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
-void ProcessInput(GLFWwindow* window)
+void MainGL::ProcessInput(GLFWwindow* window)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 	{

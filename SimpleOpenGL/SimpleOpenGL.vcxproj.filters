@@ -36,6 +36,9 @@
     <ClCompile Include="AppSettings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainGL.h">
@@ -53,6 +56,9 @@
     <ClInclude Include="AppSettings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Shaders\colored_triangle.fragment">
@@ -65,6 +71,12 @@
       <Filter>Resource Files\Shaders</Filter>
     </None>
     <None Include="..\Shaders\texture.vertex">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="..\Shaders\camera.fragment">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="..\Shaders\camera.vertex">
       <Filter>Resource Files\Shaders</Filter>
     </None>
   </ItemGroup>
