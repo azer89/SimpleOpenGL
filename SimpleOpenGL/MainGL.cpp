@@ -198,12 +198,13 @@ int MainGL::MainLoop()
 		//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		 // pass projection matrix to shader (note that in this case it could change every frame)
 		glm::mat4 projection = glm::perspective(glm::radians(camera->Zoom), (float)AppSettings::ScreenWidth / (float)AppSettings::ScreenHeight, 0.1f, 100.0f);
+		
 		shader.SetMat4("projection", projection);
 		// camera/view transformation
 		glm::mat4 view = camera->GetViewMatrix();
 		shader.SetMat4("view", view);
+
 		// render boxes
-		glBindVertexArray(VAO);
 		for (unsigned int i = 0; i < 10; i++)
 		{
 			// calculate the model matrix for each object and pass it to shader before drawing
@@ -211,6 +212,7 @@ int MainGL::MainLoop()
 			model = glm::translate(model, cubePositions[i]);
 			float angle = 20.0f * i;
 			model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+			
 			shader.SetMat4("model", model);
 			glDrawArrays(GL_TRIANGLES, 0, 36);
 		}
