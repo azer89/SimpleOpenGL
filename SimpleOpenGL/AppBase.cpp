@@ -1,4 +1,4 @@
-#include "MainGL.h"
+#include "AppBase.h"
 #include "Shader.h"
 #include "Texture.h"
 #include "AppSettings.h"
@@ -10,7 +10,7 @@
 
 #include <iostream>
 
-int MainGL::MainLoop()
+int AppBase::MainLoop()
 {
 	XMLReader::LoadSettings();
 
@@ -47,21 +47,21 @@ int MainGL::MainLoop()
 	{
 		auto func = [](GLFWwindow* window, int width, int height)
 		{
-			static_cast<MainGL*>(glfwGetWindowUserPointer(window))->FrameBufferSizeCallback(window, width, height);
+			static_cast<AppBase*>(glfwGetWindowUserPointer(window))->FrameBufferSizeCallback(window, width, height);
 		};
 		glfwSetFramebufferSizeCallback(glfwWindow, func);
 	}
 	{
 		auto func = [](GLFWwindow* window, double xpos, double ypos)
 		{
-			static_cast<MainGL*>(glfwGetWindowUserPointer(window))->MouseCallback(window, xpos, ypos);
+			static_cast<AppBase*>(glfwGetWindowUserPointer(window))->MouseCallback(window, xpos, ypos);
 		};
 		glfwSetCursorPosCallback(glfwWindow, func);
 	}
 	{
 		auto func = [](GLFWwindow* window, double xoffset, double yoffset)
 		{
-			static_cast<MainGL*>(glfwGetWindowUserPointer(window))->ScrollCallback(window, xoffset, yoffset);
+			static_cast<AppBase*>(glfwGetWindowUserPointer(window))->ScrollCallback(window, xoffset, yoffset);
 		};
 		glfwSetScrollCallback(glfwWindow, func);
 	}
@@ -234,14 +234,14 @@ int MainGL::MainLoop()
 }
 
 // GLFW: whenever the window size changed (by OS or user resize) this callback function executes
-void MainGL::FrameBufferSizeCallback(GLFWwindow* window, int width, int height)
+void AppBase::FrameBufferSizeCallback(GLFWwindow* window, int width, int height)
 {
 	// Make sure the viewport matches the new window dimensions; note that width and 
 	// height will be significantly larger than specified on retina displays.
 	glViewport(0, 0, width, height);
 }
 
-void MainGL::MouseCallback(GLFWwindow* window, double xposIn, double yposIn)
+void AppBase::MouseCallback(GLFWwindow* window, double xposIn, double yposIn)
 {
 	float xpos = static_cast<float>(xposIn);
 	float ypos = static_cast<float>(yposIn);
@@ -258,13 +258,13 @@ void MainGL::MouseCallback(GLFWwindow* window, double xposIn, double yposIn)
 	camera->ProcessMouseMovement(xoffset, yoffset);
 }
 
-void MainGL::ScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
+void AppBase::ScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
 {
 	camera->ProcessMouseScroll(static_cast<float>(yoffset));
 }
 
 // Process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
-void MainGL::ProcessInput(GLFWwindow* window)
+void AppBase::ProcessInput(GLFWwindow* window)
 {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 	{

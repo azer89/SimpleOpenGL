@@ -1,5 +1,5 @@
-#ifndef __MAIN_GL_H__
-#define __MAIN_GL_H__
+#ifndef __APP_BASE_H__
+#define __APP_BASE_H__
 
 #include <memory>
 #include <string>
@@ -8,7 +8,7 @@
 
 #include "Camera.h"
 
-class MainGL
+class AppBase
 {
 public:
 	int MainLoop();
@@ -30,7 +30,6 @@ private:
 	// Timing
 	float deltaTime; // Time between current frame and last frame
 	float lastFrame;
-
 };
 
 #endif

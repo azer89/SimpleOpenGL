@@ -147,7 +147,7 @@
   <ItemGroup>
     <ClCompile Include="AppSettings.cpp" />
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="MainGL.cpp" />
+    <ClCompile Include="AppBase.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Texture.cpp" />
@@ -157,7 +157,7 @@
     <ClInclude Include="AppSettings.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="XMLReader.h" />
-    <ClInclude Include="MainGL.h" />
+    <ClInclude Include="AppBase.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Texture.h" />
   </ItemGroup>

@@ -1,8 +1,8 @@
-#include "MainGL.h"
+#include "AppBase.h"
 
 int main()
 {
-	MainGL app;
+	AppBase app;
 	auto returnValue = app.MainLoop();
 	return returnValue;
 }
