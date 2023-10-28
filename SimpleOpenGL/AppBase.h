@@ -19,7 +19,7 @@ private:
 	void FrameBufferSizeCallback(GLFWwindow* window, int width, int height);
 	void MouseCallback(GLFWwindow* window, double xpos, double ypos);
 	void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset);
-
+	void SetupGLFW();
 	void ProcessInput(GLFWwindow* window);
 
 private:

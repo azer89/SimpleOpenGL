@@ -13,12 +13,11 @@
 AppBase::AppBase()
 {
 	XMLReader::LoadSettings();
+	SetupGLFW();
 }
 
-int AppBase::MainLoop()
+void AppBase::SetupGLFW()
 {
-	
-
 	// GLFW: initialize and configure
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -27,15 +26,14 @@ int AppBase::MainLoop()
 
 	// GLFW window creation
 	glfwWindow = glfwCreateWindow(AppSettings::ScreenWidth,
-		AppSettings::ScreenHeight, 
-		AppSettings::ScreenTitle.c_str(), 
-		NULL, 
+		AppSettings::ScreenHeight,
+		AppSettings::ScreenTitle.c_str(),
+		NULL,
 		NULL);
 	if (glfwWindow == NULL)
 	{
 		std::cerr << "Failed to create GLFW window" << std::endl;
 		glfwTerminate();
-		return -1;
 	}
 	glfwMakeContextCurrent(glfwWindow);
 
@@ -64,6 +62,21 @@ int AppBase::MainLoop()
 
 	// Tell GLFW to capture our mouse
 	glfwSetInputMode(glfwWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+}
+
+int AppBase::MainLoop()
+{
+	if (glfwWindow == NULL)
+	{
+		return -1;
+	}
+
+	// GLAD
+	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+	{
+		std::cerr << "Failed to initialize GLAD" << std::endl;
+		return -1;
+	}
 
 	// Camera
 	camera = std::make_unique<Camera>(glm::vec3(0.0f, 0.0f, 3.0f));
@@ -74,16 +87,8 @@ int AppBase::MainLoop()
 	deltaTime = 0.0f;	// Time between current frame and last frame
 	lastFrame = 0.0f;
 
-	// GLAD
-	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-	{
-		std::cerr << "Failed to initialize GLAD" << std::endl;
-		return -1;
-	}
-
 	// Configure global opengl state
 	glEnable(GL_DEPTH_TEST);
-
 
 	// Shader programs
 	Shader shader(AppSettings::VertexShaderFile.c_str(), AppSettings::FragmentShaderFile.c_str());

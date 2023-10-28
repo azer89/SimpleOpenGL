@@ -19,10 +19,8 @@ public:
 
 public:
 	Shader(const char* vertexPath, const char* fragmentPath);
-
-	// Activate the shader
-	void Use();
-
+	
+	void Use(); // Activate the shader
 	void Delete();
 
 	// Utility uniform functions
