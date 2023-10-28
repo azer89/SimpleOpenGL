@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AppBoxes.cpp" />
     <ClCompile Include="AppSettings.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="AppBase.cpp" />
@@ -154,6 +155,7 @@
     <ClCompile Include="XMLReader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AppBoxes.h" />
     <ClInclude Include="AppSettings.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="XMLReader.h" />

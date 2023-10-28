@@ -1,8 +1,8 @@
-#include "AppBase.h"
+#include "AppBoxes.h"
 
 int main()
 {
-	AppBase app;
+	AppBoxes app;
 	auto returnValue = app.MainLoop();
 	return returnValue;
 }
