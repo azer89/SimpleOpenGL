@@ -11,6 +11,8 @@
 class AppBase
 {
 public:
+	AppBase();
+
 	int MainLoop();
 
 private:
@@ -21,6 +23,8 @@ private:
 	void ProcessInput(GLFWwindow* window);
 
 private:
+	GLFWwindow* glfwWindow;
+
 	// Camera
 	std::unique_ptr<Camera> camera;
 	float lastX;

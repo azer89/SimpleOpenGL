@@ -10,18 +10,14 @@
 
 #include <iostream>
 
-int AppBase::MainLoop()
+AppBase::AppBase()
 {
 	XMLReader::LoadSettings();
+}
 
-	// Camera
-	camera = std::make_unique<Camera>(glm::vec3(0.0f, 0.0f, 3.0f));
-	lastX = AppSettings::ScreenWidth / 2.0f;
-	lastY = AppSettings::ScreenHeight / 2.0f;
-	firstMouse = true;
-	// Timing
-	deltaTime = 0.0f;	// Time between current frame and last frame
-	lastFrame = 0.0f;
+int AppBase::MainLoop()
+{
+	
 
 	// GLFW: initialize and configure
 	glfwInit();
@@ -30,7 +26,7 @@ int AppBase::MainLoop()
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	// GLFW window creation
-	GLFWwindow* glfwWindow = glfwCreateWindow(AppSettings::ScreenWidth,
+	glfwWindow = glfwCreateWindow(AppSettings::ScreenWidth,
 		AppSettings::ScreenHeight, 
 		AppSettings::ScreenTitle.c_str(), 
 		NULL, 
@@ -68,6 +64,15 @@ int AppBase::MainLoop()
 
 	// Tell GLFW to capture our mouse
 	glfwSetInputMode(glfwWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
+	// Camera
+	camera = std::make_unique<Camera>(glm::vec3(0.0f, 0.0f, 3.0f));
+	lastX = AppSettings::ScreenWidth / 2.0f;
+	lastY = AppSettings::ScreenHeight / 2.0f;
+	firstMouse = true;
+	// Timing
+	deltaTime = 0.0f;	// Time between current frame and last frame
+	lastFrame = 0.0f;
 
 	// GLAD
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
@@ -230,6 +235,7 @@ int AppBase::MainLoop()
 
 	// GLFW: terminate, clearing all previously allocated GLFW resources.
 	glfwTerminate();
+
 	return 0;
 }
 
