@@ -19,7 +19,7 @@ public:
 	unsigned int ID;
 
 public:
-	Shader(std::string vertexFilename, std::string fragmentFilename);
+	Shader(const std::string& vertexFilename, const std::string& fragmentFilename);
 	
 	void Use(); // Activate the shader
 	void Delete();

@@ -12,7 +12,7 @@
 
 #include <iostream>
 
-Texture::Texture(std::string imageFilename, GLenum textureIndex)
+Texture::Texture(const std::string& imageFilename, GLenum textureIndex)
 {
 	this->textureIndex = textureIndex;
 

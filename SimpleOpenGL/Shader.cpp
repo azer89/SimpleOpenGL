@@ -6,7 +6,7 @@
 #include <sstream>
 #include <iostream>
 
-Shader::Shader(std::string vertexFilename, std::string fragmentFilename)
+Shader::Shader(const std::string& vertexFilename, const std::string& fragmentFilename)
 {
 	// Retrieve the vertex/fragment source code from filePath
 	auto vsFullFilepath = AppSettings::VertexShaderFolder + vertexFilename;
