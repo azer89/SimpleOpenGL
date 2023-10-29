@@ -42,6 +42,9 @@
     <ClCompile Include="AppBoxes.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="AppBlinnPhong.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppBase.h">
@@ -65,6 +68,9 @@
     <ClInclude Include="AppBoxes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="AppBlinnPhong.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Shaders\colored_triangle.fragment">
@@ -83,6 +89,12 @@
       <Filter>Resource Files\Shaders</Filter>
     </None>
     <None Include="..\Shaders\camera.vertex">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="..\Shaders\blinn_phong.fragment">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="..\Shaders\blinn_phong.vertex">
       <Filter>Resource Files\Shaders</Filter>
     </None>
   </ItemGroup>

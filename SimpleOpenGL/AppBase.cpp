@@ -7,10 +7,13 @@
 AppBase::AppBase()
 {
 	XMLReader::LoadSettings();
-	SetupGLFW();
+	InitGLFW();
+	InitGlad();
+	InitCamera();
+	InitTiming();
 }
 
-void AppBase::SetupGLFW()
+void AppBase::InitGLFW()
 {
 	// GLFW: initialize and configure
 	glfwInit();
@@ -58,6 +61,71 @@ void AppBase::SetupGLFW()
 	glfwSetInputMode(glfwWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 }
 
+void AppBase::InitGlad()
+{
+	// GLAD
+	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+	{
+		std::cerr << "Failed to initialize GLAD" << std::endl;
+		isGladLoaded = false;
+		return;
+	}
+	isGladLoaded = true;
+}
+
+void AppBase::InitCamera()
+{
+	camera = std::make_unique<Camera>(glm::vec3(0.0f, 0.0f, 3.0f));
+	lastX = AppSettings::ScreenWidth / 2.0f;
+	lastY = AppSettings::ScreenHeight / 2.0f;
+	firstMouse = true;
+}
+
+void AppBase::InitTiming()
+{
+	deltaTime = 0.0f;	// Time between current frame and last frame
+	lastFrame = 0.0f;
+}
+
+bool AppBase::IsGLFWWindowCreated()
+{
+	return glfwWindow != NULL;
+}
+
+bool AppBase::IsGLADLoaded()
+{
+	return isGladLoaded;
+}
+
+int AppBase::GLFWWindowShouldClose()
+{
+	return glfwWindowShouldClose(glfwWindow);
+}
+
+void AppBase::ProcessTiming()
+{
+	// Per-frame time
+	float currentFrame = static_cast<float>(glfwGetTime());
+	deltaTime = currentFrame - lastFrame;
+	lastFrame = currentFrame;
+}
+
+void AppBase::SwapBuffers()
+{
+	// GLFW: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
+	glfwSwapBuffers(glfwWindow);
+}
+
+void AppBase::PollEvents()
+{
+	glfwPollEvents();
+}
+
+void AppBase::Terminate()
+{
+	glfwTerminate();
+}
+
 // GLFW: whenever the window size changed (by OS or user resize) this callback function executes
 void AppBase::FrameBufferSizeCallback(GLFWwindow* window, int width, int height)
 {
@@ -89,29 +157,29 @@ void AppBase::ScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
 }
 
 // Process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
-void AppBase::ProcessInput(GLFWwindow* window)
+void AppBase::ProcessInput()
 {
-	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+	if (glfwGetKey(glfwWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 	{
-		glfwSetWindowShouldClose(window, true);
+		glfwSetWindowShouldClose(glfwWindow, true);
 	}
 
-	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+	if (glfwGetKey(glfwWindow, GLFW_KEY_W) == GLFW_PRESS)
 	{
 		camera->ProcessKeyboard(CameraForward, deltaTime);
 	}
 
-	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+	if (glfwGetKey(glfwWindow, GLFW_KEY_S) == GLFW_PRESS)
 	{
 		camera->ProcessKeyboard(CameraBackward, deltaTime);
 	}
 
-	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+	if (glfwGetKey(glfwWindow, GLFW_KEY_A) == GLFW_PRESS)
 	{
 		camera->ProcessKeyboard(CameraLeft, deltaTime);
 	}
 
-	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+	if (glfwGetKey(glfwWindow, GLFW_KEY_D) == GLFW_PRESS)
 	{
 		camera->ProcessKeyboard(CameraRight, deltaTime);
 	}

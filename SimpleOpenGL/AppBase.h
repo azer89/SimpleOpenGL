@@ -18,12 +18,25 @@ protected:
 	void FrameBufferSizeCallback(GLFWwindow* window, int width, int height);
 	void MouseCallback(GLFWwindow* window, double xpos, double ypos);
 	void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset);
-	void SetupGLFW();
-	void ProcessInput(GLFWwindow* window);
+	
+	void InitGLFW();
+	void InitGlad();
+	void InitCamera();
+	void InitTiming();
+	bool IsGLFWWindowCreated();
+	bool IsGLADLoaded();
+	int GLFWWindowShouldClose();
+	void ProcessTiming();
+	void ProcessInput();
+	void SwapBuffers();
+	void PollEvents();
+	void Terminate();
+
+private:
+	GLFWwindow* glfwWindow;
+	bool isGladLoaded = false;
 
 protected:
-	GLFWwindow* glfwWindow;
-
 	// Camera
 	std::unique_ptr<Camera> camera;
 	float lastX;

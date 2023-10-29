@@ -17,26 +17,10 @@ AppBoxes::AppBoxes()
 
 int AppBoxes::MainLoop()
 {
-	if (glfwWindow == NULL)
+	if(!IsGLFWWindowCreated() || !IsGLADLoaded())
 	{
 		return -1;
 	}
-
-	// GLAD
-	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-	{
-		std::cerr << "Failed to initialize GLAD" << std::endl;
-		return -1;
-	}
-
-	// Camera
-	camera = std::make_unique<Camera>(glm::vec3(0.0f, 0.0f, 3.0f));
-	lastX = AppSettings::ScreenWidth / 2.0f;
-	lastY = AppSettings::ScreenHeight / 2.0f;
-	firstMouse = true;
-	// Timing
-	deltaTime = 0.0f;	// Time between current frame and last frame
-	lastFrame = 0.0f;
 
 	// Configure global opengl state
 	glEnable(GL_DEPTH_TEST);
@@ -138,15 +122,10 @@ int AppBoxes::MainLoop()
 	glEnableVertexAttribArray(1);
 
 	// Render loop
-	while (!glfwWindowShouldClose(glfwWindow))
+	while (!GLFWWindowShouldClose())
 	{
-		// Per-frame time
-		float currentFrame = static_cast<float>(glfwGetTime());
-		deltaTime = currentFrame - lastFrame;
-		lastFrame = currentFrame;
-
-		// Input
-		ProcessInput(glfwWindow);
+		ProcessTiming();
+		ProcessInput();
 
 		// Render
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -165,7 +144,7 @@ int AppBoxes::MainLoop()
 		glm::mat4 view = camera->GetViewMatrix();
 		shader.SetMat4("view", view);
 
-		// render boxes
+		// Render boxes
 		for (unsigned int i = 0; i < 10; i++)
 		{
 			// calculate the model matrix for each object and pass it to shader before drawing
@@ -178,9 +157,8 @@ int AppBoxes::MainLoop()
 			glDrawArrays(GL_TRIANGLES, 0, 36);
 		}
 
-		// GLFW: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
-		glfwSwapBuffers(glfwWindow);
-		glfwPollEvents();
+		SwapBuffers();
+		PollEvents();
 	}
 
 	// De-allocate all resources once they've outlived their purpose
@@ -190,7 +168,7 @@ int AppBoxes::MainLoop()
 	shader.Delete();
 
 	// GLFW: terminate, clearing all previously allocated GLFW resources.
-	glfwTerminate();
+	Terminate();
 
 	return 0;
 }
