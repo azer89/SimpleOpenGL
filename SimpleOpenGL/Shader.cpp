@@ -1,15 +1,18 @@
 #include "Shader.h"
+#include "AppSettings.h"
 
 #include <string>
 #include <fstream>
 #include <sstream>
 #include <iostream>
 
-Shader::Shader(const char* vertexPath, const char* fragmentPath)
+Shader::Shader(std::string vertexFilename, std::string fragmentFilename)
 {
 	// Retrieve the vertex/fragment source code from filePath
-	auto vertexCode = LoadTextFile(vertexPath);
-	auto fragmentCode = LoadTextFile(fragmentPath);
+	auto vsFullFilepath = AppSettings::VertexShaderFolder + vertexFilename;
+	auto fsFullFilepath = AppSettings::FragmentShaderFolder + fragmentFilename;
+	auto vertexCode = LoadTextFile(vsFullFilepath.c_str());
+	auto fragmentCode = LoadTextFile(fsFullFilepath.c_str());
 	auto vertex = CreateShaderProgram(vertexCode.c_str(), GL_VERTEX_SHADER);
 	auto fragment = CreateShaderProgram(fragmentCode.c_str(), GL_FRAGMENT_SHADER);
 	
@@ -146,7 +149,7 @@ void Shader::CheckCompileErrors(unsigned int shader, ObjectType objectType)
 		if (!success)
 		{
 			glGetShaderInfoLog(shader, 1024, NULL, infoLog);
-			std::cout << "Error Shader compilation of type: " << infoLog << '\n';
+			std::cerr << "Error Shader compilation of type: " << infoLog << '\n';
 		}
 	}
 	else
@@ -155,7 +158,7 @@ void Shader::CheckCompileErrors(unsigned int shader, ObjectType objectType)
 		if (!success)
 		{
 			glGetProgramInfoLog(shader, 1024, NULL, infoLog);
-			std::cout << "Error program linking error of type: " << infoLog << '\n';
+			std::cerr << "Error program linking error of type: " << infoLog << '\n';
 		}
 	}
 }

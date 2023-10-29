@@ -26,7 +26,7 @@ int AppBoxes::MainLoop()
 	glEnable(GL_DEPTH_TEST);
 
 	// Shader programs
-	Shader shader(AppSettings::VertexShaderFile.c_str(), AppSettings::FragmentShaderFile.c_str());
+	Shader shader("camera.vertex", "camera.fragment");
 
 	// Texture
 	Texture texture("neco_coneco.jpg", GL_TEXTURE0);

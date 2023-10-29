@@ -9,8 +9,8 @@ namespace AppSettings
 	extern int ScreenWidth;
 	extern int ScreenHeight;
 	extern std::string ScreenTitle;
-	extern std::string VertexShaderFile;
-	extern std::string FragmentShaderFile;
+	extern std::string VertexShaderFolder;
+	extern std::string FragmentShaderFolder;
 	extern std::string TextureFolder;
 };
 

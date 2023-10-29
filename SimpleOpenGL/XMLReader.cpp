@@ -43,7 +43,7 @@ void XMLReader::LoadSettings()
 	AppSettings::ScreenWidth = GetInt(general_parent->FirstChildElement("ScreenWidth"));
 	AppSettings::ScreenHeight = GetInt(general_parent->FirstChildElement("ScreenHeight"));
 	AppSettings::ScreenTitle = GetString(general_parent->FirstChildElement("ScreenTitle"));
-	AppSettings::VertexShaderFile = GetString(general_parent->FirstChildElement("VertexShaderFile"));
-	AppSettings::FragmentShaderFile = GetString(general_parent->FirstChildElement("FragmentShaderFile"));
+	AppSettings::VertexShaderFolder = GetString(general_parent->FirstChildElement("VertexShaderFolder"));
+	AppSettings::FragmentShaderFolder = GetString(general_parent->FirstChildElement("FragmentShaderFolder"));
 	AppSettings::TextureFolder = GetString(general_parent->FirstChildElement("TextureFolder"));
 }

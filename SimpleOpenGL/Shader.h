@@ -2,6 +2,7 @@
 #define __SHADER_H__
 
 #include <iostream>
+#include <string>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
@@ -18,7 +19,7 @@ public:
 	unsigned int ID;
 
 public:
-	Shader(const char* vertexPath, const char* fragmentPath);
+	Shader(std::string vertexFilename, std::string fragmentFilename);
 	
 	void Use(); // Activate the shader
 	void Delete();

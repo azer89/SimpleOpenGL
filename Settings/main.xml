@@ -3,8 +3,8 @@
 		<ScreenWidth value="800"/>
 		<ScreenHeight value="600"/>
 		<ScreenTitle value="Simple OpenGL"/>
-		<VertexShaderFile value="C://Users/azer//workspace//SimpleOpenGL//Shaders//camera.vertex"/>
-		<FragmentShaderFile value="C://Users//azer//workspace//SimpleOpenGL//Shaders//camera.fragment"/>
+		<VertexShaderFolder value="C://Users/azer//workspace//SimpleOpenGL//Shaders//"/>
+		<FragmentShaderFolder value="C://Users//azer//workspace//SimpleOpenGL//Shaders//"/>
 		<TextureFolder value="C://Users//azer//workspace//SimpleOpenGL//Textures//"/>
 	</General>
 </App>
