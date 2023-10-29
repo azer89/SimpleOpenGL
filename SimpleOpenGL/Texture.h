@@ -3,6 +3,7 @@
 
 #include <glad/glad.h>
 #include <glm/glm.hpp>
+#include <string>
 
 class Texture
 {
@@ -11,7 +12,7 @@ private:
 	GLenum textureIndex;
 
 public:
-	Texture(const char* imageFilePath, GLenum textureIndex);
+	Texture(std::string imageFilename, GLenum textureIndex);
 	void Bind();
 };
 

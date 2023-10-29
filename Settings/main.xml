@@ -5,6 +5,6 @@
 		<ScreenTitle value="Simple OpenGL"/>
 		<VertexShaderFile value="C://Users/azer//workspace//SimpleOpenGL//Shaders//camera.vertex"/>
 		<FragmentShaderFile value="C://Users//azer//workspace//SimpleOpenGL//Shaders//camera.fragment"/>
-		<Texture value="C://Users//azer//workspace//SimpleOpenGL//Textures//neco_coneco.jpg"/>
+		<TextureFolder value="C://Users//azer//workspace//SimpleOpenGL//Textures//"/>
 	</General>
 </App>

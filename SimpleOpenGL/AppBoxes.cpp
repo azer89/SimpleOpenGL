@@ -29,7 +29,7 @@ int AppBoxes::MainLoop()
 	Shader shader(AppSettings::VertexShaderFile.c_str(), AppSettings::FragmentShaderFile.c_str());
 
 	// Texture
-	Texture texture(AppSettings::TextureFile.c_str(), GL_TEXTURE0);
+	Texture texture("neco_coneco.jpg", GL_TEXTURE0);
 
 	/*float vertices[] = {
 		// positions          // colors           // texture coords

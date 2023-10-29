@@ -1,4 +1,5 @@
 #include "Texture.h"
+#include "Appsettings.h"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
@@ -11,7 +12,7 @@
 
 #include <iostream>
 
-Texture::Texture(const char* imageFilePath, GLenum textureIndex)
+Texture::Texture(std::string imageFilename, GLenum textureIndex)
 {
 	this->textureIndex = textureIndex;
 
@@ -20,7 +21,8 @@ Texture::Texture(const char* imageFilePath, GLenum textureIndex)
 	// Load image
 	int width, height, nrComponents;
 	stbi_set_flip_vertically_on_load(true);
-	unsigned char* data = stbi_load(imageFilePath, &width, &height, &nrComponents, 0);
+	auto imageFullFilepath = AppSettings::TextureFolder + imageFilename;
+	unsigned char* data = stbi_load(imageFullFilepath.c_str(), &width, &height, &nrComponents, 0);
 	if (data)
 	{
 		GLenum format;
