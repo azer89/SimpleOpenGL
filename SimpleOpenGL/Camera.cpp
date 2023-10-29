@@ -1,4 +1,7 @@
 #include "Camera.h"
+#include "AppSettings.h"
+
+#include <glm/glm.hpp>
 
 Camera::Camera(glm::vec3 position, glm::vec3 up, float yaw, float pitch) : 
 	Front(glm::vec3(0.0f, 0.0f, -1.0f)), 
@@ -24,6 +27,14 @@ Camera::Camera(float posX, float posY, float posZ, float upX, float upY, float u
 	Yaw = yaw;
 	Pitch = pitch;
 	UpdateCameraVectors();
+}
+
+glm::mat4 Camera::GetProjectionMatrix()
+{
+	return glm::perspective(glm::radians(Zoom), 
+		(float)AppSettings::ScreenWidth / (float)AppSettings::ScreenHeight, 
+		0.1f, 
+		100.0f);
 }
 
 glm::mat4 Camera::GetViewMatrix()

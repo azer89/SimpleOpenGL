@@ -121,28 +121,27 @@ int AppBoxes::MainLoop()
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
 
+	// Texture
+	shader.Use();
+	shader.SetInt("texture1", 0);
+
 	// Render loop
 	while (!GLFWWindowShouldClose())
 	{
 		ProcessTiming();
 		ProcessInput();
 
-		// Render
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		texture.Bind();
 
 		shader.Use();
+		shader.SetMat4("projection", camera->GetProjectionMatrix());
+		shader.SetMat4("view", camera->GetViewMatrix());
+
 		glBindVertexArray(VAO);
 		//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-		 // pass projection matrix to shader (note that in this case it could change every frame)
-		glm::mat4 projection = glm::perspective(glm::radians(camera->Zoom), (float)AppSettings::ScreenWidth / (float)AppSettings::ScreenHeight, 0.1f, 100.0f);
-
-		shader.SetMat4("projection", projection);
-		// camera/view transformation
-		glm::mat4 view = camera->GetViewMatrix();
-		shader.SetMat4("view", view);
 
 		// Render boxes
 		for (unsigned int i = 0; i < 10; i++)
@@ -152,7 +151,6 @@ int AppBoxes::MainLoop()
 			model = glm::translate(model, cubePositions[i]);
 			float angle = 20.0f * i;
 			model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
-
 			shader.SetMat4("model", model);
 			glDrawArrays(GL_TRIANGLES, 0, 36);
 		}

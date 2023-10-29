@@ -48,6 +48,7 @@ public:
 
 	Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch);
 
+	glm::mat4 GetProjectionMatrix();
 	glm::mat4 GetViewMatrix();
 
 	void ProcessKeyboard(CameraMovement direction, float deltaTime);
