@@ -24,7 +24,8 @@ int AppBlinnPhong::MainLoop()
 	Shader shader("blinn_phong.vertex", "blinn_phong.fragment");
 
 	// Texture
-	Texture texture("wood.png", GL_TEXTURE0);
+	Texture texture(GL_TEXTURE0);
+	texture.CreateFromImageFile("wood.png");
 
 	float vertices[] = {
 		// positions			// normals			// texcoords

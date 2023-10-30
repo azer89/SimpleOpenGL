@@ -29,7 +29,8 @@ int AppBoxes::MainLoop()
 	Shader shader("camera.vertex", "camera.fragment");
 
 	// Texture
-	Texture texture("neco_coneco.jpg", GL_TEXTURE0);
+	Texture texture(GL_TEXTURE0);
+	texture.CreateFromImageFile("neco_coneco.jpg");
 
 	/*float vertices[] = {
 		// positions          // colors           // texture coords

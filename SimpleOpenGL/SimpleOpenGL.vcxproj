@@ -148,6 +148,7 @@
     <ClCompile Include="AppBlinnPhong.cpp" />
     <ClCompile Include="AppBoxes.cpp" />
     <ClCompile Include="AppSettings.cpp" />
+    <ClCompile Include="AppShadowMapping.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="AppBase.cpp" />
     <ClCompile Include="main.cpp" />
@@ -159,6 +160,7 @@
     <ClInclude Include="AppBlinnPhong.h" />
     <ClInclude Include="AppBoxes.h" />
     <ClInclude Include="AppSettings.h" />
+    <ClInclude Include="AppShadowMapping.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="XMLReader.h" />
     <ClInclude Include="AppBase.h" />
@@ -172,6 +174,12 @@
     <None Include="..\Shaders\camera.vertex" />
     <None Include="..\Shaders\colored_triangle.fragment" />
     <None Include="..\Shaders\colored_triangle.vertex" />
+    <None Include="..\Shaders\shadow_mapping.fragment" />
+    <None Include="..\Shaders\shadow_mapping.vertex" />
+    <None Include="..\Shaders\shadow_mapping_debug.fragment" />
+    <None Include="..\Shaders\shadow_mapping_debug.vertex" />
+    <None Include="..\Shaders\shadow_mapping_depth.fragment" />
+    <None Include="..\Shaders\shadow_mapping_depth.vertex" />
     <None Include="..\Shaders\texture.fragment" />
     <None Include="..\Shaders\texture.vertex" />
   </ItemGroup>

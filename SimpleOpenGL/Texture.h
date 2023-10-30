@@ -12,7 +12,10 @@ private:
 	GLenum textureIndex;
 
 public:
-	Texture(const std::string& imageFilename, GLenum textureIndex);
+	Texture(GLenum textureIndex);
+	//Texture(const std::string& imageFilename, GLenum textureIndex);
+	void CreateFromImageFile(const std::string& imageFilename);
+	void CreateDepthMap();
 	void Bind();
 };
 

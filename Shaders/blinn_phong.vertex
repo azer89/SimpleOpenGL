@@ -12,11 +12,12 @@ out VS_OUT {
 
 uniform mat4 projection;
 uniform mat4 view;
+// uniform mat4 view;
 
 void main()
 {
 	vs_out.FragPos = aPos;
-	vs_out.Normal = aNormal; // TODO Normal vector scaled
+	vs_out.Normal = aNormal; // TODO transpose(inverse(mat3(model))) * aNormal;
 	vs_out.TexCoords = aTexCoords;
 	gl_Position = projection * view * vec4(aPos, 1.0);
 }

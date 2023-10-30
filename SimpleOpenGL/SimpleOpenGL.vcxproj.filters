@@ -45,6 +45,9 @@
     <ClCompile Include="AppBlinnPhong.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="AppShadowMapping.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppBase.h">
@@ -71,6 +74,9 @@
     <ClInclude Include="AppBlinnPhong.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="AppShadowMapping.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Shaders\colored_triangle.fragment">
@@ -95,6 +101,24 @@
       <Filter>Resource Files\Shaders</Filter>
     </None>
     <None Include="..\Shaders\blinn_phong.vertex">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="..\Shaders\shadow_mapping.fragment">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="..\Shaders\shadow_mapping.vertex">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="..\Shaders\shadow_mapping_debug.fragment">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="..\Shaders\shadow_mapping_debug.vertex">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="..\Shaders\shadow_mapping_depth.fragment">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="..\Shaders\shadow_mapping_depth.vertex">
       <Filter>Resource Files\Shaders</Filter>
     </None>
   </ItemGroup>

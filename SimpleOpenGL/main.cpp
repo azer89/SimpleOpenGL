@@ -3,7 +3,7 @@
 
 int main()
 {
-	AppBlinnPhong app;
+	AppBoxes app;
 	auto returnValue = app.MainLoop();
 	return returnValue;
 }
