@@ -9,6 +9,8 @@ int AppShadowMapping::MainLoop()
 		return -1;
 	}
 
+	glEnable(GL_DEPTH_TEST);
+
 	InitScene();
 
 	Shader mainShader("shadow_mapping.vertex", "shadow_mapping.fragment");
