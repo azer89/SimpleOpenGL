@@ -23,7 +23,7 @@ int AppShadowMapping::MainLoop()
 	debugShader.Use();
 	debugShader.SetInt("depthMap", 0);
 
-	// Texture
+	// Textures
 	Texture woodTexture;
 	woodTexture.CreateFromImageFile("wood.png");
 
@@ -102,6 +102,7 @@ int AppShadowMapping::MainLoop()
 		debugShader.SetFloat("near_plane", near_plane);
 		debugShader.SetFloat("far_plane", far_plane);
 		depthTexture.Bind(GL_TEXTURE0);
+		//RenderQuad();
 
 		SwapBuffers();
 		PollEvents();
