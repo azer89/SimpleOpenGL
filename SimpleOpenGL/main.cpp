@@ -4,7 +4,7 @@
 
 int main()
 {
-	AppShadowMapping app;
+	AppBlinnPhong app;
 	auto returnValue = app.MainLoop();
 	return returnValue;
 }

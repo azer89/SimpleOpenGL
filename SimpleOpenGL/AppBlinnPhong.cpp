@@ -24,7 +24,7 @@ int AppBlinnPhong::MainLoop()
 	Shader shader("blinn_phong.vertex", "blinn_phong.fragment");
 
 	// Texture
-	Texture texture(GL_TEXTURE0);
+	Texture texture;
 	texture.CreateFromImageFile("wood.png");
 
 	float vertices[] = {
@@ -59,6 +59,8 @@ int AppBlinnPhong::MainLoop()
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
 	glEnableVertexAttribArray(2);
 
+	glBindVertexArray(0);
+
 	// Texture
 	shader.Use();
 	shader.SetInt("texture1", 0);
@@ -81,7 +83,7 @@ int AppBlinnPhong::MainLoop()
 		// floor
 		glBindVertexArray(VAO);
 		glActiveTexture(GL_TEXTURE0);
-		texture.Bind();
+		texture.Bind(GL_TEXTURE0);
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 
 		SwapBuffers();

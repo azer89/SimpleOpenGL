@@ -29,7 +29,7 @@ int AppBoxes::MainLoop()
 	Shader shader("camera.vertex", "camera.fragment");
 
 	// Texture
-	Texture texture(GL_TEXTURE0);
+	Texture texture;
 	texture.CreateFromImageFile("neco_coneco.jpg");
 
 	/*float vertices[] = {
@@ -135,7 +135,7 @@ int AppBoxes::MainLoop()
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		texture.Bind();
+		texture.Bind(GL_TEXTURE0);
 
 		shader.Use();
 		shader.SetMat4("projection", camera->GetProjectionMatrix());

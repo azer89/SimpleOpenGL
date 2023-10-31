@@ -10,6 +10,8 @@ public:
 	int MainLoop() override;
 
 private:
+	void InitScene();
+
 	void RenderScene(const Shader& shader);
 	void RenderCube();
 	void RenderQuad();

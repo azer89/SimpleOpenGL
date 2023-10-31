@@ -9,14 +9,18 @@ class Texture
 {
 private:
 	unsigned int ID;
-	GLenum textureIndex;
 
 public:
-	Texture(GLenum textureIndex);
+	Texture();
 	//Texture(const std::string& imageFilename, GLenum textureIndex);
 	void CreateFromImageFile(const std::string& imageFilename);
 	void CreateDepthMap(unsigned int width, unsigned int height);
-	void Bind();
+	void Bind(GLenum textureIndex);
+
+	unsigned int GetID()
+	{
+		return ID;
+	}
 };
 
 #endif

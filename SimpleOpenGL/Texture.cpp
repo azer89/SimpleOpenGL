@@ -12,16 +12,13 @@
 
 #include <iostream>
 
-Texture::Texture(GLenum textureIndex)
+Texture::Texture()
 {
-	this->textureIndex = textureIndex;
 	ID = GL_INVALID_VALUE;
 }
 
 void Texture::CreateFromImageFile(const std::string& imageFilename)
 {
-	this->textureIndex = textureIndex;
-
 	glGenTextures(1, &ID);
 
 	// Load image
@@ -77,7 +74,7 @@ void Texture::CreateDepthMap(unsigned int width, unsigned int height)
 	glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
 }
 
-void Texture::Bind()
+void Texture::Bind(GLenum textureIndex)
 {
 	glActiveTexture(textureIndex);
 	glBindTexture(GL_TEXTURE_2D, ID);
