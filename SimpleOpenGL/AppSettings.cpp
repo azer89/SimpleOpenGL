@@ -8,3 +8,4 @@ std::string AppSettings::ScreenTitle = "";
 std::string AppSettings::VertexShaderFolder = "";
 std::string AppSettings::FragmentShaderFolder = "";
 std::string AppSettings::TextureFolder = "";
+std::string AppSettings::ModelFolder = "";

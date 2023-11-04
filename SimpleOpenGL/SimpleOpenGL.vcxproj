@@ -149,6 +149,7 @@
   <ItemGroup>
     <ClCompile Include="AppBlinnPhong.cpp" />
     <ClCompile Include="AppBoxes.cpp" />
+    <ClCompile Include="AppModelLoading.cpp" />
     <ClCompile Include="AppSettings.cpp" />
     <ClCompile Include="AppShadowMapping.cpp" />
     <ClCompile Include="Camera.cpp" />
@@ -163,6 +164,7 @@
   <ItemGroup>
     <ClInclude Include="AppBlinnPhong.h" />
     <ClInclude Include="AppBoxes.h" />
+    <ClInclude Include="AppModelLoading.h" />
     <ClInclude Include="AppSettings.h" />
     <ClInclude Include="AppShadowMapping.h" />
     <ClInclude Include="Camera.h" />
@@ -180,6 +182,8 @@
     <None Include="..\Shaders\camera.vertex" />
     <None Include="..\Shaders\colored_triangle.fragment" />
     <None Include="..\Shaders\colored_triangle.vertex" />
+    <None Include="..\Shaders\model_loading.fragment" />
+    <None Include="..\Shaders\model_loading.vertex" />
     <None Include="..\Shaders\shadow_mapping.fragment" />
     <None Include="..\Shaders\shadow_mapping.vertex" />
     <None Include="..\Shaders\shadow_mapping_debug.fragment" />

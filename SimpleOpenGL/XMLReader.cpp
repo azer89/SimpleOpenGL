@@ -46,4 +46,5 @@ void XMLReader::LoadSettings()
 	AppSettings::VertexShaderFolder = GetString(general_parent->FirstChildElement("VertexShaderFolder"));
 	AppSettings::FragmentShaderFolder = GetString(general_parent->FirstChildElement("FragmentShaderFolder"));
 	AppSettings::TextureFolder = GetString(general_parent->FirstChildElement("TextureFolder"));
+	AppSettings::ModelFolder = GetString(general_parent->FirstChildElement("ModelFolder"));
 }

@@ -6,5 +6,6 @@
 		<VertexShaderFolder value="C://Users/azer//workspace//SimpleOpenGL//Shaders//"/>
 		<FragmentShaderFolder value="C://Users//azer//workspace//SimpleOpenGL//Shaders//"/>
 		<TextureFolder value="C://Users//azer//workspace//SimpleOpenGL//Textures//"/>
+		<ModelFolder value="C://Users//azer//workspace//SimpleOpenGL//Models//"/>
 	</General>
 </App>
