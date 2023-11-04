@@ -22,7 +22,7 @@ int AppModelLoading::MainLoop()
 
 	Model obj(AppSettings::ModelFolder + "DamagedHelmet//DamagedHelmet.gltf");
 
-	glm::vec3 lightPos(0.0f, 2.0f, 0.0f);
+	glm::vec3 lightPos(0.0f, 10.0f, 0.0f);
 
 	// Render loop
 	while (!GLFWWindowShouldClose())
