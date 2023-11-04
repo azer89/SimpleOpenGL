@@ -26,6 +26,8 @@ int AppShadowMapping::MainLoop()
 	// Textures
 	Texture woodTexture;
 	woodTexture.CreateFromImageFile("wood.png");
+	Texture necoTexture;
+	necoTexture.CreateFromImageFile("neco_coneco.jpg");
 
 	// Depth
 	const unsigned int DEPTH_WIDTH = 1024;
@@ -77,7 +79,8 @@ int AppShadowMapping::MainLoop()
 		glBindFramebuffer(GL_FRAMEBUFFER, depthFBO);
 		glClear(GL_DEPTH_BUFFER_BIT);
 		woodTexture.Bind(GL_TEXTURE0);
-		RenderScene(depthShader);
+		RenderPlane(depthShader);
+		RenderCubes(depthShader);
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 		// Reset
@@ -95,7 +98,10 @@ int AppShadowMapping::MainLoop()
 		mainShader.SetMat4("lightSpaceMatrix", lightSpaceMatrix);
 		woodTexture.Bind(GL_TEXTURE0);
 		depthTexture.Bind(GL_TEXTURE1);
-		RenderScene(mainShader);
+		RenderPlane(mainShader);
+		necoTexture.Bind(GL_TEXTURE0);
+		depthTexture.Bind(GL_TEXTURE1);
+		RenderCubes(mainShader);
 
 		// Debug
 		debugShader.Use();
@@ -113,14 +119,19 @@ int AppShadowMapping::MainLoop()
 	return 0;
 }
 
-void AppShadowMapping::RenderScene(const Shader& shader)
+void AppShadowMapping::RenderPlane(const Shader& shader)
 {
 	// Plane
 	glm::mat4 model = glm::mat4(1.0f);
 	shader.SetMat4("model", model);
 	glBindVertexArray(planeVAO);
 	glDrawArrays(GL_TRIANGLES, 0, 6);
-	
+}
+
+void AppShadowMapping::RenderCubes(const Shader& shader)
+{
+	glm::mat4 model = glm::mat4(1.0f);
+
 	// Cubes
 	model = glm::mat4(1.0f);
 	model = glm::translate(model, glm::vec3(0.0f, 1.5f, 0.0));

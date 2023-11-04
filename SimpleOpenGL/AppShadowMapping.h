@@ -12,7 +12,8 @@ public:
 private:
 	void InitScene();
 
-	void RenderScene(const Shader& shader);
+	void RenderPlane(const Shader& shader);
+	void RenderCubes(const Shader& shader);
 	void RenderCube();
 	void RenderQuad();
 
