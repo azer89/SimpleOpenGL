@@ -68,7 +68,6 @@ int AppShadowMapping::MainLoop()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		// Render depth
-		//lightProjection = glm::perspective(glm::radians(45.0f), (GLfloat)SHADOW_WIDTH / (GLfloat)SHADOW_HEIGHT, near_plane, far_plane); // note that if you use a perspective projection matrix you'll have to change the light position as the current light position isn't enough to reflect the whole scene
 		lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, near_plane, far_plane);
 		lightView = glm::lookAt(lightPos, glm::vec3(0.0f), glm::vec3(0.0, 1.0, 0.0));
 		lightSpaceMatrix = lightProjection * lightView;
@@ -89,10 +88,8 @@ int AppShadowMapping::MainLoop()
 
 		// Render Scene
 		mainShader.Use();
-		projection = glm::perspective(glm::radians(camera->Zoom), (float)AppSettings::ScreenWidth / (float)AppSettings::ScreenHeight, 0.1f, 100.0f);
-		glm::mat4 view = camera->GetViewMatrix();
-		mainShader.SetMat4("projection", projection);
-		mainShader.SetMat4("view", view);
+		mainShader.SetMat4("projection", camera->GetProjectionMatrix());
+		mainShader.SetMat4("view", camera->GetViewMatrix());
 		mainShader.SetVec3("viewPos", camera->Position);
 		mainShader.SetVec3("lightPos", lightPos);
 		mainShader.SetMat4("lightSpaceMatrix", lightSpaceMatrix);
