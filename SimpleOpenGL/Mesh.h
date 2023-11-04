@@ -2,7 +2,6 @@
 #define __MESH_H__
 
 #include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
 
 #include <vector>
 
@@ -10,25 +9,25 @@
 
 #define MAX_BONE_INFLUENCE 4
 
-struct Vertex
+struct MVertex
 {
-	// position
+	// Position
 	glm::vec3 Position;
-	// normal
+	// Normal
 	glm::vec3 Normal;
-	// texCoords
+	// TexCoords
 	glm::vec2 TexCoords;
-	// tangent
+	// Tangent
 	glm::vec3 Tangent;
-	// bitangent
+	// Bitangent
 	glm::vec3 Bitangent;
-	//bone indexes which will influence this vertex
+	// Bone indexes which will influence this vertex
 	int m_BoneIDs[MAX_BONE_INFLUENCE];
-	//weights from each bone
+	// Weights from each bone
 	float m_Weights[MAX_BONE_INFLUENCE];
 };
 
-struct Texture
+struct MTexture
 {
 	unsigned int id;
 	std::string type;
@@ -38,14 +37,14 @@ struct Texture
 class Mesh
 {
 public:
-	// mesh Data
-	std::vector<Vertex>	vertices;
+	// Mesh Data
+	std::vector<MVertex>	vertices;
 	std::vector<unsigned int> indices;
-	std::vector<Texture> textures;
+	std::vector<MTexture> textures;
 	unsigned int VAO;
 
 	// Constructor
-	Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures);
+	Mesh(std::vector<MVertex> vertices, std::vector<unsigned int> indices, std::vector<MTexture> textures);
 
 	// Render the mesh
 	void Draw(Shader& shader);
