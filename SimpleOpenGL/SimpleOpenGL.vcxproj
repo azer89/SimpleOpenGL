@@ -117,6 +117,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Users\azer\workspace\SimpleOpenGL\External\GLAD\GLAD\include;C:\Users\azer\workspace\SimpleOpenGL\External\GLFW\include;C:\Users\azer\workspace\SimpleOpenGL\External\STB;C:\Users\azer\workspace\SimpleOpenGL\External\TinyXML\TinyXML;C:\Users\azer\workspace\SimpleOpenGL\External\GLM</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -134,6 +135,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Users\azer\workspace\SimpleOpenGL\External\GLAD\GLAD\include;C:\Users\azer\workspace\SimpleOpenGL\External\GLFW\include;C:\Users\azer\workspace\SimpleOpenGL\External\STB;C:\Users\azer\workspace\SimpleOpenGL\External\TinyXML\TinyXML;C:\Users\azer\workspace\SimpleOpenGL\External\GLM</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -152,6 +154,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="AppBase.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="XMLReader.cpp" />
@@ -162,6 +165,7 @@
     <ClInclude Include="AppSettings.h" />
     <ClInclude Include="AppShadowMapping.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Mesh.h" />
     <ClInclude Include="XMLReader.h" />
     <ClInclude Include="AppBase.h" />
     <ClInclude Include="Shader.h" />
