@@ -20,8 +20,8 @@ public:
 	void Bind(GLenum textureIndex);
 
 	unsigned int GetID();
-	std::string GetType();
-	std::string GetName();
+	const char* GetType();
+	const char* GetName();
 };
 
 #endif

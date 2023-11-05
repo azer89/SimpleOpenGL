@@ -29,14 +29,14 @@ unsigned int Texture::GetID()
 	return id;
 }
 
-std::string Texture::GetType()
+const char* Texture::GetType()
 {
-	return textureType;
+	return textureType.c_str();
 }
 
-std::string Texture::GetName()
+const char* Texture::GetName()
 {
-	return textureName;
+	return textureName.c_str();
 }
 
 void Texture::CreateFromImageFile(const std::string& fullFilePath, bool flipVertical)

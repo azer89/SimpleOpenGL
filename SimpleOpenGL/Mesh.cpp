@@ -29,19 +29,19 @@ void Mesh::Draw(Shader& shader)
 		// Retrieve texture number (the N in diffuse_textureN)
 		std::string number;
 		auto name = textures[i].GetType();
-		if (name == "texture_diffuse")
+		if (std::strcmp(name, "texture_diffuse") == 0)
 		{
 			number = std::to_string(diffuseNr++);
 		}
-		else if (name == "texture_specular")
+		else if (std::strcmp(name, "texture_specular") == 0)
 		{
 			number = std::to_string(specularNr++); // Transfer unsigned int to string
 		}
-		else if (name == "texture_normal")
+		else if (std::strcmp(name, "texture_normal") == 0)
 		{
 			number = std::to_string(normalNr++); // Transfer unsigned int to string
 		}
-		else if (name == "texture_height")
+		else if (std::strcmp(name, "texture_height") == 0)
 		{
 			number = std::to_string(heightNr++); // Transfer unsigned int to string
 		}
