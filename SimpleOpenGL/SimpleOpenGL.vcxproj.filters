@@ -16,6 +16,21 @@
     <Filter Include="Resource Files\Shaders">
       <UniqueIdentifier>{f93241e8-8e96-4dee-a7ff-2583684b451d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Shaders\BlinnPhong">
+      <UniqueIdentifier>{bb386957-ac77-4ff7-a2d6-9af2ff7f9a62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Shaders\Cubemap">
+      <UniqueIdentifier>{e5a02510-9188-4723-8616-43c40b595982}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Shaders\ShadowMapping">
+      <UniqueIdentifier>{130b3ede-5c54-454b-9f25-87bc6a24a78a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Shaders\Misc">
+      <UniqueIdentifier>{2b9e3dcc-dc0e-4a9f-acda-09c05298070e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Shaders\ModelLoading">
+      <UniqueIdentifier>{8726d2b8-e7a9-4cf3-b11d-44939c84eb11}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -103,71 +118,71 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Shaders\colored_triangle.fragment">
-      <Filter>Resource Files\Shaders</Filter>
-    </None>
-    <None Include="..\Shaders\colored_triangle.vertex">
-      <Filter>Resource Files\Shaders</Filter>
-    </None>
-    <None Include="..\Shaders\texture.fragment">
-      <Filter>Resource Files\Shaders</Filter>
-    </None>
-    <None Include="..\Shaders\texture.vertex">
-      <Filter>Resource Files\Shaders</Filter>
-    </None>
-    <None Include="..\Shaders\camera.fragment">
-      <Filter>Resource Files\Shaders</Filter>
-    </None>
-    <None Include="..\Shaders\camera.vertex">
-      <Filter>Resource Files\Shaders</Filter>
-    </None>
     <None Include="..\Shaders\blinn_phong.fragment">
-      <Filter>Resource Files\Shaders</Filter>
+      <Filter>Resource Files\Shaders\BlinnPhong</Filter>
     </None>
     <None Include="..\Shaders\blinn_phong.vertex">
-      <Filter>Resource Files\Shaders</Filter>
+      <Filter>Resource Files\Shaders\BlinnPhong</Filter>
     </None>
-    <None Include="..\Shaders\shadow_mapping.fragment">
-      <Filter>Resource Files\Shaders</Filter>
+    <None Include="..\Shaders\camera.fragment">
+      <Filter>Resource Files\Shaders\Misc</Filter>
     </None>
-    <None Include="..\Shaders\shadow_mapping.vertex">
-      <Filter>Resource Files\Shaders</Filter>
+    <None Include="..\Shaders\camera.vertex">
+      <Filter>Resource Files\Shaders\Misc</Filter>
     </None>
-    <None Include="..\Shaders\shadow_mapping_debug.fragment">
-      <Filter>Resource Files\Shaders</Filter>
+    <None Include="..\Shaders\colored_triangle.fragment">
+      <Filter>Resource Files\Shaders\Misc</Filter>
     </None>
-    <None Include="..\Shaders\shadow_mapping_debug.vertex">
-      <Filter>Resource Files\Shaders</Filter>
-    </None>
-    <None Include="..\Shaders\shadow_mapping_depth.fragment">
-      <Filter>Resource Files\Shaders</Filter>
-    </None>
-    <None Include="..\Shaders\shadow_mapping_depth.vertex">
-      <Filter>Resource Files\Shaders</Filter>
-    </None>
-    <None Include="..\Shaders\model_loading.fragment">
-      <Filter>Resource Files\Shaders</Filter>
-    </None>
-    <None Include="..\Shaders\model_loading.vertex">
-      <Filter>Resource Files\Shaders</Filter>
-    </None>
-    <None Include="..\Shaders\light_cube.fragment">
-      <Filter>Resource Files\Shaders</Filter>
-    </None>
-    <None Include="..\Shaders\light_cube.vertex">
-      <Filter>Resource Files\Shaders</Filter>
+    <None Include="..\Shaders\colored_triangle.vertex">
+      <Filter>Resource Files\Shaders\Misc</Filter>
     </None>
     <None Include="..\Shaders\cubemap.fragment">
-      <Filter>Resource Files\Shaders</Filter>
+      <Filter>Resource Files\Shaders\Cubemap</Filter>
     </None>
     <None Include="..\Shaders\cubemap.vertex">
-      <Filter>Resource Files\Shaders</Filter>
+      <Filter>Resource Files\Shaders\Cubemap</Filter>
     </None>
     <None Include="..\Shaders\skybox.fragment">
-      <Filter>Resource Files\Shaders</Filter>
+      <Filter>Resource Files\Shaders\Cubemap</Filter>
     </None>
     <None Include="..\Shaders\skybox.vertex">
-      <Filter>Resource Files\Shaders</Filter>
+      <Filter>Resource Files\Shaders\Cubemap</Filter>
+    </None>
+    <None Include="..\Shaders\texture.fragment">
+      <Filter>Resource Files\Shaders\Misc</Filter>
+    </None>
+    <None Include="..\Shaders\texture.vertex">
+      <Filter>Resource Files\Shaders\Misc</Filter>
+    </None>
+    <None Include="..\Shaders\shadow_mapping.fragment">
+      <Filter>Resource Files\Shaders\ShadowMapping</Filter>
+    </None>
+    <None Include="..\Shaders\shadow_mapping.vertex">
+      <Filter>Resource Files\Shaders\ShadowMapping</Filter>
+    </None>
+    <None Include="..\Shaders\shadow_mapping_debug.fragment">
+      <Filter>Resource Files\Shaders\ShadowMapping</Filter>
+    </None>
+    <None Include="..\Shaders\shadow_mapping_debug.vertex">
+      <Filter>Resource Files\Shaders\ShadowMapping</Filter>
+    </None>
+    <None Include="..\Shaders\shadow_mapping_depth.fragment">
+      <Filter>Resource Files\Shaders\ShadowMapping</Filter>
+    </None>
+    <None Include="..\Shaders\shadow_mapping_depth.vertex">
+      <Filter>Resource Files\Shaders\ShadowMapping</Filter>
+    </None>
+    <None Include="..\Shaders\light_cube.fragment">
+      <Filter>Resource Files\Shaders\Misc</Filter>
+    </None>
+    <None Include="..\Shaders\light_cube.vertex">
+      <Filter>Resource Files\Shaders\Misc</Filter>
+    </None>
+    <None Include="..\Shaders\model_loading.fragment">
+      <Filter>Resource Files\Shaders\ModelLoading</Filter>
+    </None>
+    <None Include="..\Shaders\model_loading.vertex">
+      <Filter>Resource Files\Shaders\ModelLoading</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
