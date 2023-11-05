@@ -12,7 +12,7 @@
 #include <map>
 #include <vector>
 
-unsigned int TextureFromFile(const char* path, const std::string& directory, bool gamma)
+unsigned int TextureFromFile(const char* path, const std::string& directory)
 {
 	std::string filename = std::string(path);
 	filename = directory + '/' + filename;
@@ -221,7 +221,8 @@ std::vector<MTexture> Model::LoadMaterialTextures(aiMaterial* mat, aiTextureType
 			}
 		}
 		if (!skip)
-		{   // If texture hasn't been loaded already, load it
+		{   
+			// If texture hasn't been loaded already, load it
 			MTexture texture;
 			texture.id = TextureFromFile(str.C_Str(), this->directory);
 			texture.type = typeName;

@@ -25,9 +25,9 @@ int AppShadowMapping::MainLoop()
 
 	// Textures
 	Texture woodTexture;
-	woodTexture.CreateFromImageFile("wood.png");
+	woodTexture.CreateFromImageFile(AppSettings::TextureFolder + "wood.png");
 	Texture necoTexture;
-	necoTexture.CreateFromImageFile("neco_coneco.jpg");
+	necoTexture.CreateFromImageFile(AppSettings::TextureFolder + "neco_coneco.jpg");
 
 	// Depth
 	const unsigned int DEPTH_WIDTH = 1024;

@@ -25,7 +25,7 @@ int AppBlinnPhong::MainLoop()
 
 	// Texture
 	Texture texture;
-	texture.CreateFromImageFile("wood.png");
+	texture.CreateFromImageFile(AppSettings::TextureFolder + "wood.png");
 
 	float vertices[] = {
 		// positions			// normals			// texcoords

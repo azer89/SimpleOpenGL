@@ -12,7 +12,7 @@ private:
 
 public:
 	Texture();
-	void CreateFromImageFile(const std::string& imageFilename);
+	void CreateFromImageFile(const std::string& fullFilePath);
 	void CreateDepthMap(unsigned int width, unsigned int height);
 	void Bind(GLenum textureIndex);
 

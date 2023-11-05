@@ -30,7 +30,7 @@ int AppBoxes::MainLoop()
 
 	// Texture
 	Texture texture;
-	texture.CreateFromImageFile("neco_coneco.jpg");
+	texture.CreateFromImageFile(AppSettings::TextureFolder + "neco_coneco.jpg");
 
 	/*float vertices[] = {
 		// positions          // colors           // texture coords

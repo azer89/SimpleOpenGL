@@ -17,15 +17,14 @@ Texture::Texture()
 	ID = GL_INVALID_VALUE;
 }
 
-void Texture::CreateFromImageFile(const std::string& imageFilename)
+void Texture::CreateFromImageFile(const std::string& fullFilePath)
 {
 	glGenTextures(1, &ID);
 
 	// Load image
 	int width, height, nrComponents;
 	stbi_set_flip_vertically_on_load(true);
-	auto imageFullFilepath = AppSettings::TextureFolder + imageFilename;
-	unsigned char* data = stbi_load(imageFullFilepath.c_str(), &width, &height, &nrComponents, 0);
+	unsigned char* data = stbi_load(fullFilePath.c_str(), &width, &height, &nrComponents, 0);
 	if (data)
 	{
 		GLenum format;
