@@ -2,14 +2,14 @@
 #define __MESH_H__
 
 #include <glm/glm.hpp>
-
 #include <vector>
 
 #include "Shader.h"
+#include "Texture.h"
 
 #define MAX_BONE_INFLUENCE 4
 
-struct MVertex
+struct Vertex
 {
 	// Position
 	glm::vec3 Position;
@@ -27,24 +27,17 @@ struct MVertex
 	float m_Weights[MAX_BONE_INFLUENCE];
 };
 
-struct MTexture
-{
-	unsigned int id;
-	std::string type;
-	std::string path;
-};
-
 class Mesh
 {
 public:
 	// Mesh Data
-	std::vector<MVertex>	vertices;
+	std::vector<Vertex>	vertices;
 	std::vector<unsigned int> indices;
-	std::vector<MTexture> textures;
+	std::vector<Texture> textures;
 	unsigned int VAO;
 
 	// Constructor
-	Mesh(std::vector<MVertex> vertices, std::vector<unsigned int> indices, std::vector<MTexture> textures);
+	Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures);
 
 	// Render the mesh
 	void Draw(Shader& shader);

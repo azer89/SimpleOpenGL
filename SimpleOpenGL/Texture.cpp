@@ -14,16 +14,41 @@
 
 Texture::Texture()
 {
-	ID = GL_INVALID_VALUE;
+	id = GL_INVALID_VALUE;
 }
 
-void Texture::CreateFromImageFile(const std::string& fullFilePath)
+Texture::Texture(std::string texType, std::string texName) :
+	textureType(texType),
+	textureName(texName)
 {
-	glGenTextures(1, &ID);
+	id = GL_INVALID_VALUE;
+}
+
+unsigned int Texture::GetID()
+{
+	return id;
+}
+
+std::string Texture::GetType()
+{
+	return textureType;
+}
+
+std::string Texture::GetName()
+{
+	return textureName;
+}
+
+void Texture::CreateFromImageFile(const std::string& fullFilePath, bool flipVertical)
+{
+	glGenTextures(1, &id);
 
 	// Load image
 	int width, height, nrComponents;
-	stbi_set_flip_vertically_on_load(true);
+	if (flipVertical)
+	{
+		stbi_set_flip_vertically_on_load(true);
+	}
 	unsigned char* data = stbi_load(fullFilePath.c_str(), &width, &height, &nrComponents, 0);
 	if (data)
 	{
@@ -41,8 +66,8 @@ void Texture::CreateFromImageFile(const std::string& fullFilePath)
 			format = GL_RGBA;
 		}
 
-		glBindTexture(GL_TEXTURE_2D, ID);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+		glBindTexture(GL_TEXTURE_2D, id);
+		glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
 		glGenerateMipmap(GL_TEXTURE_2D);
 
 		// Wrapping
@@ -62,8 +87,8 @@ void Texture::CreateFromImageFile(const std::string& fullFilePath)
 
 void Texture::CreateDepthMap(unsigned int width, unsigned int height)
 {
-	glGenTextures(1, &ID);
-	glBindTexture(GL_TEXTURE_2D, ID);
+	glGenTextures(1, &id);
+	glBindTexture(GL_TEXTURE_2D, id);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, width, height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -76,5 +101,5 @@ void Texture::CreateDepthMap(unsigned int width, unsigned int height)
 void Texture::Bind(GLenum textureIndex)
 {
 	glActiveTexture(textureIndex);
-	glBindTexture(GL_TEXTURE_2D, ID);
+	glBindTexture(GL_TEXTURE_2D, id);
 }
