@@ -5,9 +5,8 @@ Features:
 
 Adapted from learnopengl.com
 
+https://github.com/azer89/SimpleOpenGL/assets/790432/52c63957-d515-478a-a444-1e7fde9d38e0
 
-<img width="400" alt="image" src="https://github.com/azer89/SimpleOpenGL/assets/790432/a85727ba-cb7a-4185-a944-7813468d4511">
-<br/>
 
 <img width="400" alt="image" src="https://github.com/azer89/SimpleOpenGL/assets/790432/1ffa8170-aa8c-4255-a172-1fa8bcd5ecb7">
 
