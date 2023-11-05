@@ -1,8 +1,8 @@
 #ifndef __MESH_H__
 #define __MESH_H__
 
-#include <glm/glm.hpp>
 #include <vector>
+#include <glm/glm.hpp>
 
 #include "Shader.h"
 #include "Texture.h"
@@ -37,7 +37,7 @@ public:
 	unsigned int VAO;
 
 	// Constructor
-	Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures);
+	Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices, const std::vector<Texture>& textures);
 
 	// Render the mesh
 	void Draw(Shader& shader);

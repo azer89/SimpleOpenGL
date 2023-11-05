@@ -152,6 +152,7 @@
     <ClCompile Include="AppModelLoading.cpp" />
     <ClCompile Include="AppSettings.cpp" />
     <ClCompile Include="AppShadowMapping.cpp" />
+    <ClCompile Include="AppSkybox.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="AppBase.cpp" />
     <ClCompile Include="main.cpp" />
@@ -167,6 +168,7 @@
     <ClInclude Include="AppModelLoading.h" />
     <ClInclude Include="AppSettings.h" />
     <ClInclude Include="AppShadowMapping.h" />
+    <ClInclude Include="AppSkybox.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />
@@ -182,6 +184,8 @@
     <None Include="..\Shaders\camera.vertex" />
     <None Include="..\Shaders\colored_triangle.fragment" />
     <None Include="..\Shaders\colored_triangle.vertex" />
+    <None Include="..\Shaders\cubemap.fragment" />
+    <None Include="..\Shaders\cubemap.vertex" />
     <None Include="..\Shaders\light_cube.fragment" />
     <None Include="..\Shaders\light_cube.vertex" />
     <None Include="..\Shaders\model_loading.fragment" />
@@ -192,6 +196,8 @@
     <None Include="..\Shaders\shadow_mapping_debug.vertex" />
     <None Include="..\Shaders\shadow_mapping_depth.fragment" />
     <None Include="..\Shaders\shadow_mapping_depth.vertex" />
+    <None Include="..\Shaders\skybox.fragment" />
+    <None Include="..\Shaders\skybox.vertex" />
     <None Include="..\Shaders\texture.fragment" />
     <None Include="..\Shaders\texture.vertex" />
   </ItemGroup>

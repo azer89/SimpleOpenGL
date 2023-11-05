@@ -4,11 +4,14 @@
 #include <glad/glad.h>
 #include <glm/glm.hpp>
 #include <string>
+#include <vector>
 
 class Texture
 {
 private:
 	unsigned int id;
+
+	// These two are only for loading glTF, otherwise they are empty
 	std::string textureType;
 	std::string textureName;
 
@@ -17,6 +20,7 @@ public:
 	Texture(std::string textureType, std::string textureName);
 	void CreateFromImageFile(const std::string& fullFilePath, bool flipVertical = false);
 	void CreateDepthMap(unsigned int width, unsigned int height);
+	void CreateCubeMap(const std::vector<std::string>& files, const std::string& directory);
 	void Bind(GLenum textureIndex);
 
 	unsigned int GetID();
