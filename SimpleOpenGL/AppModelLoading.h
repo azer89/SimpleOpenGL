@@ -7,6 +7,12 @@ class AppModelLoading : AppBase
 {
 public:
 	int MainLoop() override;
+
+private:
+	void InitCube();
+
+	unsigned int cubeVAO;
+	unsigned int cubeVBO;
 };
 
 #endif

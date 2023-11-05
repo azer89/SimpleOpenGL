@@ -145,6 +145,12 @@
     <None Include="..\Shaders\model_loading.vertex">
       <Filter>Resource Files\Shaders</Filter>
     </None>
+    <None Include="..\Shaders\light_cube.fragment">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
+    <None Include="..\Shaders\light_cube.vertex">
+      <Filter>Resource Files\Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Settings\main.xml">
