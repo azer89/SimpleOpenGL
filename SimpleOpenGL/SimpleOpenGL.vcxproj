@@ -152,7 +152,7 @@
     <ClCompile Include="AppModelLoading.cpp" />
     <ClCompile Include="AppSettings.cpp" />
     <ClCompile Include="AppShadowMapping.cpp" />
-    <ClCompile Include="AppSkyboxWIthModel.cpp" />
+    <ClCompile Include="AppSkyboxWithModel.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="AppBase.cpp" />
     <ClCompile Include="main.cpp" />
@@ -186,8 +186,8 @@
     <None Include="..\Shaders\camera.vertex" />
     <None Include="..\Shaders\colored_triangle.fragment" />
     <None Include="..\Shaders\colored_triangle.vertex" />
-    <None Include="..\Shaders\cubemap.fragment" />
-    <None Include="..\Shaders\cubemap.vertex" />
+    <None Include="..\Shaders\cube.fragment" />
+    <None Include="..\Shaders\cube.vertex" />
     <None Include="..\Shaders\light_cube.fragment" />
     <None Include="..\Shaders\light_cube.vertex" />
     <None Include="..\Shaders\model_loading.fragment" />

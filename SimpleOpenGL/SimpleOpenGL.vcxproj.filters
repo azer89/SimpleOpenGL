@@ -72,7 +72,7 @@
     <ClCompile Include="AppModelLoading.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AppSkyboxWIthModel.cpp">
+    <ClCompile Include="AppSkyboxWithModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -136,10 +136,10 @@
     <None Include="..\Shaders\colored_triangle.vertex">
       <Filter>Resource Files\Shaders\Misc</Filter>
     </None>
-    <None Include="..\Shaders\cubemap.fragment">
+    <None Include="..\Shaders\cube.fragment">
       <Filter>Resource Files\Shaders\Cubemap</Filter>
     </None>
-    <None Include="..\Shaders\cubemap.vertex">
+    <None Include="..\Shaders\cube.vertex">
       <Filter>Resource Files\Shaders\Cubemap</Filter>
     </None>
     <None Include="..\Shaders\skybox.fragment">
