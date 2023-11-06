@@ -3,6 +3,7 @@
 #include "AppShadowMapping.h"
 #include "AppModelLoading.h"
 #include "AppSkyboxWithModel.h"
+#include "AppSkyboxWithCube.h"
 
 int main()
 {

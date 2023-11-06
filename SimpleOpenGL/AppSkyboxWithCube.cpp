@@ -1,10 +1,9 @@
-#include "AppSkyboxWithModel.h"
+#include "AppSkyboxWithCube.h"
 #include "Texture.h"
 #include "Shader.h"
-#include "Model.h"
 #include "AppSettings.h"
 
-int AppSkyboxWithModel::MainLoop()
+int AppSkyboxWithCube::MainLoop()
 {
 	if (!IsGLFWWindowCreated() || !IsGLADLoaded())
 	{
@@ -13,24 +12,30 @@ int AppSkyboxWithModel::MainLoop()
 
 	glEnable(GL_DEPTH_TEST);
 
+	InitCube();
 	InitSkybox();
+
+	Texture cubeTexture;
+	cubeTexture.CreateFromImageFile(AppSettings::TextureFolder + "neco_coneco.jpg", true);
 
 	Texture skyboxTexture;
 	std::vector<std::string> files
 	{
-		"right.png",
-		"left.png",
-		"top.png",
-		"bottom.png",
-		"front.png",
-		"back.png"
+		"right.jpg",
+		"left.jpg",
+		"top.jpg",
+		"bottom.jpg",
+		"front.jpg",
+		"back.jpg"
 	};
-	skyboxTexture.CreateCubeMap(files, AppSettings::TextureFolder + "skybox_blue_space//");
+	skyboxTexture.CreateCubeMap(files, AppSettings::TextureFolder + "skybox_sea_mountains//");
 
+	Shader cubeShader("cube.vertex", "cube.fragment");
 	Shader mainShader("blinn_phong_skybox.vertex", "blinn_phong_skybox.fragment");
 	Shader skyboxShader("skybox.vertex", "skybox.fragment");
 
-	Model obj(AppSettings::ModelFolder + "DamagedHelmet//DamagedHelmet.gltf");
+	cubeShader.Use();
+	cubeShader.SetInt("texture1", 0);
 
 	skyboxShader.Use();
 	skyboxShader.SetInt("skybox", 0);
@@ -49,21 +54,17 @@ int AppSkyboxWithModel::MainLoop()
 		glm::mat4 view = camera->GetViewMatrix();
 		glm::mat4 projection = camera->GetProjectionMatrix();
 
-		// glTF
-		mainShader.Use();
-		mainShader.SetMat4("projection", projection);
-		mainShader.SetMat4("view", view);
-		mainShader.SetVec3("viewPos", camera->Position);
-		mainShader.SetVec3("lightPos", lightPos);
-
+		// Draw Cube
+		cubeShader.Use();
 		glm::mat4 model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
-		model = glm::rotate(model, glm::half_pi<float>(), glm::vec3(1.0f, 0.0f, 0.0f));
-		model = glm::rotate(model, modelRotation, glm::vec3(0.0f, 0.0f, 1.0f));
-		modelRotation += deltaTime;
-		mainShader.SetMat4("model", model);
-		obj.Draw(mainShader);
+		model = glm::scale(model, glm::vec3(0.5f));
+		cubeShader.SetMat4("model", model);
+		cubeShader.SetMat4("view", view);
+		cubeShader.SetMat4("projection", projection);
+		glBindVertexArray(cubeVAO);
+		cubeTexture.Bind(GL_TEXTURE0);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+		glBindVertexArray(0);
 
 		// Draw skybox
 		glDepthFunc(GL_LEQUAL); // Change depth function so depth test passes when values are equal to depth buffer's content
@@ -86,7 +87,22 @@ int AppSkyboxWithModel::MainLoop()
 	return 0;
 }
 
-void AppSkyboxWithModel::InitSkybox()
+void AppSkyboxWithCube::InitCube()
+{
+	auto cubeVertices = GenerateCubeVertices();
+
+	glGenVertexArrays(1, &cubeVAO);
+	glGenBuffers(1, &cubeVBO);
+	glBindVertexArray(cubeVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, cubeVBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * cubeVertices.size(), cubeVertices.data(), GL_STATIC_DRAW);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+}
+
+void AppSkyboxWithCube::InitSkybox()
 {
 	auto skyboxVertices = GenerateCubeVertices();
 

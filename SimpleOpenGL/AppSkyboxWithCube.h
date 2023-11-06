@@ -1,9 +1,9 @@
-#ifndef __SKYBOX_WITH_MODEL_H__
-#define __SKYBOX_WITH_MODEL_H__
+#ifndef __SKYBOX_WITH_CUBE_H__
+#define __SKYBOX_WITH_CUBE_H__
 
 #include "AppBase.h"
 
-class AppSkyboxWithModel : AppBase
+class AppSkyboxWithCube : AppBase
 {
 public:
 	int MainLoop() override;
@@ -12,6 +12,8 @@ private:
 	void InitCube();
 	void InitSkybox();
 
+	unsigned int cubeVAO;
+	unsigned int cubeVBO;
 	unsigned int skyboxVAO;
 	unsigned int skyboxVBO;
 };

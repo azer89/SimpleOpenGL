@@ -75,6 +75,9 @@
     <ClCompile Include="AppSkyboxWithModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="AppSkyboxWithCube.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppBase.h">
@@ -114,6 +117,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AppSkyboxWithModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AppSkyboxWithCube.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
