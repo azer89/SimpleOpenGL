@@ -35,7 +35,8 @@ int AppSkyboxWithCube::MainLoop()
 	Shader skyboxShader("skybox.vertex", "skybox.fragment");
 
 	cubeShader.Use();
-	cubeShader.SetInt("texture1", 0);
+	//cubeShader.SetInt("texture1", 0);
+	cubeShader.SetInt("skybox", 0);
 
 	skyboxShader.Use();
 	skyboxShader.SetInt("skybox", 0);
@@ -61,8 +62,10 @@ int AppSkyboxWithCube::MainLoop()
 		cubeShader.SetMat4("model", model);
 		cubeShader.SetMat4("view", view);
 		cubeShader.SetMat4("projection", projection);
+		cubeShader.SetVec3("cameraPos", camera->Position);
 		glBindVertexArray(cubeVAO);
-		cubeTexture.Bind(GL_TEXTURE0);
+		//cubeTexture.Bind(GL_TEXTURE0);
+		skyboxTexture.Bind(GL_TEXTURE0);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 		glBindVertexArray(0);
 
@@ -99,7 +102,9 @@ void AppSkyboxWithCube::InitCube()
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
 }
 
 void AppSkyboxWithCube::InitSkybox()
