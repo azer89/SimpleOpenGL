@@ -45,10 +45,7 @@ void Texture::CreateFromImageFile(const std::string& fullFilePath, bool flipVert
 
 	// Load image
 	int width, height, nrComponents;
-	if (flipVertical)
-	{
-		stbi_set_flip_vertically_on_load(true);
-	}
+	stbi_set_flip_vertically_on_load(flipVertical);
 	unsigned char* data = stbi_load(fullFilePath.c_str(), &width, &height, &nrComponents, 0);
 	if (data)
 	{
@@ -102,7 +99,7 @@ void Texture::CreateCubeMap(const std::vector<std::string>& files, const std::st
 {
 	glGenTextures(1, &id);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, id);
-
+	stbi_set_flip_vertically_on_load(false);
 	int width, height, nrChannels;
 	for (unsigned int i = 0; i < files.size(); i++)
 	{

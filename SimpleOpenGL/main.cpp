@@ -2,10 +2,11 @@
 #include "AppBlinnPhong.h"
 #include "AppShadowMapping.h"
 #include "AppModelLoading.h"
+#include "AppSkybox.h"
 
 int main()
 {
-	AppModelLoading app;
+	AppSkybox app;
 	auto returnValue = app.MainLoop();
 	return returnValue;
 }
