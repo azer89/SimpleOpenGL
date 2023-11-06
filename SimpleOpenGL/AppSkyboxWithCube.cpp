@@ -21,14 +21,14 @@ int AppSkyboxWithCube::MainLoop()
 	Texture skyboxTexture;
 	std::vector<std::string> files
 	{
-		"right.jpg",
-		"left.jpg",
-		"top.jpg",
-		"bottom.jpg",
-		"front.jpg",
-		"back.jpg"
+		"right.png",
+		"left.png",
+		"top.png",
+		"bottom.png",
+		"front.png",
+		"back.png"
 	};
-	skyboxTexture.CreateCubeMap(files, AppSettings::TextureFolder + "skybox_sea_mountains//");
+	skyboxTexture.CreateCubeMap(files, AppSettings::TextureFolder + "skybox_blue_space//");
 
 	Shader cubeShader("cube.vertex", "cube.fragment");
 	Shader mainShader("blinn_phong_skybox.vertex", "blinn_phong_skybox.fragment");
@@ -37,6 +37,7 @@ int AppSkyboxWithCube::MainLoop()
 	cubeShader.Use();
 	//cubeShader.SetInt("texture1", 0);
 	cubeShader.SetInt("skybox", 0);
+	cubeShader.SetInt("texture1", 1);
 
 	skyboxShader.Use();
 	skyboxShader.SetInt("skybox", 0);
@@ -64,8 +65,8 @@ int AppSkyboxWithCube::MainLoop()
 		cubeShader.SetMat4("projection", projection);
 		cubeShader.SetVec3("cameraPos", camera->Position);
 		glBindVertexArray(cubeVAO);
-		//cubeTexture.Bind(GL_TEXTURE0);
 		skyboxTexture.Bind(GL_TEXTURE0);
+		cubeTexture.Bind(GL_TEXTURE1);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 		glBindVertexArray(0);
 
