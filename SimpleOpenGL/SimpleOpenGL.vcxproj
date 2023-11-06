@@ -152,7 +152,7 @@
     <ClCompile Include="AppModelLoading.cpp" />
     <ClCompile Include="AppSettings.cpp" />
     <ClCompile Include="AppShadowMapping.cpp" />
-    <ClCompile Include="AppSkybox.cpp" />
+    <ClCompile Include="AppSkyboxWIthModel.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="AppBase.cpp" />
     <ClCompile Include="main.cpp" />
@@ -168,7 +168,7 @@
     <ClInclude Include="AppModelLoading.h" />
     <ClInclude Include="AppSettings.h" />
     <ClInclude Include="AppShadowMapping.h" />
-    <ClInclude Include="AppSkybox.h" />
+    <ClInclude Include="AppSkyboxWithModel.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />

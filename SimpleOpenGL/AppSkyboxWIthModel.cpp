@@ -1,10 +1,10 @@
-#include "AppSkybox.h"
+#include "AppSkyboxWithModel.h"
 #include "Texture.h"
 #include "Shader.h"
 #include "Model.h"
 #include "AppSettings.h"
 
-int AppSkybox::MainLoop()
+int AppSkyboxWithModel::MainLoop()
 {
 	if (!IsGLFWWindowCreated() || !IsGLADLoaded())
 	{
@@ -108,7 +108,7 @@ int AppSkybox::MainLoop()
 	return 0;
 }
 
-void AppSkybox::InitCube()
+void AppSkyboxWithModel::InitCube()
 {
 	float cubeVertices[] = {
 		// positions		  // texture Coords
@@ -166,7 +166,7 @@ void AppSkybox::InitCube()
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 }
 
-void AppSkybox::InitSkybox()
+void AppSkyboxWithModel::InitSkybox()
 {
 	float skyboxVertices[] = {
 		// positions

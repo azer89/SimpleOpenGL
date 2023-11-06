@@ -1,9 +1,9 @@
-#ifndef __SKYBOX_H__
-#define __SKYBOX_H__
+#ifndef __SKYBOX_WITH_MODEL_H__
+#define __SKYBOX_WITH_MODEL_H__
 
 #include "AppBase.h"
 
-class AppSkybox : AppBase
+class AppSkyboxWithModel : AppBase
 {
 public:
 	int MainLoop() override;
