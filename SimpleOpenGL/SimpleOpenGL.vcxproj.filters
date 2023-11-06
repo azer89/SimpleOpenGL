@@ -184,6 +184,12 @@
     <None Include="..\Shaders\model_loading.vertex">
       <Filter>Resource Files\Shaders\ModelLoading</Filter>
     </None>
+    <None Include="..\Shaders\blinn_phong_skybox.fragment">
+      <Filter>Resource Files\Shaders\Cubemap</Filter>
+    </None>
+    <None Include="..\Shaders\blinn_phong_skybox.vertex">
+      <Filter>Resource Files\Shaders\Cubemap</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Settings\main.xml">

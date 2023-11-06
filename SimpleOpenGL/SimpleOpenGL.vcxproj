@@ -180,6 +180,8 @@
   <ItemGroup>
     <None Include="..\Shaders\blinn_phong.fragment" />
     <None Include="..\Shaders\blinn_phong.vertex" />
+    <None Include="..\Shaders\blinn_phong_skybox.fragment" />
+    <None Include="..\Shaders\blinn_phong_skybox.vertex" />
     <None Include="..\Shaders\camera.fragment" />
     <None Include="..\Shaders\camera.vertex" />
     <None Include="..\Shaders\colored_triangle.fragment" />
