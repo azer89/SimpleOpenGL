@@ -29,7 +29,7 @@ int AppSkyboxWithModel::MainLoop()
 		"front.png",
 		"back.png"
 	};
-	skyboxTexture.CreateCubeMap(files, AppSettings::TextureFolder + "red_skybox//");
+	skyboxTexture.CreateCubeMap(files, AppSettings::TextureFolder + "skybox_blue_space//");
 
 	//Shader cubeShader("cubemap.vertex", "cubemap.fragment");
 	Shader mainShader("blinn_phong_skybox.vertex", "blinn_phong_skybox.fragment");
@@ -39,8 +39,6 @@ int AppSkyboxWithModel::MainLoop()
 
 	//cubeShader.Use();
 	//cubeShader.SetInt("texture1", 0);
-	mainShader.Use();
-	//skyboxShader.SetInt("skybox", 1);
 
 	skyboxShader.Use();
 	skyboxShader.SetInt("skybox", 0);
@@ -71,7 +69,8 @@ int AppSkyboxWithModel::MainLoop()
 		cubeTexture.Bind(GL_TEXTURE0);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 		glBindVertexArray(0);*/
-		// Object
+
+		// glTF
 		mainShader.Use();
 		mainShader.SetMat4("projection", projection);
 		mainShader.SetMat4("view", view);

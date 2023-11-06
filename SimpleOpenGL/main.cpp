@@ -6,7 +6,7 @@
 
 int main()
 {
-	AppBlinnPhong app;
+	AppSkyboxWithModel app;
 	auto returnValue = app.MainLoop();
 	return returnValue;
 }
