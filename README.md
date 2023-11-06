@@ -1,6 +1,7 @@
 Features:
 * Blinn-Phong lighting
 * Shadow mapping
+* Skybox
 * glTF model loading
 
 Adapted from learnopengl.com
