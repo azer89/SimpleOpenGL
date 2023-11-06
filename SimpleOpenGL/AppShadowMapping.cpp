@@ -207,7 +207,7 @@ void AppShadowMapping::InitScene()
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 
-	// Quad
+	// Quad (for debugging)
 	float quadVertices[] = {
 		// positions		// texture Coords
 		-1.0f,  1.0f, 0.0f, 0.0f, 1.0f,
