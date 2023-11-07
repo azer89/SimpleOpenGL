@@ -11,7 +11,7 @@ Adapted from learnopengl.com
 https://github.com/azer89/SimpleOpenGL/assets/790432/c2bfb436-c1c8-4711-9648-5b267d6f2281
 
 
-<img width="400" alt="image" src="https://github.com/azer89/SimpleOpenGL/assets/790432/482fe76f-7b74-4c9c-a393-450f5e169302">
+<img width="400" alt="image" src="https://github.com/azer89/SimpleOpenGL/assets/790432/ae47eeea-0464-442c-85f2-d3223554585a">
 <br/>
 
 <img width="400" alt="image" src="https://github.com/azer89/SimpleOpenGL/assets/790432/1ffa8170-aa8c-4255-a172-1fa8bcd5ecb7">
