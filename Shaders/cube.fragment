@@ -16,6 +16,6 @@ void main()
 	vec3 R = reflect(I, normalize(Normal));
 	vec3 skyColor = texture(skybox, R).rgb;
 	vec3 texColor = texture(texture1, TexCoords).rgb;
-	vec3 finalColor = (skyColor * 0.8) + (texColor * 0.2);
+	vec3 finalColor = (skyColor * 0.9) + (texColor * 0.1);
 	FragColor = vec4(finalColor, 1.0);
 }
