@@ -7,7 +7,7 @@
 
 int main()
 {
-	AppSkyboxWithCube app;
+	AppShadowMapping app;
 	auto returnValue = app.MainLoop();
 	return returnValue;
 }

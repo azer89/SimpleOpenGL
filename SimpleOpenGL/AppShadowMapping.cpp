@@ -1,5 +1,6 @@
 #include "AppShadowMapping.h"
 #include "Texture.h"
+#include "Model.h"
 #include "AppSettings.h"
 
 int AppShadowMapping::MainLoop()
@@ -17,6 +18,8 @@ int AppShadowMapping::MainLoop()
 	Shader depthShader("shadow_mapping_depth.vertex", "shadow_mapping_depth.fragment");
 	Shader debugShader("shadow_mapping_debug.vertex", "shadow_mapping_debug.fragment");
 
+	Model obj(AppSettings::ModelFolder + "Fox//Fox.gltf");
+
 	mainShader.Use();
 	mainShader.SetInt("diffuseTexture", 0);
 	mainShader.SetInt("shadowMap", 1);
@@ -24,14 +27,14 @@ int AppShadowMapping::MainLoop()
 	debugShader.SetInt("depthMap", 0);
 
 	// Textures
-	Texture woodTexture;
-	woodTexture.CreateFromImageFile(AppSettings::TextureFolder + "wood.png");
-	Texture necoTexture;
-	necoTexture.CreateFromImageFile(AppSettings::TextureFolder + "neco_coneco.jpg");
+	Texture grassTexture;
+	grassTexture.CreateFromImageFile(AppSettings::TextureFolder + "grass.png");
+	//Texture necoTexture;
+	//necoTexture.CreateFromImageFile(AppSettings::TextureFolder + "neco_coneco.jpg");
 
 	// Depth
-	const unsigned int DEPTH_WIDTH = 1024;
-	const unsigned int DEPTH_HEIGHT = 1024;
+	const unsigned int DEPTH_WIDTH = 2048;
+	const unsigned int DEPTH_HEIGHT = 2048;
 	Texture depthTexture;
 	depthTexture.CreateDepthMap(DEPTH_WIDTH, DEPTH_HEIGHT);
 
@@ -67,6 +70,9 @@ int AppShadowMapping::MainLoop()
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+		glm::mat4 model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(0.02f));
+
 		// Render depth
 		lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, near_plane, far_plane);
 		lightView = glm::lookAt(lightPos, glm::vec3(0.0f), glm::vec3(0.0, 1.0, 0.0));
@@ -77,9 +83,10 @@ int AppShadowMapping::MainLoop()
 		glViewport(0, 0, DEPTH_WIDTH, DEPTH_HEIGHT);
 		glBindFramebuffer(GL_FRAMEBUFFER, depthFBO);
 		glClear(GL_DEPTH_BUFFER_BIT);
-		woodTexture.Bind(GL_TEXTURE0);
 		RenderPlane(depthShader);
-		RenderCubes(depthShader);
+		//RenderCubes(depthShader);
+		depthShader.SetMat4("model", model);
+		obj.Draw(depthShader);
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 		// Reset
@@ -93,12 +100,17 @@ int AppShadowMapping::MainLoop()
 		mainShader.SetVec3("viewPos", camera->Position);
 		mainShader.SetVec3("lightPos", lightPos);
 		mainShader.SetMat4("lightSpaceMatrix", lightSpaceMatrix);
-		woodTexture.Bind(GL_TEXTURE0);
+		grassTexture.Bind(GL_TEXTURE0);
 		depthTexture.Bind(GL_TEXTURE1);
 		RenderPlane(mainShader);
-		necoTexture.Bind(GL_TEXTURE0);
+
+		
+		mainShader.SetMat4("model", model);
+		//necoTexture.Bind(GL_TEXTURE0);
 		depthTexture.Bind(GL_TEXTURE1);
-		RenderCubes(mainShader);
+		
+		obj.Draw(mainShader);
+		//RenderCubes(mainShader);
 
 		// Debug
 		debugShader.Use();
@@ -152,9 +164,9 @@ void AppShadowMapping::RenderCubes(const Shader& shader)
 
 void AppShadowMapping::RenderCube()
 {
-	glBindVertexArray(cubeVAO);
+	/*glBindVertexArray(cubeVAO);
 	glDrawArrays(GL_TRIANGLES, 0, 36);
-	glBindVertexArray(0);
+	glBindVertexArray(0);*/
 }
 
 void AppShadowMapping::RenderQuad()
@@ -191,7 +203,7 @@ void AppShadowMapping::InitScene()
 	glBindVertexArray(0);
 
 	// Cube
-	std::vector<float> cubeVertices = GenerateCubeVertices();
+	/*std::vector<float> cubeVertices = GenerateCubeVertices();
 
 	glGenVertexArrays(1, &cubeVAO);
 	glGenBuffers(1, &cubeVBO);
@@ -205,7 +217,7 @@ void AppShadowMapping::InitScene()
 	glEnableVertexAttribArray(2);
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindVertexArray(0);
+	glBindVertexArray(0);*/
 
 	// Quad (for debugging)
 	float quadVertices[] = {
