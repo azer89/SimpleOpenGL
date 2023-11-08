@@ -17,7 +17,7 @@ int AppModelLoading::MainLoop()
 	// Configure global opengl state
 	glEnable(GL_DEPTH_TEST);
 
-	InitCube();
+	InitLightCube();
 
 	Shader mainShader("model_loading.vertex", "model_loading.fragment");
 	Shader cubeShader("light_cube.vertex", "light_cube.fragment");
@@ -63,7 +63,7 @@ int AppModelLoading::MainLoop()
 		model = glm::translate(model, lightPos);
 		model = glm::scale(model, glm::vec3(0.2f));
 		cubeShader.SetMat4("model", model);
-		glBindVertexArray(cubeVAO);
+		glBindVertexArray(lightCubeVAO);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
 		SwapBuffers();
@@ -77,16 +77,16 @@ int AppModelLoading::MainLoop()
 	return 0;
 }
 
-void AppModelLoading::InitCube()
+void AppModelLoading::InitLightCube()
 {
 	auto vertices = GenerateCubeVertices();
 
-	glGenBuffers(1, &cubeVBO);
+	glGenBuffers(1, &lightCubeVBO);
 
-	glGenVertexArrays(1, &cubeVAO);
-	glBindVertexArray(cubeVAO);
+	glGenVertexArrays(1, &lightCubeVAO);
+	glBindVertexArray(lightCubeVAO);
 
-	glBindBuffer(GL_ARRAY_BUFFER, cubeVBO);
+	glBindBuffer(GL_ARRAY_BUFFER, lightCubeVBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.size(), vertices.data(), GL_STATIC_DRAW);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);

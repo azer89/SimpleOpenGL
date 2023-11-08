@@ -9,10 +9,10 @@ public:
 	int MainLoop() override;
 
 private:
-	void InitCube();
+	void InitLightCube();
 
-	unsigned int cubeVAO;
-	unsigned int cubeVBO;
+	unsigned int lightCubeVAO;
+	unsigned int lightCubeVBO;
 };
 
 #endif
