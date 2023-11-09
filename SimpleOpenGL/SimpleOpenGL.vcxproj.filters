@@ -31,6 +31,9 @@
     <Filter Include="Resource Files\Shaders\ModelLoading">
       <UniqueIdentifier>{8726d2b8-e7a9-4cf3-b11d-44939c84eb11}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Shaders\Deferred">
+      <UniqueIdentifier>{32759f88-70f9-466d-93f6-34912b9af670}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -78,6 +81,9 @@
     <ClCompile Include="AppSkyboxWithCube.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="AppDeferred.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AppBase.h">
@@ -120,6 +126,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AppSkyboxWithCube.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AppDeferred.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

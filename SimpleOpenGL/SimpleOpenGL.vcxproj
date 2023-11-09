@@ -149,6 +149,7 @@
   <ItemGroup>
     <ClCompile Include="AppBlinnPhong.cpp" />
     <ClCompile Include="AppBoxes.cpp" />
+    <ClCompile Include="AppDeferred.cpp" />
     <ClCompile Include="AppModelLoading.cpp" />
     <ClCompile Include="AppSettings.cpp" />
     <ClCompile Include="AppShadowMapping.cpp" />
@@ -166,6 +167,7 @@
   <ItemGroup>
     <ClInclude Include="AppBlinnPhong.h" />
     <ClInclude Include="AppBoxes.h" />
+    <ClInclude Include="AppDeferred.h" />
     <ClInclude Include="AppModelLoading.h" />
     <ClInclude Include="AppSettings.h" />
     <ClInclude Include="AppShadowMapping.h" />
