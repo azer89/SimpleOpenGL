@@ -205,6 +205,30 @@
     <None Include="..\Shaders\blinn_phong_skybox.vertex">
       <Filter>Resource Files\Shaders\Cubemap</Filter>
     </None>
+    <None Include="..\Shaders\deferred_shading.fragment">
+      <Filter>Resource Files\Shaders\Deferred</Filter>
+    </None>
+    <None Include="..\Shaders\deferred_shading.vertex">
+      <Filter>Resource Files\Shaders\Deferred</Filter>
+    </None>
+    <None Include="..\Shaders\deferred_fbo_debug.fragment">
+      <Filter>Resource Files\Shaders\Deferred</Filter>
+    </None>
+    <None Include="..\Shaders\deferred_fbo_debug.vertex">
+      <Filter>Resource Files\Shaders\Deferred</Filter>
+    </None>
+    <None Include="..\Shaders\deferred_g_buffer.fragment">
+      <Filter>Resource Files\Shaders\Deferred</Filter>
+    </None>
+    <None Include="..\Shaders\deferred_g_buffer.vertex">
+      <Filter>Resource Files\Shaders\Deferred</Filter>
+    </None>
+    <None Include="..\Shaders\light_cube_colored.fragment">
+      <Filter>Resource Files\Shaders\Misc</Filter>
+    </None>
+    <None Include="..\Shaders\light_cube_colored.vertex">
+      <Filter>Resource Files\Shaders\Misc</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Settings\main.xml">
