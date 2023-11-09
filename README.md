@@ -1,10 +1,14 @@
 Features:
 * Blinn-Phong lighting
 * Shadow mapping
-* Skybox
+* Cubemap
 * glTF model loading
 
 Adapted from learnopengl.com
+
+
+
+https://github.com/azer89/SimpleOpenGL/assets/790432/ff9fa67f-afdc-4da1-bdb6-108bc7d7864e
 
 
 
