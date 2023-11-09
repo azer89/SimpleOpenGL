@@ -3,6 +3,7 @@
 
 #include "AppBase.h"
 #include "Shader.h"
+#include "Model.h"
 
 class AppShadowMapping : AppBase
 {
@@ -13,15 +14,21 @@ private:
 	void InitScene();
 
 	void RenderPlane(const Shader& shader);
-	void RenderCubes(const Shader& shader);
-	void RenderCube();
+	void RenderFoxes(const Shader& shader);
+	//void RenderCube();
 	void RenderQuad();
 
+	void InitLightCube();
+
 private:
-	//unsigned int cubeVAO = 0;
-	//unsigned int cubeVBO = 0;
+	std::unique_ptr<Model> foxModel;
+
+	unsigned int lightCubeVAO = 0;
+	unsigned int lightCubeVBO = 0;
+
 	unsigned int quadVAO = 0;
 	unsigned int quadVBO = 0;
+
 	unsigned int planeVAO = 0;
 	unsigned int planeVBO = 0;
 };

@@ -24,7 +24,7 @@ public:
 	Model(const std::string& path, bool gamma = false);
 
 	// Draws the model, and thus all its meshes
-	void Draw(Shader& shader);
+	void Draw(const Shader& shader);
 
 private:
 	// Loads a model with supported ASSIMP extensions from file and stores the resulting meshes in the meshes vector.

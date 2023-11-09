@@ -36,11 +36,12 @@ public:
 	std::vector<Texture> textures;
 	unsigned int VAO;
 
-	// Constructor
+	// Constructors
+	Mesh(std::vector<Vertex>&& vertices, std::vector<unsigned int>&& indices, std::vector<Texture>&& textures);
 	Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices, const std::vector<Texture>& textures);
 
 	// Render the mesh
-	void Draw(Shader& shader);
+	void Draw(const Shader& shader);
 
 private:
 	// Render data 

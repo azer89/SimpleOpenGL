@@ -20,7 +20,7 @@ Model::Model(const std::string& path, bool gamma) :
 }
 
 // Draws the model, and thus all its meshes
-void Model::Draw(Shader& shader)
+void Model::Draw(const Shader& shader)
 {
 	for (unsigned int i = 0; i < meshes.size(); i++)
 	{
@@ -151,7 +151,7 @@ Mesh Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 	textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
 
 	// Return a mesh object created from the extracted mesh data
-	return Mesh(vertices, indices, textures);
+	return Mesh(std::move(vertices), std::move(indices), std::move(textures));
 }
 
 // Checks all material textures of a given type and loads the textures if they're not loaded yet.

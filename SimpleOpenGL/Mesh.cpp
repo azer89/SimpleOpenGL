@@ -5,18 +5,25 @@
 #include <vector>
 
 // Constructor
+Mesh::Mesh(std::vector<Vertex>&& vertices, std::vector<unsigned int>&& indices, std::vector<Texture>&& textures)
+{
+	this->vertices = std::move(vertices);
+	this->indices = std::move(indices);
+	this->textures = std::move(textures);
+	SetupMesh();
+}
+
+// Constructor
 Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices, const std::vector<Texture>& textures)
 {
 	this->vertices = vertices;
 	this->indices = indices;
 	this->textures = textures;
-
-	// Now that we have all the required data, set the vertex buffers and its attribute pointers.
 	SetupMesh();
 }
 
 // Render the mesh
-void Mesh::Draw(Shader& shader)
+void Mesh::Draw(const Shader& shader)
 {
 	// Bind appropriate textures
 	unsigned int diffuseNr = 1;
