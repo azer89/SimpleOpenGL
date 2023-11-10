@@ -91,7 +91,6 @@ int AppShadowMapping::MainLoop()
 		glBindFramebuffer(GL_FRAMEBUFFER, depthFBO);
 		glClear(GL_DEPTH_BUFFER_BIT);
 		RenderPlane(depthShader);
-		depthShader.SetMat4("model", model);
 		RenderFoxes(depthShader);
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
@@ -143,7 +142,6 @@ int AppShadowMapping::MainLoop()
 
 void AppShadowMapping::RenderPlane(const Shader& shader)
 {
-	// Plane
 	glm::mat4 model = glm::mat4(1.0f);
 	shader.SetMat4("model", model);
 	glBindVertexArray(planeVAO);
@@ -195,7 +193,7 @@ void AppShadowMapping::InitScene()
 
 	// Plane
 	float planeVertices[] = {
-		// positions			// normals			// texcoords
+		// Positions			// Normals			// Texcoords
 		 25.0f, -0.5f,  25.0f,  0.0f, 1.0f, 0.0f,  25.0f,  0.0f,
 		-25.0f, -0.5f,  25.0f,  0.0f, 1.0f, 0.0f,   0.0f,  0.0f,
 		-25.0f, -0.5f, -25.0f,  0.0f, 1.0f, 0.0f,   0.0f, 25.0f,
