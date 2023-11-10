@@ -9,6 +9,10 @@ Adapted from learnopengl.com
 
 
 
+https://github.com/azer89/SimpleOpenGL/assets/790432/b49395ca-e741-4f59-85b8-26506c1fac2e
+
+
+
 https://github.com/azer89/SimpleOpenGL/assets/790432/ff9fa67f-afdc-4da1-bdb6-108bc7d7864e
 
 https://github.com/azer89/SimpleOpenGL/assets/790432/c2bfb436-c1c8-4711-9648-5b267d6f2281
