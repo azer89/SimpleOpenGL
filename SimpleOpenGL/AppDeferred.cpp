@@ -15,6 +15,11 @@ int AppDeferred::MainLoop()
 
 	Shader gBufferShader("deferred_g_buffer.vertex", "deferred_g_buffer.fragment");
 	Shader lightingShader("deferred_lighting.vertex", "deferred_lighting.fragment");
+	lightingShader.Use();
+	lightingShader.SetInt("gPosition", 0);
+	lightingShader.SetInt("gNormal", 1);
+	lightingShader.SetInt("gAlbedoSpec", 2);
+
 	Shader lightSphereShader("light_sphere.vertex", "light_sphere.fragment");
 
 	Texture grassTexture;
@@ -22,9 +27,10 @@ int AppDeferred::MainLoop()
 
 	// G buffer
 	unsigned int gBuffer;
+	unsigned int gPosition, gNormal, gAlbedoSpec;
 	glGenFramebuffers(1, &gBuffer);
 	glBindFramebuffer(GL_FRAMEBUFFER, gBuffer);
-	unsigned int gPosition, gNormal, gAlbedoSpec;
+	
 	// Position
 	glGenTextures(1, &gPosition);
 	glBindTexture(GL_TEXTURE_2D, gPosition);
@@ -32,6 +38,7 @@ int AppDeferred::MainLoop()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, gPosition, 0);
+	
 	// Normal
 	glGenTextures(1, &gNormal);
 	glBindTexture(GL_TEXTURE_2D, gNormal);
@@ -39,6 +46,7 @@ int AppDeferred::MainLoop()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, gNormal, 0);
+	
 	// Color + Specular
 	glGenTextures(1, &gAlbedoSpec);
 	glBindTexture(GL_TEXTURE_2D, gAlbedoSpec);
@@ -66,11 +74,6 @@ int AppDeferred::MainLoop()
 
 	InitLights();
 	InitScene();
-
-	lightingShader.Use();
-	lightingShader.SetInt("gPosition", 0);
-	lightingShader.SetInt("gNormal", 1);
-	lightingShader.SetInt("gAlbedoSpec", 2);
 
 	lightSphereShader.Use();
 	lightSphereShader.SetFloat("radius", 0.2f);
@@ -100,6 +103,7 @@ int AppDeferred::MainLoop()
 		// 2 Lighting Pass
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		lightingShader.Use();
+		lightingShader.SetVec3("viewPos", camera->Position);
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, gPosition);
 		glActiveTexture(GL_TEXTURE1);
@@ -117,7 +121,6 @@ int AppDeferred::MainLoop()
 			lightingShader.SetFloat("lights[" + std::to_string(i) + "].Linear", linear);
 			lightingShader.SetFloat("lights[" + std::to_string(i) + "].Quadratic", quadratic);
 		}
-		lightingShader.SetVec3("viewPos", camera->Position);
 		// Render quad
 		RenderQuad();
 

@@ -157,6 +157,7 @@
     <ClCompile Include="AppSkyboxWithModel.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="AppBase.cpp" />
+    <ClCompile Include="GBuffer.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mesh.cpp" />
@@ -176,6 +177,7 @@
     <ClInclude Include="AppSkyboxWithCube.h" />
     <ClInclude Include="AppSkyboxWithModel.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="GBuffer.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />
