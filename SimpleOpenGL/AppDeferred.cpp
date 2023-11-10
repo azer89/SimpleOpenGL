@@ -6,6 +6,8 @@
 
 #include <memory>
 
+const unsigned int NR_LIGHTS = 64;
+
 int AppDeferred::MainLoop()
 {
 	if (!IsGLFWWindowCreated() || !IsGLADLoaded())
@@ -37,6 +39,7 @@ int AppDeferred::MainLoop()
 		gBuffer.EndGeometryPass();
 
 		// 2 Lighting Pass
+		UpdateLightPositions();
 		gBuffer.StartLightingPass(lights, camera->Position);
 
 		// 3 Copy content of geometry's depth buffer to default framebuffer's depth buffer
@@ -57,15 +60,20 @@ int AppDeferred::MainLoop()
 void AppDeferred::InitLights()
 {
 	lightSphereShader = std::make_unique<Shader>("light_sphere.vertex", "light_sphere.fragment");
+	
+	float pi2 = glm::two_pi<float>();
 
-	const unsigned int NR_LIGHTS = 64;
-	srand(time(NULL));
 	for (unsigned int i = 0; i < NR_LIGHTS; i++)
 	{
+		float yPos = UsefulStuff::RandomNumber<float>(0.15f, 1.0f);
+		float radius = UsefulStuff::RandomNumber<float>(3.0f, 8.0f);
+		float rad = UsefulStuff::RandomNumber<float>(0.0f, pi2);
+		float xPos = glm::cos(rad);
+
 		glm::vec3 position(
-			UsefulStuff::RandomNumber<float>(-6.0f, 6.0f),
-			UsefulStuff::RandomNumber<float>(0.15f, 1.0f),
-			UsefulStuff::RandomNumber<float>(-6.0f, 6.0f)
+			glm::cos(rad) * radius,
+			yPos,
+			glm::sin(rad) * radius
 		);
 
 		glm::vec3 color(
@@ -74,6 +82,8 @@ void AppDeferred::InitLights()
 			UsefulStuff::RandomNumber<float>(0.5f, 1.0f)
 		);
 
+		lightAngles.push_back(rad);
+		lightRadii.push_back(radius);
 		lights.emplace_back(position, color, true, 0.1f);
 	}
 
@@ -83,7 +93,19 @@ void AppDeferred::InitLights()
 
 void AppDeferred::UpdateLightPositions()
 {
+	for (unsigned int i = 0; i < NR_LIGHTS; i++)
+	{
+		float step = deltaTime;
 
+		float yPos = lights[i].Position.y;
+		lightAngles[i] += step;
+
+		lights[i].Position = glm::vec3(
+			glm::cos(lightAngles[i]) * lightRadii[i],
+			yPos,
+			glm::sin(lightAngles[i]) * lightRadii[i]
+		);
+	}
 }
 
 void AppDeferred::InitScene()
