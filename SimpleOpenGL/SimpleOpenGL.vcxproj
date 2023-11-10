@@ -193,8 +193,8 @@
     <None Include="..\Shaders\cube.fragment" />
     <None Include="..\Shaders\cube.vertex" />
     <None Include="..\Shaders\light_cube_colored.fragment" />
-    <None Include="..\Shaders\deferred_shading.fragment" />
-    <None Include="..\Shaders\deferred_shading.vertex" />
+    <None Include="..\Shaders\deferred_lighting.fragment" />
+    <None Include="..\Shaders\deferred_lighting.vertex" />
     <None Include="..\Shaders\deferred_fbo_debug.fragment" />
     <None Include="..\Shaders\deferred_fbo_debug.vertex" />
     <None Include="..\Shaders\light_cube_colored.vertex" />

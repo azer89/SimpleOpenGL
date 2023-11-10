@@ -4,10 +4,11 @@
 #include "AppModelLoading.h"
 #include "AppSkyboxWithModel.h"
 #include "AppSkyboxWithCube.h"
+#include "AppDeferred.h"
 
 int main()
 {
-	AppShadowMapping app;
+	AppDeferred app;
 	auto returnValue = app.MainLoop();
 	return returnValue;
 }

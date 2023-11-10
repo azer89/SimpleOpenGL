@@ -205,10 +205,10 @@
     <None Include="..\Shaders\blinn_phong_skybox.vertex">
       <Filter>Resource Files\Shaders\Cubemap</Filter>
     </None>
-    <None Include="..\Shaders\deferred_shading.fragment">
+    <None Include="..\Shaders\deferred_lighting.fragment">
       <Filter>Resource Files\Shaders\Deferred</Filter>
     </None>
-    <None Include="..\Shaders\deferred_shading.vertex">
+    <None Include="..\Shaders\deferred_lighting.vertex">
       <Filter>Resource Files\Shaders\Deferred</Filter>
     </None>
     <None Include="..\Shaders\deferred_fbo_debug.fragment">
