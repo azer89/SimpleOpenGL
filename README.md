@@ -19,6 +19,7 @@ https://github.com/azer89/SimpleOpenGL/assets/790432/c2bfb436-c1c8-4711-9648-5b2
 
 <img width="400" height="300" alt="image" src="https://github.com/azer89/SimpleOpenGL/assets/790432/f1199712-7a89-4175-ad7c-f7512335f7c5">
 
-<img width="400" height="300" alt="image" src="https://github.com/azer89/SimpleOpenGL/assets/790432/1be9249d-0e80-444a-925b-78422a0b6ce1">
+<img width="400" height="300" alt="image" src="https://github.com/azer89/SimpleOpenGL/assets/790432/dfbf0d3d-bd3d-4b96-8599-d559ed54f9a6">
+
 
 
