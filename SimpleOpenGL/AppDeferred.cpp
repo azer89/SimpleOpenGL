@@ -164,7 +164,7 @@ void AppDeferred::InitLights()
 			static_cast<float>(((rand() % 100) / 200.0f) + 0.5), // Between 0.5 and 1.0
 			static_cast<float>(((rand() % 100) / 200.0f) + 0.5) // Between 0.5 and 1.0
 		);
-		lights.emplace_back(position, color, true, 0.2f);
+		lights.emplace_back(position, color, true, 0.1f);
 	}
 }
 

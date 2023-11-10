@@ -13,7 +13,7 @@ public:
 	glm::vec3 Color;
 
 public:
-	Light(glm::vec3 position, glm::vec3 color, bool debugShow = true, float debugRadius = 0.2f);
+	Light(glm::vec3 position, glm::vec3 color, bool debugShow = true, float debugRadius = 0.1f);
 	void Render(const Shader& shader);
 
 private:

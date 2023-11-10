@@ -35,10 +35,10 @@ void Light::Render(const Shader& shader)
 	shader.Use();
 	shader.SetFloat("radius", renderRadius);
 
-	glm::mat4 model(1.0f);
-	model = glm::translate(model, Position);
+	//glm::mat4 model(1.0f);
+	//model = glm::translate(model, Position);
 
-	shader.SetMat4("model", model);
+	//shader.SetMat4("model", model);
 	shader.SetVec3("lightColor", Color);
 	shader.SetVec3("lightPosition", Position);
 
