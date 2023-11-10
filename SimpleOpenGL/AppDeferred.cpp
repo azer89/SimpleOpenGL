@@ -16,6 +16,9 @@ int AppDeferred::MainLoop()
 	Shader lightingShader("deferred_lighting.vertex", "deferred_lighting.fragment");
 	Shader lightCubeShader("light_cube_colored.vertex", "light_cube_colored.fragment");
 
+	Texture grassTexture;
+	grassTexture.CreateFromImageFile(AppSettings::TextureFolder + "grass.png");
+
 	// G buffer
 	unsigned int gBuffer;
 	glGenFramebuffers(1, &gBuffer);
@@ -86,7 +89,8 @@ int AppDeferred::MainLoop()
 		gBufferShader.Use();
 		gBufferShader.SetMat4("projection", projection);
 		gBufferShader.SetMat4("view", view);
-		//RenderPlane(gBufferShader);
+		grassTexture.Bind(GL_TEXTURE0);
+		RenderPlane(gBufferShader);
 		RenderFoxes(gBufferShader);
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
@@ -153,9 +157,9 @@ void AppDeferred::InitLights()
 	srand(13);
 	for (unsigned int i = 0; i < NR_LIGHTS; i++)
 	{
-		float xPos = static_cast<float>(((rand() % 100) / 100.0) * 6.0 - 3.0);
-		float yPos = static_cast<float>(((rand() % 100) / 100.0) * 6.0 - 4.0);
-		float zPos = static_cast<float>(((rand() % 100) / 100.0) * 6.0 - 3.0);
+		float xPos = static_cast<float>(((rand() % 100) / 100.0) * 8.0 - 4.0);
+		float yPos = static_cast<float>(((rand() % 100) / 100.0) * 4.5 + 0.5);
+		float zPos = static_cast<float>(((rand() % 100) / 100.0) * 8.0 - 4.0);
 		lightPositions.push_back(glm::vec3(xPos, yPos, zPos));
 
 		float rColor = static_cast<float>(((rand() % 100) / 200.0f) + 0.5); // Between 0.5 and 1.0
@@ -206,13 +210,19 @@ void AppDeferred::RenderPlane(const Shader& shader)
 void AppDeferred::RenderFoxes(const Shader& shader)
 {
 	glm::mat4 model = glm::mat4(1.0f);
-	model = glm::translate(model, glm::vec3(0.0f, -0.5f, 1.0f));
+	model = glm::translate(model, glm::vec3(2.0f, -0.5f, 1.0f));
 	model = glm::scale(model, glm::vec3(0.02f));
 	shader.SetMat4("model", model);
 	foxModel->Draw(shader);
 
 	model = glm::mat4(1.0f);
-	model = glm::translate(model, glm::vec3(-2.0f, -0.5f, 0.0f));
+	model = glm::translate(model, glm::vec3(0.0f, -0.5f, 2.0f));
+	model = glm::scale(model, glm::vec3(0.02f));
+	shader.SetMat4("model", model);
+	foxModel->Draw(shader);
+
+	model = glm::mat4(1.0f);
+	model = glm::translate(model, glm::vec3(-1.5f, -0.5f, 0.0f));
 	model = glm::scale(model, glm::vec3(0.03f));
 	shader.SetMat4("model", model);
 	foxModel->Draw(shader);
