@@ -1,5 +1,6 @@
 #include "AppDeferred.h"
 #include "AppSettings.h"
+#include "SimpleGeometryFactory.h"
 
 #include <memory>
 
@@ -72,6 +73,9 @@ int AppDeferred::MainLoop()
 	lightingShader.SetInt("gNormal", 1);
 	lightingShader.SetInt("gAlbedoSpec", 2);
 
+	lightCubeShader.Use();
+	lightCubeShader.SetFloat("radius", 0.2f);
+
 	while (!GLFWWindowShouldClose())
 	{
 		ProcessTiming();
@@ -135,11 +139,12 @@ int AppDeferred::MainLoop()
 		{
 			model = glm::mat4(1.0f);
 			model = glm::translate(model, lightPositions[i]);
-			model = glm::scale(model, glm::vec3(0.075f));
+			//model = glm::scale(model, glm::vec3(0.075f));
 			lightCubeShader.SetMat4("model", model);
 			lightCubeShader.SetVec3("lightColor", lightColors[i]);
+			lightCubeShader.SetVec3("lightPosition", lightPositions[i]);
 			glBindVertexArray(lightCubeVAO);
-			glDrawArrays(GL_TRIANGLES, 0, 36);
+			glDrawArrays(GL_TRIANGLES, 0, 6);
 		}
 
 		SwapBuffers();
@@ -158,7 +163,7 @@ void AppDeferred::InitLights()
 	for (unsigned int i = 0; i < NR_LIGHTS; i++)
 	{
 		float xPos = static_cast<float>(((rand() % 100) / 100.0) * 12.0 - 6.0);
-		float yPos = static_cast<float>(((rand() % 100) / 100.0) * 4.0 + 0.15);
+		float yPos = static_cast<float>(((rand() % 100) / 100.0) * 1.0 + 0.15);
 		float zPos = static_cast<float>(((rand() % 100) / 100.0) * 12.0 - 6.0);
 		lightPositions.push_back(glm::vec3(xPos, yPos, zPos));
 
@@ -259,10 +264,9 @@ void AppDeferred::RenderQuad()
 
 void AppDeferred::InitLightCube()
 {
-	auto vertices = GenerateCubeVertices();
+	auto vertices = SimpleGeometryFactory::GenerateQuadVertices();
 
 	glGenBuffers(1, &lightCubeVBO);
-
 	glGenVertexArrays(1, &lightCubeVAO);
 	glBindVertexArray(lightCubeVAO);
 

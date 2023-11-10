@@ -32,9 +32,6 @@ protected:
 	void PollEvents();
 	void Terminate();
 
-	std::vector<float> GenerateCubeVertices();
-	std::vector<float> GenerateQuadVertices();
-
 private:
 	GLFWwindow* glfwWindow;
 	bool isGladLoaded = false;

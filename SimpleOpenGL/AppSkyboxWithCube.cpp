@@ -2,6 +2,7 @@
 #include "Texture.h"
 #include "Shader.h"
 #include "AppSettings.h"
+#include "SimpleGeometryFactory.h"
 
 int AppSkyboxWithCube::MainLoop()
 {
@@ -93,7 +94,7 @@ int AppSkyboxWithCube::MainLoop()
 
 void AppSkyboxWithCube::InitCube()
 {
-	auto cubeVertices = GenerateCubeVertices();
+	auto cubeVertices = SimpleGeometryFactory::GenerateCubeVertices();
 
 	glGenVertexArrays(1, &cubeVAO);
 	glGenBuffers(1, &cubeVBO);
@@ -110,7 +111,7 @@ void AppSkyboxWithCube::InitCube()
 
 void AppSkyboxWithCube::InitSkybox()
 {
-	auto skyboxVertices = GenerateCubeVertices();
+	auto skyboxVertices = SimpleGeometryFactory::GenerateCubeVertices();
 
 	glGenVertexArrays(1, &skyboxVAO);
 	glGenBuffers(1, &skyboxVBO);

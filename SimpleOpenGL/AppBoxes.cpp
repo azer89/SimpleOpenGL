@@ -4,6 +4,7 @@
 #include "Texture.h"
 #include "AppSettings.h"
 #include "XMLReader.h"
+#include "SimpleGeometryFactory.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -33,7 +34,7 @@ int AppBoxes::MainLoop()
 	texture.CreateFromImageFile(AppSettings::TextureFolder + "neco_coneco.jpg", true);
 	
 	// Cube
-	auto vertices = GenerateCubeVertices();
+	auto vertices = SimpleGeometryFactory::GenerateCubeVertices();
 
 	// World space positions of our cubes
 	glm::vec3 cubePositions[] = {

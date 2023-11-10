@@ -1,10 +1,20 @@
 #version 330 core
+#extension GL_ARB_separate_shader_objects : enable
+
+layout(location = 0) in vec2 fragOffset;
 
 layout(location = 0) out vec4 FragColor;
 
 uniform vec3 lightColor;
+uniform vec3 lightPosition;
 
 void main()
 {
+	float dis = sqrt(dot(fragOffset, fragOffset));
+	if (dis >= 1.0)
+	{
+		discard;
+	}
 	FragColor = vec4(lightColor, 1.0);
+	//FragColor = vec4(fragOffset.x, fragOffset.y, 0.0, 1.0);
 }

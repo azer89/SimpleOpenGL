@@ -161,6 +161,7 @@
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="SimpleGeometryFactory.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="XMLReader.cpp" />
   </ItemGroup>
@@ -176,6 +177,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />
+    <ClInclude Include="SimpleGeometryFactory.h" />
     <ClInclude Include="XMLReader.h" />
     <ClInclude Include="AppBase.h" />
     <ClInclude Include="Shader.h" />
