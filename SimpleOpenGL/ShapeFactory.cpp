@@ -1,6 +1,6 @@
-#include "SimpleGeometryFactory.h"
+#include "ShapeFactory.h"
 
-std::vector<float> SimpleGeometryFactory::GenerateCubeVertices()
+std::vector<float> ShapeFactory::GenerateCubeVertices()
 {
 	return {
 		// Back face
@@ -48,7 +48,7 @@ std::vector<float> SimpleGeometryFactory::GenerateCubeVertices()
 	};
 }
 
-std::vector<float> SimpleGeometryFactory::GenerateQuadVertices()
+std::vector<float> ShapeFactory::GenerateQuadVertices()
 {
 	return {
 		// Positions		 // Normals			// Texcoords

@@ -161,7 +161,7 @@
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="Shader.cpp" />
-    <ClCompile Include="SimpleGeometryFactory.cpp" />
+    <ClCompile Include="ShapeFactory.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="XMLReader.cpp" />
   </ItemGroup>
@@ -175,9 +175,10 @@
     <ClInclude Include="AppSkyboxWithCube.h" />
     <ClInclude Include="AppSkyboxWithModel.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Light.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />
-    <ClInclude Include="SimpleGeometryFactory.h" />
+    <ClInclude Include="ShapeFactory.h" />
     <ClInclude Include="XMLReader.h" />
     <ClInclude Include="AppBase.h" />
     <ClInclude Include="Shader.h" />
@@ -194,12 +195,12 @@
     <None Include="..\Shaders\colored_triangle.vertex" />
     <None Include="..\Shaders\cube.fragment" />
     <None Include="..\Shaders\cube.vertex" />
-    <None Include="..\Shaders\light_cube_colored.fragment" />
+    <None Include="..\Shaders\light_sphere.fragment" />
     <None Include="..\Shaders\deferred_lighting.fragment" />
     <None Include="..\Shaders\deferred_lighting.vertex" />
     <None Include="..\Shaders\deferred_fbo_debug.fragment" />
     <None Include="..\Shaders\deferred_fbo_debug.vertex" />
-    <None Include="..\Shaders\light_cube_colored.vertex" />
+    <None Include="..\Shaders\light_sphere.vertex" />
     <None Include="..\Shaders\deferred_g_buffer.fragment" />
     <None Include="..\Shaders\deferred_g_buffer.vertex" />
     <None Include="..\Shaders\light_cube.fragment" />

@@ -1,6 +1,6 @@
 #include "AppDeferred.h"
 #include "AppSettings.h"
-#include "SimpleGeometryFactory.h"
+#include "ShapeFactory.h"
 
 #include <memory>
 
@@ -15,7 +15,7 @@ int AppDeferred::MainLoop()
 
 	Shader gBufferShader("deferred_g_buffer.vertex", "deferred_g_buffer.fragment");
 	Shader lightingShader("deferred_lighting.vertex", "deferred_lighting.fragment");
-	Shader lightCubeShader("light_cube_colored.vertex", "light_cube_colored.fragment");
+	Shader lightCubeShader("light_sphere.vertex", "light_sphere.fragment");
 
 	Texture grassTexture;
 	grassTexture.CreateFromImageFile(AppSettings::TextureFolder + "grass.png");
@@ -264,7 +264,7 @@ void AppDeferred::RenderQuad()
 
 void AppDeferred::InitLightCube()
 {
-	auto vertices = SimpleGeometryFactory::GenerateQuadVertices();
+	auto vertices = ShapeFactory::GenerateQuadVertices();
 
 	glGenBuffers(1, &lightCubeVBO);
 	glGenVertexArrays(1, &lightCubeVAO);

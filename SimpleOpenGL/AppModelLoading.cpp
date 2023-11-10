@@ -2,7 +2,7 @@
 #include "AppSettings.h"
 #include "Shader.h"
 #include "Model.h"
-#include "SimpleGeometryFactory.h"
+#include "ShapeFactory.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -80,7 +80,7 @@ int AppModelLoading::MainLoop()
 
 void AppModelLoading::InitLightCube()
 {
-	auto vertices = SimpleGeometryFactory::GenerateCubeVertices();
+	auto vertices = ShapeFactory::GenerateCubeVertices();
 
 	glGenBuffers(1, &lightCubeVBO);
 

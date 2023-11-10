@@ -3,7 +3,7 @@
 #include "Shader.h"
 #include "Model.h"
 #include "AppSettings.h"
-#include "SimpleGeometryFactory.h"
+#include "ShapeFactory.h"
 
 int AppSkyboxWithModel::MainLoop()
 {
@@ -89,7 +89,7 @@ int AppSkyboxWithModel::MainLoop()
 
 void AppSkyboxWithModel::InitSkybox()
 {
-	auto skyboxVertices = SimpleGeometryFactory::GenerateCubeVertices();
+	auto skyboxVertices = ShapeFactory::GenerateCubeVertices();
 
 	glGenVertexArrays(1, &skyboxVAO);
 	glGenBuffers(1, &skyboxVBO);

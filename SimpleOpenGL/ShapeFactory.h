@@ -1,9 +1,9 @@
-#ifndef __SIMPLE_GEOMETRY_FACTORY_H__
-#define __SIMPLE_GEOMETRY_FACTORY_H__
+#ifndef __SHAPE_FACTORY_H__
+#define __SHAPE_FACTORY_H__
 
 #include <vector>
 
-class SimpleGeometryFactory
+class ShapeFactory
 {
 public:
 	static std::vector<float> GenerateCubeVertices();

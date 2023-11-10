@@ -84,7 +84,7 @@
     <ClCompile Include="AppDeferred.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SimpleGeometryFactory.cpp">
+    <ClCompile Include="ShapeFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -134,7 +134,10 @@
     <ClInclude Include="AppDeferred.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SimpleGeometryFactory.h">
+    <ClInclude Include="ShapeFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -229,10 +232,10 @@
     <None Include="..\Shaders\deferred_g_buffer.vertex">
       <Filter>Resource Files\Shaders\Deferred</Filter>
     </None>
-    <None Include="..\Shaders\light_cube_colored.fragment">
+    <None Include="..\Shaders\light_sphere.fragment">
       <Filter>Resource Files\Shaders\Misc</Filter>
     </None>
-    <None Include="..\Shaders\light_cube_colored.vertex">
+    <None Include="..\Shaders\light_sphere.vertex">
       <Filter>Resource Files\Shaders\Misc</Filter>
     </None>
   </ItemGroup>

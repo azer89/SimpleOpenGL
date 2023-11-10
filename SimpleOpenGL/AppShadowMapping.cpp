@@ -1,7 +1,7 @@
 #include "AppShadowMapping.h"
 #include "Texture.h"
 #include "AppSettings.h"
-#include "SimpleGeometryFactory.h"
+#include "ShapeFactory.h"
 
 int AppShadowMapping::MainLoop()
 {
@@ -173,7 +173,7 @@ void AppShadowMapping::RenderQuad()
 
 void AppShadowMapping::InitLightCube()
 {
-	auto vertices = SimpleGeometryFactory::GenerateCubeVertices();
+	auto vertices = ShapeFactory::GenerateCubeVertices();
 
 	glGenBuffers(1, &lightCubeVBO);
 
