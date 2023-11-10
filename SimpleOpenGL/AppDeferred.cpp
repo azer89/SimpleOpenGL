@@ -13,19 +13,10 @@ int AppDeferred::MainLoop()
 	}
 
 	glEnable(GL_DEPTH_TEST);
-
-	Shader lightSphereShader("light_sphere.vertex", "light_sphere.fragment");
-
-	Texture grassTexture;
-	grassTexture.CreateFromImageFile(AppSettings::TextureFolder + "grass.png");
-
+	
 	GBuffer gBuffer;
-
 	InitLights();
 	InitScene();
-
-	lightSphereShader.Use();
-	lightSphereShader.SetFloat("radius", 0.2f);
 
 	while (!GLFWWindowShouldClose())
 	{
@@ -38,13 +29,10 @@ int AppDeferred::MainLoop()
 		glm::mat4 projection = camera->GetProjectionMatrix();
 		glm::mat4 view = camera->GetViewMatrix();
 
-
 		// 1 Geometry pass
 		gBuffer.StartGeometryPass(projection, view);
 		Shader* geomShaderPtr = gBuffer.GetGeometryShader();
-		grassTexture.Bind(GL_TEXTURE0);
-		RenderPlane(*geomShaderPtr);
-		RenderFoxes(*geomShaderPtr);
+		RenderScene(*geomShaderPtr);
 		gBuffer.EndGeometryPass();
 
 		// 2 Lighting Pass
@@ -53,14 +41,8 @@ int AppDeferred::MainLoop()
 		// 3 Copy content of geometry's depth buffer to default framebuffer's depth buffer
 		gBuffer.Blit();
 
-		// Render lights on top of scene
-		lightSphereShader.Use();
-		lightSphereShader.SetMat4("projection", projection);
-		lightSphereShader.SetMat4("view", view);
-		for (unsigned int i = 0; i < lights.size(); i++)
-		{
-			lights[i].Render(lightSphereShader);
-		}
+		// Render lights
+		RenderLights();
 
 		SwapBuffers();
 		PollEvents();
@@ -73,6 +55,8 @@ int AppDeferred::MainLoop()
 
 void AppDeferred::InitLights()
 {
+	lightSphereShader = std::make_unique<Shader>("light_sphere.vertex", "light_sphere.fragment");
+
 	const unsigned int NR_LIGHTS = 64;
 	srand(time(NULL));
 	for (unsigned int i = 0; i < NR_LIGHTS; i++)
@@ -89,6 +73,9 @@ void AppDeferred::InitLights()
 		);
 		lights.emplace_back(position, color, true, 0.1f);
 	}
+
+	lightSphereShader->Use();
+	lightSphereShader->SetFloat("radius", 0.2f);
 }
 
 void AppDeferred::InitScene()
@@ -96,9 +83,12 @@ void AppDeferred::InitScene()
 	// Fox
 	foxModel = std::make_unique<Model>(AppSettings::ModelFolder + "Fox//Fox.gltf");
 
-	float halfWidth = 50.0f;
+	// Grass texture
+	grassTexture = std::make_unique<Texture>();
+	grassTexture->CreateFromImageFile(AppSettings::TextureFolder + "grass.png");
 
-	// Plane
+	// Grass plane
+	float halfWidth = 50.0f;
 	float planeVertices[] = {
 		// Positions				   // Normals			// Texcoords
 		 halfWidth, 0.0f,  halfWidth,  0.0f, 1.0f, 0.0f,  25.0f,  0.0f,
@@ -109,6 +99,7 @@ void AppDeferred::InitScene()
 		-halfWidth, 0.0f, -halfWidth,  0.0f, 1.0f, 0.0f,   0.0f, 25.0f,
 		 halfWidth, 0.0f, -halfWidth,  0.0f, 1.0f, 0.0f,  25.0f, 25.0f
 	};
+	unsigned int planeVBO;
 	glGenVertexArrays(1, &planeVAO);
 	glGenBuffers(1, &planeVBO);
 	glBindVertexArray(planeVAO);
@@ -123,15 +114,18 @@ void AppDeferred::InitScene()
 	glBindVertexArray(0);
 }
 
-void AppDeferred::RenderPlane(const Shader& shader)
+void AppDeferred::RenderLights()
 {
-	glm::mat4 model = glm::mat4(1.0f);
-	shader.SetMat4("model", model);
-	glBindVertexArray(planeVAO);
-	glDrawArrays(GL_TRIANGLES, 0, 6);
+	lightSphereShader->Use();
+	lightSphereShader->SetMat4("projection", camera->GetProjectionMatrix());
+	lightSphereShader->SetMat4("view", camera->GetViewMatrix());
+	for (unsigned int i = 0; i < lights.size(); i++)
+	{
+		lights[i].Render(*lightSphereShader);
+	}
 }
 
-void AppDeferred::RenderFoxes(const Shader& shader)
+void AppDeferred::RenderScene(const Shader& shader)
 {
 	glm::mat4 model = glm::mat4(1.0f);
 	model = glm::translate(model, glm::vec3(2.0f, 0.0f, 1.0f));
@@ -150,4 +144,10 @@ void AppDeferred::RenderFoxes(const Shader& shader)
 	model = glm::scale(model, glm::vec3(0.03f));
 	shader.SetMat4("model", model);
 	foxModel->Draw(shader);
+
+	model = glm::mat4(1.0f);
+	shader.SetMat4("model", model);
+	grassTexture->Bind(GL_TEXTURE0);
+	glBindVertexArray(planeVAO);
+	glDrawArrays(GL_TRIANGLES, 0, 6);
 }

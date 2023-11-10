@@ -5,6 +5,7 @@
 #include "Shader.h"
 #include "Model.h"
 #include "Light.h"
+#include "Texture.h"
 
 class AppDeferred : AppBase
 {
@@ -15,19 +16,19 @@ private:
 	void InitScene();
 	void InitLights(); 
 
-	void RenderPlane(const Shader& shader);
-	void RenderFoxes(const Shader& shader);
-	void RenderQuad();
-	
+	void RenderScene(const Shader& shader);
+	void RenderLights();
 
 private:
+
+	// Scene
 	std::unique_ptr<Model> foxModel;
-
-	std::vector<Light> lights;
-
+	std::unique_ptr<Texture> grassTexture;
 	unsigned int planeVAO = 0;
-	unsigned int planeVBO = 0;
-};
 
+	// Lights
+	std::unique_ptr<Shader> lightSphereShader;
+	std::vector<Light> lights;
+};
 
 #endif
