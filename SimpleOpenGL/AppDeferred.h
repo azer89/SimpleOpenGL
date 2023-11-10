@@ -16,6 +16,8 @@ private:
 	void InitScene();
 	void InitLights(); 
 
+	void UpdateLightPositions();
+
 	void RenderScene(const Shader& shader);
 	void RenderLights();
 
@@ -29,6 +31,8 @@ private:
 	// Lights
 	std::unique_ptr<Shader> lightSphereShader;
 	std::vector<Light> lights;
+	std::vector<float> lightAngles;
+	std::vector<float> lightRadii;
 };
 
 #endif

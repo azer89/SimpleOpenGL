@@ -182,6 +182,7 @@
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="ShapeFactory.h" />
+    <ClInclude Include="UsefulStuff.h" />
     <ClInclude Include="XMLReader.h" />
     <ClInclude Include="AppBase.h" />
     <ClInclude Include="Shader.h" />

@@ -2,6 +2,7 @@
 #include "AppSettings.h"
 #include "ShapeFactory.h"
 #include "GBuffer.h"
+#include "UsefulStuff.h"
 
 #include <memory>
 
@@ -62,20 +63,27 @@ void AppDeferred::InitLights()
 	for (unsigned int i = 0; i < NR_LIGHTS; i++)
 	{
 		glm::vec3 position(
-			static_cast<float>(((rand() % 100) / 100.0) * 12.0 - 6.0),
-			static_cast<float>(((rand() % 100) / 100.0) * 1.0 + 0.15),
-			static_cast<float>(((rand() % 100) / 100.0) * 12.0 - 6.0)
+			UsefulStuff::RandomNumber<float>(-6.0f, 6.0f),
+			UsefulStuff::RandomNumber<float>(0.15f, 1.0f),
+			UsefulStuff::RandomNumber<float>(-6.0f, 6.0f)
 		);
+
 		glm::vec3 color(
-			static_cast<float>(((rand() % 100) / 200.0f) + 0.5), // Between 0.5 and 1.0
-			static_cast<float>(((rand() % 100) / 200.0f) + 0.5), // Between 0.5 and 1.0
-			static_cast<float>(((rand() % 100) / 200.0f) + 0.5) // Between 0.5 and 1.0
+			UsefulStuff::RandomNumber<float>(0.5f, 1.0f),
+			UsefulStuff::RandomNumber<float>(0.5f, 1.0f),
+			UsefulStuff::RandomNumber<float>(0.5f, 1.0f)
 		);
+
 		lights.emplace_back(position, color, true, 0.1f);
 	}
 
 	lightSphereShader->Use();
 	lightSphereShader->SetFloat("radius", 0.2f);
+}
+
+void AppDeferred::UpdateLightPositions()
+{
+
 }
 
 void AppDeferred::InitScene()
