@@ -135,7 +135,7 @@ int AppDeferred::MainLoop()
 		{
 			model = glm::mat4(1.0f);
 			model = glm::translate(model, lightPositions[i]);
-			model = glm::scale(model, glm::vec3(0.125f));
+			model = glm::scale(model, glm::vec3(0.075f));
 			lightCubeShader.SetMat4("model", model);
 			lightCubeShader.SetVec3("lightColor", lightColors[i]);
 			glBindVertexArray(lightCubeVAO);
@@ -154,12 +154,12 @@ int AppDeferred::MainLoop()
 void AppDeferred::InitLights()
 {
 	const unsigned int NR_LIGHTS = 64;
-	srand(13);
+	srand(time(NULL));
 	for (unsigned int i = 0; i < NR_LIGHTS; i++)
 	{
-		float xPos = static_cast<float>(((rand() % 100) / 100.0) * 8.0 - 4.0);
-		float yPos = static_cast<float>(((rand() % 100) / 100.0) * 4.5 + 0.5);
-		float zPos = static_cast<float>(((rand() % 100) / 100.0) * 8.0 - 4.0);
+		float xPos = static_cast<float>(((rand() % 100) / 100.0) * 12.0 - 6.0);
+		float yPos = static_cast<float>(((rand() % 100) / 100.0) * 4.0 + 0.15);
+		float zPos = static_cast<float>(((rand() % 100) / 100.0) * 12.0 - 6.0);
 		lightPositions.push_back(glm::vec3(xPos, yPos, zPos));
 
 		float rColor = static_cast<float>(((rand() % 100) / 200.0f) + 0.5); // Between 0.5 and 1.0
@@ -174,16 +174,18 @@ void AppDeferred::InitScene()
 	// Fox
 	foxModel = std::make_unique<Model>(AppSettings::ModelFolder + "Fox//Fox.gltf");
 
+	float halfWidth = 50.0f;
+
 	// Plane
 	float planeVertices[] = {
-		// Positions			// Normals			// Texcoords
-		 25.0f, -0.5f,  25.0f,  0.0f, 1.0f, 0.0f,  25.0f,  0.0f,
-		-25.0f, -0.5f,  25.0f,  0.0f, 1.0f, 0.0f,   0.0f,  0.0f,
-		-25.0f, -0.5f, -25.0f,  0.0f, 1.0f, 0.0f,   0.0f, 25.0f,
+		// Positions				   // Normals			// Texcoords
+		 halfWidth, 0.0f,  halfWidth,  0.0f, 1.0f, 0.0f,  25.0f,  0.0f,
+		-halfWidth, 0.0f,  halfWidth,  0.0f, 1.0f, 0.0f,   0.0f,  0.0f,
+		-halfWidth, 0.0f, -halfWidth,  0.0f, 1.0f, 0.0f,   0.0f, 25.0f,
 
-		 25.0f, -0.5f,  25.0f,  0.0f, 1.0f, 0.0f,  25.0f,  0.0f,
-		-25.0f, -0.5f, -25.0f,  0.0f, 1.0f, 0.0f,   0.0f, 25.0f,
-		 25.0f, -0.5f, -25.0f,  0.0f, 1.0f, 0.0f,  25.0f, 25.0f
+		 halfWidth, 0.0f,  halfWidth,  0.0f, 1.0f, 0.0f,  25.0f,  0.0f,
+		-halfWidth, 0.0f, -halfWidth,  0.0f, 1.0f, 0.0f,   0.0f, 25.0f,
+		 halfWidth, 0.0f, -halfWidth,  0.0f, 1.0f, 0.0f,  25.0f, 25.0f
 	};
 	glGenVertexArrays(1, &planeVAO);
 	glGenBuffers(1, &planeVBO);
@@ -210,19 +212,19 @@ void AppDeferred::RenderPlane(const Shader& shader)
 void AppDeferred::RenderFoxes(const Shader& shader)
 {
 	glm::mat4 model = glm::mat4(1.0f);
-	model = glm::translate(model, glm::vec3(2.0f, -0.5f, 1.0f));
+	model = glm::translate(model, glm::vec3(2.0f, 0.0f, 1.0f));
+	model = glm::scale(model, glm::vec3(0.025f));
+	shader.SetMat4("model", model);
+	foxModel->Draw(shader);
+
+	model = glm::mat4(1.0f);
+	model = glm::translate(model, glm::vec3(0.0f, 0.0f, 2.0f));
 	model = glm::scale(model, glm::vec3(0.02f));
 	shader.SetMat4("model", model);
 	foxModel->Draw(shader);
 
 	model = glm::mat4(1.0f);
-	model = glm::translate(model, glm::vec3(0.0f, -0.5f, 2.0f));
-	model = glm::scale(model, glm::vec3(0.02f));
-	shader.SetMat4("model", model);
-	foxModel->Draw(shader);
-
-	model = glm::mat4(1.0f);
-	model = glm::translate(model, glm::vec3(-1.5f, -0.5f, 0.0f));
+	model = glm::translate(model, glm::vec3(-1.5f, 0.0f, 0.0f));
 	model = glm::scale(model, glm::vec3(0.03f));
 	shader.SetMat4("model", model);
 	foxModel->Draw(shader);
