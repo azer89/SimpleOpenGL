@@ -15,7 +15,7 @@ int AppDeferred::MainLoop()
 
 	Shader gBufferShader("deferred_g_buffer.vertex", "deferred_g_buffer.fragment");
 	Shader lightingShader("deferred_lighting.vertex", "deferred_lighting.fragment");
-	Shader lightCubeShader("light_sphere.vertex", "light_sphere.fragment");
+	Shader lightSphereShader("light_sphere.vertex", "light_sphere.fragment");
 
 	Texture grassTexture;
 	grassTexture.CreateFromImageFile(AppSettings::TextureFolder + "grass.png");
@@ -66,15 +66,14 @@ int AppDeferred::MainLoop()
 
 	InitLights();
 	InitScene();
-	InitLightCube();
 
 	lightingShader.Use();
 	lightingShader.SetInt("gPosition", 0);
 	lightingShader.SetInt("gNormal", 1);
 	lightingShader.SetInt("gAlbedoSpec", 2);
 
-	lightCubeShader.Use();
-	lightCubeShader.SetFloat("radius", 0.2f);
+	lightSphereShader.Use();
+	lightSphereShader.SetFloat("radius", 0.2f);
 
 	while (!GLFWWindowShouldClose())
 	{
@@ -108,13 +107,13 @@ int AppDeferred::MainLoop()
 		glActiveTexture(GL_TEXTURE2);
 		glBindTexture(GL_TEXTURE_2D, gAlbedoSpec);
 		// Send light relevant uniforms
-		for (unsigned int i = 0; i < lightPositions.size(); i++)
+		const float linear = 0.7f;
+		const float quadratic = 1.8f;
+		for (unsigned int i = 0; i < lights.size(); i++)
 		{
-			lightingShader.SetVec3("lights[" + std::to_string(i) + "].Position", lightPositions[i]);
-			lightingShader.SetVec3("lights[" + std::to_string(i) + "].Color", lightColors[i]);
+			lightingShader.SetVec3("lights[" + std::to_string(i) + "].Position", lights[i].Position);
+			lightingShader.SetVec3("lights[" + std::to_string(i) + "].Color", lights[i].Color);
 			// Update attenuation parameters and calculate radius
-			const float linear = 0.7f;
-			const float quadratic = 1.8f;
 			lightingShader.SetFloat("lights[" + std::to_string(i) + "].Linear", linear);
 			lightingShader.SetFloat("lights[" + std::to_string(i) + "].Quadratic", quadratic);
 		}
@@ -132,19 +131,12 @@ int AppDeferred::MainLoop()
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 		// Render lights on top of scene
-		lightCubeShader.Use();
-		lightCubeShader.SetMat4("projection", projection);
-		lightCubeShader.SetMat4("view", view);
-		for (unsigned int i = 0; i < lightPositions.size(); i++)
+		lightSphereShader.Use();
+		lightSphereShader.SetMat4("projection", projection);
+		lightSphereShader.SetMat4("view", view);
+		for (unsigned int i = 0; i < lights.size(); i++)
 		{
-			model = glm::mat4(1.0f);
-			model = glm::translate(model, lightPositions[i]);
-			//model = glm::scale(model, glm::vec3(0.075f));
-			lightCubeShader.SetMat4("model", model);
-			lightCubeShader.SetVec3("lightColor", lightColors[i]);
-			lightCubeShader.SetVec3("lightPosition", lightPositions[i]);
-			glBindVertexArray(lightCubeVAO);
-			glDrawArrays(GL_TRIANGLES, 0, 6);
+			lights[i].Render(lightSphereShader);
 		}
 
 		SwapBuffers();
@@ -162,15 +154,17 @@ void AppDeferred::InitLights()
 	srand(time(NULL));
 	for (unsigned int i = 0; i < NR_LIGHTS; i++)
 	{
-		float xPos = static_cast<float>(((rand() % 100) / 100.0) * 12.0 - 6.0);
-		float yPos = static_cast<float>(((rand() % 100) / 100.0) * 1.0 + 0.15);
-		float zPos = static_cast<float>(((rand() % 100) / 100.0) * 12.0 - 6.0);
-		lightPositions.push_back(glm::vec3(xPos, yPos, zPos));
-
-		float rColor = static_cast<float>(((rand() % 100) / 200.0f) + 0.5); // Between 0.5 and 1.0
-		float gColor = static_cast<float>(((rand() % 100) / 200.0f) + 0.5); // Between 0.5 and 1.0
-		float bColor = static_cast<float>(((rand() % 100) / 200.0f) + 0.5); // Between 0.5 and 1.0
-		lightColors.push_back(glm::vec3(rColor, gColor, bColor));
+		glm::vec3 position(
+			static_cast<float>(((rand() % 100) / 100.0) * 12.0 - 6.0),
+			static_cast<float>(((rand() % 100) / 100.0) * 1.0 + 0.15),
+			static_cast<float>(((rand() % 100) / 100.0) * 12.0 - 6.0)
+		);
+		glm::vec3 color(
+			static_cast<float>(((rand() % 100) / 200.0f) + 0.5), // Between 0.5 and 1.0
+			static_cast<float>(((rand() % 100) / 200.0f) + 0.5), // Between 0.5 and 1.0
+			static_cast<float>(((rand() % 100) / 200.0f) + 0.5) // Between 0.5 and 1.0
+		);
+		lights.emplace_back(position, color, true, 0.2f);
 	}
 }
 
@@ -259,20 +253,5 @@ void AppDeferred::RenderQuad()
 	}
 	glBindVertexArray(quadVAO);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-	glBindVertexArray(0);
-}
-
-void AppDeferred::InitLightCube()
-{
-	auto vertices = ShapeFactory::GenerateQuadVertices();
-
-	glGenBuffers(1, &lightCubeVBO);
-	glGenVertexArrays(1, &lightCubeVAO);
-	glBindVertexArray(lightCubeVAO);
-
-	glBindBuffer(GL_ARRAY_BUFFER, lightCubeVBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.size(), vertices.data(), GL_STATIC_DRAW);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
 	glBindVertexArray(0);
 }

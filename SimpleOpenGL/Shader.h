@@ -21,7 +21,7 @@ public:
 public:
 	Shader(const std::string& vertexFilename, const std::string& fragmentFilename);
 	
-	void Use(); // Activate the shader
+	void Use() const;  // Activate the shader
 	void Delete();
 
 	// Utility uniform functions

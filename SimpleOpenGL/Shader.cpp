@@ -28,7 +28,7 @@ Shader::Shader(const std::string& vertexFilename, const std::string& fragmentFil
 	glDeleteShader(fragment);
 }
 
-void Shader::Use()
+void Shader::Use() const
 {
 	glUseProgram(ID);
 }
