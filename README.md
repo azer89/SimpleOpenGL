@@ -9,7 +9,11 @@ Adapted from learnopengl.com
 
 
 
-https://github.com/azer89/SimpleOpenGL/assets/790432/b49395ca-e741-4f59-85b8-26506c1fac2e
+
+
+https://github.com/azer89/SimpleOpenGL/assets/790432/71060d69-5dcf-4fe3-a45d-8b91ef21a146
+
+
 
 
 
