@@ -5,10 +5,11 @@
 #include "AppSkyboxWithModel.h"
 #include "AppSkyboxWithCube.h"
 #include "AppDeferred.h"
+#include "AppDeferredSponza.h"
 
 int main()
 {
-	AppDeferred app;
+	AppDeferredSponza app;
 	auto returnValue = app.MainLoop();
 	return returnValue;
 }
