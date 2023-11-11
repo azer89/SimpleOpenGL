@@ -7,7 +7,7 @@ Features:
   
 <div align="center">
   
-https://github.com/azer89/SimpleOpenGL/assets/790432/65684501-df71-450d-a4e2-ebf32071bba4
+https://github.com/azer89/SimpleOpenGL/assets/790432/8185affd-2fa8-4f66-a43b-236b1047be56
 
 https://github.com/azer89/SimpleOpenGL/assets/790432/ff9fa67f-afdc-4da1-bdb6-108bc7d7864e
 
