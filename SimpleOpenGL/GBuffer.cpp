@@ -113,13 +113,12 @@ void GBuffer::StartLightingPass(const std::vector<Light>& lights, const glm::vec
 	// Send light relevant uniforms
 	const float linear = 0.7f;
 	const float quadratic = 1.8f;
+	lightingShader->SetFloat("linear", linear);
+	lightingShader->SetFloat("quadratic", quadratic);
 	for (unsigned int i = 0; i < lights.size(); i++)
 	{
 		lightingShader->SetVec3("lights[" + std::to_string(i) + "].Position", lights[i].Position);
 		lightingShader->SetVec3("lights[" + std::to_string(i) + "].Color", lights[i].Color);
-		// Update attenuation parameters and calculate radius
-		lightingShader->SetFloat("lights[" + std::to_string(i) + "].Linear", linear);
-		lightingShader->SetFloat("lights[" + std::to_string(i) + "].Quadratic", quadratic);
 	}
 	// Render quad
 	glBindVertexArray(quadVAO);

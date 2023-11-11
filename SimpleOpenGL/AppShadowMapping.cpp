@@ -30,8 +30,8 @@ int AppShadowMapping::MainLoop()
 	grassTexture.CreateFromImageFile(AppSettings::TextureFolder + "grass.png");
 
 	// Depth
-	const unsigned int DEPTH_WIDTH = 2000;
-	const unsigned int DEPTH_HEIGHT = 2000;
+	const unsigned int DEPTH_WIDTH = 6000;
+	const unsigned int DEPTH_HEIGHT = 6000;
 	Texture depthTexture;
 	depthTexture.CreateDepthMap(DEPTH_WIDTH, DEPTH_HEIGHT);
 

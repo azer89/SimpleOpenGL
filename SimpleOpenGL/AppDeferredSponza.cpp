@@ -6,7 +6,7 @@
 
 #include <memory>
 
-const unsigned int NR_LIGHTS = 200;
+const unsigned int NR_LIGHTS = 100;
 
 int AppDeferredSponza::MainLoop()
 {

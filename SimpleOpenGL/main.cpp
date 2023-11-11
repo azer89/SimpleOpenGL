@@ -9,7 +9,7 @@
 
 int main()
 {
-	AppDeferredSponza app;
+	AppDeferred app;
 	auto returnValue = app.MainLoop();
 	return returnValue;
 }
