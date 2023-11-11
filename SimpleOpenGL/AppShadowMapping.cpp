@@ -152,13 +152,19 @@ void AppShadowMapping::RenderPlane(const Shader& shader)
 void AppShadowMapping::RenderFoxes(const Shader& shader)
 {
 	glm::mat4 model = glm::mat4(1.0f);
-	model = glm::translate(model, glm::vec3(0.0f, -0.5f, 1.0f));
+	model = glm::translate(model, glm::vec3(2.0f, 0.0f, 1.0f));
+	model = glm::scale(model, glm::vec3(0.025f));
+	shader.SetMat4("model", model);
+	foxModel->Draw(shader);
+
+	model = glm::mat4(1.0f);
+	model = glm::translate(model, glm::vec3(0.0f, 0.0f, 2.0f));
 	model = glm::scale(model, glm::vec3(0.02f));
 	shader.SetMat4("model", model);
 	foxModel->Draw(shader);
 
 	model = glm::mat4(1.0f);
-	model = glm::translate(model, glm::vec3(-2.0f, -0.5f, 0.0f));
+	model = glm::translate(model, glm::vec3(-1.5f, 0.0f, 0.0f));
 	model = glm::scale(model, glm::vec3(0.03f));
 	shader.SetMat4("model", model);
 	foxModel->Draw(shader);
@@ -195,13 +201,13 @@ void AppShadowMapping::InitScene()
 	// Plane
 	float planeVertices[] = {
 		// Positions			// Normals			// Texcoords
-		 25.0f, -0.5f,  25.0f,  0.0f, 1.0f, 0.0f,  25.0f,  0.0f,
-		-25.0f, -0.5f,  25.0f,  0.0f, 1.0f, 0.0f,   0.0f,  0.0f,
-		-25.0f, -0.5f, -25.0f,  0.0f, 1.0f, 0.0f,   0.0f, 25.0f,
+		 25.0f, 0.0f,  25.0f,  0.0f, 1.0f, 0.0f,  25.0f,  0.0f,
+		-25.0f, 0.0f,  25.0f,  0.0f, 1.0f, 0.0f,   0.0f,  0.0f,
+		-25.0f, 0.0f, -25.0f,  0.0f, 1.0f, 0.0f,   0.0f, 25.0f,
 
-		 25.0f, -0.5f,  25.0f,  0.0f, 1.0f, 0.0f,  25.0f,  0.0f,
-		-25.0f, -0.5f, -25.0f,  0.0f, 1.0f, 0.0f,   0.0f, 25.0f,
-		 25.0f, -0.5f, -25.0f,  0.0f, 1.0f, 0.0f,  25.0f, 25.0f
+		 25.0f, 0.0f,  25.0f,  0.0f, 1.0f, 0.0f,  25.0f,  0.0f,
+		-25.0f, 0.0f, -25.0f,  0.0f, 1.0f, 0.0f,   0.0f, 25.0f,
+		 25.0f, 0.0f, -25.0f,  0.0f, 1.0f, 0.0f,  25.0f, 25.0f
 	};
 	glGenVertexArrays(1, &planeVAO);
 	glGenBuffers(1, &planeVBO);
