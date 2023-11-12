@@ -34,130 +34,83 @@
     <Filter Include="Resource Files\Shaders\Deferred">
       <UniqueIdentifier>{32759f88-70f9-466d-93f6-34912b9af670}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Apps">
+      <UniqueIdentifier>{90c652d4-098b-47e2-beb4-3a9966a13d91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\System">
+      <UniqueIdentifier>{99623857-e092-4360-9005-fc37983790b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\App">
+      <UniqueIdentifier>{abb55d5d-8504-4cbf-a975-a461862a1941}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\System">
+      <UniqueIdentifier>{6ce0c462-07c2-43ef-a9e0-fda920d75440}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AppBase.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Apps\AppBase.cpp">
+      <Filter>Source Files\App</Filter>
     </ClCompile>
-    <ClCompile Include="Shader.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Apps\AppBlinnPhong.cpp">
+      <Filter>Source Files\App</Filter>
     </ClCompile>
-    <ClCompile Include="Texture.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Apps\AppBoxes.cpp">
+      <Filter>Source Files\App</Filter>
     </ClCompile>
-    <ClCompile Include="XMLReader.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Apps\AppDeferred.cpp">
+      <Filter>Source Files\App</Filter>
     </ClCompile>
-    <ClCompile Include="AppSettings.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Apps\AppDeferredSponza.cpp">
+      <Filter>Source Files\App</Filter>
     </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Apps\AppModelLoading.cpp">
+      <Filter>Source Files\App</Filter>
     </ClCompile>
-    <ClCompile Include="AppBoxes.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Apps\AppSettings.cpp">
+      <Filter>Source Files\App</Filter>
     </ClCompile>
-    <ClCompile Include="AppBlinnPhong.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Apps\AppShadowMapping.cpp">
+      <Filter>Source Files\App</Filter>
     </ClCompile>
-    <ClCompile Include="AppShadowMapping.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Apps\AppSkyboxWithCube.cpp">
+      <Filter>Source Files\App</Filter>
     </ClCompile>
-    <ClCompile Include="Mesh.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Apps\AppSkyboxWIthModel.cpp">
+      <Filter>Source Files\App</Filter>
     </ClCompile>
-    <ClCompile Include="Model.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Apps\AppSSAO.cpp">
+      <Filter>Source Files\App</Filter>
     </ClCompile>
-    <ClCompile Include="AppModelLoading.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="System\Camera.cpp">
+      <Filter>Source Files\System</Filter>
     </ClCompile>
-    <ClCompile Include="AppSkyboxWithModel.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="System\GBuffer.cpp">
+      <Filter>Source Files\System</Filter>
     </ClCompile>
-    <ClCompile Include="AppSkyboxWithCube.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="System\Light.cpp">
+      <Filter>Source Files\System</Filter>
     </ClCompile>
-    <ClCompile Include="AppDeferred.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="System\Mesh.cpp">
+      <Filter>Source Files\System</Filter>
     </ClCompile>
-    <ClCompile Include="ShapeFactory.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="System\Model.cpp">
+      <Filter>Source Files\System</Filter>
     </ClCompile>
-    <ClCompile Include="Light.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="System\Shader.cpp">
+      <Filter>Source Files\System</Filter>
     </ClCompile>
-    <ClCompile Include="GBuffer.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="System\ShapeFactory.cpp">
+      <Filter>Source Files\System</Filter>
     </ClCompile>
-    <ClCompile Include="AppDeferredSponza.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="System\Texture.cpp">
+      <Filter>Source Files\System</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="AppBase.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Shader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="XMLReader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AppSettings.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AppBoxes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AppBlinnPhong.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AppShadowMapping.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Mesh.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Model.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AppModelLoading.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AppSkyboxWithModel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AppSkyboxWithCube.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AppDeferred.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ShapeFactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Light.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GBuffer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="UsefulStuff.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AppDeferredSponza.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <ClCompile Include="System\XMLReader.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Shaders\blinn_phong.fragment">
@@ -261,5 +214,70 @@
     <Xml Include="..\Settings\main.xml">
       <Filter>Resource Files</Filter>
     </Xml>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Apps\AppBase.h">
+      <Filter>Header Files\Apps</Filter>
+    </ClInclude>
+    <ClInclude Include="Apps\AppBlinnPhong.h">
+      <Filter>Header Files\Apps</Filter>
+    </ClInclude>
+    <ClInclude Include="Apps\AppBoxes.h">
+      <Filter>Header Files\Apps</Filter>
+    </ClInclude>
+    <ClInclude Include="Apps\AppDeferred.h">
+      <Filter>Header Files\Apps</Filter>
+    </ClInclude>
+    <ClInclude Include="Apps\AppDeferredSponza.h">
+      <Filter>Header Files\Apps</Filter>
+    </ClInclude>
+    <ClInclude Include="Apps\AppModelLoading.h">
+      <Filter>Header Files\Apps</Filter>
+    </ClInclude>
+    <ClInclude Include="Apps\AppSettings.h">
+      <Filter>Header Files\Apps</Filter>
+    </ClInclude>
+    <ClInclude Include="Apps\AppShadowMapping.h">
+      <Filter>Header Files\Apps</Filter>
+    </ClInclude>
+    <ClInclude Include="Apps\AppSkyboxWithCube.h">
+      <Filter>Header Files\Apps</Filter>
+    </ClInclude>
+    <ClInclude Include="Apps\AppSkyboxWithModel.h">
+      <Filter>Header Files\Apps</Filter>
+    </ClInclude>
+    <ClInclude Include="Apps\AppSSAO.h">
+      <Filter>Header Files\Apps</Filter>
+    </ClInclude>
+    <ClInclude Include="System\Camera.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="System\GBuffer.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="System\Light.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="System\Mesh.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="System\Model.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="System\Shader.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="System\ShapeFactory.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="System\Texture.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="System\UsefulStuff.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="System\XMLReader.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -116,7 +116,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\azer\workspace\SimpleOpenGL\External\GLAD\GLAD\include;C:\Users\azer\workspace\SimpleOpenGL\External\GLFW\include;C:\Users\azer\workspace\SimpleOpenGL\External\STB;C:\Users\azer\workspace\SimpleOpenGL\External\TinyXML\TinyXML;C:\Users\azer\workspace\SimpleOpenGL\External\GLM;C:\Users\azer\workspace\SimpleOpenGL\External\ASSIMP\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\azer\workspace\SimpleOpenGL\External\GLAD\GLAD\include;C:\Users\azer\workspace\SimpleOpenGL\External\GLFW\include;C:\Users\azer\workspace\SimpleOpenGL\External\STB;C:\Users\azer\workspace\SimpleOpenGL\External\TinyXML\TinyXML;C:\Users\azer\workspace\SimpleOpenGL\External\GLM;C:\Users\azer\workspace\SimpleOpenGL\External\ASSIMP\include;C:\Users\azer\workspace\SimpleOpenGL\SimpleOpenGL\Apps;C:\Users\azer\workspace\SimpleOpenGL\SimpleOpenGL\System</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -134,7 +134,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\azer\workspace\SimpleOpenGL\External\GLAD\GLAD\include;C:\Users\azer\workspace\SimpleOpenGL\External\GLFW\include;C:\Users\azer\workspace\SimpleOpenGL\External\STB;C:\Users\azer\workspace\SimpleOpenGL\External\TinyXML\TinyXML;C:\Users\azer\workspace\SimpleOpenGL\External\GLM;C:\Users\azer\workspace\SimpleOpenGL\External\ASSIMP\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\azer\workspace\SimpleOpenGL\External\GLAD\GLAD\include;C:\Users\azer\workspace\SimpleOpenGL\External\GLFW\include;C:\Users\azer\workspace\SimpleOpenGL\External\STB;C:\Users\azer\workspace\SimpleOpenGL\External\TinyXML\TinyXML;C:\Users\azer\workspace\SimpleOpenGL\External\GLM;C:\Users\azer\workspace\SimpleOpenGL\External\ASSIMP\include;C:\Users\azer\workspace\SimpleOpenGL\SimpleOpenGL\Apps;C:\Users\azer\workspace\SimpleOpenGL\SimpleOpenGL\System</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -147,48 +147,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AppBlinnPhong.cpp" />
-    <ClCompile Include="AppBoxes.cpp" />
-    <ClCompile Include="AppDeferred.cpp" />
-    <ClCompile Include="AppDeferredSponza.cpp" />
-    <ClCompile Include="AppModelLoading.cpp" />
-    <ClCompile Include="AppSettings.cpp" />
-    <ClCompile Include="AppShadowMapping.cpp" />
-    <ClCompile Include="AppSkyboxWithCube.cpp" />
-    <ClCompile Include="AppSkyboxWithModel.cpp" />
-    <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="AppBase.cpp" />
-    <ClCompile Include="GBuffer.cpp" />
-    <ClCompile Include="Light.cpp" />
+    <ClCompile Include="Apps\AppBase.cpp" />
+    <ClCompile Include="Apps\AppBlinnPhong.cpp" />
+    <ClCompile Include="Apps\AppBoxes.cpp" />
+    <ClCompile Include="Apps\AppDeferred.cpp" />
+    <ClCompile Include="Apps\AppDeferredSponza.cpp" />
+    <ClCompile Include="Apps\AppModelLoading.cpp" />
+    <ClCompile Include="Apps\AppSettings.cpp" />
+    <ClCompile Include="Apps\AppShadowMapping.cpp" />
+    <ClCompile Include="Apps\AppSkyboxWithCube.cpp" />
+    <ClCompile Include="Apps\AppSkyboxWIthModel.cpp" />
+    <ClCompile Include="Apps\AppSSAO.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Mesh.cpp" />
-    <ClCompile Include="Model.cpp" />
-    <ClCompile Include="Shader.cpp" />
-    <ClCompile Include="ShapeFactory.cpp" />
-    <ClCompile Include="Texture.cpp" />
-    <ClCompile Include="XMLReader.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="AppBlinnPhong.h" />
-    <ClInclude Include="AppBoxes.h" />
-    <ClInclude Include="AppDeferred.h" />
-    <ClInclude Include="AppDeferredSponza.h" />
-    <ClInclude Include="AppModelLoading.h" />
-    <ClInclude Include="AppSettings.h" />
-    <ClInclude Include="AppShadowMapping.h" />
-    <ClInclude Include="AppSkyboxWithCube.h" />
-    <ClInclude Include="AppSkyboxWithModel.h" />
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="GBuffer.h" />
-    <ClInclude Include="Light.h" />
-    <ClInclude Include="Mesh.h" />
-    <ClInclude Include="Model.h" />
-    <ClInclude Include="ShapeFactory.h" />
-    <ClInclude Include="UsefulStuff.h" />
-    <ClInclude Include="XMLReader.h" />
-    <ClInclude Include="AppBase.h" />
-    <ClInclude Include="Shader.h" />
-    <ClInclude Include="Texture.h" />
+    <ClCompile Include="System\Camera.cpp" />
+    <ClCompile Include="System\GBuffer.cpp" />
+    <ClCompile Include="System\Light.cpp" />
+    <ClCompile Include="System\Mesh.cpp" />
+    <ClCompile Include="System\Model.cpp" />
+    <ClCompile Include="System\Shader.cpp" />
+    <ClCompile Include="System\ShapeFactory.cpp" />
+    <ClCompile Include="System\Texture.cpp" />
+    <ClCompile Include="System\XMLReader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Shaders\blinn_phong.fragment" />
@@ -226,6 +205,29 @@
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Settings\main.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Apps\AppBase.h" />
+    <ClInclude Include="Apps\AppBlinnPhong.h" />
+    <ClInclude Include="Apps\AppBoxes.h" />
+    <ClInclude Include="Apps\AppDeferred.h" />
+    <ClInclude Include="Apps\AppDeferredSponza.h" />
+    <ClInclude Include="Apps\AppModelLoading.h" />
+    <ClInclude Include="Apps\AppSettings.h" />
+    <ClInclude Include="Apps\AppShadowMapping.h" />
+    <ClInclude Include="Apps\AppSkyboxWithCube.h" />
+    <ClInclude Include="Apps\AppSkyboxWithModel.h" />
+    <ClInclude Include="Apps\AppSSAO.h" />
+    <ClInclude Include="System\Camera.h" />
+    <ClInclude Include="System\GBuffer.h" />
+    <ClInclude Include="System\Light.h" />
+    <ClInclude Include="System\Mesh.h" />
+    <ClInclude Include="System\Model.h" />
+    <ClInclude Include="System\Shader.h" />
+    <ClInclude Include="System\ShapeFactory.h" />
+    <ClInclude Include="System\Texture.h" />
+    <ClInclude Include="System\UsefulStuff.h" />
+    <ClInclude Include="System\XMLReader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
