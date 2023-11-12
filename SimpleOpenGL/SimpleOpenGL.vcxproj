@@ -181,6 +181,9 @@
     <None Include="..\Shaders\colored_triangle.vertex" />
     <None Include="..\Shaders\cube.fragment" />
     <None Include="..\Shaders\cube.vertex" />
+    <None Include="..\Shaders\geom.fragment" />
+    <None Include="..\Shaders\geom.geometry" />
+    <None Include="..\Shaders\geom.vertex" />
     <None Include="..\Shaders\light_sphere.fragment" />
     <None Include="..\Shaders\deferred_lighting.fragment" />
     <None Include="..\Shaders\deferred_lighting.vertex" />

@@ -26,9 +26,9 @@ Shader::Shader(const char* vertexFilename,
 
 	if (geometryFilename)
 	{
-		auto gFullFilepath = AppSettings::ShaderFolder + fragmentFilename;
-		auto geomCode = LoadTextFile(fsFullFilepath.c_str());
-		auto geom = CreateShaderProgram(fragmentCode.c_str(), GL_GEOMETRY_SHADER);
+		auto gFullFilepath = AppSettings::ShaderFolder + geometryFilename;
+		auto geomCode = LoadTextFile(gFullFilepath.c_str());
+		auto geom = CreateShaderProgram(geomCode.c_str(), GL_GEOMETRY_SHADER);
 		glAttachShader(ID, geom);
 	}
 	

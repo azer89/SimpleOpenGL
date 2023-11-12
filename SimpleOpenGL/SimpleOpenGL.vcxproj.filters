@@ -215,6 +215,15 @@
     <None Include="..\Shaders\light_sphere.vertex">
       <Filter>Resource Files\Shaders\Misc</Filter>
     </None>
+    <None Include="..\Shaders\geom.fragment">
+      <Filter>Resource Files\Shaders\GeometryShader</Filter>
+    </None>
+    <None Include="..\Shaders\geom.geometry">
+      <Filter>Resource Files\Shaders\GeometryShader</Filter>
+    </None>
+    <None Include="..\Shaders\geom.vertex">
+      <Filter>Resource Files\Shaders\GeometryShader</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Settings\main.xml">

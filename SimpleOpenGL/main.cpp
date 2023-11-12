@@ -6,10 +6,11 @@
 #include "AppSkyboxWithCube.h"
 #include "AppDeferred.h"
 #include "AppDeferredSponza.h"
+#include "AppGeom.h"
 
 int main()
 {
-	AppDeferred app;
+	AppGeom app;
 	auto returnValue = app.MainLoop();
 	return returnValue;
 }
