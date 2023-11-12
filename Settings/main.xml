@@ -3,8 +3,7 @@
 		<ScreenWidth value="800"/>
 		<ScreenHeight value="600"/>
 		<ScreenTitle value="Simple OpenGL"/>
-		<VertexShaderFolder value="C://Users/azer//workspace//SimpleOpenGL//Shaders//"/>
-		<FragmentShaderFolder value="C://Users//azer//workspace//SimpleOpenGL//Shaders//"/>
+		<ShaderFolder value="C://Users/azer//workspace//SimpleOpenGL//Shaders//"/>
 		<TextureFolder value="C://Users//azer//workspace//SimpleOpenGL//Textures//"/>
 		<ModelFolder value="C://Users//azer//workspace//SimpleOpenGL//Models//"/>
 	</General>

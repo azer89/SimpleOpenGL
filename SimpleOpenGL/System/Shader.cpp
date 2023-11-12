@@ -6,20 +6,32 @@
 #include <sstream>
 #include <iostream>
 
-Shader::Shader(const std::string& vertexFilename, const std::string& fragmentFilename)
+Shader::Shader(const char* vertexFilename,
+	const char* fragmentFilename,
+	const char* geometryFilename)
 {
-	// Retrieve the vertex/fragment source code from filePath
-	auto vsFullFilepath = AppSettings::VertexShaderFolder + vertexFilename;
-	auto fsFullFilepath = AppSettings::FragmentShaderFolder + fragmentFilename;
-	auto vertexCode = LoadTextFile(vsFullFilepath.c_str());
-	auto fragmentCode = LoadTextFile(fsFullFilepath.c_str());
-	auto vertex = CreateShaderProgram(vertexCode.c_str(), GL_VERTEX_SHADER);
-	auto fragment = CreateShaderProgram(fragmentCode.c_str(), GL_FRAGMENT_SHADER);
-	
 	// Shader Program
 	ID = glCreateProgram();
+
+	// Retrieve the vertex/fragment source code from filePath
+	auto vsFullFilepath = AppSettings::ShaderFolder + vertexFilename;
+	auto vertexCode = LoadTextFile(vsFullFilepath.c_str());
+	auto vertex = CreateShaderProgram(vertexCode.c_str(), GL_VERTEX_SHADER);
 	glAttachShader(ID, vertex);
+
+	auto fsFullFilepath = AppSettings::ShaderFolder + fragmentFilename;
+	auto fragmentCode = LoadTextFile(fsFullFilepath.c_str());
+	auto fragment = CreateShaderProgram(fragmentCode.c_str(), GL_FRAGMENT_SHADER);
 	glAttachShader(ID, fragment);
+
+	if (geometryFilename)
+	{
+		auto gFullFilepath = AppSettings::ShaderFolder + fragmentFilename;
+		auto geomCode = LoadTextFile(fsFullFilepath.c_str());
+		auto geom = CreateShaderProgram(fragmentCode.c_str(), GL_GEOMETRY_SHADER);
+		glAttachShader(ID, geom);
+	}
+	
 	glLinkProgram(ID);
 	CheckCompileErrors(ID, ObjectType::ProgramObject);
 	

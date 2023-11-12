@@ -152,6 +152,7 @@
     <ClCompile Include="Apps\AppBoxes.cpp" />
     <ClCompile Include="Apps\AppDeferred.cpp" />
     <ClCompile Include="Apps\AppDeferredSponza.cpp" />
+    <ClCompile Include="Apps\AppGeom.cpp" />
     <ClCompile Include="Apps\AppModelLoading.cpp" />
     <ClCompile Include="Apps\AppSettings.cpp" />
     <ClCompile Include="Apps\AppShadowMapping.cpp" />
@@ -212,6 +213,7 @@
     <ClInclude Include="Apps\AppBoxes.h" />
     <ClInclude Include="Apps\AppDeferred.h" />
     <ClInclude Include="Apps\AppDeferredSponza.h" />
+    <ClInclude Include="Apps\AppGeom.h" />
     <ClInclude Include="Apps\AppModelLoading.h" />
     <ClInclude Include="Apps\AppSettings.h" />
     <ClInclude Include="Apps\AppShadowMapping.h" />

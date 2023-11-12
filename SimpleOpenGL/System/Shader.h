@@ -19,7 +19,9 @@ public:
 	unsigned int ID;
 
 public:
-	Shader(const std::string& vertexFilename, const std::string& fragmentFilename);
+	Shader(const char* vertexFilename,
+		const char* fragmentFilename,
+		const char* geometryFilename = nullptr);
 	
 	void Use() const;  // Activate the shader
 	void Delete();

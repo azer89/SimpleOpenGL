@@ -46,6 +46,9 @@
     <Filter Include="Source Files\System">
       <UniqueIdentifier>{6ce0c462-07c2-43ef-a9e0-fda920d75440}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Shaders\GeometryShader">
+      <UniqueIdentifier>{e4cc0378-04b4-4b6d-a8dd-bb9f5961bbbd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -110,6 +113,9 @@
     </ClCompile>
     <ClCompile Include="System\XMLReader.cpp">
       <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Apps\AppGeom.cpp">
+      <Filter>Source Files\App</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -278,6 +284,9 @@
     </ClInclude>
     <ClInclude Include="System\XMLReader.h">
       <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Apps\AppGeom.h">
+      <Filter>Header Files\Apps</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
