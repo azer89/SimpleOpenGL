@@ -1,13 +1,49 @@
 #version 330 core
 
 layout(points) in;
-layout(triangle_strip, max_vertices = 5) out;
+layout(triangle_strip, max_vertices = 60) out;
 
 in VS_OUT{
 	vec3 color;
 } gs_in[];
 
 out vec3 fColor;
+
+#define PI2 6.28318530718
+
+void build_circle(vec4 position)
+{
+	float segmentCount = 20;
+	float radius = 0.5;
+
+	vec4 prevPoint = vec4(position.x + cos(0) * radius,
+		position.y + sin(0) * radius,
+		position.z,
+		position.w);
+	
+	float step = PI2 / segmentCount;
+
+	fColor = gs_in[0].color;
+	for (int i = 1; i <= segmentCount; ++i)
+	{
+		float theta = i * step;
+
+		vec4 currPoint = vec4(position.x + cos(theta) * radius,
+			position.y + sin(theta) * radius,
+			position.z,
+			position.w);
+
+		gl_Position = position;
+		EmitVertex();
+		gl_Position = prevPoint;
+		EmitVertex();
+		gl_Position = currPoint;
+		EmitVertex();
+		EndPrimitive();
+
+		prevPoint = currPoint;
+	}
+}
 
 void build_house(vec4 position)
 {
@@ -28,5 +64,5 @@ void build_house(vec4 position)
 
 void main()
 {
-	build_house(gl_in[0].gl_Position);
+	build_circle(gl_in[0].gl_Position);
 }
