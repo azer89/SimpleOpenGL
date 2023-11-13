@@ -3,6 +3,7 @@ Features:
 * Shadow mapping
 * Deferred shading
 * Cubemap
+* Geometry shader
 * glTF model loading
   
 <div align="center">
