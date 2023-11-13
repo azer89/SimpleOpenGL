@@ -18,8 +18,8 @@ int AppDeferred::MainLoop()
 	glEnable(GL_DEPTH_TEST);
 	
 	DeferredGBuffer gBuffer(
-		"deferred_g_buffer.vertex", "deferred_g_buffer.fragment",
-		"deferred_lighting.vertex", "deferred_lighting.fragment"
+		"Deferred//deferred_g_buffer.vertex", "Deferred//deferred_g_buffer.fragment",
+		"Deferred//deferred_lighting.vertex", "Deferred//deferred_lighting.fragment"
 	);
 	InitLights();
 	InitScene();
@@ -62,7 +62,7 @@ int AppDeferred::MainLoop()
 
 void AppDeferred::InitLights()
 {
-	lightSphereShader = std::make_unique<Shader>("light_sphere.vertex", "light_sphere.fragment");
+	lightSphereShader = std::make_unique<Shader>("Misc//light_sphere.vertex", "Misc//light_sphere.fragment");
 	
 	float pi2 = glm::two_pi<float>();
 

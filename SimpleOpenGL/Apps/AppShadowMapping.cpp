@@ -14,10 +14,10 @@ int AppShadowMapping::MainLoop()
 
 	InitScene();
 
-	Shader mainShader("shadow_mapping.vertex", "shadow_mapping.fragment");
-	Shader depthShader("shadow_mapping_depth.vertex", "shadow_mapping_depth.fragment");
-	Shader debugShader("shadow_mapping_debug.vertex", "shadow_mapping_debug.fragment");
-	Shader lightCubeShader("light_cube.vertex", "light_cube.fragment");
+	Shader mainShader("ShadowMapping//shadow_mapping.vertex", "ShadowMapping//shadow_mapping.fragment");
+	Shader depthShader("ShadowMapping//shadow_mapping_depth.vertex", "ShadowMapping//shadow_mapping_depth.fragment");
+	Shader debugShader("ShadowMapping//shadow_mapping_debug.vertex", "ShadowMapping//shadow_mapping_debug.fragment");
+	Shader lightCubeShader("Misc//light_cube.vertex", "Misc//light_cube.fragment");
 
 	mainShader.Use();
 	mainShader.SetInt("diffuseTexture", 0);

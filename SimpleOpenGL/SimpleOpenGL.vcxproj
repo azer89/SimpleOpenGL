@@ -171,45 +171,6 @@
     <ClCompile Include="System\XMLReader.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Shaders\blinn_phong.fragment" />
-    <None Include="..\Shaders\blinn_phong.vertex" />
-    <None Include="..\Shaders\blinn_phong_skybox.fragment" />
-    <None Include="..\Shaders\blinn_phong_skybox.vertex" />
-    <None Include="..\Shaders\camera.fragment" />
-    <None Include="..\Shaders\camera.vertex" />
-    <None Include="..\Shaders\colored_triangle.fragment" />
-    <None Include="..\Shaders\colored_triangle.vertex" />
-    <None Include="..\Shaders\cube.fragment" />
-    <None Include="..\Shaders\cube.vertex" />
-    <None Include="..\Shaders\deferred_lighting_ssbo.fragment" />
-    <None Include="..\Shaders\deferred_lighting_ssbo.vertex" />
-    <None Include="..\Shaders\geom.fragment" />
-    <None Include="..\Shaders\geom.geometry" />
-    <None Include="..\Shaders\geom.vertex" />
-    <None Include="..\Shaders\light_sphere.fragment" />
-    <None Include="..\Shaders\deferred_lighting.fragment" />
-    <None Include="..\Shaders\deferred_lighting.vertex" />
-    <None Include="..\Shaders\deferred_fbo_debug.fragment" />
-    <None Include="..\Shaders\deferred_fbo_debug.vertex" />
-    <None Include="..\Shaders\light_sphere.vertex" />
-    <None Include="..\Shaders\deferred_g_buffer.fragment" />
-    <None Include="..\Shaders\deferred_g_buffer.vertex" />
-    <None Include="..\Shaders\light_cube.fragment" />
-    <None Include="..\Shaders\light_cube.vertex" />
-    <None Include="..\Shaders\model_loading.fragment" />
-    <None Include="..\Shaders\model_loading.vertex" />
-    <None Include="..\Shaders\shadow_mapping.fragment" />
-    <None Include="..\Shaders\shadow_mapping.vertex" />
-    <None Include="..\Shaders\shadow_mapping_debug.fragment" />
-    <None Include="..\Shaders\shadow_mapping_debug.vertex" />
-    <None Include="..\Shaders\shadow_mapping_depth.fragment" />
-    <None Include="..\Shaders\shadow_mapping_depth.vertex" />
-    <None Include="..\Shaders\skybox.fragment" />
-    <None Include="..\Shaders\skybox.vertex" />
-    <None Include="..\Shaders\texture.fragment" />
-    <None Include="..\Shaders\texture.vertex" />
-  </ItemGroup>
-  <ItemGroup>
     <Xml Include="..\Settings\main.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -235,6 +196,43 @@
     <ClInclude Include="System\Texture.h" />
     <ClInclude Include="System\UsefulStuff.h" />
     <ClInclude Include="System\XMLReader.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Shaders\BlinnPhong\blinn_phong.fragment" />
+    <None Include="..\Shaders\BlinnPhong\blinn_phong.vertex" />
+    <None Include="..\Shaders\Cubemap\blinn_phong_skybox.fragment" />
+    <None Include="..\Shaders\Cubemap\blinn_phong_skybox.vertex" />
+    <None Include="..\Shaders\Cubemap\cube.fragment" />
+    <None Include="..\Shaders\Cubemap\cube.vertex" />
+    <None Include="..\Shaders\Cubemap\skybox.fragment" />
+    <None Include="..\Shaders\Cubemap\skybox.vertex" />
+    <None Include="..\Shaders\Deferred\deferred_fbo_debug.fragment" />
+    <None Include="..\Shaders\Deferred\deferred_fbo_debug.vertex" />
+    <None Include="..\Shaders\Deferred\deferred_g_buffer.fragment" />
+    <None Include="..\Shaders\Deferred\deferred_g_buffer.vertex" />
+    <None Include="..\Shaders\Deferred\deferred_lighting.fragment" />
+    <None Include="..\Shaders\Deferred\deferred_lighting.vertex" />
+    <None Include="..\Shaders\GeometryShader\geom.fragment" />
+    <None Include="..\Shaders\GeometryShader\geom.geometry" />
+    <None Include="..\Shaders\GeometryShader\geom.vertex" />
+    <None Include="..\Shaders\Misc\camera.fragment" />
+    <None Include="..\Shaders\Misc\camera.vertex" />
+    <None Include="..\Shaders\Misc\colored_triangle.fragment" />
+    <None Include="..\Shaders\Misc\colored_triangle.vertex" />
+    <None Include="..\Shaders\Misc\light_cube.fragment" />
+    <None Include="..\Shaders\Misc\light_cube.vertex" />
+    <None Include="..\Shaders\Misc\light_sphere.fragment" />
+    <None Include="..\Shaders\Misc\light_sphere.vertex" />
+    <None Include="..\Shaders\Misc\texture.fragment" />
+    <None Include="..\Shaders\Misc\texture.vertex" />
+    <None Include="..\Shaders\ModelLoading\model_loading.fragment" />
+    <None Include="..\Shaders\ModelLoading\model_loading.vertex" />
+    <None Include="..\Shaders\ShadowMapping\shadow_mapping.fragment" />
+    <None Include="..\Shaders\ShadowMapping\shadow_mapping.vertex" />
+    <None Include="..\Shaders\ShadowMapping\shadow_mapping_debug.fragment" />
+    <None Include="..\Shaders\ShadowMapping\shadow_mapping_debug.vertex" />
+    <None Include="..\Shaders\ShadowMapping\shadow_mapping_depth.fragment" />
+    <None Include="..\Shaders\ShadowMapping\shadow_mapping_depth.vertex" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

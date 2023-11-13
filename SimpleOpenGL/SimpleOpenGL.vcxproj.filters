@@ -72,9 +72,6 @@
     <ClCompile Include="Apps\AppModelLoading.cpp">
       <Filter>Source Files\App</Filter>
     </ClCompile>
-    <ClCompile Include="Apps\AppSettings.cpp">
-      <Filter>Source Files\App</Filter>
-    </ClCompile>
     <ClCompile Include="Apps\AppShadowMapping.cpp">
       <Filter>Source Files\App</Filter>
     </ClCompile>
@@ -117,119 +114,9 @@
     <ClCompile Include="Apps\AppGeom.cpp">
       <Filter>Source Files\App</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\Shaders\blinn_phong.fragment">
-      <Filter>Resource Files\Shaders\BlinnPhong</Filter>
-    </None>
-    <None Include="..\Shaders\blinn_phong.vertex">
-      <Filter>Resource Files\Shaders\BlinnPhong</Filter>
-    </None>
-    <None Include="..\Shaders\camera.fragment">
-      <Filter>Resource Files\Shaders\Misc</Filter>
-    </None>
-    <None Include="..\Shaders\camera.vertex">
-      <Filter>Resource Files\Shaders\Misc</Filter>
-    </None>
-    <None Include="..\Shaders\colored_triangle.fragment">
-      <Filter>Resource Files\Shaders\Misc</Filter>
-    </None>
-    <None Include="..\Shaders\colored_triangle.vertex">
-      <Filter>Resource Files\Shaders\Misc</Filter>
-    </None>
-    <None Include="..\Shaders\cube.fragment">
-      <Filter>Resource Files\Shaders\Cubemap</Filter>
-    </None>
-    <None Include="..\Shaders\cube.vertex">
-      <Filter>Resource Files\Shaders\Cubemap</Filter>
-    </None>
-    <None Include="..\Shaders\skybox.fragment">
-      <Filter>Resource Files\Shaders\Cubemap</Filter>
-    </None>
-    <None Include="..\Shaders\skybox.vertex">
-      <Filter>Resource Files\Shaders\Cubemap</Filter>
-    </None>
-    <None Include="..\Shaders\texture.fragment">
-      <Filter>Resource Files\Shaders\Misc</Filter>
-    </None>
-    <None Include="..\Shaders\texture.vertex">
-      <Filter>Resource Files\Shaders\Misc</Filter>
-    </None>
-    <None Include="..\Shaders\shadow_mapping.fragment">
-      <Filter>Resource Files\Shaders\ShadowMapping</Filter>
-    </None>
-    <None Include="..\Shaders\shadow_mapping.vertex">
-      <Filter>Resource Files\Shaders\ShadowMapping</Filter>
-    </None>
-    <None Include="..\Shaders\shadow_mapping_debug.fragment">
-      <Filter>Resource Files\Shaders\ShadowMapping</Filter>
-    </None>
-    <None Include="..\Shaders\shadow_mapping_debug.vertex">
-      <Filter>Resource Files\Shaders\ShadowMapping</Filter>
-    </None>
-    <None Include="..\Shaders\shadow_mapping_depth.fragment">
-      <Filter>Resource Files\Shaders\ShadowMapping</Filter>
-    </None>
-    <None Include="..\Shaders\shadow_mapping_depth.vertex">
-      <Filter>Resource Files\Shaders\ShadowMapping</Filter>
-    </None>
-    <None Include="..\Shaders\light_cube.fragment">
-      <Filter>Resource Files\Shaders\Misc</Filter>
-    </None>
-    <None Include="..\Shaders\light_cube.vertex">
-      <Filter>Resource Files\Shaders\Misc</Filter>
-    </None>
-    <None Include="..\Shaders\model_loading.fragment">
-      <Filter>Resource Files\Shaders\ModelLoading</Filter>
-    </None>
-    <None Include="..\Shaders\model_loading.vertex">
-      <Filter>Resource Files\Shaders\ModelLoading</Filter>
-    </None>
-    <None Include="..\Shaders\blinn_phong_skybox.fragment">
-      <Filter>Resource Files\Shaders\Cubemap</Filter>
-    </None>
-    <None Include="..\Shaders\blinn_phong_skybox.vertex">
-      <Filter>Resource Files\Shaders\Cubemap</Filter>
-    </None>
-    <None Include="..\Shaders\deferred_lighting.fragment">
-      <Filter>Resource Files\Shaders\Deferred</Filter>
-    </None>
-    <None Include="..\Shaders\deferred_lighting.vertex">
-      <Filter>Resource Files\Shaders\Deferred</Filter>
-    </None>
-    <None Include="..\Shaders\deferred_fbo_debug.fragment">
-      <Filter>Resource Files\Shaders\Deferred</Filter>
-    </None>
-    <None Include="..\Shaders\deferred_fbo_debug.vertex">
-      <Filter>Resource Files\Shaders\Deferred</Filter>
-    </None>
-    <None Include="..\Shaders\deferred_g_buffer.fragment">
-      <Filter>Resource Files\Shaders\Deferred</Filter>
-    </None>
-    <None Include="..\Shaders\deferred_g_buffer.vertex">
-      <Filter>Resource Files\Shaders\Deferred</Filter>
-    </None>
-    <None Include="..\Shaders\light_sphere.fragment">
-      <Filter>Resource Files\Shaders\Misc</Filter>
-    </None>
-    <None Include="..\Shaders\light_sphere.vertex">
-      <Filter>Resource Files\Shaders\Misc</Filter>
-    </None>
-    <None Include="..\Shaders\geom.fragment">
-      <Filter>Resource Files\Shaders\GeometryShader</Filter>
-    </None>
-    <None Include="..\Shaders\geom.geometry">
-      <Filter>Resource Files\Shaders\GeometryShader</Filter>
-    </None>
-    <None Include="..\Shaders\geom.vertex">
-      <Filter>Resource Files\Shaders\GeometryShader</Filter>
-    </None>
-    <None Include="..\Shaders\deferred_lighting_ssbo.fragment">
-      <Filter>Resource Files\Shaders\Deferred</Filter>
-    </None>
-    <None Include="..\Shaders\deferred_lighting_ssbo.vertex">
-      <Filter>Resource Files\Shaders\Deferred</Filter>
-    </None>
+    <ClCompile Include="Apps\AppSettings.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Settings\main.xml">
@@ -303,5 +190,112 @@
     <ClInclude Include="Apps\AppGeom.h">
       <Filter>Header Files\Apps</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Shaders\BlinnPhong\blinn_phong.fragment">
+      <Filter>Resource Files\Shaders\BlinnPhong</Filter>
+    </None>
+    <None Include="..\Shaders\BlinnPhong\blinn_phong.vertex">
+      <Filter>Resource Files\Shaders\BlinnPhong</Filter>
+    </None>
+    <None Include="..\Shaders\Cubemap\blinn_phong_skybox.fragment">
+      <Filter>Resource Files\Shaders\Cubemap</Filter>
+    </None>
+    <None Include="..\Shaders\Cubemap\blinn_phong_skybox.vertex">
+      <Filter>Resource Files\Shaders\Cubemap</Filter>
+    </None>
+    <None Include="..\Shaders\Cubemap\cube.fragment">
+      <Filter>Resource Files\Shaders\Cubemap</Filter>
+    </None>
+    <None Include="..\Shaders\Cubemap\cube.vertex">
+      <Filter>Resource Files\Shaders\Cubemap</Filter>
+    </None>
+    <None Include="..\Shaders\Cubemap\skybox.fragment">
+      <Filter>Resource Files\Shaders\Cubemap</Filter>
+    </None>
+    <None Include="..\Shaders\Cubemap\skybox.vertex">
+      <Filter>Resource Files\Shaders\Cubemap</Filter>
+    </None>
+    <None Include="..\Shaders\Deferred\deferred_fbo_debug.fragment">
+      <Filter>Resource Files\Shaders\Deferred</Filter>
+    </None>
+    <None Include="..\Shaders\Deferred\deferred_fbo_debug.vertex">
+      <Filter>Resource Files\Shaders\Deferred</Filter>
+    </None>
+    <None Include="..\Shaders\Deferred\deferred_g_buffer.fragment">
+      <Filter>Resource Files\Shaders\Deferred</Filter>
+    </None>
+    <None Include="..\Shaders\Deferred\deferred_g_buffer.vertex">
+      <Filter>Resource Files\Shaders\Deferred</Filter>
+    </None>
+    <None Include="..\Shaders\Deferred\deferred_lighting.fragment">
+      <Filter>Resource Files\Shaders\Deferred</Filter>
+    </None>
+    <None Include="..\Shaders\Deferred\deferred_lighting.vertex">
+      <Filter>Resource Files\Shaders\Deferred</Filter>
+    </None>
+    <None Include="..\Shaders\GeometryShader\geom.fragment">
+      <Filter>Resource Files\Shaders\GeometryShader</Filter>
+    </None>
+    <None Include="..\Shaders\GeometryShader\geom.geometry">
+      <Filter>Resource Files\Shaders\GeometryShader</Filter>
+    </None>
+    <None Include="..\Shaders\GeometryShader\geom.vertex">
+      <Filter>Resource Files\Shaders\GeometryShader</Filter>
+    </None>
+    <None Include="..\Shaders\Misc\camera.fragment">
+      <Filter>Resource Files\Shaders\Misc</Filter>
+    </None>
+    <None Include="..\Shaders\Misc\camera.vertex">
+      <Filter>Resource Files\Shaders\Misc</Filter>
+    </None>
+    <None Include="..\Shaders\Misc\colored_triangle.fragment">
+      <Filter>Resource Files\Shaders\Misc</Filter>
+    </None>
+    <None Include="..\Shaders\Misc\colored_triangle.vertex">
+      <Filter>Resource Files\Shaders\Misc</Filter>
+    </None>
+    <None Include="..\Shaders\Misc\light_cube.fragment">
+      <Filter>Resource Files\Shaders\Misc</Filter>
+    </None>
+    <None Include="..\Shaders\Misc\light_cube.vertex">
+      <Filter>Resource Files\Shaders\Misc</Filter>
+    </None>
+    <None Include="..\Shaders\Misc\light_sphere.fragment">
+      <Filter>Resource Files\Shaders\Misc</Filter>
+    </None>
+    <None Include="..\Shaders\Misc\light_sphere.vertex">
+      <Filter>Resource Files\Shaders\Misc</Filter>
+    </None>
+    <None Include="..\Shaders\Misc\texture.fragment">
+      <Filter>Resource Files\Shaders\Misc</Filter>
+    </None>
+    <None Include="..\Shaders\Misc\texture.vertex">
+      <Filter>Resource Files\Shaders\Misc</Filter>
+    </None>
+    <None Include="..\Shaders\ModelLoading\model_loading.fragment">
+      <Filter>Resource Files\Shaders\ModelLoading</Filter>
+    </None>
+    <None Include="..\Shaders\ModelLoading\model_loading.vertex">
+      <Filter>Resource Files\Shaders\ModelLoading</Filter>
+    </None>
+    <None Include="..\Shaders\ShadowMapping\shadow_mapping.fragment">
+      <Filter>Resource Files\Shaders\ShadowMapping</Filter>
+    </None>
+    <None Include="..\Shaders\ShadowMapping\shadow_mapping.vertex">
+      <Filter>Resource Files\Shaders\ShadowMapping</Filter>
+    </None>
+    <None Include="..\Shaders\ShadowMapping\shadow_mapping_debug.fragment">
+      <Filter>Resource Files\Shaders\ShadowMapping</Filter>
+    </None>
+    <None Include="..\Shaders\ShadowMapping\shadow_mapping_debug.vertex">
+      <Filter>Resource Files\Shaders\ShadowMapping</Filter>
+    </None>
+    <None Include="..\Shaders\ShadowMapping\shadow_mapping_depth.fragment">
+      <Filter>Resource Files\Shaders\ShadowMapping</Filter>
+    </None>
+    <None Include="..\Shaders\ShadowMapping\shadow_mapping_depth.vertex">
+      <Filter>Resource Files\Shaders\ShadowMapping</Filter>
+    </None>
   </ItemGroup>
 </Project>

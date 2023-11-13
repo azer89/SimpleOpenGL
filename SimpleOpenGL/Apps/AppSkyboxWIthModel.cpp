@@ -28,8 +28,8 @@ int AppSkyboxWithModel::MainLoop()
 	};
 	skyboxTexture.CreateCubeMap(files, AppSettings::TextureFolder + "skybox_blue_space//");
 
-	Shader mainShader("blinn_phong_skybox.vertex", "blinn_phong_skybox.fragment");
-	Shader skyboxShader("skybox.vertex", "skybox.fragment");
+	Shader mainShader("Cubemap//blinn_phong_skybox.vertex", "Cubemap//blinn_phong_skybox.fragment");
+	Shader skyboxShader("Cubemap//skybox.vertex", "Cubemap//skybox.fragment");
 
 	Model obj(AppSettings::ModelFolder + "DamagedHelmet//DamagedHelmet.gltf");
 

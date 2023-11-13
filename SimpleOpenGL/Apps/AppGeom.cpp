@@ -10,7 +10,10 @@ int AppGeom::MainLoop()
 
 	glEnable(GL_DEPTH_TEST);
 
-	Shader shader("geom.vertex", "geom.fragment", "geom.geometry");
+	Shader shader(
+		"GeometryShader//geom.vertex", 
+		"GeometryShader//geom.fragment", 
+		"GeometryShader//geom.geometry");
 
 	float points[] = {
 		0.0f,  0.0f, 0.0f, 1.0f, 0.0f

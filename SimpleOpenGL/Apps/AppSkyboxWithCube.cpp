@@ -31,9 +31,9 @@ int AppSkyboxWithCube::MainLoop()
 	};
 	skyboxTexture.CreateCubeMap(files, AppSettings::TextureFolder + "skybox_blue_space//");
 
-	Shader cubeShader("cube.vertex", "cube.fragment");
-	Shader mainShader("blinn_phong_skybox.vertex", "blinn_phong_skybox.fragment");
-	Shader skyboxShader("skybox.vertex", "skybox.fragment");
+	Shader cubeShader("Cubemap//cube.vertex", "Cubemap//cube.fragment");
+	Shader mainShader("Cubemap//blinn_phong_skybox.vertex", "Cubemap//blinn_phong_skybox.fragment");
+	Shader skyboxShader("Cubemap//skybox.vertex", "Cubemap//skybox.fragment");
 
 	cubeShader.Use();
 	//cubeShader.SetInt("texture1", 0);

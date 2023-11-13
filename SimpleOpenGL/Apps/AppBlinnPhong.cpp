@@ -21,7 +21,7 @@ int AppBlinnPhong::MainLoop()
 	glm::vec3 lightPos(0.0f, 0.0f, 0.0f);
 
 	// Shader programs
-	Shader shader("blinn_phong.vertex", "blinn_phong.fragment");
+	Shader shader("BlinnPhong//blinn_phong.vertex", "BlinnPhong//blinn_phong.fragment");
 
 	// Texture
 	Texture texture;

@@ -20,8 +20,8 @@ int AppModelLoading::MainLoop()
 
 	InitLightCube();
 
-	Shader mainShader("model_loading.vertex", "model_loading.fragment");
-	Shader lightCubeShader("light_cube.vertex", "light_cube.fragment");
+	Shader mainShader("ModelLoading//model_loading.vertex", "ModelLoading//model_loading.fragment");
+	Shader lightCubeShader("Misc//light_cube.vertex", "Misc//light_cube.fragment");
 	Model obj(AppSettings::ModelFolder + "DamagedHelmet//DamagedHelmet.gltf");
 
 	glm::vec3 lightPos(0.0f, 1.5f, 1.5f);
