@@ -5,13 +5,18 @@
 #include "Light.h"
 
 #include <vector>
-
+#include <string>
 #include <memory>
 
-class GBuffer
+class DeferredGBuffer
 {
 public:
-	GBuffer();
+	DeferredGBuffer(
+		const char* gBufferVertexShader,
+		const char* gBufferFragmentShader,
+		const char* lightingVertexShader,
+		const char* lightingFragmentShader
+	);
 
 	// Call these in order
 	void StartGeometryPass(const glm::mat4& projection, const glm::mat4& view);
@@ -29,7 +34,12 @@ public:
 	}
 
 private:
-	void Init();
+	void Init(
+		const char* gBufferVertexShader,
+		const char* gBufferFragmentShader,
+		const char* lightingVertexShader,
+		const char* lightingFragmentShader
+	);
 
 	std::unique_ptr<Shader> gBufferShader;
 	std::unique_ptr<Shader> lightingShader;

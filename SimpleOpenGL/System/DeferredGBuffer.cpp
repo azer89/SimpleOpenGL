@@ -1,18 +1,28 @@
-#include "GBuffer.h"
+#include "DeferredGBuffer.h"
 #include "AppSettings.h"
 
 #include <glad/glad.h>
 
-GBuffer::GBuffer()
+DeferredGBuffer::DeferredGBuffer(
+	const char* gBufferVertexShader,
+	const char* gBufferFragmentShader,
+	const char* lightingVertexShader,
+	const char* lightingFragmentShader
+)
 {
-	Init();
+	Init(gBufferVertexShader, gBufferFragmentShader, lightingVertexShader, lightingFragmentShader);
 }
 
-void GBuffer::Init()
+void DeferredGBuffer::Init(
+	const char* gBufferVertexShader,
+	const char* gBufferFragmentShader,
+	const char* lightingVertexShader,
+	const char* lightingFragmentShader
+)
 {
 	// Shaders
-	gBufferShader = std::make_unique<Shader>("deferred_g_buffer.vertex", "deferred_g_buffer.fragment");
-	lightingShader = std::make_unique<Shader>("deferred_lighting.vertex", "deferred_lighting.fragment");
+	gBufferShader = std::make_unique<Shader>(gBufferVertexShader, gBufferFragmentShader);
+	lightingShader = std::make_unique<Shader>(lightingVertexShader, lightingFragmentShader);
 	lightingShader->Use();
 	lightingShader->SetInt("gPosition", 0);
 	lightingShader->SetInt("gNormal", 1);
@@ -83,7 +93,7 @@ void GBuffer::Init()
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void GBuffer::StartGeometryPass(const glm::mat4& projection, const glm::mat4& view)
+void DeferredGBuffer::StartGeometryPass(const glm::mat4& projection, const glm::mat4& view)
 {
 	// 1 Geometry pass
 	glBindFramebuffer(GL_FRAMEBUFFER, gBuffer);
@@ -93,12 +103,12 @@ void GBuffer::StartGeometryPass(const glm::mat4& projection, const glm::mat4& vi
 	gBufferShader->SetMat4("view", view);
 }
 
-void GBuffer::EndGeometryPass() 
+void DeferredGBuffer::EndGeometryPass() 
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void GBuffer::StartLightingPass(const std::vector<Light>& lights, const glm::vec3& cameraPosition)
+void DeferredGBuffer::StartLightingPass(const std::vector<Light>& lights, const glm::vec3& cameraPosition)
 {
 	// 2 Lighting Pass
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -126,7 +136,7 @@ void GBuffer::StartLightingPass(const std::vector<Light>& lights, const glm::vec
 	glBindVertexArray(0);
 }
 
-void GBuffer::Blit() 
+void DeferredGBuffer::Blit() 
 {
 	// 3 Copy content of geometry's depth buffer to default framebuffer's depth buffer
 	glBindFramebuffer(GL_READ_FRAMEBUFFER, gBuffer);

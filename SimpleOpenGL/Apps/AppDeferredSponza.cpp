@@ -1,7 +1,7 @@
 #include "AppDeferredSponza.h"
 #include "AppSettings.h"
 #include "ShapeFactory.h"
-#include "GBuffer.h"
+#include "DeferredGBuffer.h"
 #include "UsefulStuff.h"
 
 #include <memory>
@@ -17,7 +17,10 @@ int AppDeferredSponza::MainLoop()
 
 	glEnable(GL_DEPTH_TEST);
 	
-	GBuffer gBuffer;
+	DeferredGBuffer gBuffer(
+		"deferred_g_buffer.vertex", "deferred_g_buffer.fragment",
+		"deferred_lighting.vertex", "deferred_lighting.fragment"
+	);
 	InitLights();
 	InitScene();
 

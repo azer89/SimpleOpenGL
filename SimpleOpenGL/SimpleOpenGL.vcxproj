@@ -161,7 +161,7 @@
     <ClCompile Include="Apps\AppSSAO.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="System\Camera.cpp" />
-    <ClCompile Include="System\GBuffer.cpp" />
+    <ClCompile Include="System\DeferredGBuffer.cpp" />
     <ClCompile Include="System\Light.cpp" />
     <ClCompile Include="System\Mesh.cpp" />
     <ClCompile Include="System\Model.cpp" />
@@ -181,6 +181,8 @@
     <None Include="..\Shaders\colored_triangle.vertex" />
     <None Include="..\Shaders\cube.fragment" />
     <None Include="..\Shaders\cube.vertex" />
+    <None Include="..\Shaders\deferred_lighting_ssbo.fragment" />
+    <None Include="..\Shaders\deferred_lighting_ssbo.vertex" />
     <None Include="..\Shaders\geom.fragment" />
     <None Include="..\Shaders\geom.geometry" />
     <None Include="..\Shaders\geom.vertex" />
@@ -224,7 +226,7 @@
     <ClInclude Include="Apps\AppSkyboxWithModel.h" />
     <ClInclude Include="Apps\AppSSAO.h" />
     <ClInclude Include="System\Camera.h" />
-    <ClInclude Include="System\GBuffer.h" />
+    <ClInclude Include="System\DeferredGBuffer.h" />
     <ClInclude Include="System\Light.h" />
     <ClInclude Include="System\Mesh.h" />
     <ClInclude Include="System\Model.h" />

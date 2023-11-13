@@ -90,7 +90,7 @@
     <ClCompile Include="System\Camera.cpp">
       <Filter>Source Files\System</Filter>
     </ClCompile>
-    <ClCompile Include="System\GBuffer.cpp">
+    <ClCompile Include="System\DeferredGBuffer.cpp">
       <Filter>Source Files\System</Filter>
     </ClCompile>
     <ClCompile Include="System\Light.cpp">
@@ -224,6 +224,12 @@
     <None Include="..\Shaders\geom.vertex">
       <Filter>Resource Files\Shaders\GeometryShader</Filter>
     </None>
+    <None Include="..\Shaders\deferred_lighting_ssbo.fragment">
+      <Filter>Resource Files\Shaders\Deferred</Filter>
+    </None>
+    <None Include="..\Shaders\deferred_lighting_ssbo.vertex">
+      <Filter>Resource Files\Shaders\Deferred</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Settings\main.xml">
@@ -267,7 +273,7 @@
     <ClInclude Include="System\Camera.h">
       <Filter>Header Files\System</Filter>
     </ClInclude>
-    <ClInclude Include="System\GBuffer.h">
+    <ClInclude Include="System\DeferredGBuffer.h">
       <Filter>Header Files\System</Filter>
     </ClInclude>
     <ClInclude Include="System\Light.h">
