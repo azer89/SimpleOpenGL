@@ -1,11 +1,14 @@
 #include "AppSSAO.h"
 #include "AppSettings.h"
+#include "UsefulStuff.h"
 #include <random>
 
 float ourLerp(float a, float b, float f)
 {
 	return a + f * (b - a);
 }
+
+const unsigned int NR_LIGHTS = 20;
 
 int AppSSAO::MainLoop()
 {
@@ -22,6 +25,7 @@ int AppSSAO::MainLoop()
 	Shader shaderBlur("SSAO//ssao.vertex", "SSAO//blur.fragment");
 
 	InitScene();
+	InitLights();
 
 	// G Buffer
 	unsigned int gBuffer;
@@ -235,6 +239,14 @@ int AppSSAO::MainLoop()
 		glBindTexture(GL_TEXTURE_2D, ssaoColorBufferBlur);
 		RenderQuad();
 
+		// Blit
+		glBindFramebuffer(GL_READ_FRAMEBUFFER, gBuffer);
+		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+		glBlitFramebuffer(0, 0, AppSettings::ScreenWidth, AppSettings::ScreenHeight, 0, 0, AppSettings::ScreenWidth, AppSettings::ScreenHeight, GL_DEPTH_BUFFER_BIT, GL_NEAREST);
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+		RenderLights();
+
 		SwapBuffers();
 		PollEvents();
 	}
@@ -285,4 +297,49 @@ void AppSSAO::RenderQuad()
 	glBindVertexArray(quadVAO);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	glBindVertexArray(0);
+}
+
+void AppSSAO::InitLights()
+{
+	lightSphereShader = std::make_unique<Shader>("Misc//light_sphere.vertex", "Misc//light_sphere.fragment");
+
+	float pi2 = glm::two_pi<float>();
+
+	for (unsigned int i = 0; i < NR_LIGHTS; i++)
+	{
+		float yPos = UsefulStuff::RandomNumber<float>(0.15f, 10.0f);
+		float radius = UsefulStuff::RandomNumber<float>(0.0f, 20.0f);
+		float rad = UsefulStuff::RandomNumber<float>(0.0f, pi2);
+		float xPos = glm::cos(rad);
+
+		glm::vec3 position(
+			glm::cos(rad) * radius,
+			yPos,
+			glm::sin(rad) * radius
+		);
+
+		glm::vec3 color(
+			UsefulStuff::RandomNumber<float>(0.5f, 1.0f),
+			UsefulStuff::RandomNumber<float>(0.5f, 1.0f),
+			UsefulStuff::RandomNumber<float>(0.5f, 1.0f)
+		);
+
+		lightAngles.push_back(rad);
+		lightRadii.push_back(radius);
+		lights.emplace_back(position, color, true, 0.1f);
+	}
+
+	lightSphereShader->Use();
+	lightSphereShader->SetFloat("radius", 0.2f);
+}
+
+void AppSSAO::RenderLights()
+{
+	lightSphereShader->Use();
+	lightSphereShader->SetMat4("projection", camera->GetProjectionMatrix());
+	lightSphereShader->SetMat4("view", camera->GetViewMatrix());
+	for (unsigned int i = 0; i < lights.size(); i++)
+	{
+		lights[i].Render(*lightSphereShader);
+	}
 }
