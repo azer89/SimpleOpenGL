@@ -10,7 +10,7 @@
 
 int main()
 {
-	AppGeom app;
+	AppDeferred app;
 	auto returnValue = app.MainLoop();
 	return returnValue;
 }
