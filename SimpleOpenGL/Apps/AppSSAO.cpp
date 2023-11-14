@@ -8,7 +8,7 @@ float ourLerp(float a, float b, float f)
 	return a + f * (b - a);
 }
 
-const unsigned int NR_LIGHTS = 20;
+const unsigned int NR_LIGHTS = 200;
 
 int AppSSAO::MainLoop()
 {
@@ -220,15 +220,22 @@ int AppSSAO::MainLoop()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		shaderLighting.Use();
 		// Send light relevant uniforms
-		glm::vec3 lightPosView = glm::vec3(view * glm::vec4(lightPos, 1.0));
-		shaderLighting.SetVec3("light.Position", lightPosView);
-		shaderLighting.SetVec3("light.Color", lightColor);
+		//glm::vec3 lightPosView = glm::vec3(view * glm::vec4(lightPos, 1.0));
+		//shaderLighting.SetVec3("light.Position", lightPosView);
+		//shaderLighting.SetVec3("light.Color", lightColor);
+		for (unsigned int i = 0; i < lights.size(); i++)
+		{
+			glm::vec3 lightPosView = glm::vec3(camera->GetViewMatrix() * glm::vec4(lights[i].Position, 1.0));
+			shaderLighting.SetVec3("lights[" + std::to_string(i) + "].Position", lightPosView);
+			shaderLighting.SetVec3("lights[" + std::to_string(i) + "].Color", lights[i].Color);
+		}
 		
 		// Update attenuation parameters
-		const float linear = 0.09f;
-		const float quadratic = 0.032f;
-		shaderLighting.SetFloat("light.Linear", linear);
-		shaderLighting.SetFloat("light.Quadratic", quadratic);
+		const float linear = 2.9f;
+		const float quadratic = 3.8f;
+		shaderLighting.SetFloat("linear", linear);
+		shaderLighting.SetFloat("quadratic", quadratic);
+		shaderLighting.SetVec3("viewPos", camera->Position);
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, gPosition);
 		glActiveTexture(GL_TEXTURE1);
