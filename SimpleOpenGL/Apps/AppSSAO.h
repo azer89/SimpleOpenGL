@@ -20,7 +20,7 @@ private:
 
 private:
 	// Scene
-	std::unique_ptr<Model> foxModel;
+	std::unique_ptr<Model> sponzaModel;
 	std::unique_ptr<Texture> grassTexture;
 	unsigned int planeVAO = 0;
 };
