@@ -49,6 +49,9 @@
     <Filter Include="Resource Files\Shaders\GeometryShader">
       <UniqueIdentifier>{e4cc0378-04b4-4b6d-a8dd-bb9f5961bbbd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Shaders\SSAO">
+      <UniqueIdentifier>{a0ff6301-f35b-4f4d-a5ab-850799dd7a05}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -296,6 +299,24 @@
     </None>
     <None Include="..\Shaders\ShadowMapping\shadow_mapping_depth.vertex">
       <Filter>Resource Files\Shaders\ShadowMapping</Filter>
+    </None>
+    <None Include="..\Shaders\SSAO\blur.fragment">
+      <Filter>Resource Files\Shaders\SSAO</Filter>
+    </None>
+    <None Include="..\Shaders\SSAO\geometry.fragment">
+      <Filter>Resource Files\Shaders\SSAO</Filter>
+    </None>
+    <None Include="..\Shaders\SSAO\geometry.vertex">
+      <Filter>Resource Files\Shaders\SSAO</Filter>
+    </None>
+    <None Include="..\Shaders\SSAO\lighting.fragment">
+      <Filter>Resource Files\Shaders\SSAO</Filter>
+    </None>
+    <None Include="..\Shaders\SSAO\ssao.fragment">
+      <Filter>Resource Files\Shaders\SSAO</Filter>
+    </None>
+    <None Include="..\Shaders\SSAO\ssao.vertex">
+      <Filter>Resource Files\Shaders\SSAO</Filter>
     </None>
   </ItemGroup>
 </Project>

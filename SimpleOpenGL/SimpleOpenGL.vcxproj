@@ -233,6 +233,12 @@
     <None Include="..\Shaders\ShadowMapping\shadow_mapping_debug.vertex" />
     <None Include="..\Shaders\ShadowMapping\shadow_mapping_depth.fragment" />
     <None Include="..\Shaders\ShadowMapping\shadow_mapping_depth.vertex" />
+    <None Include="..\Shaders\SSAO\blur.fragment" />
+    <None Include="..\Shaders\SSAO\geometry.fragment" />
+    <None Include="..\Shaders\SSAO\geometry.vertex" />
+    <None Include="..\Shaders\SSAO\lighting.fragment" />
+    <None Include="..\Shaders\SSAO\ssao.fragment" />
+    <None Include="..\Shaders\SSAO\ssao.vertex" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

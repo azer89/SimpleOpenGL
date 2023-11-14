@@ -16,6 +16,7 @@ private:
 	void InitScene();
 
 	void RenderScene(const Shader& shader);
+	void RenderQuad();
 
 private:
 	// Scene

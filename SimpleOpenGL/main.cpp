@@ -7,10 +7,11 @@
 #include "AppDeferred.h"
 #include "AppDeferredSponza.h"
 #include "AppGeom.h"
+#include "AppSSAO.h"
 
 int main()
 {
-	AppDeferred app;
+	AppSSAO app;
 	auto returnValue = app.MainLoop();
 	return returnValue;
 }
