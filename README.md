@@ -4,6 +4,7 @@ Features:
 * Deferred shading
 * Cubemap
 * Geometry shader
+* Ambient occlusion
 * glTF model loading
   
 <div align="center">
@@ -13,6 +14,8 @@ https://github.com/azer89/SimpleOpenGL/assets/790432/8185affd-2fa8-4f66-a43b-236
 https://github.com/azer89/SimpleOpenGL/assets/790432/ff9fa67f-afdc-4da1-bdb6-108bc7d7864e
 
 https://github.com/azer89/SimpleOpenGL/assets/790432/c2bfb436-c1c8-4711-9648-5b267d6f2281
+
+<img width="400" height="300" alt="image" src="https://github.com/azer89/SimpleOpenGL/assets/790432/b31ce507-2103-44c0-a4dd-e58c637188f8">
 
 <img width="400" height="300" alt="image" src="https://github.com/azer89/SimpleOpenGL/assets/790432/1c01a0ad-c3c3-4374-bc8e-9bd71313e499">
 
