@@ -165,6 +165,7 @@
     <ClCompile Include="System\Light.cpp" />
     <ClCompile Include="System\Mesh.cpp" />
     <ClCompile Include="System\Model.cpp" />
+    <ClCompile Include="System\PipelineDeferredSSAO.cpp" />
     <ClCompile Include="System\Shader.cpp" />
     <ClCompile Include="System\ShapeFactory.cpp" />
     <ClCompile Include="System\Texture.cpp" />
@@ -191,6 +192,7 @@
     <ClInclude Include="System\Light.h" />
     <ClInclude Include="System\Mesh.h" />
     <ClInclude Include="System\Model.h" />
+    <ClInclude Include="System\PipelineDeferredSSAO.h" />
     <ClInclude Include="System\Shader.h" />
     <ClInclude Include="System\ShapeFactory.h" />
     <ClInclude Include="System\Texture.h" />

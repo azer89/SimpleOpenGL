@@ -120,6 +120,9 @@
     <ClCompile Include="Apps\AppSettings.cpp">
       <Filter>Source Files\System</Filter>
     </ClCompile>
+    <ClCompile Include="System\PipelineDeferredSSAO.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Settings\main.xml">
@@ -192,6 +195,9 @@
     </ClInclude>
     <ClInclude Include="Apps\AppGeom.h">
       <Filter>Header Files\Apps</Filter>
+    </ClInclude>
+    <ClInclude Include="System\PipelineDeferredSSAO.h">
+      <Filter>Header Files\System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

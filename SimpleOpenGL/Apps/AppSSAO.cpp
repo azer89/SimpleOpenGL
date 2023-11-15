@@ -28,47 +28,47 @@ int AppSSAO::MainLoop()
 	InitLights();
 
 	// G Buffer
-	unsigned int gBuffer;
-	glGenFramebuffers(1, &gBuffer);
-	glBindFramebuffer(GL_FRAMEBUFFER, gBuffer);
-	unsigned int gPosition, gNormal, gAlbedo;
+	unsigned int gBufferFBO;
+	glGenFramebuffers(1, &gBufferFBO);
+	glBindFramebuffer(GL_FRAMEBUFFER, gBufferFBO);
+	unsigned int gPositionTexture, gNormalTexture, gAlbedoTexture;
 
 	// Position
-	glGenTextures(1, &gPosition);
-	glBindTexture(GL_TEXTURE_2D, gPosition);
+	glGenTextures(1, &gPositionTexture);
+	glBindTexture(GL_TEXTURE_2D, gPositionTexture);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, AppSettings::ScreenWidth, AppSettings::ScreenHeight, 0, GL_RGBA, GL_FLOAT, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, gPosition, 0);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, gPositionTexture, 0);
 	
 	// Normal
-	glGenTextures(1, &gNormal);
-	glBindTexture(GL_TEXTURE_2D, gNormal);
+	glGenTextures(1, &gNormalTexture);
+	glBindTexture(GL_TEXTURE_2D, gNormalTexture);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, AppSettings::ScreenWidth, AppSettings::ScreenHeight, 0, GL_RGBA, GL_FLOAT, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, gNormal, 0);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, gNormalTexture, 0);
 	
 	// Color + Specular
-	glGenTextures(1, &gAlbedo);
-	glBindTexture(GL_TEXTURE_2D, gAlbedo);
+	glGenTextures(1, &gAlbedoTexture);
+	glBindTexture(GL_TEXTURE_2D, gAlbedoTexture);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, AppSettings::ScreenWidth, AppSettings::ScreenHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, gAlbedo, 0);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, gAlbedoTexture, 0);
 	
 	// Attachments
 	unsigned int attachments[3] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
 	glDrawBuffers(3, attachments);
 
-	// Render buffer
-	unsigned int rboDepth;
-	glGenRenderbuffers(1, &rboDepth);
-	glBindRenderbuffer(GL_RENDERBUFFER, rboDepth);
+	// Depth render buffer
+	unsigned int depthRBO;
+	glGenRenderbuffers(1, &depthRBO);
+	glBindRenderbuffer(GL_RENDERBUFFER, depthRBO);
 	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, AppSettings::ScreenWidth, AppSettings::ScreenHeight);
-	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, rboDepth);
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthRBO);
 	
 	// Check frame buffer
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
@@ -82,33 +82,33 @@ int AppSSAO::MainLoop()
 	glGenFramebuffers(1, &ssaoFBO); 
 	
 	glBindFramebuffer(GL_FRAMEBUFFER, ssaoFBO);
-	unsigned int ssaoColorBuffer, ssaoColorBufferBlur;
+	unsigned int ssaoColorTexture, ssaoBlurTexture;
 
 	// SSAO color buffer
-	glGenTextures(1, &ssaoColorBuffer);
-	glBindTexture(GL_TEXTURE_2D, ssaoColorBuffer);
+	glGenTextures(1, &ssaoColorTexture);
+	glBindTexture(GL_TEXTURE_2D, ssaoColorTexture);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, AppSettings::ScreenWidth, AppSettings::ScreenHeight, 0, GL_RED, GL_FLOAT, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, ssaoColorBuffer, 0);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, ssaoColorTexture, 0);
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 	{
-		std::cout << "SSAO Framebuffer not complete!" << std::endl;
+		std::cerr << "SSAO Framebuffer not complete!" << std::endl;
 	}
 
 	// Blur frame buffer
 	unsigned int ssaoBlurFBO;
 	glGenFramebuffers(1, &ssaoBlurFBO);
 	glBindFramebuffer(GL_FRAMEBUFFER, ssaoBlurFBO);
-	glGenTextures(1, &ssaoColorBufferBlur);
-	glBindTexture(GL_TEXTURE_2D, ssaoColorBufferBlur);
+	glGenTextures(1, &ssaoBlurTexture);
+	glBindTexture(GL_TEXTURE_2D, ssaoBlurTexture);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, AppSettings::ScreenWidth, AppSettings::ScreenHeight, 0, GL_RED, GL_FLOAT, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, ssaoColorBufferBlur, 0);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, ssaoBlurTexture, 0);
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 	{
-		std::cout << "SSAO Blur Framebuffer not complete!" << std::endl;
+		std::cerr << "SSAO Blur Framebuffer not complete!" << std::endl;
 	}
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
@@ -146,8 +146,8 @@ int AppSSAO::MainLoop()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
 	// Lighting
-	glm::vec3 lightPos = glm::vec3(2.0, 4.0, -2.0);
-	glm::vec3 lightColor = glm::vec3(0.2, 0.2, 0.7);
+	//glm::vec3 lightPos = glm::vec3(2.0, 4.0, -2.0);
+	//glm::vec3 lightColor = glm::vec3(0.2, 0.2, 0.7);
 
 	// Shader configuration
 	shaderLighting.Use();
@@ -177,14 +177,14 @@ int AppSSAO::MainLoop()
 		glm::mat4 view = camera->GetViewMatrix();
 
 		// 1 Geometry pass: render scene's geometry/color data into G buffer
-		glBindFramebuffer(GL_FRAMEBUFFER, gBuffer);
+		glBindFramebuffer(GL_FRAMEBUFFER, gBufferFBO);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glm::mat4 model = glm::mat4(1.0f);
 		shaderGeometry.Use();
 		shaderGeometry.SetMat4("projection", projection);
 		shaderGeometry.SetMat4("view", view);
 		shaderGeometry.SetMat4("model", model);
-		shaderGeometry.SetInt("invertedNormals", 0); // invert normals as we're inside the cube
+		shaderGeometry.SetInt("invertedNormals", 0);
 		RenderScene(shaderGeometry);
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
@@ -199,9 +199,9 @@ int AppSSAO::MainLoop()
 		}
 		shaderSSAO.SetMat4("projection", projection);
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, gPosition);
+		glBindTexture(GL_TEXTURE_2D, gPositionTexture);
 		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, gNormal);
+		glBindTexture(GL_TEXTURE_2D, gNormalTexture);
 		glActiveTexture(GL_TEXTURE2);
 		glBindTexture(GL_TEXTURE_2D, noiseTexture);
 		RenderQuad();
@@ -212,17 +212,13 @@ int AppSSAO::MainLoop()
 		glClear(GL_COLOR_BUFFER_BIT);
 		shaderBlur.Use();
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, ssaoColorBuffer);
+		glBindTexture(GL_TEXTURE_2D, ssaoColorTexture);
 		RenderQuad();
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 		// 4 lighting pass: traditional deferred Blinn-Phong lighting with added screen-space ambient occlusion
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		shaderLighting.Use();
-		// Send light relevant uniforms
-		//glm::vec3 lightPosView = glm::vec3(view * glm::vec4(lightPos, 1.0));
-		//shaderLighting.SetVec3("light.Position", lightPosView);
-		//shaderLighting.SetVec3("light.Color", lightColor);
 		for (unsigned int i = 0; i < lights.size(); i++)
 		{
 			glm::vec3 lightPosView = glm::vec3(camera->GetViewMatrix() * glm::vec4(lights[i].Position, 1.0));
@@ -237,17 +233,17 @@ int AppSSAO::MainLoop()
 		shaderLighting.SetFloat("quadratic", quadratic);
 		shaderLighting.SetVec3("viewPos", camera->Position);
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, gPosition);
+		glBindTexture(GL_TEXTURE_2D, gPositionTexture);
 		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, gNormal);
+		glBindTexture(GL_TEXTURE_2D, gNormalTexture);
 		glActiveTexture(GL_TEXTURE2);
-		glBindTexture(GL_TEXTURE_2D, gAlbedo);
+		glBindTexture(GL_TEXTURE_2D, gAlbedoTexture);
 		glActiveTexture(GL_TEXTURE3); // add extra SSAO texture to lighting pass
-		glBindTexture(GL_TEXTURE_2D, ssaoColorBufferBlur);
+		glBindTexture(GL_TEXTURE_2D, ssaoBlurTexture);
 		RenderQuad();
 
 		// Blit
-		glBindFramebuffer(GL_READ_FRAMEBUFFER, gBuffer);
+		glBindFramebuffer(GL_READ_FRAMEBUFFER, gBufferFBO);
 		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 		glBlitFramebuffer(0, 0, AppSettings::ScreenWidth, AppSettings::ScreenHeight, 0, 0, AppSettings::ScreenWidth, AppSettings::ScreenHeight, GL_DEPTH_BUFFER_BIT, GL_NEAREST);
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
