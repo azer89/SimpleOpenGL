@@ -8,10 +8,10 @@
 #include <string>
 #include <memory>
 
-class DeferredGBuffer
+class PipelineDeferred
 {
 public:
-	DeferredGBuffer(
+	PipelineDeferred(
 		const char* gBufferVertexShader,
 		const char* gBufferFragmentShader,
 		const char* lightingVertexShader,

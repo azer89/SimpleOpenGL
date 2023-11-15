@@ -1,7 +1,7 @@
 #include "AppDeferred.h"
 #include "AppSettings.h"
 #include "ShapeFactory.h"
-#include "DeferredGBuffer.h"
+#include "PipelineDeferred.h"
 #include "UsefulStuff.h"
 
 #include <memory>
@@ -17,10 +17,11 @@ int AppDeferred::MainLoop()
 
 	glEnable(GL_DEPTH_TEST);
 	
-	DeferredGBuffer gBuffer(
+	PipelineDeferred pipeline(
 		"Deferred//deferred_g_buffer.vertex", "Deferred//deferred_g_buffer.fragment",
 		"Deferred//deferred_lighting.vertex", "Deferred//deferred_lighting.fragment"
 	);
+
 	InitLights();
 	InitScene();
 
@@ -36,17 +37,17 @@ int AppDeferred::MainLoop()
 		glm::mat4 view = camera->GetViewMatrix();
 
 		// 1 Geometry pass
-		gBuffer.StartGeometryPass(projection, view);
-		Shader* geomShaderPtr = gBuffer.GetGeometryShader();
+		pipeline.StartGeometryPass(projection, view);
+		Shader* geomShaderPtr = pipeline.GetGeometryShader();
 		RenderScene(*geomShaderPtr);
-		gBuffer.EndGeometryPass();
+		pipeline.EndGeometryPass();
 
 		// 2 Lighting Pass
 		UpdateLightPositions();
-		gBuffer.StartLightingPass(lights, camera->Position);
+		pipeline.StartLightingPass(lights, camera->Position);
 
 		// 3 Copy content of geometry's depth buffer to default framebuffer's depth buffer
-		gBuffer.Blit();
+		pipeline.Blit();
 
 		// Render lights
 		RenderLights();

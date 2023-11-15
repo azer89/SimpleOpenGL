@@ -161,7 +161,7 @@
     <ClCompile Include="Apps\AppSSAO.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="System\Camera.cpp" />
-    <ClCompile Include="System\DeferredGBuffer.cpp" />
+    <ClCompile Include="System\PipelineDeferred.cpp" />
     <ClCompile Include="System\Light.cpp" />
     <ClCompile Include="System\Mesh.cpp" />
     <ClCompile Include="System\Model.cpp" />
@@ -187,7 +187,7 @@
     <ClInclude Include="Apps\AppSkyboxWithModel.h" />
     <ClInclude Include="Apps\AppSSAO.h" />
     <ClInclude Include="System\Camera.h" />
-    <ClInclude Include="System\DeferredGBuffer.h" />
+    <ClInclude Include="System\PipelineDeferred.h" />
     <ClInclude Include="System\Light.h" />
     <ClInclude Include="System\Mesh.h" />
     <ClInclude Include="System\Model.h" />

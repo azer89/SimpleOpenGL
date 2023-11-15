@@ -1,9 +1,9 @@
-#include "DeferredGBuffer.h"
+#include "PipelineDeferred.h"
 #include "AppSettings.h"
 
 #include <glad/glad.h>
 
-DeferredGBuffer::DeferredGBuffer(
+PipelineDeferred::PipelineDeferred(
 	const char* gBufferVertexShader,
 	const char* gBufferFragmentShader,
 	const char* lightingVertexShader,
@@ -13,7 +13,7 @@ DeferredGBuffer::DeferredGBuffer(
 	Init(gBufferVertexShader, gBufferFragmentShader, lightingVertexShader, lightingFragmentShader);
 }
 
-void DeferredGBuffer::Init(
+void PipelineDeferred::Init(
 	const char* gBufferVertexShader,
 	const char* gBufferFragmentShader,
 	const char* lightingVertexShader,
@@ -93,7 +93,7 @@ void DeferredGBuffer::Init(
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void DeferredGBuffer::StartGeometryPass(const glm::mat4& projection, const glm::mat4& view)
+void PipelineDeferred::StartGeometryPass(const glm::mat4& projection, const glm::mat4& view)
 {
 	// 1 Geometry pass
 	glBindFramebuffer(GL_FRAMEBUFFER, gBuffer);
@@ -103,12 +103,12 @@ void DeferredGBuffer::StartGeometryPass(const glm::mat4& projection, const glm::
 	gBufferShader->SetMat4("view", view);
 }
 
-void DeferredGBuffer::EndGeometryPass() 
+void PipelineDeferred::EndGeometryPass() 
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void DeferredGBuffer::StartLightingPass(const std::vector<Light>& lights, const glm::vec3& cameraPosition)
+void PipelineDeferred::StartLightingPass(const std::vector<Light>& lights, const glm::vec3& cameraPosition)
 {
 	// 2 Lighting Pass
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -136,7 +136,7 @@ void DeferredGBuffer::StartLightingPass(const std::vector<Light>& lights, const 
 	glBindVertexArray(0);
 }
 
-void DeferredGBuffer::Blit() 
+void PipelineDeferred::Blit() 
 {
 	// 3 Copy content of geometry's depth buffer to default framebuffer's depth buffer
 	glBindFramebuffer(GL_READ_FRAMEBUFFER, gBuffer);

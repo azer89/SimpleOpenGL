@@ -326,8 +326,8 @@ void AppSSAO::InitLights()
 		);
 
 		glm::vec3 color(
-			UsefulStuff::RandomNumber<float>(0.5f, 1.0f),
-			UsefulStuff::RandomNumber<float>(0.5f, 1.0f),
+			UsefulStuff::RandomNumber<float>(0.2f, 0.5f),
+			UsefulStuff::RandomNumber<float>(0.2f, 0.5f),
 			UsefulStuff::RandomNumber<float>(0.5f, 1.0f)
 		);
 

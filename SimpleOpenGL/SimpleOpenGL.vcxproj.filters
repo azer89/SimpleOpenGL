@@ -90,7 +90,7 @@
     <ClCompile Include="System\Camera.cpp">
       <Filter>Source Files\System</Filter>
     </ClCompile>
-    <ClCompile Include="System\DeferredGBuffer.cpp">
+    <ClCompile Include="System\PipelineDeferred.cpp">
       <Filter>Source Files\System</Filter>
     </ClCompile>
     <ClCompile Include="System\Light.cpp">
@@ -163,7 +163,7 @@
     <ClInclude Include="System\Camera.h">
       <Filter>Header Files\System</Filter>
     </ClInclude>
-    <ClInclude Include="System\DeferredGBuffer.h">
+    <ClInclude Include="System\PipelineDeferred.h">
       <Filter>Header Files\System</Filter>
     </ClInclude>
     <ClInclude Include="System\Light.h">
