@@ -1,4 +1,5 @@
 #version 330 core
+
 out vec4 FragColor;
 
 in vec2 TexCoords;
@@ -15,19 +16,20 @@ struct Light
 };
 const int NR_LIGHTS = 200;
 uniform Light lights[NR_LIGHTS];
+
 uniform vec3 viewPos;
 uniform float linear;
 uniform float quadratic;
 
 void main()
 {
-	// Retrieve data from gbuffer
+	// Retrieve data from G buffer
 	vec3 FragPos = texture(gPosition, TexCoords).rgb;
 	vec3 Normal = texture(gNormal, TexCoords).rgb;
 	vec3 Diffuse = texture(gAlbedo, TexCoords).rgb;
 	float AmbientOcclusion = texture(ssao, TexCoords).r;
 
-	// Then calculate lighting as usual
+	// Calculate lighting
 	vec3 ambient = vec3(0.3 * Diffuse * AmbientOcclusion);
 	vec3 lighting = ambient;
 	vec3 viewDir = normalize(viewPos - FragPos);

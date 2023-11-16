@@ -202,7 +202,7 @@ void PipelineDeferredSSAO::StartGeometryPass(const glm::mat4& projection, const 
 	shaderGeometry->SetMat4("projection", projection);
 	shaderGeometry->SetMat4("view", view);
 	shaderGeometry->SetMat4("model", model);
-	shaderGeometry->SetInt("invertedNormals", 0);
+	shaderGeometry->SetFloat("invertedNormals", 1.0f);
 }
 
 void PipelineDeferredSSAO::EndGeometryPass()
