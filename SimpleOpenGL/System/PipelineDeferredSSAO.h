@@ -1,6 +1,7 @@
 #ifndef __PIPELINE_DEFERRED_SSAO__
 #define __PIPELINE_DEFERRED_SSAO__
 
+#include <vector>
 #include <memory>
 #include "glm/glm.hpp"
 
@@ -29,6 +30,15 @@ public:
 		const glm::mat4& cameraview,
 		const glm::vec3& cameraPosition);
 	void Blit();
+
+	Shader* GetGeometryShader()
+	{
+		if (shaderGeometry == nullptr)
+		{
+			return nullptr;
+		}
+		return shaderGeometry.get();
+	}
 
 private:
 	void Init(

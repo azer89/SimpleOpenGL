@@ -1,12 +1,9 @@
 #include "AppSSAO.h"
 #include "AppSettings.h"
 #include "UsefulStuff.h"
-#include <random>
+#include "PipelineDeferredSSAO.h"
 
-float ourLerp(float a, float b, float f)
-{
-	return a + f * (b - a);
-}
+#include <random>
 
 const unsigned int NR_LIGHTS = 200;
 
@@ -19,150 +16,15 @@ int AppSSAO::MainLoop()
 
 	glEnable(GL_DEPTH_TEST);
 
-	Shader shaderGeometry("SSAO//geometry.vertex", "SSAO//geometry.fragment");
-	Shader shaderLighting("SSAO//ssao.vertex", "SSAO//lighting.fragment");
-	Shader shaderSSAO("SSAO//ssao.vertex", "SSAO//ssao.fragment");
-	Shader shaderBlur("SSAO//ssao.vertex", "SSAO//blur.fragment");
-
 	InitScene();
 	InitLights();
 
-	// G Buffer
-	unsigned int gBufferFBO;
-	glGenFramebuffers(1, &gBufferFBO);
-	glBindFramebuffer(GL_FRAMEBUFFER, gBufferFBO);
-	unsigned int gPositionTexture, gNormalTexture, gAlbedoTexture;
-
-	// Position
-	glGenTextures(1, &gPositionTexture);
-	glBindTexture(GL_TEXTURE_2D, gPositionTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, AppSettings::ScreenWidth, AppSettings::ScreenHeight, 0, GL_RGBA, GL_FLOAT, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, gPositionTexture, 0);
-	
-	// Normal
-	glGenTextures(1, &gNormalTexture);
-	glBindTexture(GL_TEXTURE_2D, gNormalTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, AppSettings::ScreenWidth, AppSettings::ScreenHeight, 0, GL_RGBA, GL_FLOAT, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, gNormalTexture, 0);
-	
-	// Color + Specular
-	glGenTextures(1, &gAlbedoTexture);
-	glBindTexture(GL_TEXTURE_2D, gAlbedoTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, AppSettings::ScreenWidth, AppSettings::ScreenHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, gAlbedoTexture, 0);
-	
-	// Attachments
-	unsigned int attachments[3] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
-	glDrawBuffers(3, attachments);
-
-	// Depth render buffer
-	unsigned int depthRBO;
-	glGenRenderbuffers(1, &depthRBO);
-	glBindRenderbuffer(GL_RENDERBUFFER, depthRBO);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, AppSettings::ScreenWidth, AppSettings::ScreenHeight);
-	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthRBO);
-	
-	// Check frame buffer
-	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-	{
-		std::cerr << "Framebuffer not complete!" << std::endl;
-	}
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-	// SSAO Frame buffer
-	unsigned int ssaoFBO;
-	glGenFramebuffers(1, &ssaoFBO); 
-	
-	glBindFramebuffer(GL_FRAMEBUFFER, ssaoFBO);
-	unsigned int ssaoColorTexture, ssaoBlurTexture;
-
-	// SSAO color buffer
-	glGenTextures(1, &ssaoColorTexture);
-	glBindTexture(GL_TEXTURE_2D, ssaoColorTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, AppSettings::ScreenWidth, AppSettings::ScreenHeight, 0, GL_RED, GL_FLOAT, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, ssaoColorTexture, 0);
-	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-	{
-		std::cerr << "SSAO Framebuffer not complete!" << std::endl;
-	}
-
-	// Blur frame buffer
-	unsigned int ssaoBlurFBO;
-	glGenFramebuffers(1, &ssaoBlurFBO);
-	glBindFramebuffer(GL_FRAMEBUFFER, ssaoBlurFBO);
-	glGenTextures(1, &ssaoBlurTexture);
-	glBindTexture(GL_TEXTURE_2D, ssaoBlurTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, AppSettings::ScreenWidth, AppSettings::ScreenHeight, 0, GL_RED, GL_FLOAT, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, ssaoBlurTexture, 0);
-	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-	{
-		std::cerr << "SSAO Blur Framebuffer not complete!" << std::endl;
-	}
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-	// Sample kernel
-	std::uniform_real_distribution<GLfloat> randomFloats(0.0, 1.0); // generates random floats between 0.0 and 1.0
-	std::default_random_engine generator;
-	std::vector<glm::vec3> ssaoKernel;
-	for (unsigned int i = 0; i < 64; ++i)
-	{
-		glm::vec3 sample(randomFloats(generator) * 2.0 - 1.0, randomFloats(generator) * 2.0 - 1.0, randomFloats(generator));
-		sample = glm::normalize(sample);
-		sample *= randomFloats(generator);
-		float scale = float(i) / 64.0f;
-
-		// scale samples s.t. they're more aligned to center of kernel
-		scale = ourLerp(0.1f, 1.0f, scale * scale);
-		sample *= scale;
-		ssaoKernel.push_back(sample);
-	}
-
-	// Noise texture
-	std::vector<glm::vec3> ssaoNoise;
-	for (unsigned int i = 0; i < 16; i++)
-	{
-		glm::vec3 noise(randomFloats(generator) * 2.0 - 1.0, randomFloats(generator) * 2.0 - 1.0, 0.0f); // rotate around z-axis (in tangent space)
-		ssaoNoise.push_back(noise);
-	}
-	unsigned int noiseTexture; 
-	glGenTextures(1, &noiseTexture);
-	glBindTexture(GL_TEXTURE_2D, noiseTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, 4, 4, 0, GL_RGB, GL_FLOAT, &ssaoNoise[0]);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
-	// Lighting
-	//glm::vec3 lightPos = glm::vec3(2.0, 4.0, -2.0);
-	//glm::vec3 lightColor = glm::vec3(0.2, 0.2, 0.7);
-
-	// Shader configuration
-	shaderLighting.Use();
-	shaderLighting.SetInt("gPosition", 0);
-	shaderLighting.SetInt("gNormal", 1);
-	shaderLighting.SetInt("gAlbedo", 2);
-	shaderLighting.SetInt("ssao", 3);
-
-	shaderSSAO.Use();
-	shaderSSAO.SetInt("gPosition", 0);
-	shaderSSAO.SetInt("gNormal", 1);
-	shaderSSAO.SetInt("texNoise", 2);
-	
-	shaderBlur.Use();
-	shaderBlur.SetInt("ssaoInput", 0);
+	PipelineDeferredSSAO pipeline(
+		"SSAO//geometry.vertex", "SSAO//geometry.fragment",
+		"SSAO//ssao.vertex", "SSAO//lighting.fragment",
+		"SSAO//ssao.vertex", "SSAO//ssao.fragment",
+		"SSAO//ssao.vertex", "SSAO//blur.fragment"
+	);
 
 	// Game loop
 	while (!GLFWWindowShouldClose())
@@ -177,76 +39,21 @@ int AppSSAO::MainLoop()
 		glm::mat4 view = camera->GetViewMatrix();
 
 		// 1 Geometry pass: render scene's geometry/color data into G buffer
-		glBindFramebuffer(GL_FRAMEBUFFER, gBufferFBO);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glm::mat4 model = glm::mat4(1.0f);
-		shaderGeometry.Use();
-		shaderGeometry.SetMat4("projection", projection);
-		shaderGeometry.SetMat4("view", view);
-		shaderGeometry.SetMat4("model", model);
-		shaderGeometry.SetInt("invertedNormals", 0);
-		RenderScene(shaderGeometry);
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		pipeline.StartGeometryPass(projection, view);
+		RenderScene(*(pipeline.GetGeometryShader()));
+		pipeline.EndGeometryPass();
 
 		// 2 SSAO
-		glBindFramebuffer(GL_FRAMEBUFFER, ssaoFBO);
-		glClear(GL_COLOR_BUFFER_BIT);
-		shaderSSAO.Use();
-		// Send kernel + rotation 
-		for (unsigned int i = 0; i < 64; ++i)
-		{
-			shaderSSAO.SetVec3("samples[" + std::to_string(i) + "]", ssaoKernel[i]);
-		}
-		shaderSSAO.SetMat4("projection", projection);
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, gPositionTexture);
-		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, gNormalTexture);
-		glActiveTexture(GL_TEXTURE2);
-		glBindTexture(GL_TEXTURE_2D, noiseTexture);
-		RenderQuad();
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		pipeline.StartSSAOPass(projection);
 
 		// 3 Blur SSAO texture to remove noise
-		glBindFramebuffer(GL_FRAMEBUFFER, ssaoBlurFBO);
-		glClear(GL_COLOR_BUFFER_BIT);
-		shaderBlur.Use();
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, ssaoColorTexture);
-		RenderQuad();
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		pipeline.StartBlurPass();
 
 		// 4 lighting pass: traditional deferred Blinn-Phong lighting with added screen-space ambient occlusion
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		shaderLighting.Use();
-		for (unsigned int i = 0; i < lights.size(); i++)
-		{
-			glm::vec3 lightPosView = glm::vec3(camera->GetViewMatrix() * glm::vec4(lights[i].Position, 1.0));
-			shaderLighting.SetVec3("lights[" + std::to_string(i) + "].Position", lightPosView);
-			shaderLighting.SetVec3("lights[" + std::to_string(i) + "].Color", lights[i].Color);
-		}
-		
-		// Update attenuation parameters
-		const float linear = 2.9f;
-		const float quadratic = 3.8f;
-		shaderLighting.SetFloat("linear", linear);
-		shaderLighting.SetFloat("quadratic", quadratic);
-		shaderLighting.SetVec3("viewPos", camera->Position);
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, gPositionTexture);
-		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, gNormalTexture);
-		glActiveTexture(GL_TEXTURE2);
-		glBindTexture(GL_TEXTURE_2D, gAlbedoTexture);
-		glActiveTexture(GL_TEXTURE3); // add extra SSAO texture to lighting pass
-		glBindTexture(GL_TEXTURE_2D, ssaoBlurTexture);
-		RenderQuad();
+		pipeline.StartLightingPass(lights, view, camera->Position);
 
-		// Blit
-		glBindFramebuffer(GL_READ_FRAMEBUFFER, gBufferFBO);
-		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
-		glBlitFramebuffer(0, 0, AppSettings::ScreenWidth, AppSettings::ScreenHeight, 0, 0, AppSettings::ScreenWidth, AppSettings::ScreenHeight, GL_DEPTH_BUFFER_BIT, GL_NEAREST);
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		// 5 Blit
+		pipeline.Blit();
 
 		RenderLights();
 
