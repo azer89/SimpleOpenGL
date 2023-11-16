@@ -127,9 +127,9 @@ void PipelineDeferredSSAO::Init(
 	// Sample kernel
 	for (unsigned int i = 0; i < 64; ++i)
 	{
-		glm::vec3 sample(Utility::RandomNumber<float>() * 2.0 - 1.0,
-			Utility::RandomNumber<float>() * 2.0 - 1.0,
-			Utility::RandomNumber<float>());
+		glm::vec3 sample(Utility::RandomNumber<float>(-1.0f, 1.0f),
+			Utility::RandomNumber<float>(-1.0f, 1.0f),
+			Utility::RandomNumber<float>()); // Half hemisphere
 		sample = glm::normalize(sample);
 		sample *= Utility::RandomNumber<float>();
 		float scale = float(i) / 64.0f;
