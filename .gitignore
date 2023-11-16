@@ -399,3 +399,6 @@ FodyWeavers.xsd
 
 # Spir-V
 *.spv
+
+#Rider
+.idea/
