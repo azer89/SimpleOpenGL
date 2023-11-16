@@ -1,11 +1,9 @@
 #include "AppSSAO.h"
 #include "AppSettings.h"
-#include "UsefulStuff.h"
+#include "Utility.h"
 #include "PipelineDeferredSSAO.h"
 
 #include <random>
-
-const unsigned int NR_LIGHTS = 200;
 
 int AppSSAO::MainLoop()
 {
@@ -80,46 +78,18 @@ void AppSSAO::RenderScene(const Shader& shader)
 	sponzaModel->Draw(shader);
 }
 
-unsigned int quadVAO = 0;
-void AppSSAO::RenderQuad()
-{
-	if (quadVAO == 0)
-	{
-		float quadVertices[] = {
-			// Positions		// Texture Coords
-			-1.0f,  1.0f, 0.0f, 0.0f, 1.0f,
-			-1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
-			 1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
-			 1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
-		};
-		// setup plane VAO
-		unsigned int quadVBO = 0;
-		glGenVertexArrays(1, &quadVAO);
-		glGenBuffers(1, &quadVBO);
-		glBindVertexArray(quadVAO);
-		glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), &quadVertices, GL_STATIC_DRAW);
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
-		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-	}
-	glBindVertexArray(quadVAO);
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-	glBindVertexArray(0);
-}
-
 void AppSSAO::InitLights()
 {
 	lightSphereShader = std::make_unique<Shader>("Misc//light_sphere.vertex", "Misc//light_sphere.fragment");
 
 	float pi2 = glm::two_pi<float>();
 
-	for (unsigned int i = 0; i < NR_LIGHTS; i++)
+	const int NR_LIGHTS = 200;
+	for (unsigned int i = 0; i < NR_LIGHTS; ++i)
 	{
-		float yPos = UsefulStuff::RandomNumber<float>(0.15f, 10.0f);
-		float radius = UsefulStuff::RandomNumber<float>(0.0f, 20.0f);
-		float rad = UsefulStuff::RandomNumber<float>(0.0f, pi2);
+		float yPos = Utility::RandomNumber<float>(0.15f, 10.0f);
+		float radius = Utility::RandomNumber<float>(0.0f, 20.0f);
+		float rad = Utility::RandomNumber<float>(0.0f, pi2);
 		float xPos = glm::cos(rad);
 
 		glm::vec3 position(
@@ -129,9 +99,9 @@ void AppSSAO::InitLights()
 		);
 
 		glm::vec3 color(
-			UsefulStuff::RandomNumber<float>(0.2f, 0.5f),
-			UsefulStuff::RandomNumber<float>(0.2f, 0.5f),
-			UsefulStuff::RandomNumber<float>(0.5f, 1.0f)
+			Utility::RandomNumber<float>(0.2f, 0.5f),
+			Utility::RandomNumber<float>(0.2f, 0.5f),
+			Utility::RandomNumber<float>(0.5f, 1.0f)
 		);
 
 		lightAngles.push_back(rad);
@@ -148,7 +118,7 @@ void AppSSAO::RenderLights()
 	lightSphereShader->Use();
 	lightSphereShader->SetMat4("projection", camera->GetProjectionMatrix());
 	lightSphereShader->SetMat4("view", camera->GetViewMatrix());
-	for (unsigned int i = 0; i < lights.size(); i++)
+	for (unsigned int i = 0; i < lights.size(); ++i)
 	{
 		lights[i].Render(*lightSphereShader);
 	}

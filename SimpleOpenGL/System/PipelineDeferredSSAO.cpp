@@ -4,10 +4,7 @@
 #include <vector>
 #include <random>
 
-float ourLerp(float a, float b, float f)
-{
-	return a + f * (b - a);
-}
+#include "Utility.h"
 
 PipelineDeferredSSAO::PipelineDeferredSSAO(
 	const char* geomVertexShader,
@@ -137,8 +134,8 @@ void PipelineDeferredSSAO::Init(
 		sample *= randomFloats(generator);
 		float scale = float(i) / 64.0f;
 
-		// scale samples s.t. they're more aligned to center of kernel
-		scale = ourLerp(0.1f, 1.0f, scale * scale);
+		// Scale samples s.t. they're more aligned to center of kernel
+		scale = Utility::Lerp<float>(0.1f, 1.0f, scale * scale);
 		sample *= scale;
 		ssaoKernel.push_back(sample);
 	}
@@ -256,7 +253,7 @@ void PipelineDeferredSSAO::StartLightingPass(const std::vector<Light>& lights,
 		shaderLighting->SetVec3("lights[" + std::to_string(i) + "].Color", lights[i].Color);
 	}
 
-	// Update attenuation parameters
+	// Attenuation parameters
 	const float linear = 2.9f;
 	const float quadratic = 3.8f;
 	shaderLighting->SetFloat("linear", linear);

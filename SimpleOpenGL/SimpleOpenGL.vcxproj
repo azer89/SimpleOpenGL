@@ -196,7 +196,7 @@
     <ClInclude Include="System\Shader.h" />
     <ClInclude Include="System\ShapeFactory.h" />
     <ClInclude Include="System\Texture.h" />
-    <ClInclude Include="System\UsefulStuff.h" />
+    <ClInclude Include="System\Utility.h" />
     <ClInclude Include="System\XMLReader.h" />
   </ItemGroup>
   <ItemGroup>

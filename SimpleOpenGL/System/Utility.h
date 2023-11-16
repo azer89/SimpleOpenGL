@@ -1,9 +1,9 @@
-#ifndef __USEFUL_STUFF_H__
-#define __USEFUL_STUFF_H__
+#ifndef __UTILITY_H__
+#define __UTILITY_H__
 
 #include <random>
 
-namespace UsefulStuff
+namespace Utility
 {
 	template <typename T>
 	inline T RandomNumber()
@@ -19,6 +19,12 @@ namespace UsefulStuff
 	inline T RandomNumber(T min, T max)
 	{
 		return min + (max - min) * RandomNumber<T>();
+	}
+
+	template <typename T>
+	float Lerp(float a, float b, float f)
+	{
+		return a + f * (b - a);
 	}
 }
 

@@ -2,11 +2,9 @@
 #include "AppSettings.h"
 #include "ShapeFactory.h"
 #include "PipelineDeferred.h"
-#include "UsefulStuff.h"
+#include "Utility.h"
 
 #include <memory>
-
-const unsigned int NR_LIGHTS = 64;
 
 int AppDeferred::MainLoop()
 {
@@ -67,11 +65,12 @@ void AppDeferred::InitLights()
 	
 	float pi2 = glm::two_pi<float>();
 
+	const unsigned int NR_LIGHTS = 64;
 	for (unsigned int i = 0; i < NR_LIGHTS; i++)
 	{
-		float yPos = UsefulStuff::RandomNumber<float>(0.15f, 1.0f);
-		float radius = UsefulStuff::RandomNumber<float>(3.0f, 8.0f);
-		float rad = UsefulStuff::RandomNumber<float>(0.0f, pi2);
+		float yPos = Utility::RandomNumber<float>(0.15f, 1.0f);
+		float radius = Utility::RandomNumber<float>(3.0f, 8.0f);
+		float rad = Utility::RandomNumber<float>(0.0f, pi2);
 		float xPos = glm::cos(rad);
 
 		glm::vec3 position(
@@ -81,9 +80,9 @@ void AppDeferred::InitLights()
 		);
 
 		glm::vec3 color(
-			UsefulStuff::RandomNumber<float>(0.5f, 1.0f),
-			UsefulStuff::RandomNumber<float>(0.5f, 1.0f),
-			UsefulStuff::RandomNumber<float>(0.5f, 1.0f)
+			Utility::RandomNumber<float>(0.5f, 1.0f),
+			Utility::RandomNumber<float>(0.5f, 1.0f),
+			Utility::RandomNumber<float>(0.5f, 1.0f)
 		);
 
 		lightAngles.push_back(rad);
@@ -97,7 +96,7 @@ void AppDeferred::InitLights()
 
 void AppDeferred::UpdateLightPositions()
 {
-	for (unsigned int i = 0; i < NR_LIGHTS; i++)
+	for (unsigned int i = 0; i < lights.size(); ++i)
 	{
 		float step = deltaTime;
 

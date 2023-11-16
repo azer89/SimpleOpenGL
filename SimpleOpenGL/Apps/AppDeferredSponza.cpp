@@ -2,11 +2,9 @@
 #include "AppSettings.h"
 #include "ShapeFactory.h"
 #include "PipelineDeferred.h"
-#include "UsefulStuff.h"
+#include "Utility.h"
 
 #include <memory>
-
-const unsigned int NR_LIGHTS = 100;
 
 int AppDeferredSponza::MainLoop()
 {
@@ -66,11 +64,12 @@ void AppDeferredSponza::InitLights()
 	
 	float pi2 = glm::two_pi<float>();
 
-	for (unsigned int i = 0; i < NR_LIGHTS; i++)
+	const unsigned int NR_LIGHTS = 100;
+	for (unsigned int i = 0; i < NR_LIGHTS; ++i)
 	{
-		float yPos = UsefulStuff::RandomNumber<float>(0.15f, 10.0f);
-		float radius = UsefulStuff::RandomNumber<float>(0.0f, 20.0f);
-		float rad = UsefulStuff::RandomNumber<float>(0.0f, pi2);
+		float yPos = Utility::RandomNumber<float>(0.15f, 10.0f);
+		float radius = Utility::RandomNumber<float>(0.0f, 20.0f);
+		float rad = Utility::RandomNumber<float>(0.0f, pi2);
 		float xPos = glm::cos(rad);
 
 		glm::vec3 position(
@@ -80,9 +79,9 @@ void AppDeferredSponza::InitLights()
 		);
 
 		glm::vec3 color(
-			UsefulStuff::RandomNumber<float>(0.5f, 1.0f),
-			UsefulStuff::RandomNumber<float>(0.5f, 1.0f),
-			UsefulStuff::RandomNumber<float>(0.5f, 1.0f)
+			Utility::RandomNumber<float>(0.5f, 1.0f),
+			Utility::RandomNumber<float>(0.5f, 1.0f),
+			Utility::RandomNumber<float>(0.5f, 1.0f)
 		);
 
 		lightAngles.push_back(rad);
@@ -96,7 +95,7 @@ void AppDeferredSponza::InitLights()
 
 void AppDeferredSponza::UpdateLightPositions()
 {
-	for (unsigned int i = 0; i < NR_LIGHTS; i++)
+	for (unsigned int i = 0; i < lights.size(); ++i)
 	{
 		float step = deltaTime * 0.5f;
 
@@ -121,7 +120,7 @@ void AppDeferredSponza::RenderLights()
 	lightSphereShader->Use();
 	lightSphereShader->SetMat4("projection", camera->GetProjectionMatrix());
 	lightSphereShader->SetMat4("view", camera->GetViewMatrix());
-	for (unsigned int i = 0; i < lights.size(); i++)
+	for (unsigned int i = 0; i < lights.size(); ++i)
 	{
 		lights[i].Render(*lightSphereShader);
 	}
