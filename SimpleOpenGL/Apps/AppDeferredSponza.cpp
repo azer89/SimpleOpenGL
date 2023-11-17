@@ -35,7 +35,7 @@ int AppDeferredSponza::MainLoop()
 
 		// 1 Geometry pass
 		pipeline.StartGeometryPass(projection, view);
-		Shader* geomShaderPtr = pipeline.GetGeometryShader();
+		const Shader* geomShaderPtr = pipeline.GetGeometryShader();
 		RenderScene(*geomShaderPtr);
 		pipeline.EndGeometryPass();
 
@@ -64,7 +64,7 @@ void AppDeferredSponza::InitLights()
 	
 	float pi2 = glm::two_pi<float>();
 
-	const unsigned int NR_LIGHTS = 100;
+	constexpr unsigned int NR_LIGHTS = 100;
 	for (unsigned int i = 0; i < NR_LIGHTS; ++i)
 	{
 		float yPos = Utility::RandomNumber<float>(0.15f, 10.0f);

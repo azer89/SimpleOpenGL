@@ -118,8 +118,8 @@ void AppSSAO::RenderLights()
 	lightSphereShader->Use();
 	lightSphereShader->SetMat4("projection", camera->GetProjectionMatrix());
 	lightSphereShader->SetMat4("view", camera->GetViewMatrix());
-	for (unsigned int i = 0; i < lights.size(); ++i)
+	for (Light& light : lights)
 	{
-		lights[i].Render(*lightSphereShader);
+		light.Render(*lightSphereShader);
 	}
 }

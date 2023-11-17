@@ -1,7 +1,7 @@
 #include "PipelineDeferred.h"
 #include "AppSettings.h"
 
-#include <glad/glad.h>
+#include "glad/glad.h"
 
 PipelineDeferred::PipelineDeferred(
 	const char* gBufferVertexShader,
@@ -29,7 +29,7 @@ void PipelineDeferred::Init(
 	lightingShader->SetInt("gAlbedoSpec", 2);
 
 	// Quad
-	float quadVertices[] = {
+	constexpr float quadVertices[] = {
 		// Positions		// Texture Coords
 		-1.0f,  1.0f, 0.0f, 0.0f, 1.0f,
 		-1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
@@ -121,8 +121,8 @@ void PipelineDeferred::StartLightingPass(const std::vector<Light>& lights, const
 	glActiveTexture(GL_TEXTURE2);
 	glBindTexture(GL_TEXTURE_2D, gAlbedoSpec);
 	// Send light relevant uniforms
-	const float linear = 0.7f;
-	const float quadratic = 1.8f;
+	constexpr float linear = 0.7f;
+	constexpr float quadratic = 1.8f;
 	lightingShader->SetFloat("linear", linear);
 	lightingShader->SetFloat("quadratic", quadratic);
 	for (unsigned int i = 0; i < lights.size(); i++)

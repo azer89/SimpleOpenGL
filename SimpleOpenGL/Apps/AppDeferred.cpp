@@ -36,7 +36,7 @@ int AppDeferred::MainLoop()
 
 		// 1 Geometry pass
 		pipeline.StartGeometryPass(projection, view);
-		Shader* geomShaderPtr = pipeline.GetGeometryShader();
+		const Shader* geomShaderPtr = pipeline.GetGeometryShader();
 		RenderScene(*geomShaderPtr);
 		pipeline.EndGeometryPass();
 
@@ -65,7 +65,7 @@ void AppDeferred::InitLights()
 	
 	float pi2 = glm::two_pi<float>();
 
-	const unsigned int NR_LIGHTS = 64;
+	constexpr unsigned int NR_LIGHTS = 64;
 	for (unsigned int i = 0; i < NR_LIGHTS; i++)
 	{
 		float yPos = Utility::RandomNumber<float>(0.15f, 1.0f);
@@ -121,8 +121,8 @@ void AppDeferred::InitScene()
 	grassTexture->CreateFromImageFile(AppSettings::TextureFolder + "grass.png");
 
 	// Grass plane
-	float halfWidth = 50.0f;
-	float planeVertices[] = {
+	constexpr float halfWidth = 50.0f;
+	constexpr float planeVertices[] = {
 		// Positions				   // Normals			// Texcoords
 		 halfWidth, 0.0f,  halfWidth,  0.0f, 1.0f, 0.0f,  25.0f,  0.0f,
 		-halfWidth, 0.0f,  halfWidth,  0.0f, 1.0f, 0.0f,   0.0f,  0.0f,
@@ -152,9 +152,9 @@ void AppDeferred::RenderLights()
 	lightSphereShader->Use();
 	lightSphereShader->SetMat4("projection", camera->GetProjectionMatrix());
 	lightSphereShader->SetMat4("view", camera->GetViewMatrix());
-	for (unsigned int i = 0; i < lights.size(); i++)
+	for (Light& light : lights)
 	{
-		lights[i].Render(*lightSphereShader);
+		light.Render(*lightSphereShader);
 	}
 }
 

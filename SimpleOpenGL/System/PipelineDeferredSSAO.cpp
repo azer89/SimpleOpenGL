@@ -1,10 +1,9 @@
 #include "PipelineDeferredSSAO.h"
 #include "AppSettings.h"
+#include "Utility.h"
 
 #include <vector>
 #include <random>
-
-#include "Utility.h"
 
 PipelineDeferredSSAO::PipelineDeferredSSAO(
 	const char* geomVertexShader,
@@ -173,7 +172,7 @@ void PipelineDeferredSSAO::Init(
 	shaderBlur->SetInt("ssaoInput", 0);
 
 	// Plane
-	float quadVertices[] = {
+	constexpr float quadVertices[] = {
 		// Positions		// Texture Coords
 		-1.0f,  1.0f, 0.0f, 0.0f, 1.0f,
 		-1.0f, -1.0f, 0.0f, 0.0f, 0.0f,

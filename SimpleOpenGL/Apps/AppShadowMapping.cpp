@@ -30,8 +30,8 @@ int AppShadowMapping::MainLoop()
 	grassTexture.CreateFromImageFile(AppSettings::TextureFolder + "grass.png");
 
 	// Depth
-	const unsigned int DEPTH_WIDTH = 6000;
-	const unsigned int DEPTH_HEIGHT = 6000;
+	constexpr unsigned int DEPTH_WIDTH = 6000;
+	constexpr unsigned int DEPTH_HEIGHT = 6000;
 	Texture depthTexture;
 	depthTexture.CreateDepthMap(DEPTH_WIDTH, DEPTH_HEIGHT);
 
@@ -49,17 +49,17 @@ int AppShadowMapping::MainLoop()
 
 	// Light
 	glm::vec3 lightPos;
-	float lightY = 2.0f;
-	float lightRadius = 3.0f;
+	constexpr float lightY = 2.0f;
+	constexpr float lightRadius = 3.0f;
+	constexpr float lightSpeed = 0.5f;
 	float lightTimer = 0.0f;
-	float lightSpeed = 0.5f;
 
 	// For depth rendering
 	glm::mat4 lightProjection;
 	glm::mat4 lightView;
 	glm::mat4 lightSpaceMatrix;
-	float near_plane = 1.0f;
-	float far_plane = 10;
+	constexpr float near_plane = 1.0f;
+	constexpr float far_plane = 10;
 
 	// Render loop
 	while (!GLFWWindowShouldClose())
@@ -199,7 +199,7 @@ void AppShadowMapping::InitScene()
 	foxModel = std::make_unique<Model>(AppSettings::ModelFolder + "Fox//Fox.gltf");
 
 	// Plane
-	float planeVertices[] = {
+	constexpr float planeVertices[] = {
 		// Positions			// Normals			// Texcoords
 		 25.0f, 0.0f,  25.0f,  0.0f, 1.0f, 0.0f,  25.0f,  0.0f,
 		-25.0f, 0.0f,  25.0f,  0.0f, 1.0f, 0.0f,   0.0f,  0.0f,
@@ -223,7 +223,7 @@ void AppShadowMapping::InitScene()
 	glBindVertexArray(0);
 
 	// Quad (for debugging)
-	float quadVertices[] = {
+	constexpr float quadVertices[] = {
 		// positions		// texture Coords
 		-1.0f,  1.0f, 0.0f, 0.0f, 1.0f,
 		-1.0f, -1.0f, 0.0f, 0.0f, 0.0f,

@@ -1,10 +1,9 @@
 #include "Model.h"
 
-#include "glad/glad.h" 
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
-#include <glm/gtc/type_ptr.hpp>
-#include "stb_image.h"
+#include "glm/gtc/type_ptr.hpp"
+#include "assimp/postprocess.h"
 
 #include <string>
 #include <fstream>
@@ -29,9 +28,9 @@ Model::Model(const std::string& path, bool gamma) :
 // Draws the model, and thus all its meshes
 void Model::Draw(const Shader& shader)
 {
-	for (unsigned int i = 0; i < meshes.size(); i++)
+	for (Mesh& mesh : meshes)
 	{
-		meshes[i].Draw(shader);
+		mesh.Draw(shader);
 	}
 }
 

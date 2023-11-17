@@ -1,10 +1,8 @@
 #ifndef __SHADER_H__
 #define __SHADER_H__
 
-#include <iostream>
 #include <string>
 #include <glad/glad.h>
-#include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 
 enum ObjectType

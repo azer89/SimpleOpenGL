@@ -77,8 +77,8 @@ void AppBase::InitCamera()
 {
 	// Can change the camera position later
 	camera = std::make_unique<Camera>(glm::vec3(0.0f, 0.0f, 3.0f));
-	lastX = AppSettings::ScreenWidth / 2.0f;
-	lastY = AppSettings::ScreenHeight / 2.0f;
+	lastX = static_cast<float>(AppSettings::ScreenWidth) / 2.0f;
+	lastY = static_cast<float>(AppSettings::ScreenHeight) / 2.0f;
 	firstMouse = true;
 }
 

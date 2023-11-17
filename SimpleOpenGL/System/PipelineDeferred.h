@@ -5,7 +5,6 @@
 #include "Light.h"
 
 #include <vector>
-#include <string>
 #include <memory>
 
 class PipelineDeferred

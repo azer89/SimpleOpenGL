@@ -2,7 +2,6 @@
 #define __TEXTURE_H__
 
 #include <glad/glad.h>
-#include <glm/glm.hpp>
 #include <string>
 #include <vector>
 
