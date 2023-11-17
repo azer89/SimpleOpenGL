@@ -31,9 +31,9 @@ private:
 	void LoadModel(std::string const& path);
 
 	// Processes a node in a recursive fashion. Processes each individual mesh located at the node and repeats this process on its children nodes (if any).
-	void ProcessNode(aiNode* node, const aiScene* scene);
+	void ProcessNode(aiNode* node, const aiScene* scene, const glm::mat4& parentTransform);
 
-	Mesh ProcessMesh(aiMesh* mesh, const aiScene* scene);
+	Mesh ProcessMesh(aiMesh* mesh, const aiScene* scene, const glm::mat4& transform);
 
 	// Checks all material textures of a given type and loads the textures if they're not loaded yet.
 	// The required info is returned as a Texture struct.

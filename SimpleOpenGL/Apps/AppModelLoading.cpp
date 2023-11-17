@@ -22,9 +22,9 @@ int AppModelLoading::MainLoop()
 
 	Shader mainShader("ModelLoading//model_loading.vertex", "ModelLoading//model_loading.fragment");
 	Shader lightCubeShader("Misc//light_cube.vertex", "Misc//light_cube.fragment");
-	Model obj(AppSettings::ModelFolder + "DamagedHelmet//DamagedHelmet.gltf");
+	Model obj(AppSettings::ModelFolder + "adamHead//adamHead.gltf");
 
-	glm::vec3 lightPos(0.0f, 1.5f, 1.5f);
+	glm::vec3 lightPos(0.0f, 0.5f, 5.0f);
 
 	auto modelRotation = 0.0f;
 
@@ -48,10 +48,10 @@ int AppModelLoading::MainLoop()
 		mainShader.SetVec3("lightPos", lightPos);
 		
 		glm::mat4 model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); 
+		//model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); 
 		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	
-		model = glm::rotate(model, glm::half_pi<float>(), glm::vec3(1.0f, 0.0f, 0.0f));
-		model = glm::rotate(model, modelRotation, glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::rotate(model, glm::half_pi<float>(), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, modelRotation, glm::vec3(0.0f, 1.0f, 0.0f));
 		modelRotation += deltaTime;
 		mainShader.SetMat4("model", model);
 		obj.Draw(mainShader);

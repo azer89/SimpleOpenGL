@@ -3,6 +3,7 @@
 #include "glad/glad.h" 
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
+#include <glm/gtc/type_ptr.hpp>
 #include "stb_image.h"
 
 #include <string>
@@ -11,6 +12,12 @@
 #include <iostream>
 #include <map>
 #include <vector>
+
+
+inline glm::mat4 mat4_cast(const aiMatrix4x4& m) 
+{ 
+	return glm::transpose(glm::make_mat4(&m.a1)); 
+}
 
 // Constructor, expects a filepath to a 3D model.
 Model::Model(const std::string& path, bool gamma) :
@@ -45,28 +52,32 @@ void Model::LoadModel(std::string const& path)
 	directory = path.substr(0, path.find_last_of('/'));
 
 	// Process ASSIMP's root node recursively
-	ProcessNode(scene->mRootNode, scene);
+	ProcessNode(scene->mRootNode, scene, glm::mat4(1.0));
 }
 
 // Processes a node in a recursive fashion. Processes each individual mesh located at the node and repeats this process on its children nodes (if any).
-void Model::ProcessNode(aiNode* node, const aiScene* scene)
+void Model::ProcessNode(aiNode* node, const aiScene* scene, const glm::mat4& parentTransform)
 {
+	glm::mat4 nodeTransform = mat4_cast(node->mTransformation);
+	glm::mat4 totalTransform = parentTransform * nodeTransform;
+
 	// Process each mesh located at the current node
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
 	{
 		// The node object only contains indices to index the actual objects in the scene. 
 		// The scene contains all the data, node is just to keep stuff organized (like relations between nodes).
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-		meshes.push_back(ProcessMesh(mesh, scene));
+		
+		meshes.push_back(ProcessMesh(mesh, scene, totalTransform));
 	}
 	// After we've processed all of the meshes (if any) we then recursively process each of the children nodes
 	for (unsigned int i = 0; i < node->mNumChildren; i++)
 	{
-		ProcessNode(node->mChildren[i], scene);
+		ProcessNode(node->mChildren[i], scene, totalTransform);
 	}
 }
 
-Mesh Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
+Mesh Model::ProcessMesh(aiMesh* mesh, const aiScene* scene, const glm::mat4& transform)
 {
 	// Data to fill
 	std::vector<Vertex> vertices;
@@ -77,19 +88,21 @@ Mesh Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 	for (unsigned int i = 0; i < mesh->mNumVertices; i++)
 	{
 		Vertex vertex;
-		glm::vec3 vector; // We declare a placeholder vector since assimp uses its own vector class that doesn't directly convert to glm's vec3 class so we transfer the data to this placeholder glm::vec3 first.
+		glm::vec4 vector; // We declare a placeholder vector since assimp uses its own vector class that doesn't directly convert to glm's vec3 class so we transfer the data to this placeholder glm::vec3 first.
 		// Positions
 		vector.x = mesh->mVertices[i].x;
 		vector.y = mesh->mVertices[i].y;
 		vector.z = mesh->mVertices[i].z;
-		vertex.Position = vector;
+		vector.w = 1;
+		vertex.Position = transform * vector;
 		// Normals
 		if (mesh->HasNormals())
 		{
 			vector.x = mesh->mNormals[i].x;
 			vector.y = mesh->mNormals[i].y;
 			vector.z = mesh->mNormals[i].z;
-			vertex.Normal = vector;
+			vector.w = 0;
+			vertex.Normal = transform * vector;
 		}
 		// Texture coordinates
 		if (mesh->mTextureCoords[0]) // does the mesh contain texture coordinates?
