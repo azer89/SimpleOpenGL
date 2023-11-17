@@ -72,7 +72,7 @@ void AppSSAO::InitScene()
 void AppSSAO::RenderScene(const Shader& shader)
 {
 	glm::mat4 model = glm::mat4(1.0f);
-	//model = glm::translate(model, glm::vec3(10.0f, 0.0f, 1.0f));
+	model = glm::translate(model, glm::vec3(8.0f, 0.0f, 1.0f));
 	model = glm::scale(model, glm::vec3(2.0f));
 	shader.SetMat4("model", model);
 	sponzaModel->Draw(shader);

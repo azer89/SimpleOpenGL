@@ -60,8 +60,7 @@ int AppSkyboxWithModel::MainLoop()
 		glm::mat4 model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
-		model = glm::rotate(model, glm::half_pi<float>(), glm::vec3(1.0f, 0.0f, 0.0f));
-		model = glm::rotate(model, modelRotation, glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::rotate(model, modelRotation, glm::vec3(0.0f, 1.0f, 0.0f));
 		modelRotation += deltaTime;
 		mainShader.SetMat4("model", model);
 		obj.Draw(mainShader);
