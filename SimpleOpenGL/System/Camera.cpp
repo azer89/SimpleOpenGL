@@ -13,7 +13,7 @@ Camera::Camera(glm::vec3 position, glm::vec3 up, float yaw, float pitch) :
 	WorldUp = up;
 	Yaw = yaw;
 	Pitch = pitch;
-	UpdateCameraVectors();
+	UpdateInternal();
 }
 
 Camera::Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch) : 
@@ -26,20 +26,17 @@ Camera::Camera(float posX, float posY, float posZ, float upX, float upY, float u
 	WorldUp = glm::vec3(upX, upY, upZ);
 	Yaw = yaw;
 	Pitch = pitch;
-	UpdateCameraVectors();
+	UpdateInternal();
 }
 
-glm::mat4 Camera::GetProjectionMatrix()
+glm::mat4 Camera::GetProjectionMatrix() const
 {
-	return glm::perspective(glm::radians(Zoom), 
-		(float)AppSettings::ScreenWidth / (float)AppSettings::ScreenHeight, 
-		0.1f, 
-		100.0f);
+	return projectionMatrix;
 }
 
-glm::mat4 Camera::GetViewMatrix()
+glm::mat4 Camera::GetViewMatrix() const
 {
-	return glm::lookAt(Position, Position + Front, Up);
+	return viewMatrix;
 }
 
 void Camera::ProcessKeyboard(CameraMovement direction, float deltaTime)
@@ -61,6 +58,8 @@ void Camera::ProcessKeyboard(CameraMovement direction, float deltaTime)
 	{
 		Position += Right * velocity;
 	}
+
+	UpdateInternal();
 }
 
 // Processes input received from a mouse input system. Expects the offset value in both the x and y direction.
@@ -85,8 +84,8 @@ void Camera::ProcessMouseMovement(float xoffset, float yoffset, bool constrainPi
 		}
 	}
 
-	// Update Front, Right and Up Vectors using the updated Euler angles
-	UpdateCameraVectors();
+	// Update vectors and matrices
+	UpdateInternal();
 }
 
 // Processes input received from a mouse scroll-wheel event. Only requires input on the vertical wheel-axis
@@ -101,19 +100,28 @@ void Camera::ProcessMouseScroll(float yoffset)
 	{
 		Zoom = 45.0f;
 	}
+
+	UpdateInternal();
 }
 
-// Calculates the front vector from the Camera's (updated) Euler Angles
-void Camera::UpdateCameraVectors()
+// Update vectors and matrices
+void Camera::UpdateInternal()
 {
-	// Calculate the new Front vector
+	// Recalculate front vector
 	glm::vec3 front;
 	front.x = cos(glm::radians(Yaw)) * cos(glm::radians(Pitch));
 	front.y = sin(glm::radians(Pitch));
 	front.z = sin(glm::radians(Yaw)) * cos(glm::radians(Pitch));
 	Front = glm::normalize(front);
 	
-	// Also re-calculate the Right and Up vector
+	// Recalculate right and up vector
 	Right = glm::normalize(glm::cross(Front, WorldUp));  // Normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
 	Up = glm::normalize(glm::cross(Right, Front));
+
+	// Matrices
+	projectionMatrix = glm::perspective(glm::radians(Zoom), 
+		(float)AppSettings::ScreenWidth / (float)AppSettings::ScreenHeight, 
+		0.1f, 
+		100.0f);
+	viewMatrix = glm::lookAt(Position, Position + Front, Up);
 }

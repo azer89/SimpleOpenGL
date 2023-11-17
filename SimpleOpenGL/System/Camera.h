@@ -15,11 +15,11 @@ enum CameraMovement
 };
 
 // Default camera values
-const float CAMERA_YAW = -90.0f;
-const float CAMERA_PITCH = 0.0f;
-const float CAMERA_SPEED = 2.5f;
-const float CAMERA_SENSITIVITY = 0.1f;
-const float CAMERA_ZOOM = 45.0f;
+constexpr float CAMERA_YAW = -90.0f;
+constexpr float CAMERA_PITCH = 0.0f;
+constexpr float CAMERA_SPEED = 2.5f;
+constexpr float CAMERA_SENSITIVITY = 0.1f;
+constexpr float CAMERA_ZOOM = 45.0f;
 
 class Camera
 {
@@ -47,15 +47,19 @@ public:
 
 	Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch);
 
-	glm::mat4 GetProjectionMatrix();
-	glm::mat4 GetViewMatrix();
+	glm::mat4 GetProjectionMatrix() const;
+	glm::mat4 GetViewMatrix() const;
 
 	void ProcessKeyboard(CameraMovement direction, float deltaTime);
 	void ProcessMouseMovement(float xoffset, float yoffset, bool constrainPitch = true);
 	void ProcessMouseScroll(float yoffset);
 
 private:
-	void UpdateCameraVectors();
+	glm::mat4 projectionMatrix;
+	glm::mat4 viewMatrix;
+	
+private:
+	void UpdateInternal();
 };
 
 #endif
