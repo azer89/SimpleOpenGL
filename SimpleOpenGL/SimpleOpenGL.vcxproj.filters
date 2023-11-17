@@ -148,9 +148,6 @@
     <ClInclude Include="Apps\AppModelLoading.h">
       <Filter>Header Files\Apps</Filter>
     </ClInclude>
-    <ClInclude Include="Apps\AppSettings.h">
-      <Filter>Header Files\Apps</Filter>
-    </ClInclude>
     <ClInclude Include="Apps\AppShadowMapping.h">
       <Filter>Header Files\Apps</Filter>
     </ClInclude>
@@ -197,6 +194,9 @@
       <Filter>Header Files\Apps</Filter>
     </ClInclude>
     <ClInclude Include="System\PipelineDeferredSSAO.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Apps\AppSettings.h">
       <Filter>Header Files\System</Filter>
     </ClInclude>
   </ItemGroup>
