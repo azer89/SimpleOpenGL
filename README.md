@@ -1,4 +1,6 @@
-Features:
+# Simple OpenGL
+
+### Features
 * Blinn-Phong lighting
 * Shadow mapping
 * Deferred shading
@@ -6,7 +8,8 @@ Features:
 * Geometry shader
 * Ambient occlusion
 * glTF model loading
-  
+
+### Demo
 <div align="center">
   
 https://github.com/azer89/SimpleOpenGL/assets/790432/8185affd-2fa8-4f66-a43b-236b1047be56
@@ -27,7 +30,7 @@ https://github.com/azer89/SimpleOpenGL/assets/790432/c2bfb436-c1c8-4711-9648-5b2
 
 </div>
 
-Credit:
+### Credit
 * [learnopengl.com](https://learnopengl.com/)
 * [glTF Assets](https://github.com/KhronosGroup/glTF-Sample-Assets)
 * Skybox textures from [humus.name](https://www.humus.name/index.php?page=Textures)
