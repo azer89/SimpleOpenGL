@@ -5,3 +5,4 @@ Models/SciFiHelmet/* filter=lfs diff=lfs merge=lfs -text
 Models/AntiqueCamera/* filter=lfs diff=lfs merge=lfs -text
 Models/Sponza/* filter=lfs diff=lfs merge=lfs -text
 Models/adamHead/* filter=lfs diff=lfs merge=lfs -text
+Models/Cerberus/* filter=lfs diff=lfs merge=lfs -text
