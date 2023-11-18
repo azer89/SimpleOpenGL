@@ -53,7 +53,7 @@ int AppSSAO::MainLoop()
 		// 5 Blit
 		pipeline.Blit();
 
-		RenderLights();
+		//RenderLights();
 
 		SwapBuffers();
 		PollEvents();
@@ -67,6 +67,7 @@ int AppSSAO::MainLoop()
 void AppSSAO::InitScene()
 {
 	sponzaModel = std::make_unique<Model>(AppSettings::ModelFolder + "Sponza//Sponza.gltf");
+	adamModel = std::make_unique<Model>(AppSettings::ModelFolder + "adamHead//adamHead.gltf");
 }
 
 void AppSSAO::RenderScene(const Shader& shader)
@@ -76,6 +77,12 @@ void AppSSAO::RenderScene(const Shader& shader)
 	model = glm::scale(model, glm::vec3(2.0f));
 	shader.SetMat4("model", model);
 	sponzaModel->Draw(shader);
+
+	model = glm::mat4(1.f);
+	model = glm::translate(model, glm::vec3(0.0f, 0.75f, 0.0f));
+	model = glm::scale(model, glm::vec3(0.5f));
+	shader.SetMat4("model", model);
+	adamModel->Draw(shader);
 }
 
 void AppSSAO::InitLights()
