@@ -1,8 +1,11 @@
 #include "Mesh.h"
+#include "TextureMapper.h"
 
-#include <glad/glad.h>
+#include "glad/glad.h"
 #include <string>
 #include <vector>
+#include <unordered_map>
+#include <iostream>
 
 // Constructor
 Mesh::Mesh(std::vector<Vertex>&& vertices, std::vector<unsigned int>&& indices, std::vector<Texture>&& textures)
@@ -25,37 +28,22 @@ Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>&
 // Render the mesh
 void Mesh::Draw(const Shader& shader)
 {
-	// Bind appropriate textures
-	unsigned int diffuseNr = 1;
-	unsigned int specularNr = 1;
-	unsigned int normalNr = 1;
-	unsigned int heightNr = 1;
-	for (unsigned int i = 0; i < textures.size(); i++)
+	std::unordered_map<aiTextureType, int> counterMap;
+	for (unsigned int i = 0; i < textures.size(); ++i)
 	{
-		glActiveTexture(GL_TEXTURE0 + i); // Active proper texture unit before binding
-		// Retrieve texture number (the N in diffuse_textureN)
+		glActiveTexture(GL_TEXTURE0 + i);
 		std::string number;
-		auto name = textures[i].GetType();
-		if (std::strcmp(name, "texture_diffuse") == 0)
+		aiTextureType aiTType = textures[i].GetType();
+		if (counterMap.find(aiTType) == counterMap.end())
 		{
-			number = std::to_string(diffuseNr++);
+			counterMap[aiTType] = 1;
 		}
-		else if (std::strcmp(name, "texture_specular") == 0)
-		{
-			number = std::to_string(specularNr++); // Transfer unsigned int to string
-		}
-		else if (std::strcmp(name, "texture_normal") == 0)
-		{
-			number = std::to_string(normalNr++); // Transfer unsigned int to string
-		}
-		else if (std::strcmp(name, "texture_height") == 0)
-		{
-			number = std::to_string(heightNr++); // Transfer unsigned int to string
-		}
+		number = std::to_string(counterMap[aiTType]);
+		++counterMap[aiTType];
 
-		// Now set the sampler to the correct texture unit
+		std::string name = TextureMapper::GetTextureString(aiTType);
+
 		glUniform1i(glGetUniformLocation(shader.ID, (name + number).c_str()), i);
-		// And finally bind the texture
 		glBindTexture(GL_TEXTURE_2D, textures[i].GetID());
 	}
 

@@ -16,7 +16,7 @@ Texture::Texture()
 	id = GL_INVALID_VALUE;
 }
 
-Texture::Texture(std::string texType, std::string texName) :
+Texture::Texture(aiTextureType texType, std::string texName) :
 	textureType(texType),
 	textureName(texName)
 {
@@ -28,9 +28,9 @@ unsigned int Texture::GetID()
 	return id;
 }
 
-const char* Texture::GetType()
+aiTextureType Texture::GetType()
 {
-	return textureType.c_str();
+	return textureType;
 }
 
 const char* Texture::GetName()

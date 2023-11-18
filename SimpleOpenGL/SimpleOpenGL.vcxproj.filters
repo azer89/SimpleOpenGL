@@ -81,7 +81,7 @@
     <ClCompile Include="Apps\AppSkyboxWithCube.cpp">
       <Filter>Source Files\App</Filter>
     </ClCompile>
-    <ClCompile Include="Apps\AppSkyboxWIthModel.cpp">
+    <ClCompile Include="Apps\AppSkyboxWithModel.cpp">
       <Filter>Source Files\App</Filter>
     </ClCompile>
     <ClCompile Include="Apps\AppSSAO.cpp">
@@ -197,6 +197,9 @@
       <Filter>Header Files\System</Filter>
     </ClInclude>
     <ClInclude Include="Apps\AppSettings.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="System\TextureMapper.h">
       <Filter>Header Files\System</Filter>
     </ClInclude>
   </ItemGroup>

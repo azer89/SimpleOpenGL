@@ -5,13 +5,14 @@
 #include "glm/gtc/type_ptr.hpp"
 #include "assimp/postprocess.h"
 
+#include "TextureMapper.h"
+
 #include <string>
 #include <fstream>
 #include <sstream>
 #include <iostream>
 #include <map>
 #include <vector>
-
 
 inline glm::mat4 mat4_cast(const aiMatrix4x4& m) 
 { 
@@ -142,58 +143,24 @@ Mesh Model::ProcessMesh(aiMesh* mesh, const aiScene* scene, const glm::mat4& tra
 	}
 	// Process materials
 	aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
-	// We assume a convention for sampler names in the shaders. Each diffuse texture should be named
-	// as 'texture_diffuseN' where N is a sequential number ranging from 1 to MAX_SAMPLER_NUMBER. 
-	// Same applies to other texture as the following list summarizes:
-	// diffuse: texture_diffuseN
-	// specular: texture_specularN
-	// normal: texture_normalN
-
-	// 1. Diffuse maps
-	std::vector<Texture> diffuseMaps = LoadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
-	textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
-	// 2. Specular maps
-	std::vector<Texture> specularMaps = LoadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
-	textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
-	// 3. Normal maps
-	std::vector<Texture> normalMaps = LoadMaterialTextures(material, aiTextureType_HEIGHT, "texture_normal");
-	textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
-	// 4. Height maps
-	std::vector<Texture> heightMaps = LoadMaterialTextures(material, aiTextureType_AMBIENT, "texture_height");
-	textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
-
-	// Return a mesh object created from the extracted mesh data
-	return Mesh(std::move(vertices), std::move(indices), std::move(textures));
-}
-
-// Checks all material textures of a given type and loads the textures if they're not loaded yet.
-// The required info is returned as a Texture struct.
-std::vector<Texture> Model::LoadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName)
-{
-	std::vector<Texture> textures;
-	for (unsigned int i = 0; i < mat->GetTextureCount(type); i++)
+	for (auto& aiTType : TextureMapper::aiTTypes)
 	{
-		aiString str;
-		mat->GetTexture(type, i, &str);
-		// Check if texture was loaded before and if so, continue to next iteration: skip loading a new texture
-		bool skip = false;
-		for (unsigned int j = 0; j < textures_loaded.size(); j++)
+		auto count = material->GetTextureCount(aiTType);
+		for (unsigned int i = 0; i < count; ++i)
 		{
-			if (std::strcmp(textures_loaded[j].GetName(), str.C_Str()) == 0)
+			aiString str;
+			material->GetTexture(aiTType, i, &str);
+
+			std::string key = str.C_Str();
+			if (textureMap.find(key) == textureMap.end())
 			{
-				textures.push_back(textures_loaded[j]);
-				skip = true; // a texture with the same filepath has already been loaded, continue to next one. (optimization)
-				break;
+				Texture texture(aiTType, str.C_Str());
+				texture.CreateFromImageFile(this->directory + '/' + str.C_Str());
+				textureMap[key] = texture;
 			}
-		}
-		if (!skip)
-		{
-			// If texture hasn't been loaded already, load it
-			Texture texture(typeName, str.C_Str());
-			texture.CreateFromImageFile(this->directory + '/' + str.C_Str());
-			textures.push_back(texture);
-			textures_loaded.push_back(texture);  // store it as texture loaded for entire model, to ensure we won't unnecessary load duplicate textures.
+			textures.push_back(textureMap[key]);
 		}
 	}
-	return textures;
+
+	return Mesh(std::move(vertices), std::move(indices), std::move(textures));
 }

@@ -157,7 +157,7 @@
     <ClCompile Include="Apps\AppSettings.cpp" />
     <ClCompile Include="Apps\AppShadowMapping.cpp" />
     <ClCompile Include="Apps\AppSkyboxWithCube.cpp" />
-    <ClCompile Include="Apps\AppSkyboxWIthModel.cpp" />
+    <ClCompile Include="Apps\AppSkyboxWithModel.cpp" />
     <ClCompile Include="Apps\AppSSAO.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="System\Camera.cpp" />
@@ -196,6 +196,7 @@
     <ClInclude Include="System\Shader.h" />
     <ClInclude Include="System\ShapeFactory.h" />
     <ClInclude Include="System\Texture.h" />
+    <ClInclude Include="System\TextureMapper.h" />
     <ClInclude Include="System\Utility.h" />
     <ClInclude Include="System\XMLReader.h" />
   </ItemGroup>

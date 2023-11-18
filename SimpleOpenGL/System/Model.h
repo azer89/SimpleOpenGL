@@ -10,11 +10,13 @@
 #include "assimp/Importer.hpp"
 #include "assimp/scene.h"
 
+#include <unordered_map>
+
 class Model
 {
 public:
 	// Model data 
-	std::vector<Texture> textures_loaded; // Stores all the textures loaded so far, optimization to make sure textures aren't loaded more than once.
+	std::unordered_map<std::string, Texture> textureMap;
 	std::vector<Mesh>  meshes;
 	std::string directory;
 	bool gammaCorrection;
@@ -33,10 +35,6 @@ private:
 	void ProcessNode(aiNode* node, const aiScene* scene, const glm::mat4& parentTransform);
 
 	Mesh ProcessMesh(aiMesh* mesh, const aiScene* scene, const glm::mat4& transform);
-
-	// Checks all material textures of a given type and loads the textures if they're not loaded yet.
-	// The required info is returned as a Texture struct.
-	std::vector<Texture> LoadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName);
 };
 
 #endif
