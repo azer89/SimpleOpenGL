@@ -52,6 +52,9 @@
     <Filter Include="Resource Files\Shaders\SSAO">
       <UniqueIdentifier>{a0ff6301-f35b-4f4d-a5ab-850799dd7a05}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Shaders\PBRTTextured">
+      <UniqueIdentifier>{fd8c2bfb-89f4-4358-9e27-032943968492}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -122,6 +125,9 @@
     </ClCompile>
     <ClCompile Include="System\PipelineDeferredSSAO.cpp">
       <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Apps\AppPBRTextured.cpp">
+      <Filter>Source Files\App</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -201,6 +207,9 @@
     </ClInclude>
     <ClInclude Include="System\TextureMapper.h">
       <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Apps\AppPBRTextured.h">
+      <Filter>Header Files\Apps</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -326,6 +335,12 @@
     </None>
     <None Include="..\Shaders\SSAO\ssao.vertex">
       <Filter>Resource Files\Shaders\SSAO</Filter>
+    </None>
+    <None Include="..\Shaders\PBRTextured\pbr.fragment">
+      <Filter>Resource Files\Shaders\PBRTTextured</Filter>
+    </None>
+    <None Include="..\Shaders\PBRTextured\pbr.vertex">
+      <Filter>Resource Files\Shaders\PBRTTextured</Filter>
     </None>
   </ItemGroup>
 </Project>

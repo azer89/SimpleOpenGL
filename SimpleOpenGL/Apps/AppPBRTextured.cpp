@@ -1,11 +1,8 @@
-#include "AppSSAO.h"
+#include "AppPBRTextured.h"
 #include "AppSettings.h"
 #include "Utility.h"
-#include "PipelineDeferredSSAO.h"
 
-#include <random>
-
-int AppSSAO::MainLoop()
+int AppPBRTextured::MainLoop()
 {
 	if (!IsGLFWWindowCreated() || !IsGLADLoaded())
 	{
@@ -14,17 +11,22 @@ int AppSSAO::MainLoop()
 
 	glEnable(GL_DEPTH_TEST);
 
+	Shader shader("PBRTextured//pbr.vertex", "PBRTextured//pbr.fragment");
+
+	shader.Use();
+	shader.SetInt("texture_diffuse1", 0);
+	shader.SetInt("texture_normal1", 1);
+	shader.SetInt("texture_metalness1", 2);
+	shader.SetInt("texture_roughness1", 3);
+	shader.SetInt("texture_ao1", 4);
+
+	glm::mat4 projection = camera->GetProjectionMatrix();
+	shader.Use();
+	shader.SetMat4("projection", projection);
+
 	InitScene();
 	InitLights();
 
-	PipelineDeferredSSAO pipeline(
-		"SSAO//geometry.vertex", "SSAO//geometry.fragment",
-		"SSAO//ssao.vertex", "SSAO//lighting.fragment",
-		"SSAO//ssao.vertex", "SSAO//ssao.fragment",
-		"SSAO//ssao.vertex", "SSAO//blur.fragment"
-	);
-
-	// Game loop
 	while (!GLFWWindowShouldClose())
 	{
 		ProcessTiming();
@@ -33,27 +35,18 @@ int AppSSAO::MainLoop()
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		glm::mat4 projection = camera->GetProjectionMatrix();
-		glm::mat4 view = camera->GetViewMatrix();
+		shader.Use();
+		shader.SetMat4("view", camera->GetViewMatrix());
+		shader.SetVec3("camPos", camera->Position);
 
-		// 1 Geometry pass: render scene's geometry/color data into G buffer
-		pipeline.StartGeometryPass(projection, view);
-		RenderScene(*(pipeline.GetGeometryShader()));
-		pipeline.EndGeometryPass();
+		for (unsigned int i = 0; i < lights.size(); i++)
+		{
+			shader.SetVec3("lightPositions[" + std::to_string(i) + "]", lights[i].Position);
+			shader.SetVec3("lightColors[" + std::to_string(i) + "]", lights[i].Color);
+		}
 
-		// 2 SSAO
-		pipeline.StartSSAOPass(projection);
-
-		// 3 Blur SSAO texture to remove noise
-		pipeline.StartBlurPass();
-
-		// 4 lighting pass: traditional deferred Blinn-Phong lighting with added screen-space ambient occlusion
-		pipeline.StartLightingPass(lights, view, camera->Position);
-
-		// 5 Blit
-		pipeline.Blit();
-
-		//RenderLights();
+		RenderScene(shader);
+		RenderLights();
 
 		SwapBuffers();
 		PollEvents();
@@ -64,13 +57,13 @@ int AppSSAO::MainLoop()
 	return 0;
 }
 
-void AppSSAO::InitScene()
+void AppPBRTextured::InitScene()
 {
 	sponzaModel = std::make_unique<Model>(AppSettings::ModelFolder + "Sponza//Sponza.gltf");
 	adamModel = std::make_unique<Model>(AppSettings::ModelFolder + "adamHead//adamHead.gltf");
 }
 
-void AppSSAO::RenderScene(const Shader& shader)
+void AppPBRTextured::RenderScene(const Shader& shader)
 {
 	glm::mat4 model = glm::mat4(1.0f);
 	model = glm::translate(model, glm::vec3(8.0f, 0.0f, 1.0f));
@@ -85,13 +78,13 @@ void AppSSAO::RenderScene(const Shader& shader)
 	adamModel->Draw(shader);
 }
 
-void AppSSAO::InitLights()
+void AppPBRTextured::InitLights()
 {
 	lightSphereShader = std::make_unique<Shader>("Misc//light_sphere.vertex", "Misc//light_sphere.fragment");
 
 	float pi2 = glm::two_pi<float>();
 
-	const int NR_LIGHTS = 64;
+	const int NR_LIGHTS = 200;
 	for (unsigned int i = 0; i < NR_LIGHTS; ++i)
 	{
 		float yPos = Utility::RandomNumber<float>(0.15f, 10.0f);
@@ -120,7 +113,7 @@ void AppSSAO::InitLights()
 	lightSphereShader->SetFloat("radius", 0.2f);
 }
 
-void AppSSAO::RenderLights()
+void AppPBRTextured::RenderLights()
 {
 	lightSphereShader->Use();
 	lightSphereShader->SetMat4("projection", camera->GetProjectionMatrix());

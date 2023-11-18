@@ -8,10 +8,11 @@
 #include "AppDeferredSponza.h"
 #include "AppGeom.h"
 #include "AppSSAO.h"
+#include "AppPBRTextured.h"
 
 int main()
 {
-	AppSSAO app;
+	AppPBRTextured app;
 	auto returnValue = app.MainLoop();
 	return returnValue;
 }
