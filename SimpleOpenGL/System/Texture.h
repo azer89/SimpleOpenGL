@@ -15,19 +15,19 @@ private:
 	unsigned int id;
 
 	// These two are only for loading glTF, otherwise they are empty
-	aiTextureType textureType;
+	TextureType textureType;
 	std::string textureName;
 
 public:
 	Texture();
-	Texture(aiTextureType textureType, std::string textureName);
+	Texture(TextureType textureType, std::string textureName);
 	void CreateFromImageFile(const std::string& fullFilePath, bool flipVertical = false);
 	void CreateDepthMap(unsigned int width, unsigned int height);
 	void CreateCubeMap(const std::vector<std::string>& files, const std::string& directory);
 	void Bind(GLenum textureIndex);
 
 	unsigned int GetID();
-	aiTextureType GetType();
+	TextureType GetType();
 	const char* GetName();
 };
 

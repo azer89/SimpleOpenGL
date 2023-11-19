@@ -82,7 +82,7 @@ Mesh Model::ProcessMesh(aiMesh* mesh, const aiScene* scene, const glm::mat4& tra
 	// Data to fill
 	std::vector<Vertex> vertices;
 	std::vector<unsigned int> indices;
-	std::vector<Texture> textures;
+	std::unordered_map<TextureType, Texture> textures;
 
 	// Walk through each of the mesh's vertices
 	for (unsigned int i = 0; i < mesh->mNumVertices; i++)
@@ -131,7 +131,7 @@ Mesh Model::ProcessMesh(aiMesh* mesh, const aiScene* scene, const glm::mat4& tra
 
 		vertices.push_back(vertex);
 	}
-	// Now wak through each of the mesh's faces (a face is a mesh its triangle) and retrieve the corresponding vertex indices.
+	// Now walk through each of the mesh's faces (a face is a mesh its triangle) and retrieve the corresponding vertex indices.
 	for (unsigned int i = 0; i < mesh->mNumFaces; i++)
 	{
 		aiFace face = mesh->mFaces[i];
@@ -150,15 +150,20 @@ Mesh Model::ProcessMesh(aiMesh* mesh, const aiScene* scene, const glm::mat4& tra
 		{
 			aiString str;
 			material->GetTexture(aiTType, i, &str);
-
 			std::string key = str.C_Str();
+			TextureType tType = TextureMapper::GetTextureType(aiTType);
+
 			if (textureMap.find(key) == textureMap.end())
 			{
-				Texture texture(aiTType, str.C_Str());
+				Texture texture(tType, str.C_Str());
 				texture.CreateFromImageFile(this->directory + '/' + str.C_Str());
 				textureMap[key] = texture;
 			}
-			textures.push_back(textureMap[key]);
+
+			if (textures.find(tType) == textures.end())
+			{
+				textures[tType] = textureMap[key];
+			}
 		}
 	}
 

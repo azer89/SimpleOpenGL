@@ -8,43 +8,42 @@
 #include <iostream>
 
 // Constructor
-Mesh::Mesh(std::vector<Vertex>&& vertices, std::vector<unsigned int>&& indices, std::vector<Texture>&& textures)
+Mesh::Mesh(std::vector<Vertex>&& vertices, std::vector<unsigned int>&& indices, std::unordered_map<TextureType, Texture>&& textures)
 {
 	this->vertices = std::move(vertices);
 	this->indices = std::move(indices);
-	this->textures = std::move(textures);
+	this->textureMap = std::move(textures);
 	SetupMesh();
 }
 
 // Constructor
-Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices, const std::vector<Texture>& textures)
+Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices, const std::unordered_map<TextureType, Texture>& textures)
 {
 	this->vertices = vertices;
 	this->indices = indices;
-	this->textures = textures;
+	this->textureMap = textures;
 	SetupMesh();
 }
 
 // Render the mesh
 void Mesh::Draw(const Shader& shader)
 {
-	std::unordered_map<aiTextureType, int> counterMap;
-	for (unsigned int i = 0; i < textures.size(); ++i)
+	// Currently only supports one texture per type
+	for (unsigned int i = 0; i < TextureMapper::NUM_TEXTURE_TYPE; ++i) // Iterate over TextureType elements
 	{
 		glActiveTexture(GL_TEXTURE0 + i);
-		std::string number;
-		aiTextureType aiTType = textures[i].GetType();
-		if (counterMap.find(aiTType) == counterMap.end())
+		TextureType tType = static_cast<TextureType>(i + 1); // Casting
+		if (textureMap.find(tType) == textureMap.end())
 		{
-			counterMap[aiTType] = 1;
+			glBindTexture(GL_TEXTURE_2D, 0); // Flush
+			continue;
 		}
-		number = std::to_string(counterMap[aiTType]);
-		++counterMap[aiTType];
+		
+		Texture& texture = textureMap[tType];
+		std::string name = TextureMapper::GetTextureString(tType) + "1";
 
-		std::string name = TextureMapper::GetTextureString(aiTType);
-
-		glUniform1i(glGetUniformLocation(shader.ID, (name + number).c_str()), i);
-		glBindTexture(GL_TEXTURE_2D, textures[i].GetID());
+		glUniform1i(glGetUniformLocation(shader.ID, name.c_str()), i);
+		glBindTexture(GL_TEXTURE_2D, texture.GetID());
 	}
 
 	// Draw mesh
@@ -52,7 +51,7 @@ void Mesh::Draw(const Shader& shader)
 	glDrawElements(GL_TRIANGLES, static_cast<unsigned int>(indices.size()), GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
 
-	// Always good practice to set everything back to defaults once configured.
+	// Set back to defaults once configured.
 	glActiveTexture(GL_TEXTURE0);
 }
 

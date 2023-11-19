@@ -2,10 +2,13 @@
 #define __MESH_H__
 
 #include <vector>
-#include <glm/glm.hpp>
+#include <unordered_map>
+
+#include "glm/glm.hpp"
 
 #include "Shader.h"
 #include "Texture.h"
+#include "TextureMapper.h"
 
 #define MAX_BONE_INFLUENCE 4
 
@@ -33,12 +36,12 @@ public:
 	// Mesh Data
 	std::vector<Vertex>	vertices;
 	std::vector<unsigned int> indices;
-	std::vector<Texture> textures;
+	std::unordered_map<TextureType, Texture> textureMap;
 	unsigned int VAO;
 
 	// Constructors
-	Mesh(std::vector<Vertex>&& vertices, std::vector<unsigned int>&& indices, std::vector<Texture>&& textures);
-	Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices, const std::vector<Texture>& textures);
+	Mesh(std::vector<Vertex>&& vertices, std::vector<unsigned int>&& indices, std::unordered_map<TextureType, Texture>&& textures);
+	Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices, const std::unordered_map<TextureType, Texture>& textures);
 
 	// Render the mesh
 	void Draw(const Shader& shader);
