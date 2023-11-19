@@ -7,12 +7,6 @@ class AppModelLoading : AppBase
 {
 public:
 	int MainLoop() override;
-
-private:
-	void InitLightCube();
-
-	unsigned int lightCubeVAO;
-	unsigned int lightCubeVBO;
 };
 
 #endif

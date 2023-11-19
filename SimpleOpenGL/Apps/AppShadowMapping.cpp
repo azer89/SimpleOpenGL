@@ -1,7 +1,7 @@
 #include "AppShadowMapping.h"
 #include "Texture.h"
 #include "AppSettings.h"
-#include "ShapeFactory.h"
+#include "Shape.h"
 
 int AppShadowMapping::MainLoop()
 {
@@ -36,7 +36,7 @@ int AppShadowMapping::MainLoop()
 	depthTexture.CreateDepthMap(DEPTH_WIDTH, DEPTH_HEIGHT);
 
 	// Light debugging
-	InitLightCube();
+	Cube cube;
 
 	// FBO
 	unsigned int depthFBO;
@@ -115,15 +115,14 @@ int AppShadowMapping::MainLoop()
 		RenderFoxes(mainShader);
 
 		// Debug light
-		/*lightCubeShader.Use();
+		lightCubeShader.Use();
 		lightCubeShader.SetMat4("projection", camera->GetProjectionMatrix());
 		lightCubeShader.SetMat4("view", camera->GetViewMatrix());
 		model = glm::mat4(1.0f);
 		model = glm::translate(model, lightPos);
 		model = glm::scale(model, glm::vec3(0.2f));
 		lightCubeShader.SetMat4("model", model);
-		glBindVertexArray(lightCubeVAO);
-		glDrawArrays(GL_TRIANGLES, 0, 36);*/
+		cube.Draw();
 
 		// Debug depth map
 		/*debugShader.Use();
@@ -174,22 +173,6 @@ void AppShadowMapping::RenderQuad()
 {
 	glBindVertexArray(quadVAO);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-	glBindVertexArray(0);
-}
-
-void AppShadowMapping::InitLightCube()
-{
-	auto vertices = ShapeFactory::GenerateCubeVertices();
-
-	glGenBuffers(1, &lightCubeVBO);
-
-	glGenVertexArrays(1, &lightCubeVAO);
-	glBindVertexArray(lightCubeVAO);
-
-	glBindBuffer(GL_ARRAY_BUFFER, lightCubeVBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.size(), vertices.data(), GL_STATIC_DRAW);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
 	glBindVertexArray(0);
 }
 

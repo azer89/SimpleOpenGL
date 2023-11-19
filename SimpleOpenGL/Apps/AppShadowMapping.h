@@ -15,10 +15,7 @@ private:
 
 	void RenderPlane(const Shader& shader);
 	void RenderFoxes(const Shader& shader);
-	//void RenderCube();
 	void RenderQuad();
-
-	void InitLightCube();
 
 private:
 	std::unique_ptr<Model> foxModel;

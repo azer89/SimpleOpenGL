@@ -2,8 +2,11 @@
 #define __LIGHT_H__
 
 #include "Shader.h"
+#include "Shape.h"
 
-#include <glm/glm.hpp>
+#include <memory>
+
+#include "glm/glm.hpp"
 
 class Light
 {
@@ -19,8 +22,7 @@ private:
 	bool shouldRender;
 	float renderRadius;
 
-	unsigned int VAO = 0;
-	unsigned int VBO = 0;
+	std::unique_ptr<Quad> quad;
 };
 
 #endif

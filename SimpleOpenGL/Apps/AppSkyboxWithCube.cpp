@@ -2,7 +2,7 @@
 #include "Texture.h"
 #include "Shader.h"
 #include "AppSettings.h"
-#include "ShapeFactory.h"
+#include "Shape.h"
 
 int AppSkyboxWithCube::MainLoop()
 {
@@ -13,8 +13,7 @@ int AppSkyboxWithCube::MainLoop()
 
 	glEnable(GL_DEPTH_TEST);
 
-	InitCube();
-	InitSkybox();
+	Cube cube;
 
 	Texture cubeTexture;
 	cubeTexture.CreateFromImageFile(AppSettings::TextureFolder + "neco_coneco.jpg", true);
@@ -36,7 +35,6 @@ int AppSkyboxWithCube::MainLoop()
 	Shader skyboxShader("Cubemap//skybox.vertex", "Cubemap//skybox.fragment");
 
 	cubeShader.Use();
-	//cubeShader.SetInt("texture1", 0);
 	cubeShader.SetInt("skybox", 0);
 	cubeShader.SetInt("texture1", 1);
 
@@ -65,10 +63,9 @@ int AppSkyboxWithCube::MainLoop()
 		cubeShader.SetMat4("view", view);
 		cubeShader.SetMat4("projection", projection);
 		cubeShader.SetVec3("cameraPos", camera->Position);
-		glBindVertexArray(cubeVAO);
 		skyboxTexture.Bind(GL_TEXTURE0);
 		cubeTexture.Bind(GL_TEXTURE1);
-		glDrawArrays(GL_TRIANGLES, 0, 36);
+		cube.Draw();
 		glBindVertexArray(0);
 
 		// Draw skybox
@@ -77,9 +74,8 @@ int AppSkyboxWithCube::MainLoop()
 		auto skyboxView = glm::mat4(glm::mat3(view)); // Remove translation from the view matrix
 		skyboxShader.SetMat4("view", skyboxView);
 		skyboxShader.SetMat4("projection", projection);
-		glBindVertexArray(skyboxVAO);
 		skyboxTexture.Bind(GL_TEXTURE0);
-		glDrawArrays(GL_TRIANGLES, 0, 36);
+		cube.Draw();
 		glBindVertexArray(0);
 		glDepthFunc(GL_LESS); // Set depth function back to default
 		
@@ -90,34 +86,4 @@ int AppSkyboxWithCube::MainLoop()
 	Terminate();
 
 	return 0;
-}
-
-void AppSkyboxWithCube::InitCube()
-{
-	auto cubeVertices = ShapeFactory::GenerateCubeVertices();
-
-	glGenVertexArrays(1, &cubeVAO);
-	glGenBuffers(1, &cubeVBO);
-	glBindVertexArray(cubeVAO);
-	glBindBuffer(GL_ARRAY_BUFFER, cubeVBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * cubeVertices.size(), cubeVertices.data(), GL_STATIC_DRAW);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-}
-
-void AppSkyboxWithCube::InitSkybox()
-{
-	auto skyboxVertices = ShapeFactory::GenerateCubeVertices();
-
-	glGenVertexArrays(1, &skyboxVAO);
-	glGenBuffers(1, &skyboxVBO);
-	glBindVertexArray(skyboxVAO);
-	glBindBuffer(GL_ARRAY_BUFFER, skyboxVBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * skyboxVertices.size(), skyboxVertices.data(), GL_STATIC_DRAW);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
 }

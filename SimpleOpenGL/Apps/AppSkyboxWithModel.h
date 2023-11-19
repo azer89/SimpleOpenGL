@@ -7,13 +7,6 @@ class AppSkyboxWithModel : AppBase
 {
 public:
 	int MainLoop() override;
-
-private:
-	void InitCube();
-	void InitSkybox();
-
-	unsigned int skyboxVAO;
-	unsigned int skyboxVBO;
 };
 
 #endif

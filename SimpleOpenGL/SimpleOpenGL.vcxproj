@@ -168,7 +168,7 @@
     <ClCompile Include="System\Model.cpp" />
     <ClCompile Include="System\PipelineDeferredSSAO.cpp" />
     <ClCompile Include="System\Shader.cpp" />
-    <ClCompile Include="System\ShapeFactory.cpp" />
+    <ClCompile Include="System\Shape.cpp" />
     <ClCompile Include="System\Texture.cpp" />
     <ClCompile Include="System\XMLReader.cpp" />
   </ItemGroup>
@@ -196,7 +196,7 @@
     <ClInclude Include="System\Model.h" />
     <ClInclude Include="System\PipelineDeferredSSAO.h" />
     <ClInclude Include="System\Shader.h" />
-    <ClInclude Include="System\ShapeFactory.h" />
+    <ClInclude Include="System\Shape.h" />
     <ClInclude Include="System\Texture.h" />
     <ClInclude Include="System\TextureMapper.h" />
     <ClInclude Include="System\Utility.h" />

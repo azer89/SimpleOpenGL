@@ -2,7 +2,7 @@
 #include "AppSettings.h"
 #include "Shader.h"
 #include "Model.h"
-#include "ShapeFactory.h"
+#include "Shape.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -18,7 +18,8 @@ int AppModelLoading::MainLoop()
 	// Configure global opengl state
 	glEnable(GL_DEPTH_TEST);
 
-	InitLightCube();
+	//InitLightCube();
+	Cube cube;
 
 	Shader mainShader("ModelLoading//model_loading.vertex", "ModelLoading//model_loading.fragment");
 	Shader lightCubeShader("Misc//light_cube.vertex", "Misc//light_cube.fragment");
@@ -62,8 +63,7 @@ int AppModelLoading::MainLoop()
 		model = glm::translate(model, lightPos);
 		model = glm::scale(model, glm::vec3(0.2f));
 		lightCubeShader.SetMat4("model", model);
-		glBindVertexArray(lightCubeVAO);
-		glDrawArrays(GL_TRIANGLES, 0, 36);
+		cube.Draw();
 
 		SwapBuffers();
 		PollEvents();
@@ -74,19 +74,4 @@ int AppModelLoading::MainLoop()
 	Terminate();
 
 	return 0;
-}
-
-void AppModelLoading::InitLightCube()
-{
-	auto vertices = ShapeFactory::GenerateCubeVertices();
-
-	glGenBuffers(1, &lightCubeVBO);
-
-	glGenVertexArrays(1, &lightCubeVAO);
-	glBindVertexArray(lightCubeVAO);
-
-	glBindBuffer(GL_ARRAY_BUFFER, lightCubeVBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.size(), vertices.data(), GL_STATIC_DRAW);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
 }

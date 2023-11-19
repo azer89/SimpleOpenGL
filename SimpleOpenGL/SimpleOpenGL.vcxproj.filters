@@ -52,7 +52,7 @@
     <Filter Include="Resource Files\Shaders\SSAO">
       <UniqueIdentifier>{a0ff6301-f35b-4f4d-a5ab-850799dd7a05}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\Shaders\PBRTTextured">
+    <Filter Include="Resource Files\Shaders\PBRTextured">
       <UniqueIdentifier>{fd8c2bfb-89f4-4358-9e27-032943968492}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -108,9 +108,6 @@
     <ClCompile Include="System\Shader.cpp">
       <Filter>Source Files\System</Filter>
     </ClCompile>
-    <ClCompile Include="System\ShapeFactory.cpp">
-      <Filter>Source Files\System</Filter>
-    </ClCompile>
     <ClCompile Include="System\Texture.cpp">
       <Filter>Source Files\System</Filter>
     </ClCompile>
@@ -128,6 +125,9 @@
     </ClCompile>
     <ClCompile Include="Apps\AppPBRTextured.cpp">
       <Filter>Source Files\App</Filter>
+    </ClCompile>
+    <ClCompile Include="System\Shape.cpp">
+      <Filter>Source Files\System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -184,9 +184,6 @@
     <ClInclude Include="System\Shader.h">
       <Filter>Header Files\System</Filter>
     </ClInclude>
-    <ClInclude Include="System\ShapeFactory.h">
-      <Filter>Header Files\System</Filter>
-    </ClInclude>
     <ClInclude Include="System\Texture.h">
       <Filter>Header Files\System</Filter>
     </ClInclude>
@@ -210,6 +207,9 @@
     </ClInclude>
     <ClInclude Include="Apps\AppPBRTextured.h">
       <Filter>Header Files\Apps</Filter>
+    </ClInclude>
+    <ClInclude Include="System\Shape.h">
+      <Filter>Header Files\System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -337,10 +337,10 @@
       <Filter>Resource Files\Shaders\SSAO</Filter>
     </None>
     <None Include="..\Shaders\PBRTextured\pbr.fragment">
-      <Filter>Resource Files\Shaders\PBRTTextured</Filter>
+      <Filter>Resource Files\Shaders\PBRTextured</Filter>
     </None>
     <None Include="..\Shaders\PBRTextured\pbr.vertex">
-      <Filter>Resource Files\Shaders\PBRTTextured</Filter>
+      <Filter>Resource Files\Shaders\PBRTextured</Filter>
     </None>
   </ItemGroup>
 </Project>

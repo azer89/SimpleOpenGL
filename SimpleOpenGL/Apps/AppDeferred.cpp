@@ -1,6 +1,5 @@
 #include "AppDeferred.h"
 #include "AppSettings.h"
-#include "ShapeFactory.h"
 #include "PipelineDeferred.h"
 #include "Utility.h"
 
