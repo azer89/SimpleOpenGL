@@ -84,8 +84,8 @@ void main()
 {
     vec3 albedo = pow(texture(texture_diffuse1, TexCoords).rgb, vec3(2.2));
     float metallic = texture(texture_metalness1, TexCoords).r;
-    //float roughness = texture(texture_roughness1, TexCoords).r;
-    float roughness = 0.5;
+    float roughness = texture(texture_roughness1, TexCoords).r;
+    //float roughness = 0.5;
     float ao = texture(texture_ao1, TexCoords).r;
 
     vec3 N = getNormalFromMap();
@@ -149,4 +149,10 @@ void main()
     color = pow(color, vec3(1.0 / 2.2));
 
     FragColor = vec4(color, 1.0);
+
+    //FragColor = vec4(albedo, 1.0);
+    //FragColor = vec4(texture(texture_normal1, TexCoords).xyz, 1.0);
+    //FragColor = vec4(metallic, metallic, metallic, 1.0);
+    //FragColor = vec4(roughness, roughness, roughness, 1.0);
+    //FragColor = vec4(ao, ao, ao, 1.0);
 }
