@@ -11,8 +11,9 @@ uniform sampler2D texture_metalness1; // metallicMap
 uniform sampler2D texture_roughness1; // roughnessMap;
 uniform sampler2D texture_ao1; // aoMap
 
-uniform vec3 lightPositions[200];
-uniform vec3 lightColors[200];
+const int NR_LIGHTS = 200;
+uniform vec3 lightPositions[NR_LIGHTS] ;
+uniform vec3 lightColors[NR_LIGHTS] ;
 
 uniform vec3 camPos;
 
@@ -98,7 +99,7 @@ void main()
 
     // Reflectance equation
     vec3 Lo = vec3(0.0);
-    for (int i = 0; i < 4; ++i)
+    for (int i = 0; i < NR_LIGHTS; ++i)
     {
         // Calculate per-light radiance
         vec3 L = normalize(lightPositions[i] - WorldPos);
