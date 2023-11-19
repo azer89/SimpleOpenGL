@@ -91,7 +91,7 @@ void AppSSAO::InitLights()
 
 	float pi2 = glm::two_pi<float>();
 
-	const int NR_LIGHTS = 64;
+	const int NR_LIGHTS = 200;
 	for (unsigned int i = 0; i < NR_LIGHTS; ++i)
 	{
 		float yPos = Utility::RandomNumber<float>(0.15f, 10.0f);
