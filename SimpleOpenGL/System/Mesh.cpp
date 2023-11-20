@@ -25,6 +25,13 @@ Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>&
 	SetupMesh();
 }
 
+void Mesh::Delete()
+{
+	glDeleteVertexArrays(1, &VAO);
+	glDeleteBuffers(1, &VBO);
+	glDeleteBuffers(1, &EBO);
+}
+
 // Render the mesh
 void Mesh::Draw(const Shader& shader)
 {

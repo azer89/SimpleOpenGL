@@ -26,6 +26,14 @@ Model::Model(const std::string& path, bool gamma) :
 	LoadModel(path);
 }
 
+Model::~Model()
+{
+	for (Mesh& mesh : meshes)
+	{
+		mesh.Delete();
+	}
+}
+
 // Draws the model, and thus all its meshes
 void Model::Draw(const Shader& shader)
 {

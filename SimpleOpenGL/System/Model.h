@@ -24,6 +24,9 @@ public:
 	// Constructor, expects a filepath to a 3D model.
 	Model(const std::string& path, bool gamma = false);
 
+	// Destructor
+	~Model();
+
 	// Draws the model, and thus all its meshes
 	void Draw(const Shader& shader);
 

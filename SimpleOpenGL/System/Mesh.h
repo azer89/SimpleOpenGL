@@ -33,6 +33,11 @@ struct Vertex
 class Mesh
 {
 public:
+	Mesh() = default;
+	
+	// Cleanup resource
+	void Delete();
+
 	// Mesh Data
 	std::vector<Vertex>	vertices;
 	std::vector<unsigned int> indices;
