@@ -16,7 +16,12 @@ Texture::Texture()
 	id = GL_INVALID_VALUE;
 }
 
-Texture::Texture(TextureType texType, std::string texName) :
+Texture::Texture(const std::string& fullFilePath)
+{
+	CreateFromImageFile(fullFilePath);
+}
+
+Texture::Texture(TextureType texType, const std::string& texName) :
 	textureType(texType),
 	textureName(texName)
 {

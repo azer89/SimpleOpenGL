@@ -1,6 +1,7 @@
 #include "AppPBRTextured.h"
 #include "AppSettings.h"
 #include "Utility.h"
+#include "Shape.h"
 
 int AppPBRTextured::MainLoop()
 {
@@ -8,19 +9,37 @@ int AppPBRTextured::MainLoop()
 
 	Shader shader("PBRTextured//pbr.vertex", "PBRTextured//pbr.fragment");
 
+	Texture albedo(AppSettings::TextureFolder + "pbr//rusted_iron//albedo.png");
+	Texture normal(AppSettings::TextureFolder + "pbr//rusted_iron//normal.png");
+	Texture metallic(AppSettings::TextureFolder + "pbr//rusted_iron//metallic.png");
+	Texture roughness(AppSettings::TextureFolder + "pbr//rusted_iron//roughness.png");
+	Texture ao(AppSettings::TextureFolder + "pbr//rusted_iron//ao.png");
+
 	shader.Use();
-	shader.SetInt("texture_diffuse1", 0);
-	shader.SetInt("texture_normal1", 1);
-	shader.SetInt("texture_metalness1", 2);
-	shader.SetInt("texture_roughness1", 3);
-	shader.SetInt("texture_ao1", 4);
+	shader.SetInt("albedoMap", 0);
+	shader.SetInt("normalMap", 1);
+	shader.SetInt("metallicMap", 2);
+	shader.SetInt("roughnessMap", 3);
+	shader.SetInt("aoMap", 4);
+
+	// Sphere
+	constexpr int nrRows = 7;
+	constexpr int nrColumns = 7;
+	constexpr float spacing = 2.5;
+	Sphere sphere;
 
 	glm::mat4 projection = camera->GetProjectionMatrix();
 	shader.Use();
 	shader.SetMat4("projection", projection);
 
-	InitScene();
-	InitLights();
+	//InitScene();
+	//InitLights();
+	glm::vec3 lightPositions[] = {
+		glm::vec3(0.0f, 0.0f, 10.0f),
+	};
+	glm::vec3 lightColors[] = {
+		glm::vec3(150.0f, 150.0f, 150.0f),
+	};
 
 	while (!GLFWWindowShouldClose())
 	{
@@ -33,14 +52,42 @@ int AppPBRTextured::MainLoop()
 		shader.SetMat4("view", camera->GetViewMatrix());
 		shader.SetVec3("camPos", camera->Position);
 
+		albedo.Bind(GL_TEXTURE0);
+		normal.Bind(GL_TEXTURE1);
+		metallic.Bind(GL_TEXTURE2);
+		roughness.Bind(GL_TEXTURE3);
+		ao.Bind(GL_TEXTURE4);
+
 		for (unsigned int i = 0; i < lights.size(); i++)
 		{
 			shader.SetVec3("lightPositions[" + std::to_string(i) + "]", lights[i].Position);
 			shader.SetVec3("lightColors[" + std::to_string(i) + "]", lights[i].Color);
 		}
 
-		RenderScene(shader);
-		RenderLights();
+		glm::mat4 model = glm::mat4(1.0f);
+		for (int row = 0; row < nrRows; ++row)
+		{
+			for (int col = 0; col < nrColumns; ++col)
+			{
+				model = glm::mat4(1.0f);
+				model = glm::translate(model, glm::vec3(
+					(float)(col - (nrColumns / 2)) * spacing,
+					(float)(row - (nrRows / 2)) * spacing,
+					0.0f
+				));
+				shader.SetMat4("model", model);
+				shader.SetMat3("normalMatrix", glm::transpose(glm::inverse(glm::mat3(model))));
+				sphere.Draw();
+			}
+		}
+
+		for (unsigned int i = 0; i < sizeof(lightPositions) / sizeof(lightPositions[0]); ++i)
+		{
+			glm::vec3 newPos = lightPositions[i] + glm::vec3(sin(glfwGetTime() * 5.0) * 5.0, 0.0, 0.0);
+			newPos = lightPositions[i];
+			shader.SetVec3("lightPositions[" + std::to_string(i) + "]", newPos);
+			shader.SetVec3("lightColors[" + std::to_string(i) + "]", lightColors[i]);
+		}
 
 		SwapBuffers();
 	}

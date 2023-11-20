@@ -20,7 +20,8 @@ private:
 
 public:
 	Texture();
-	Texture(TextureType textureType, std::string textureName);
+	Texture(const std::string& fullFilePath);
+	Texture(TextureType textureType, const std::string& textureName);
 	void CreateFromImageFile(const std::string& fullFilePath, bool flipVertical = false);
 	void CreateDepthMap(unsigned int width, unsigned int height);
 	void CreateCubeMap(const std::vector<std::string>& files, const std::string& directory);
