@@ -33,24 +33,27 @@ void Mesh::Delete()
 }
 
 // Render the mesh
-void Mesh::Draw(const Shader& shader)
+void Mesh::Draw(const Shader& shader, bool skipTexture)
 {
-	// Currently only supports one texture per type
-	for (unsigned int i = 0; i < TextureMapper::NUM_TEXTURE_TYPE; ++i) // Iterate over TextureType elements
+	if (!skipTexture)
 	{
-		glActiveTexture(GL_TEXTURE0 + i);
-		TextureType tType = static_cast<TextureType>(i + 1); // Casting
-		if (textureMap.find(tType) == textureMap.end())
+		// Currently only supports one texture per type
+		for (unsigned int i = 0; i < TextureMapper::NUM_TEXTURE_TYPE; ++i) // Iterate over TextureType elements
 		{
-			glBindTexture(GL_TEXTURE_2D, 0); // Flush
-			continue;
-		}
-		
-		Texture& texture = textureMap[tType];
-		std::string name = TextureMapper::GetTextureString(tType) + "1";
+			glActiveTexture(GL_TEXTURE0 + i);
+			TextureType tType = static_cast<TextureType>(i + 1); // Casting
+			if (textureMap.find(tType) == textureMap.end())
+			{
+				glBindTexture(GL_TEXTURE_2D, 0); // Flush
+				continue;
+			}
 
-		glUniform1i(glGetUniformLocation(shader.ID, name.c_str()), i);
-		glBindTexture(GL_TEXTURE_2D, texture.GetID());
+			Texture& texture = textureMap[tType];
+			std::string name = TextureMapper::GetTextureString(tType) + "1";
+
+			glUniform1i(glGetUniformLocation(shader.ID, name.c_str()), i);
+			glBindTexture(GL_TEXTURE_2D, texture.GetID());
+		}
 	}
 
 	// Draw mesh

@@ -32,8 +32,7 @@ int AppPBRTextured::MainLoop()
 	shader.Use();
 	shader.SetMat4("projection", projection);
 
-	//InitScene();
-	//InitLights();
+	InitScene();
 	glm::vec3 lightPositions[] = {
 		glm::vec3(0.0f, 0.0f, 10.0f),
 	};
@@ -64,22 +63,7 @@ int AppPBRTextured::MainLoop()
 			shader.SetVec3("lightColors[" + std::to_string(i) + "]", lights[i].Color);
 		}
 
-		glm::mat4 model = glm::mat4(1.0f);
-		for (int row = 0; row < nrRows; ++row)
-		{
-			for (int col = 0; col < nrColumns; ++col)
-			{
-				model = glm::mat4(1.0f);
-				model = glm::translate(model, glm::vec3(
-					(float)(col - (nrColumns / 2)) * spacing,
-					(float)(row - (nrRows / 2)) * spacing,
-					0.0f
-				));
-				shader.SetMat4("model", model);
-				shader.SetMat3("normalMatrix", glm::transpose(glm::inverse(glm::mat3(model))));
-				sphere.Draw();
-			}
-		}
+		RenderScene(shader);
 
 		for (unsigned int i = 0; i < sizeof(lightPositions) / sizeof(lightPositions[0]); ++i)
 		{
@@ -99,23 +83,16 @@ int AppPBRTextured::MainLoop()
 
 void AppPBRTextured::InitScene()
 {
-	sponzaModel = std::make_unique<Model>(AppSettings::ModelFolder + "Sponza//Sponza.gltf");
-	adamModel = std::make_unique<Model>(AppSettings::ModelFolder + "adamHead//adamHead.gltf");
+	dragonModel = std::make_unique<Model>(AppSettings::ModelFolder + "Dragon//Dragon.obj");
 }
 
 void AppPBRTextured::RenderScene(const Shader& shader)
 {
 	glm::mat4 model = glm::mat4(1.0f);
-	model = glm::translate(model, glm::vec3(8.0f, 0.0f, 1.0f));
-	model = glm::scale(model, glm::vec3(2.0f));
 	shader.SetMat4("model", model);
-	sponzaModel->Draw(shader);
-
-	model = glm::mat4(1.f);
-	model = glm::translate(model, glm::vec3(0.0f, 0.75f, 0.0f));
-	model = glm::scale(model, glm::vec3(0.5f));
-	shader.SetMat4("model", model);
-	adamModel->Draw(shader);
+	shader.SetMat3("normalMatrix", glm::transpose(glm::inverse(glm::mat3(model))));
+	bool skipTextureBinding = true;
+	dragonModel->Draw(shader, skipTextureBinding);
 }
 
 void AppPBRTextured::InitLights()

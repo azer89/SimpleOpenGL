@@ -28,7 +28,7 @@ public:
 	~Model();
 
 	// Draws the model, and thus all its meshes
-	void Draw(const Shader& shader);
+	void Draw(const Shader& shader, bool skipTexture = false);
 
 private:
 	// Loads a model with supported ASSIMP extensions from file and stores the resulting meshes in the meshes vector.

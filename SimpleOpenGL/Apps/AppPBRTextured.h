@@ -5,7 +5,6 @@
 #include "Model.h"
 #include "Light.h"
 
-
 #include <memory>
 
 class AppPBRTextured : AppBase
@@ -22,8 +21,7 @@ private:
 
 private:
 	// Scene
-	std::unique_ptr<Model> sponzaModel;
-	std::unique_ptr<Model> adamModel;
+	std::unique_ptr<Model> dragonModel;
 
 	// Lights
 	std::unique_ptr<Shader> lightSphereShader;

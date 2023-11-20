@@ -35,11 +35,11 @@ Model::~Model()
 }
 
 // Draws the model, and thus all its meshes
-void Model::Draw(const Shader& shader)
+void Model::Draw(const Shader& shader, bool skipTexture)
 {
 	for (Mesh& mesh : meshes)
 	{
-		mesh.Draw(shader);
+		mesh.Draw(shader, skipTexture);
 	}
 }
 

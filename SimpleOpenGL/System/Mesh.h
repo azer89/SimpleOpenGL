@@ -49,7 +49,7 @@ public:
 	Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices, const std::unordered_map<TextureType, Texture>& textures);
 
 	// Render the mesh
-	void Draw(const Shader& shader);
+	void Draw(const Shader& shader, bool skipTexture);
 
 private:
 	// Render data 
