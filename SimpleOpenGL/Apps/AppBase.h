@@ -3,8 +3,8 @@
 
 #include <memory>
 #include <string>
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
+#include "glad/glad.h"
+#include "GLFW/glfw3.h"
 
 #include "Camera.h"
 
@@ -26,11 +26,13 @@ protected:
 	bool IsGLFWWindowCreated();
 	bool IsGLADLoaded();
 	int GLFWWindowShouldClose();
+	void SwapBuffers();
+	void Terminate();
+
+	void ProcessLoop(glm::vec4 clearColor, GLbitfield mask);
+	void PollEvents();
 	void ProcessTiming();
 	void ProcessInput();
-	void SwapBuffers();
-	void PollEvents();
-	void Terminate();
 
 private:
 	GLFWwindow* glfwWindow;

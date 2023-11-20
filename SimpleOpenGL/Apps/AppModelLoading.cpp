@@ -18,7 +18,6 @@ int AppModelLoading::MainLoop()
 	// Configure global opengl state
 	glEnable(GL_DEPTH_TEST);
 
-	//InitLightCube();
 	Cube cube;
 
 	Shader mainShader("ModelLoading//model_loading.vertex", "ModelLoading//model_loading.fragment");
@@ -32,11 +31,10 @@ int AppModelLoading::MainLoop()
 	// Render loop
 	while (!GLFWWindowShouldClose())
 	{
-		ProcessTiming();
-		ProcessInput();
-
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		ProcessLoop(
+			glm::vec4(0.2f, 0.3f, 0.3f, 1.0f),
+			GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT
+		);
 
 		auto projection = camera->GetProjectionMatrix();
 		auto view = camera->GetViewMatrix();
@@ -66,7 +64,6 @@ int AppModelLoading::MainLoop()
 		cube.Draw();
 
 		SwapBuffers();
-		PollEvents();
 	}
 
 	mainShader.Delete();

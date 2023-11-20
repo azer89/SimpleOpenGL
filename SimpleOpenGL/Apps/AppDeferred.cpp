@@ -24,11 +24,10 @@ int AppDeferred::MainLoop()
 
 	while (!GLFWWindowShouldClose())
 	{
-		ProcessTiming();
-		ProcessInput();
-
-		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		ProcessLoop(
+			glm::vec4(0.0f, 0.0f, 0.0f, 1.0f),
+			GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT
+		);
 
 		glm::mat4 projection = camera->GetProjectionMatrix();
 		glm::mat4 view = camera->GetViewMatrix();
@@ -50,7 +49,6 @@ int AppDeferred::MainLoop()
 		RenderLights();
 
 		SwapBuffers();
-		PollEvents();
 	}
 
 	Terminate();

@@ -41,11 +41,10 @@ int AppSkyboxWithModel::MainLoop()
 
 	while (!GLFWWindowShouldClose())
 	{
-		ProcessTiming();
-		ProcessInput();
-
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		ProcessLoop(
+			glm::vec4(0.2f, 0.3f, 0.3f, 1.0f),
+			GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT
+		);
 
 		glm::mat4 view = camera->GetViewMatrix();
 		glm::mat4 projection = camera->GetProjectionMatrix();
@@ -77,7 +76,6 @@ int AppSkyboxWithModel::MainLoop()
 		glDepthFunc(GL_LESS); // Set depth function back to default
 		
 		SwapBuffers();
-		PollEvents();
 	}
 
 	Terminate();

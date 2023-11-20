@@ -122,6 +122,16 @@ void AppBase::PollEvents()
 	glfwPollEvents();
 }
 
+void AppBase::ProcessLoop(glm::vec4 clearColor, GLbitfield mask)
+{
+	PollEvents();
+	ProcessTiming();
+	ProcessInput();
+
+	glClearColor(clearColor.x, clearColor.y, clearColor.z, clearColor.w);
+	glClear(mask);
+}
+
 void AppBase::Terminate()
 {
 	glfwTerminate();

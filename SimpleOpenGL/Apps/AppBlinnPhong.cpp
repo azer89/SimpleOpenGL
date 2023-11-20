@@ -69,11 +69,10 @@ int AppBlinnPhong::MainLoop()
 	// Render loop
 	while (!GLFWWindowShouldClose())
 	{
-		ProcessTiming();
-		ProcessInput();
-
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		ProcessLoop(
+			glm::vec4(0.2f, 0.3f, 0.3f, 1.0f), 
+			GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT
+		);
 
 		shader.Use();
 		shader.SetMat4("projection", camera->GetProjectionMatrix());
@@ -88,13 +87,11 @@ int AppBlinnPhong::MainLoop()
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 
 		SwapBuffers();
-		PollEvents();
 	}
 
 	// De-allocate all resources once they've outlived their purpose
 	glDeleteVertexArrays(1, &VAO);
 	glDeleteBuffers(1, &VBO);
-	//glDeleteBuffers(1, &EBO);
 
 	// GLFW: terminate, clearing all previously allocated GLFW resources.
 	Terminate();
