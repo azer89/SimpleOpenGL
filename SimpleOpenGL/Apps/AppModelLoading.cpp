@@ -10,11 +10,6 @@
 
 int AppModelLoading::MainLoop()
 {
-	if (!IsGLFWWindowCreated() || !IsGLADLoaded())
-	{
-		return -1;
-	}
-
 	// Configure global opengl state
 	glEnable(GL_DEPTH_TEST);
 

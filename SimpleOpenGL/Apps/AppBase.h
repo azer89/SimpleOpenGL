@@ -23,8 +23,6 @@ protected:
 	void InitGlad();
 	void InitCamera();
 	void InitTiming();
-	bool IsGLFWWindowCreated();
-	bool IsGLADLoaded();
 	int GLFWWindowShouldClose();
 	void SwapBuffers();
 	void Terminate();
@@ -36,7 +34,6 @@ protected:
 
 private:
 	GLFWwindow* glfwWindow;
-	bool isGladLoaded = false;
 
 protected:
 	// Camera

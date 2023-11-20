@@ -5,11 +5,6 @@
 
 int AppShadowMapping::MainLoop()
 {
-	if (!IsGLFWWindowCreated() || !IsGLADLoaded())
-	{
-		return -1;
-	}
-
 	glEnable(GL_DEPTH_TEST);
 
 	InitScene();

@@ -29,8 +29,8 @@ void AppBase::InitGLFW()
 		NULL);
 	if (glfwWindow == NULL)
 	{
-		std::cerr << "Failed to create GLFW window" << std::endl;
 		glfwTerminate();
+		throw std::runtime_error("Failed to create GLFW window");
 	}
 	glfwMakeContextCurrent(glfwWindow);
 
@@ -66,11 +66,8 @@ void AppBase::InitGlad()
 	// GLAD
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
-		std::cerr << "Failed to initialize GLAD" << std::endl;
-		isGladLoaded = false;
-		return;
+		throw std::runtime_error("Failed to initialize GLAD");
 	}
-	isGladLoaded = true;
 }
 
 void AppBase::InitCamera()
@@ -86,16 +83,6 @@ void AppBase::InitTiming()
 {
 	deltaTime = 0.0f;	// Time between current frame and last frame
 	lastFrame = 0.0f;
-}
-
-bool AppBase::IsGLFWWindowCreated()
-{
-	return glfwWindow != NULL;
-}
-
-bool AppBase::IsGLADLoaded()
-{
-	return isGladLoaded;
 }
 
 int AppBase::GLFWWindowShouldClose()
@@ -199,23 +186,20 @@ void AppBase::ProcessInput()
 // Example here
 /*int AppDerived::MainLoop()
 {
-	if (!IsGLFWWindowCreated() || !IsGLADLoaded())
-	{
-		return -1;
-	}
-
 	glEnable(GL_DEPTH_TEST);
+
+	// Init
 
 	while (!GLFWWindowShouldClose())
 	{
-		ProcessTiming();
-		ProcessInput();
+		ProcessLoop(
+			glm::vec4(0.2f, 0.3f, 0.3f, 1.0f),
+			GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT
+		);
 
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		// Code
 
 		SwapBuffers();
-		PollEvents();
 	}
 
 	Terminate();
