@@ -14,7 +14,7 @@
 <div align="center">
 
 <br/>
-An example of deferred shading with 200 light sources
+An example of deferred shading with 200 light sources and the Blinn-Phong shading
 
 https://github.com/azer89/SimpleOpenGL/assets/790432/8185affd-2fa8-4f66-a43b-236b1047be56
 
