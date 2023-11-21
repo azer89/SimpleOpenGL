@@ -2,12 +2,13 @@
 
 ### Features
 * Blinn-Phong lighting
+* glTF model loading
 * Shadow mapping
 * Deferred shading
 * Cubemap
 * Geometry shader
 * Ambient occlusion
-* glTF model loading
+* PBR <em>(WIP)</em>
 
 ### Demo
 <div align="center">
