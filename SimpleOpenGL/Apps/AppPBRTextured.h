@@ -16,9 +16,6 @@ private:
 	void InitScene();
 	void RenderScene(const Shader& shader);
 
-	void InitLights();
-	void RenderLights();
-
 private:
 	// Scene
 	std::unique_ptr<Model> dragonModel;

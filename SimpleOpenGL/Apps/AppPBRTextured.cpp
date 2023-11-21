@@ -1,6 +1,7 @@
 #include "AppPBRTextured.h"
 #include "AppSettings.h"
 #include "Utility.h"
+#include "Light.h"
 #include "Shape.h"
 
 int AppPBRTextured::MainLoop()
@@ -16,29 +17,19 @@ int AppPBRTextured::MainLoop()
 	Texture ao(AppSettings::TextureFolder + "pbr//rusted_iron//ao.png");
 
 	shader.Use();
-	shader.SetInt("albedoMap", 0);
-	shader.SetInt("normalMap", 1);
-	shader.SetInt("metallicMap", 2);
-	shader.SetInt("roughnessMap", 3);
-	shader.SetInt("aoMap", 4);
-
-	// Sphere
-	constexpr int nrRows = 7;
-	constexpr int nrColumns = 7;
-	constexpr float spacing = 2.5;
-	Sphere sphere;
+	shader.SetInt("texture_diffuse1", 0);
+	shader.SetInt("texture_normal1", 1);
+	shader.SetInt("texture_metalness1", 2);
+	shader.SetInt("texture_roughness1", 3);
+	shader.SetInt("texture_ao1", 4);
 
 	glm::mat4 projection = camera->GetProjectionMatrix();
 	shader.Use();
 	shader.SetMat4("projection", projection);
-
 	InitScene();
-	glm::vec3 lightPositions[] = {
-		glm::vec3(0.0f, 0.0f, 10.0f),
-	};
-	glm::vec3 lightColors[] = {
-		glm::vec3(150.0f, 150.0f, 150.0f),
-	};
+
+	std::vector<Light> lights;
+	lights.emplace_back(glm::vec3(0.0f, 0.0f, 10.0f), glm::vec3(150.0f, 150.0f, 150.0f));
 
 	while (!GLFWWindowShouldClose())
 	{
@@ -65,14 +56,6 @@ int AppPBRTextured::MainLoop()
 
 		RenderScene(shader);
 
-		for (unsigned int i = 0; i < sizeof(lightPositions) / sizeof(lightPositions[0]); ++i)
-		{
-			glm::vec3 newPos = lightPositions[i] + glm::vec3(sin(glfwGetTime() * 5.0) * 5.0, 0.0, 0.0);
-			newPos = lightPositions[i];
-			shader.SetVec3("lightPositions[" + std::to_string(i) + "]", newPos);
-			shader.SetVec3("lightColors[" + std::to_string(i) + "]", lightColors[i]);
-		}
-
 		SwapBuffers();
 	}
 
@@ -90,53 +73,6 @@ void AppPBRTextured::RenderScene(const Shader& shader)
 {
 	glm::mat4 model = glm::mat4(1.0f);
 	shader.SetMat4("model", model);
-	shader.SetMat3("normalMatrix", glm::transpose(glm::inverse(glm::mat3(model))));
 	bool skipTextureBinding = true;
 	dragonModel->Draw(shader, skipTextureBinding);
-}
-
-void AppPBRTextured::InitLights()
-{
-	lightSphereShader = std::make_unique<Shader>("Misc//light_sphere.vertex", "Misc//light_sphere.fragment");
-
-	float pi2 = glm::two_pi<float>();
-
-	const int NR_LIGHTS = 200;
-	for (unsigned int i = 0; i < NR_LIGHTS; ++i)
-	{
-		float yPos = Utility::RandomNumber<float>(0.15f, 10.0f);
-		float radius = Utility::RandomNumber<float>(0.0f, 20.0f);
-		float rad = Utility::RandomNumber<float>(0.0f, pi2);
-		float xPos = glm::cos(rad);
-
-		glm::vec3 position(
-			glm::cos(rad) * radius,
-			yPos,
-			glm::sin(rad) * radius
-		);
-
-		glm::vec3 color(
-			Utility::RandomNumber<float>(0.2f, 0.5f),
-			Utility::RandomNumber<float>(0.2f, 0.5f),
-			Utility::RandomNumber<float>(0.5f, 1.0f)
-		);
-
-		lightAngles.push_back(rad);
-		lightRadii.push_back(radius);
-		lights.emplace_back(position, color, true, 0.1f);
-	}
-
-	lightSphereShader->Use();
-	lightSphereShader->SetFloat("radius", 0.2f);
-}
-
-void AppPBRTextured::RenderLights()
-{
-	lightSphereShader->Use();
-	lightSphereShader->SetMat4("projection", camera->GetProjectionMatrix());
-	lightSphereShader->SetMat4("view", camera->GetViewMatrix());
-	for (Light& light : lights)
-	{
-		light.Render(*lightSphereShader);
-	}
 }
