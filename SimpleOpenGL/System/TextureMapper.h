@@ -14,6 +14,7 @@ enum TextureType
 	TEXTURE_METALNESS = 3,
 	TEXTURE_ROUGHNESS = 4,
 	TEXTURE_AO = 5,
+	TEXTURE_EMISSIVE = 6,
 };
 
 namespace TextureMapper
@@ -21,28 +22,53 @@ namespace TextureMapper
 	// Corresponds to yhe number of elements in TextureType
 	constexpr unsigned int NUM_TEXTURE_TYPE = 5; 
 
-	static std::vector<aiTextureType> aiTTypes = 
+	// This vector is a priority list
+	static std::vector<aiTextureType> aiTTypeSearchOrder = 
 	{
+		// Diffuse
 		aiTextureType_DIFFUSE,
+
+		// Specular
 		aiTextureType_SPECULAR,
-		aiTextureType_NORMALS,
 		aiTextureType_METALNESS,
+		
+		// Normal
+		aiTextureType_NORMALS,
+		
+		// Roughness shininess
 		aiTextureType_DIFFUSE_ROUGHNESS,
+		aiTextureType_SHININESS,
+		
+		// AO
+		aiTextureType_AMBIENT_OCCLUSION,
 		aiTextureType_LIGHTMAP,
-		aiTextureType_AMBIENT_OCCLUSION
-		//aiTextureType_EMISSIVE
+
+		// Emissive
+		aiTextureType_EMISSIVE
 	};
 
 	static std::unordered_map<aiTextureType, TextureType> assimpTextureToTextureType =
 	{
+		// Diffuse
 		{aiTextureType_DIFFUSE, TEXTURE_DIFFUSE},
+
+		// Specular
 		{aiTextureType_SPECULAR, TEXTURE_METALNESS},
-		{aiTextureType_NORMALS, TEXTURE_NORMAL},
 		{aiTextureType_METALNESS, TEXTURE_METALNESS},
+		
+		// Normal
+		{aiTextureType_NORMALS, TEXTURE_NORMAL},
+		
+		// Roughness shininess
 		{aiTextureType_DIFFUSE_ROUGHNESS, TEXTURE_ROUGHNESS},
+		{aiTextureType_SHININESS, TEXTURE_ROUGHNESS},
+		
+		// AO
+		{aiTextureType_AMBIENT_OCCLUSION, TEXTURE_AO},
 		{aiTextureType_LIGHTMAP, TEXTURE_AO},
-		{aiTextureType_AMBIENT_OCCLUSION, TEXTURE_AO}
-		//aiTextureType_EMISSIVE
+
+		// Emissive
+		{aiTextureType_EMISSIVE, TEXTURE_EMISSIVE}
 	};
 
 	static std::unordered_map<TextureType, std::string> textureTypeToString =
@@ -52,6 +78,7 @@ namespace TextureMapper
 		{TEXTURE_METALNESS, "texture_metalness"},
 		{TEXTURE_ROUGHNESS, "texture_roughness"},
 		{TEXTURE_AO, "texture_ao"},
+		{TEXTURE_EMISSIVE, "texture_emissive"},
 	};
 
 	static TextureType GetTextureType(aiTextureType aiTType)
@@ -72,6 +99,5 @@ namespace TextureMapper
 		return TextureMapper::textureTypeToString[tType];
 	}
 };
-
 
 #endif

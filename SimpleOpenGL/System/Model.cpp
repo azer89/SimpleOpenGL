@@ -151,7 +151,7 @@ Mesh Model::ProcessMesh(aiMesh* mesh, const aiScene* scene, const glm::mat4& tra
 	}
 	// Process materials
 	aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
-	for (auto& aiTType : TextureMapper::aiTTypes)
+	for (auto& aiTType : TextureMapper::aiTTypeSearchOrder)
 	{
 		auto count = material->GetTextureCount(aiTType);
 		for (unsigned int i = 0; i < count; ++i)
@@ -161,14 +161,14 @@ Mesh Model::ProcessMesh(aiMesh* mesh, const aiScene* scene, const glm::mat4& tra
 			std::string key = str.C_Str();
 			TextureType tType = TextureMapper::GetTextureType(aiTType);
 
-			if (textureMap.find(key) == textureMap.end())
+			if (textureMap.find(key) == textureMap.end()) // Make sure never loaded before
 			{
 				Texture texture(tType, str.C_Str());
 				texture.CreateFromImageFile(this->directory + '/' + str.C_Str());
 				textureMap[key] = texture;
 			}
 
-			if (textures.find(tType) == textures.end())
+			if (textures.find(tType) == textures.end()) // Only support one image per texture type
 			{
 				textures[tType] = textureMap[key];
 			}

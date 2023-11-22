@@ -81,9 +81,6 @@ void AppDeferred::InitLights()
 		lightRadii.push_back(radius);
 		lights.emplace_back(position, color, true, 0.1f);
 	}
-
-	lightSphereShader->Use();
-	lightSphereShader->SetFloat("radius", 0.2f);
 }
 
 void AppDeferred::UpdateLightPositions()

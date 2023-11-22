@@ -16,7 +16,7 @@ class Model
 {
 public:
 	// Model data 
-	std::unordered_map<std::string, Texture> textureMap;
+	std::unordered_map<std::string, Texture> textureMap; // key is the filename
 	std::vector<Mesh>  meshes;
 	std::string directory;
 	bool gammaCorrection;
