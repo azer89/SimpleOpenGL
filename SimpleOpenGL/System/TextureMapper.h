@@ -20,7 +20,7 @@ enum TextureType
 namespace TextureMapper
 {
 	// Corresponds to yhe number of elements in TextureType
-	constexpr unsigned int NUM_TEXTURE_TYPE = 5; 
+	constexpr unsigned int NUM_TEXTURE_TYPE = 6; 
 
 	// This vector is a priority list
 	static std::vector<aiTextureType> aiTTypeSearchOrder = 
