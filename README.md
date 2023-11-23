@@ -40,9 +40,9 @@ https://github.com/azer89/SimpleOpenGL/assets/790432/ff9fa67f-afdc-4da1-bdb6-108
 Some other cool results
 <br/>
 
-<img width="400" height="300" alt="image" src="https://github.com/azer89/SimpleOpenGL/assets/790432/2205127f-b56c-4b49-a4d9-ea9b1d1b7c52">
+<img width="400" height="300" alt="image" src="https://github.com/azer89/SimpleOpenGL/assets/790432/d9b9ea15-20c3-46c1-8169-9a4599501179">
 
-<img width="400" height="300" alt="image" src="https://github.com/azer89/SimpleOpenGL/assets/790432/82f27538-a2be-4faa-be5a-f8e83a5133c2">
+<img width="400" height="300" alt="image" src="https://github.com/azer89/SimpleOpenGL/assets/790432/2205127f-b56c-4b49-a4d9-ea9b1d1b7c52">
 
 <img width="400" height="300" alt="image" src="https://github.com/azer89/SimpleOpenGL/assets/790432/1c01a0ad-c3c3-4374-bc8e-9bd71313e499">
 
