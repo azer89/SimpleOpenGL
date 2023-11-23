@@ -9,10 +9,11 @@
 #include "AppGeom.h"
 #include "AppSSAO.h"
 #include "AppPBRTextured.h"
+#include "AppPBRModel.h"
 
 int main()
 {
-	AppPBRTextured app;
+	AppPBRModel app;
 	auto returnValue = app.MainLoop();
 	return returnValue;
 }

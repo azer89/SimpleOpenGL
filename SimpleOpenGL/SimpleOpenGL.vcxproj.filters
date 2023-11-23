@@ -129,6 +129,9 @@
     <ClCompile Include="System\Shape.cpp">
       <Filter>Source Files\System</Filter>
     </ClCompile>
+    <ClCompile Include="Apps\AppPBRModel.cpp">
+      <Filter>Source Files\App</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Settings\main.xml">
@@ -210,6 +213,9 @@
     </ClInclude>
     <ClInclude Include="System\Shape.h">
       <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Apps\AppPBRModel.h">
+      <Filter>Header Files\Apps</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -340,6 +346,9 @@
       <Filter>Resource Files\Shaders\PBRTextured</Filter>
     </None>
     <None Include="..\Shaders\PBRTextured\pbr.vertex">
+      <Filter>Resource Files\Shaders\PBRTextured</Filter>
+    </None>
+    <None Include="..\Shaders\PBRTextured\pbr_emissive.fragment">
       <Filter>Resource Files\Shaders\PBRTextured</Filter>
     </None>
   </ItemGroup>

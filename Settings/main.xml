@@ -1,7 +1,7 @@
 <App>
 	<General>
-		<ScreenWidth value="800"/>
-		<ScreenHeight value="600"/>
+		<ScreenWidth value="1600"/>
+		<ScreenHeight value="1200"/>
 		<ScreenTitle value="Simple OpenGL"/>
 		<ShaderFolder value="C://Users/azer//workspace//SimpleOpenGL//Shaders//"/>
 		<TextureFolder value="C://Users//azer//workspace//SimpleOpenGL//Textures//"/>
