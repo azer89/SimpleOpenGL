@@ -8,7 +8,7 @@ int AppPBRTextured::MainLoop()
 {
 	glEnable(GL_DEPTH_TEST);
 
-	Shader shader("PBRTextured//pbr.vertex", "PBRTextured//pbr.fragment");
+	Shader shader("PBR//pbr.vertex", "PBR//pbr.fragment");
 
 	Texture albedo(AppSettings::TextureFolder + "pbr//rusted_iron//albedo.png");
 	Texture normal(AppSettings::TextureFolder + "pbr//rusted_iron//normal.png");

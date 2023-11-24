@@ -18,7 +18,7 @@ private:
 
 private:
 	// Scene
-	std::unique_ptr<Model> dragonModel;
+	std::unique_ptr<Model> renderModel;
 
 	// Lights
 	std::unique_ptr<Shader> lightSphereShader;

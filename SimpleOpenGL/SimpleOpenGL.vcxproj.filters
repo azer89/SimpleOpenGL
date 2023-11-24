@@ -52,7 +52,10 @@
     <Filter Include="Resource Files\Shaders\SSAO">
       <UniqueIdentifier>{a0ff6301-f35b-4f4d-a5ab-850799dd7a05}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\Shaders\PBRTextured">
+    <Filter Include="Resource Files\Shaders\IBL">
+      <UniqueIdentifier>{4bcf86bb-a717-49bf-b3d5-edbdda14a54e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Shaders\PBR">
       <UniqueIdentifier>{fd8c2bfb-89f4-4358-9e27-032943968492}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -341,15 +344,6 @@
     </None>
     <None Include="..\Shaders\SSAO\ssao.vertex">
       <Filter>Resource Files\Shaders\SSAO</Filter>
-    </None>
-    <None Include="..\Shaders\PBRTextured\pbr.fragment">
-      <Filter>Resource Files\Shaders\PBRTextured</Filter>
-    </None>
-    <None Include="..\Shaders\PBRTextured\pbr.vertex">
-      <Filter>Resource Files\Shaders\PBRTextured</Filter>
-    </None>
-    <None Include="..\Shaders\PBRTextured\pbr_emissive.fragment">
-      <Filter>Resource Files\Shaders\PBRTextured</Filter>
     </None>
   </ItemGroup>
 </Project>
