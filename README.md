@@ -8,7 +8,7 @@
 * Cubemap
 * Geometry shader
 * Ambient occlusion
-* Physically Based Rendering <em>(WIP)</em>
+* Physically Based Rendering
 
 ### Demo
 <div align="center">
