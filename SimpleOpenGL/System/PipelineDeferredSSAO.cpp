@@ -141,7 +141,7 @@ void PipelineDeferredSSAO::Init(
 
 	// Noise texture
 	std::vector<glm::vec3> ssaoNoise;
-	for (unsigned int i = 0; i < 16; i++)
+	for (unsigned int i = 0; i < 16; ++i)
 	{
 		glm::vec3 noise(
 			Utility::RandomNumber<float>() * 2.0 - 1.0,
@@ -247,7 +247,7 @@ void PipelineDeferredSSAO::StartLightingPass(const std::vector<Light>& lights,
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	shaderLighting->Use();
-	for (unsigned int i = 0; i < lights.size(); i++)
+	for (unsigned int i = 0; i < lights.size(); ++i)
 	{
 		glm::vec3 lightPosView = glm::vec3(cameraview * glm::vec4(lights[i].Position, 1.0));
 		shaderLighting->SetVec3("lights[" + std::to_string(i) + "].Position", lightPosView);

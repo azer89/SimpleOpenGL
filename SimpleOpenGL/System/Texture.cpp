@@ -105,7 +105,7 @@ void Texture::CreateCubeMap(const std::vector<std::string>& files, const std::st
 	glBindTexture(GL_TEXTURE_CUBE_MAP, id);
 	stbi_set_flip_vertically_on_load(false);
 	int width, height, nrChannels;
-	for (unsigned int i = 0; i < files.size(); i++)
+	for (unsigned int i = 0; i < files.size(); ++i)
 	{
 		auto filePath = directory + files[i];
 		unsigned char* data = stbi_load(filePath.c_str(), &width, &height, &nrChannels, 0);

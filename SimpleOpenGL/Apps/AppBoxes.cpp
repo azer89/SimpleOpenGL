@@ -63,7 +63,7 @@ int AppBoxes::MainLoop()
 		shader.SetMat4("view", camera->GetViewMatrix());
 
 		// Render boxes
-		for (unsigned int i = 0; i < 10; i++)
+		for (unsigned int i = 0; i < 10; ++i)
 		{
 			// Calculate the model matrix for each object and pass it to shader before drawing
 			glm::mat4 model = glm::mat4(1.0f); // Make sure to initialize matrix to identity matrix first

@@ -48,7 +48,7 @@ int AppPBRTextured::MainLoop()
 		roughness.Bind(GL_TEXTURE3);
 		ao.Bind(GL_TEXTURE4);
 
-		for (unsigned int i = 0; i < lights.size(); i++)
+		for (unsigned int i = 0; i < lights.size(); ++i)
 		{
 			shader.SetVec3("lightPositions[" + std::to_string(i) + "]", lights[i].Position);
 			shader.SetVec3("lightColors[" + std::to_string(i) + "]", lights[i].Color);

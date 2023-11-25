@@ -58,7 +58,7 @@ void AppDeferred::InitLights()
 	float pi2 = glm::two_pi<float>();
 
 	constexpr unsigned int NR_LIGHTS = 64;
-	for (unsigned int i = 0; i < NR_LIGHTS; i++)
+	for (unsigned int i = 0; i < NR_LIGHTS; ++i)
 	{
 		float yPos = Utility::RandomNumber<float>(0.15f, 1.0f);
 		float radius = Utility::RandomNumber<float>(3.0f, 8.0f);
