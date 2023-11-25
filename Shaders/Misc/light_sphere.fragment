@@ -1,4 +1,5 @@
 #version 330 core
+
 #extension GL_ARB_separate_shader_objects : enable
 
 layout(location = 0) in vec2 fragOffset;
@@ -14,5 +15,5 @@ void main()
 	{
 		discard;
 	}
-	FragColor = vec4(lightColor, 1.0);
+	FragColor = vec4(normalize(lightColor), 1.0);
 }
