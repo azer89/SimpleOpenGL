@@ -1,10 +1,13 @@
 *assimp-vc142-mtd.dll filter=lfs diff=lfs merge=lfs -text
 *assimp-vc142-mt.dll filter=lfs diff=lfs merge=lfs -text
-Textures/skybox_blue_space/* filter=lfs diff=lfs merge=lfs -text
+
 Models/SciFiHelmet/* filter=lfs diff=lfs merge=lfs -text
 Models/AntiqueCamera/* filter=lfs diff=lfs merge=lfs -text
 Models/Sponza/* filter=lfs diff=lfs merge=lfs -text
 Models/adamHead/* filter=lfs diff=lfs merge=lfs -text
 Models/Cerberus/* filter=lfs diff=lfs merge=lfs -text
 Models/Dragon/* filter=lfs diff=lfs merge=lfs -text
+
+Textures/skybox_blue_space/* filter=lfs diff=lfs merge=lfs -text
 Textures/pbr/*/* filter=lfs diff=lfs merge=lfs -text
+Textures/hdr/* filter=lfs diff=lfs merge=lfs -text
