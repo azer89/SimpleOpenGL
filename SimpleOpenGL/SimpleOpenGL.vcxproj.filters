@@ -52,11 +52,11 @@
     <Filter Include="Resource Files\Shaders\SSAO">
       <UniqueIdentifier>{a0ff6301-f35b-4f4d-a5ab-850799dd7a05}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\Shaders\IBL">
-      <UniqueIdentifier>{4bcf86bb-a717-49bf-b3d5-edbdda14a54e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resource Files\Shaders\PBR">
       <UniqueIdentifier>{fd8c2bfb-89f4-4358-9e27-032943968492}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Shaders\IrradianceCubemap">
+      <UniqueIdentifier>{4bcf86bb-a717-49bf-b3d5-edbdda14a54e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -133,6 +133,9 @@
       <Filter>Source Files\System</Filter>
     </ClCompile>
     <ClCompile Include="Apps\AppPBRModel.cpp">
+      <Filter>Source Files\App</Filter>
+    </ClCompile>
+    <ClCompile Include="Apps\AppIrradianceCubemap.cpp">
       <Filter>Source Files\App</Filter>
     </ClCompile>
   </ItemGroup>
@@ -218,6 +221,9 @@
       <Filter>Header Files\System</Filter>
     </ClInclude>
     <ClInclude Include="Apps\AppPBRModel.h">
+      <Filter>Header Files\Apps</Filter>
+    </ClInclude>
+    <ClInclude Include="Apps\AppIrradianceCubemap.h">
       <Filter>Header Files\Apps</Filter>
     </ClInclude>
   </ItemGroup>
@@ -344,6 +350,27 @@
     </None>
     <None Include="..\Shaders\SSAO\ssao.vertex">
       <Filter>Resource Files\Shaders\SSAO</Filter>
+    </None>
+    <None Include="..\Shaders\IrradianceCubemap\background.fragment">
+      <Filter>Resource Files\Shaders\IrradianceCubemap</Filter>
+    </None>
+    <None Include="..\Shaders\IrradianceCubemap\background.vertex">
+      <Filter>Resource Files\Shaders\IrradianceCubemap</Filter>
+    </None>
+    <None Include="..\Shaders\IrradianceCubemap\cubemap.vertex">
+      <Filter>Resource Files\Shaders\IrradianceCubemap</Filter>
+    </None>
+    <None Include="..\Shaders\IrradianceCubemap\equirectangular_to_cubemap.fragment">
+      <Filter>Resource Files\Shaders\IrradianceCubemap</Filter>
+    </None>
+    <None Include="..\Shaders\IrradianceCubemap\irradiance_convolution.fragment">
+      <Filter>Resource Files\Shaders\IrradianceCubemap</Filter>
+    </None>
+    <None Include="..\Shaders\IrradianceCubemap\pbr.fragment">
+      <Filter>Resource Files\Shaders\IrradianceCubemap</Filter>
+    </None>
+    <None Include="..\Shaders\IrradianceCubemap\pbr.vertex">
+      <Filter>Resource Files\Shaders\IrradianceCubemap</Filter>
     </None>
   </ItemGroup>
 </Project>

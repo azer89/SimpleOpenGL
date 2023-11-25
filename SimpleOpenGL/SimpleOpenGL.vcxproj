@@ -153,6 +153,7 @@
     <ClCompile Include="Apps\AppDeferred.cpp" />
     <ClCompile Include="Apps\AppDeferredSponza.cpp" />
     <ClCompile Include="Apps\AppGeom.cpp" />
+    <ClCompile Include="Apps\AppIrradianceCubemap.cpp" />
     <ClCompile Include="Apps\AppModelLoading.cpp" />
     <ClCompile Include="Apps\AppPBRModel.cpp" />
     <ClCompile Include="Apps\AppPBRTextured.cpp" />
@@ -183,6 +184,7 @@
     <ClInclude Include="Apps\AppDeferred.h" />
     <ClInclude Include="Apps\AppDeferredSponza.h" />
     <ClInclude Include="Apps\AppGeom.h" />
+    <ClInclude Include="Apps\AppIrradianceCubemap.h" />
     <ClInclude Include="Apps\AppModelLoading.h" />
     <ClInclude Include="Apps\AppPBRModel.h" />
     <ClInclude Include="Apps\AppPBRTextured.h" />
@@ -222,6 +224,13 @@
     <None Include="..\Shaders\GeometryShader\geom.fragment" />
     <None Include="..\Shaders\GeometryShader\geom.geometry" />
     <None Include="..\Shaders\GeometryShader\geom.vertex" />
+    <None Include="..\Shaders\IrradianceCubemap\background.fragment" />
+    <None Include="..\Shaders\IrradianceCubemap\background.vertex" />
+    <None Include="..\Shaders\IrradianceCubemap\cubemap.vertex" />
+    <None Include="..\Shaders\IrradianceCubemap\equirectangular_to_cubemap.fragment" />
+    <None Include="..\Shaders\IrradianceCubemap\irradiance_convolution.fragment" />
+    <None Include="..\Shaders\IrradianceCubemap\pbr.fragment" />
+    <None Include="..\Shaders\IrradianceCubemap\pbr.vertex" />
     <None Include="..\Shaders\Misc\camera.fragment" />
     <None Include="..\Shaders\Misc\camera.vertex" />
     <None Include="..\Shaders\Misc\colored_triangle.fragment" />
