@@ -2,7 +2,6 @@
 #define __TEXTURE_H__
 
 #include "glad/glad.h"
-#include "assimp//material.h"
 
 #include <string>
 #include <vector>
@@ -23,6 +22,7 @@ public:
 	Texture(const std::string& fullFilePath);
 	Texture(TextureType textureType, const std::string& textureName);
 	void CreateFromImageFile(const std::string& fullFilePath, bool flipVertical = false);
+	void CreateFromHDRFile(const std::string& fullFilePath);
 	void CreateDepthMap(unsigned int width, unsigned int height);
 	void CreateCubeMap(const std::vector<std::string>& files, const std::string& directory);
 	void Bind(GLenum textureIndex);

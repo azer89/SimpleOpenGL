@@ -87,7 +87,7 @@ void PipelineDeferredSSAO::Init(
 	// Check frame buffer
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 	{
-		std::cerr << "Framebuffer not complete!" << std::endl;
+		throw std::runtime_error("Framebuffer not complete!\n");
 	}
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
@@ -105,7 +105,7 @@ void PipelineDeferredSSAO::Init(
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, ssaoColorTexture, 0);
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 	{
-		std::cerr << "SSAO Framebuffer not complete!" << std::endl;
+		throw std::runtime_error("SSAO Framebuffer not complete!\n");
 	}
 
 	// Blur frame buffer
@@ -119,7 +119,7 @@ void PipelineDeferredSSAO::Init(
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, ssaoBlurTexture, 0);
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 	{
-		std::cerr << "SSAO Blur Framebuffer not complete!" << std::endl;
+		throw std::runtime_error("SSAO Blur Framebuffer not complete!\n");
 	}
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 

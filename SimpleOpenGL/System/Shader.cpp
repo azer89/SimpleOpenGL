@@ -148,6 +148,7 @@ std::string Shader::LoadTextFile(const char* filePath)
 	catch (std::ifstream::failure& e)
 	{
 		std::cerr << "Error cannot read file: " << e.what() << std::endl;
+		return std::string();
 	}
 }
 

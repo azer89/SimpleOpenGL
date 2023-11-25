@@ -2,6 +2,7 @@
 #include "AppSettings.h"
 
 #include "glad/glad.h"
+#include <stdexcept>
 
 PipelineDeferred::PipelineDeferred(
 	const char* gBufferVertexShader,
@@ -88,7 +89,7 @@ void PipelineDeferred::Init(
 	// Check if framebuffer is complete
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 	{
-		std::cerr << "Framebuffer not complete!" << '\n';
+		throw std::runtime_error("Framebuffer not complete!\n");
 	}
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }

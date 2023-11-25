@@ -7,13 +7,14 @@
 #include "AppDeferred.h"
 #include "AppDeferredSponza.h"
 #include "AppGeom.h"
+#include "AppIrradianceCubemap.h"
 #include "AppSSAO.h"
 #include "AppPBRTextured.h"
 #include "AppPBRModel.h"
 
 int main()
 {
-	AppPBRModel app;
+	AppIrradianceCubemap app;
 	auto returnValue = app.MainLoop();
 	return returnValue;
 }

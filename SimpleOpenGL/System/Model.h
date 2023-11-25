@@ -6,11 +6,10 @@
 
 #include <string>
 #include <vector>
+#include <unordered_map>
 
 #include "assimp/Importer.hpp"
 #include "assimp/scene.h"
-
-#include <unordered_map>
 
 class Model
 {

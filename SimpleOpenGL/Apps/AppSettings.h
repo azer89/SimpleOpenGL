@@ -1,7 +1,7 @@
 #ifndef __APP_SETTINGS_H__
 #define __APP_SETTINGS_H__
 
-#include <iostream>
+#include <string>
 
 namespace AppSettings
 {

@@ -81,9 +81,34 @@ void Texture::CreateFromImageFile(const std::string& fullFilePath, bool flipVert
 	}
 	else
 	{
-		std::cerr << "Failed to load texture" << std::endl;
+		throw std::runtime_error("Failed to load texture" + fullFilePath);
 	}
 	stbi_image_free(data);
+}
+
+void Texture::CreateFromHDRFile(const std::string& fullFilePath)
+{
+	stbi_set_flip_vertically_on_load(true);
+	int width, height, nrComponents;
+	float *data = stbi_loadf(fullFilePath.c_str(), &width, &height, &nrComponents, 0);
+	unsigned int hdrTexture;
+	if (data)
+	{
+		glGenTextures(1, &hdrTexture);
+		glBindTexture(GL_TEXTURE_2D, hdrTexture);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, width, height, 0, GL_RGB, GL_FLOAT, data); // note how we specify the texture's data value to be float
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		stbi_image_free(data);
+	}
+	else
+	{
+		throw std::runtime_error("Failed to load HDR image " + fullFilePath);
+	}
 }
 
 void Texture::CreateDepthMap(unsigned int width, unsigned int height)
@@ -115,7 +140,7 @@ void Texture::CreateCubeMap(const std::vector<std::string>& files, const std::st
 		}
 		else
 		{
-			std::cerr << "Cubemap texture failed to load at file: " << files[i] << std::endl;
+			throw std::runtime_error("Cubemap texture failed to load: " + files[i]);
 		}
 		stbi_image_free(data);
 	}
