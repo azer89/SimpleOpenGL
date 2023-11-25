@@ -11,6 +11,8 @@ int AppIrradianceCubemap::MainLoop()
 {
 	glEnable(GL_DEPTH_TEST);
 
+	constexpr float CUBE_SIZE = 1024;
+
 	// Init
 	glDepthFunc(GL_LEQUAL); // Set depth function to less than AND equal for skybox depth trick.
 	Shader pbrShader("IrradianceCubemap//pbr.vertex", "IrradianceCubemap//pbr.fragment");
@@ -34,12 +36,12 @@ int AppIrradianceCubemap::MainLoop()
 
 	glBindFramebuffer(GL_FRAMEBUFFER, captureFBO);
 	glBindRenderbuffer(GL_RENDERBUFFER, captureRBO);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, 512, 512);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, CUBE_SIZE, CUBE_SIZE);
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, captureRBO);
 
 	// PBR load the HDR environment map
 	Texture hdrTexture;
-	hdrTexture.CreateFromHDRFile(AppSettings::TextureFolder + "hdr//the_sky_is_on_fire_4k.hdr");
+	hdrTexture.CreateFromHDRFile(AppSettings::TextureFolder + "hdr//kloppenheim_07_puresky_4k.hdr");
 
 	// PBR setup cubemap to render to and attach to framebuffer
 	unsigned int envCubemap;
@@ -47,7 +49,7 @@ int AppIrradianceCubemap::MainLoop()
 	glBindTexture(GL_TEXTURE_CUBE_MAP, envCubemap);
 	for (unsigned int i = 0; i < 6; ++i)
 	{
-		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB16F, 512, 512, 0, GL_RGB, GL_FLOAT, nullptr);
+		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB16F, CUBE_SIZE, CUBE_SIZE, 0, GL_RGB, GL_FLOAT, nullptr);
 	}
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
@@ -75,7 +77,7 @@ int AppIrradianceCubemap::MainLoop()
 	//glBindTexture(GL_TEXTURE_2D, hdrTexture);
 	hdrTexture.Bind(GL_TEXTURE0);
 
-	glViewport(0, 0, 512, 512); // don't forget to configure the viewport to the capture dimensions.
+	glViewport(0, 0, CUBE_SIZE, CUBE_SIZE); // don't forget to configure the viewport to the capture dimensions.
 	glBindFramebuffer(GL_FRAMEBUFFER, captureFBO);
 	for (unsigned int i = 0; i < 6; ++i)
 	{
@@ -150,7 +152,7 @@ int AppIrradianceCubemap::MainLoop()
 		backgroundShader.SetMat4("view", camera->GetViewMatrix());
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_CUBE_MAP, envCubemap);
-		//glBindTexture(GL_TEXTURE_CUBE_MAP, irradianceMap); // display irradiance map
+		glBindTexture(GL_TEXTURE_CUBE_MAP, irradianceMap); // display irradiance map
 		renderCube();
 
 		SwapBuffers();
