@@ -1,8 +1,8 @@
 # Simple OpenGL Renderer
 
 ### Features
-* Blinn-Phong lighting
-* glTFloader that supports PBR material
+* Blinn-Phong shading
+* glTFloader that supports PBR materials
 * Shadow mapping
 * Deferred shading
 * Cubemap
