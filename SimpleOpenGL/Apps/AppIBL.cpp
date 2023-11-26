@@ -4,6 +4,7 @@
 #include "AppSettings.h"
 #include "Shader.h"
 #include "Texture.h"
+#include "Model.h"
 
 void renderCube();
 void renderQuad();
@@ -19,6 +20,14 @@ int AppIBL::MainLoop()
 	glDepthFunc(GL_LEQUAL);
 	// Enable seamless cubemap sampling for lower mip levels in the pre-filter map.
 	glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
+
+	Texture albedo(AppSettings::TextureFolder + "pbr//rusted_iron//albedo.png");
+	Texture normal(AppSettings::TextureFolder + "pbr//rusted_iron//normal.png");
+	Texture metallic(AppSettings::TextureFolder + "pbr//rusted_iron//metallic.png");
+	Texture roughness(AppSettings::TextureFolder + "pbr//rusted_iron//roughness.png");
+	Texture ao(AppSettings::TextureFolder + "pbr//rusted_iron//ao.png");
+
+	Model dragonModel(AppSettings::ModelFolder + "Dragon//Dragon.obj");
 
 	Shader pbrShader("IBL//pbr.vertex", "IBL//pbr.fragment");
 	Shader equirectangularToCubemapShader("IBL//cubemap.vertex", "IBL//equirectangular_to_cubemap.fragment");
@@ -54,7 +63,7 @@ int AppIBL::MainLoop()
 
 	// PBR load the HDR environment map
 	Texture hdrTexture;
-	hdrTexture.CreateFromHDRFile(AppSettings::TextureFolder + "hdr//kloppenheim_07_puresky_4k.hdr");
+	hdrTexture.CreateFromHDRFile(AppSettings::TextureFolder + "hdr//the_sky_is_on_fire_4k.hdr");
 
 	// PBR setup cubemap to render to and attach to framebuffer
 	unsigned int envCubemap;
@@ -237,7 +246,6 @@ int AppIBL::MainLoop()
 		);
 
 		pbrShader.Use();
-		glm::mat4 model = glm::mat4(1.0f);
 		glm::mat4 view = camera->GetViewMatrix();
 		pbrShader.SetMat4("view", view);
 		pbrShader.SetVec3("camPos", camera->Position);
@@ -250,7 +258,17 @@ int AppIBL::MainLoop()
 		glActiveTexture(GL_TEXTURE2);
 		glBindTexture(GL_TEXTURE_2D, brdfLUTTexture);
 
+		albedo.Bind(GL_TEXTURE3);
+		normal.Bind(GL_TEXTURE4);
+		metallic.Bind(GL_TEXTURE5);
+		roughness.Bind(GL_TEXTURE6);
+		ao.Bind(GL_TEXTURE7);
+
 		// Render
+		glm::mat4 model = glm::mat4(1.0f);
+		pbrShader.SetMat4("model", model);
+		bool skipTextureBinding = true;
+		dragonModel.Draw(pbrShader, skipTextureBinding);
 
 		backgroundShader.Use();
 		backgroundShader.SetMat4("view", camera->GetViewMatrix());
