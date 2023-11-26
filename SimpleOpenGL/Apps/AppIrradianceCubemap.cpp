@@ -152,7 +152,7 @@ int AppIrradianceCubemap::MainLoop()
 		backgroundShader.SetMat4("view", camera->GetViewMatrix());
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_CUBE_MAP, envCubemap);
-		glBindTexture(GL_TEXTURE_CUBE_MAP, irradianceMap); // display irradiance map
+		//glBindTexture(GL_TEXTURE_CUBE_MAP, irradianceMap); // display irradiance map
 		renderCube();
 
 		SwapBuffers();

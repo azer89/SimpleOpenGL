@@ -9,6 +9,7 @@ int AppPBRModel::MainLoop()
 	glEnable(GL_DEPTH_TEST);
 
 	Shader shader("PBR//pbr.vertex", "PBR//pbr_emissive.fragment");
+	Shader lightSphereShader("Misc//light_sphere.vertex", "Misc//light_sphere.fragment");
 
 	glm::mat4 projection = camera->GetProjectionMatrix();
 	shader.Use();
@@ -16,9 +17,9 @@ int AppPBRModel::MainLoop()
 	InitScene();
 
 	std::vector<Light> lights;
-	lights.emplace_back(glm::vec3(0.0f, 0.0f, 10.0f), glm::vec3(150.0f, 150.0f, 150.0f));
-	lights.emplace_back(glm::vec3(0.0f, 2.0f, 10.0f), glm::vec3(150.0f, 150.0f, 150.0f));
-	lights.emplace_back(glm::vec3(0.0f, -2.0f, 10.0f), glm::vec3(150.0f, 150.0f, 150.0f));
+	lights.emplace_back(glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(150.0f, 40.0f, 40.0f));
+	lights.emplace_back(glm::vec3(5.f, 0.0f, 5.0f), glm::vec3(40.0f, 150.0f, 40.0f));
+	lights.emplace_back(glm::vec3(-5.f, 0.0f, 5.0f), glm::vec3(40.0f, 40.0f, 150.0f));
 
 	while (!GLFWWindowShouldClose())
 	{
@@ -39,6 +40,14 @@ int AppPBRModel::MainLoop()
 
 		RenderScene(shader);
 
+		lightSphereShader.Use();
+		lightSphereShader.SetMat4("projection", camera->GetProjectionMatrix());
+		lightSphereShader.SetMat4("view", camera->GetViewMatrix());
+		for (auto& l : lights)
+		{
+			l.Render(lightSphereShader);
+		}
+
 		SwapBuffers();
 	}
 
@@ -49,13 +58,27 @@ int AppPBRModel::MainLoop()
 
 void AppPBRModel::InitScene()
 {
-	renderModel = std::make_unique<Model>(AppSettings::ModelFolder + "DamagedHelmet//DamagedHelmet.gltf");
+	renderModel1 = std::make_unique<Model>(AppSettings::ModelFolder + "DamagedHelmet//DamagedHelmet.gltf");
+	renderModel2 = std::make_unique<Model>(AppSettings::ModelFolder + "HorseStatue//horse_statue_01_4k.gltf");
+	renderModel3 = std::make_unique<Model>(AppSettings::ModelFolder + "SciFiHelmet//SciFiHelmet.gltf");
 }
 
 void AppPBRModel::RenderScene(const Shader& shader)
 {
+	bool skipTextureBinding = false;
+
 	glm::mat4 modelMatrix = glm::mat4(1.0f);
 	shader.SetMat4("model", modelMatrix);
-	bool skipTextureBinding = false;
-	renderModel->Draw(shader, skipTextureBinding);
+	renderModel1->Draw(shader, skipTextureBinding);
+
+	modelMatrix = glm::mat4(1.0f);
+	modelMatrix = glm::translate(modelMatrix, glm::vec3(-2.5f, 0.0f, 0.0f));
+	modelMatrix = glm::scale(modelMatrix, glm::vec3(10.f));
+	shader.SetMat4("model", modelMatrix);
+	renderModel2->Draw(shader, skipTextureBinding);
+
+	modelMatrix = glm::mat4(1.0f);
+	modelMatrix = glm::translate(modelMatrix, glm::vec3(2.5f, 0.0f, 0.0f));
+	shader.SetMat4("model", modelMatrix);
+	renderModel3->Draw(shader, skipTextureBinding);
 }

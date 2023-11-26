@@ -243,6 +243,9 @@
     <None Include="..\Shaders\Misc\texture.vertex" />
     <None Include="..\Shaders\ModelLoading\model_loading.fragment" />
     <None Include="..\Shaders\ModelLoading\model_loading.vertex" />
+    <None Include="..\Shaders\PBR\pbr.fragment" />
+    <None Include="..\Shaders\PBR\pbr.vertex" />
+    <None Include="..\Shaders\PBR\pbr_emissive.fragment" />
     <None Include="..\Shaders\ShadowMapping\shadow_mapping.fragment" />
     <None Include="..\Shaders\ShadowMapping\shadow_mapping.vertex" />
     <None Include="..\Shaders\ShadowMapping\shadow_mapping_debug.fragment" />

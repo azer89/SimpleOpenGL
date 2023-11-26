@@ -372,5 +372,14 @@
     <None Include="..\Shaders\IrradianceCubemap\pbr.vertex">
       <Filter>Resource Files\Shaders\IrradianceCubemap</Filter>
     </None>
+    <None Include="..\Shaders\PBR\pbr.fragment">
+      <Filter>Resource Files\Shaders\PBR</Filter>
+    </None>
+    <None Include="..\Shaders\PBR\pbr.vertex">
+      <Filter>Resource Files\Shaders\PBR</Filter>
+    </None>
+    <None Include="..\Shaders\PBR\pbr_emissive.fragment">
+      <Filter>Resource Files\Shaders\PBR</Filter>
+    </None>
   </ItemGroup>
 </Project>

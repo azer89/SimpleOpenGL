@@ -18,7 +18,9 @@ private:
 
 private:
 	// Scene
-	std::unique_ptr<Model> renderModel;
+	std::unique_ptr<Model> renderModel1;
+	std::unique_ptr<Model> renderModel2;
+	std::unique_ptr<Model> renderModel3;
 
 	// Lights
 	std::unique_ptr<Shader> lightSphereShader;
