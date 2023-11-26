@@ -143,8 +143,7 @@ int AppIBL::MainLoop()
 	}
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-	// pbr: create a pre-filter cubemap, and re-scale capture FBO to pre-filter scale.
-	// --------------------------------------------------------------------------------
+	// PBR create a pre-filter cubemap, and re-scale capture FBO to pre-filter scale
 	unsigned int prefilterMap;
 	glGenTextures(1, &prefilterMap);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, prefilterMap);
@@ -157,7 +156,7 @@ int AppIBL::MainLoop()
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR); // be sure to set minification filter to mip_linear 
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	// generate mipmaps for the cubemap so OpenGL automatically allocates the required memory.
+	// Generate mipmaps for the cubemap so OpenGL automatically allocates the required memory.
 	glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
 
 	// PBR Run a quasi monte-carlo simulation on the environment lighting to create a prefilter (cube)map
@@ -171,7 +170,7 @@ int AppIBL::MainLoop()
 	unsigned int maxMipLevels = 5;
 	for (unsigned int mip = 0; mip < maxMipLevels; ++mip)
 	{
-		// reisze framebuffer according to mip-level size.
+		// Resize framebuffer according to mip-level size.
 		unsigned int mipWidth = static_cast<unsigned int>(128 * std::pow(0.5, mip));
 		unsigned int mipHeight = static_cast<unsigned int>(128 * std::pow(0.5, mip));
 		glBindRenderbuffer(GL_RENDERBUFFER, captureRBO);
@@ -217,7 +216,6 @@ int AppIBL::MainLoop()
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-
 	// Initialize static shader uniforms before rendering
 	glm::mat4 projection = camera->GetProjectionMatrix();
 	pbrShader.Use();
@@ -238,7 +236,15 @@ int AppIBL::MainLoop()
 			GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT
 		);
 
-		// Code
+		// Bind pre-computed IBL data
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, irradianceMap);
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, prefilterMap);
+		glActiveTexture(GL_TEXTURE2);
+		glBindTexture(GL_TEXTURE_2D, brdfLUTTexture);
+
+		// Render
 
 		backgroundShader.Use();
 		backgroundShader.SetMat4("view", camera->GetViewMatrix());
