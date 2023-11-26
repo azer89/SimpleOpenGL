@@ -8,20 +8,24 @@
 #include <iostream>
 
 // Constructor
-Mesh::Mesh(std::vector<Vertex>&& vertices, std::vector<unsigned int>&& indices, std::unordered_map<TextureType, Texture>&& textures)
+Mesh::Mesh(std::vector<Vertex>&& _vertices, 
+	std::vector<unsigned int>&& _indices, 
+	std::unordered_map<TextureType, Texture>&& _textures) :
+	vertices(std::move(_vertices)),
+	indices(std::move(_indices)),
+	textureMap(std::move(_textures))
 {
-	this->vertices = std::move(vertices);
-	this->indices = std::move(indices);
-	this->textureMap = std::move(textures);
 	SetupMesh();
 }
 
 // Constructor
-Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices, const std::unordered_map<TextureType, Texture>& textures)
+Mesh::Mesh(const std::vector<Vertex>& _vertices, 
+	const std::vector<unsigned int>& _indices, 
+	const std::unordered_map<TextureType, Texture>& _textures) :
+	vertices(_vertices),
+	indices(_indices),
+	textureMap(_textures)
 {
-	this->vertices = vertices;
-	this->indices = indices;
-	this->textureMap = textures;
 	SetupMesh();
 }
 
