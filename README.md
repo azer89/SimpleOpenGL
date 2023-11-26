@@ -39,14 +39,15 @@ https://github.com/azer89/SimpleOpenGL/assets/790432/ff9fa67f-afdc-4da1-bdb6-108
 <br/>
 Some other cool results
 <br/>
+<img width="400" height="300" alt="PBR" src="https://github.com/azer89/SimpleOpenGL/assets/790432/d4c44a9b-ee31-40cb-94ec-15010058768d">
 
-<img width="400" height="300" alt="image" src="https://github.com/azer89/SimpleOpenGL/assets/790432/d9b9ea15-20c3-46c1-8169-9a4599501179">
+<img width="400" height="300" alt="PBR" src="https://github.com/azer89/SimpleOpenGL/assets/790432/d9b9ea15-20c3-46c1-8169-9a4599501179">
 
-<img width="400" height="300" alt="image" src="https://github.com/azer89/SimpleOpenGL/assets/790432/2205127f-b56c-4b49-a4d9-ea9b1d1b7c52">
+<img width="400" height="300" alt="PBR" src="https://github.com/azer89/SimpleOpenGL/assets/790432/2205127f-b56c-4b49-a4d9-ea9b1d1b7c52">
 
-<img width="400" height="300" alt="image" src="https://github.com/azer89/SimpleOpenGL/assets/790432/1c01a0ad-c3c3-4374-bc8e-9bd71313e499">
+<img width="400" height="300" alt="Deferred Shading" src="https://github.com/azer89/SimpleOpenGL/assets/790432/1c01a0ad-c3c3-4374-bc8e-9bd71313e499">
 
-<img width="400" height="300" alt="image" src="https://github.com/azer89/SimpleOpenGL/assets/790432/ae47eeea-0464-442c-85f2-d3223554585a">
+<img width="400" height="300" alt="Skybox" src="https://github.com/azer89/SimpleOpenGL/assets/790432/ae47eeea-0464-442c-85f2-d3223554585a">
 
 
 
