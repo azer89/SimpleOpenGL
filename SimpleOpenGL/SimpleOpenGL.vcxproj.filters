@@ -381,5 +381,14 @@
     <None Include="..\Shaders\IBL\pbr.vertex">
       <Filter>Resource Files\Shaders\IBL</Filter>
     </None>
+    <None Include="..\Shaders\IBL\brdf.fragment">
+      <Filter>Resource Files\Shaders\IBL</Filter>
+    </None>
+    <None Include="..\Shaders\IBL\brdf.vertex">
+      <Filter>Resource Files\Shaders\IBL</Filter>
+    </None>
+    <None Include="..\Shaders\IBL\prefilter.fragment">
+      <Filter>Resource Files\Shaders\IBL</Filter>
+    </None>
   </ItemGroup>
 </Project>

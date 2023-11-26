@@ -226,11 +226,14 @@
     <None Include="..\Shaders\GeometryShader\geom.vertex" />
     <None Include="..\Shaders\IBL\background.fragment" />
     <None Include="..\Shaders\IBL\background.vertex" />
+    <None Include="..\Shaders\IBL\brdf.fragment" />
+    <None Include="..\Shaders\IBL\brdf.vertex" />
     <None Include="..\Shaders\IBL\cubemap.vertex" />
     <None Include="..\Shaders\IBL\equirectangular_to_cubemap.fragment" />
     <None Include="..\Shaders\IBL\irradiance_convolution.fragment" />
     <None Include="..\Shaders\IBL\pbr.fragment" />
     <None Include="..\Shaders\IBL\pbr.vertex" />
+    <None Include="..\Shaders\IBL\prefilter.fragment" />
     <None Include="..\Shaders\Misc\camera.fragment" />
     <None Include="..\Shaders\Misc\camera.vertex" />
     <None Include="..\Shaders\Misc\colored_triangle.fragment" />
