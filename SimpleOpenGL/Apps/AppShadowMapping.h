@@ -18,7 +18,7 @@ private:
 	void RenderQuad();
 
 private:
-	std::unique_ptr<Model> foxModel;
+	std::unique_ptr<Model> renderModel;
 
 	unsigned int lightCubeVAO = 0;
 	unsigned int lightCubeVBO = 0;

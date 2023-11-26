@@ -21,12 +21,12 @@ int AppShadowMapping::MainLoop()
 	debugShader.SetInt("depthMap", 0);
 
 	// Textures
-	Texture grassTexture;
-	grassTexture.CreateFromImageFile(AppSettings::TextureFolder + "grass.png");
+	Texture planeTexture;
+	planeTexture.CreateFromImageFile(AppSettings::TextureFolder + "White1x1.png");
 
 	// Depth
-	constexpr unsigned int DEPTH_WIDTH = 6000;
-	constexpr unsigned int DEPTH_HEIGHT = 6000;
+	constexpr unsigned int DEPTH_WIDTH = 2000;
+	constexpr unsigned int DEPTH_HEIGHT = 2000;
 	Texture depthTexture;
 	depthTexture.CreateDepthMap(DEPTH_WIDTH, DEPTH_HEIGHT);
 
@@ -44,8 +44,8 @@ int AppShadowMapping::MainLoop()
 
 	// Light
 	glm::vec3 lightPos;
-	constexpr float lightY = 2.0f;
-	constexpr float lightRadius = 3.0f;
+	constexpr float lightY = 6.0f;
+	constexpr float lightRadius = 5.0f;
 	constexpr float lightSpeed = 0.5f;
 	float lightTimer = 0.0f;
 
@@ -54,7 +54,7 @@ int AppShadowMapping::MainLoop()
 	glm::mat4 lightView;
 	glm::mat4 lightSpaceMatrix;
 	constexpr float near_plane = 1.0f;
-	constexpr float far_plane = 10;
+	constexpr float far_plane = 20;
 
 	// Render loop
 	while (!GLFWWindowShouldClose())
@@ -100,7 +100,7 @@ int AppShadowMapping::MainLoop()
 		mainShader.SetVec3("viewPos", camera->Position);
 		mainShader.SetVec3("lightPos", lightPos);
 		mainShader.SetMat4("lightSpaceMatrix", lightSpaceMatrix);
-		grassTexture.Bind(GL_TEXTURE0);
+		planeTexture.Bind(GL_TEXTURE0);
 		depthTexture.Bind(GL_TEXTURE1);
 		RenderPlane(mainShader);
 		
@@ -145,21 +145,18 @@ void AppShadowMapping::RenderFoxes(const Shader& shader)
 {
 	glm::mat4 model = glm::mat4(1.0f);
 	model = glm::translate(model, glm::vec3(2.0f, 0.0f, 1.0f));
-	model = glm::scale(model, glm::vec3(0.025f));
 	shader.SetMat4("model", model);
-	foxModel->Draw(shader);
+	renderModel->Draw(shader);
 
 	model = glm::mat4(1.0f);
 	model = glm::translate(model, glm::vec3(0.0f, 0.0f, 2.0f));
-	model = glm::scale(model, glm::vec3(0.02f));
 	shader.SetMat4("model", model);
-	foxModel->Draw(shader);
+	renderModel->Draw(shader);
 
 	model = glm::mat4(1.0f);
 	model = glm::translate(model, glm::vec3(-1.5f, 0.0f, 0.0f));
-	model = glm::scale(model, glm::vec3(0.03f));
 	shader.SetMat4("model", model);
-	foxModel->Draw(shader);
+	renderModel->Draw(shader);
 }
 
 void AppShadowMapping::RenderQuad()
@@ -172,7 +169,7 @@ void AppShadowMapping::RenderQuad()
 void AppShadowMapping::InitScene()
 {
 	// Fox
-	foxModel = std::make_unique<Model>(AppSettings::ModelFolder + "Fox//Fox.gltf");
+	renderModel = std::make_unique<Model>(AppSettings::ModelFolder + "Zaku//scene.gltf");
 
 	// Plane
 	constexpr float planeVertices[] = {
