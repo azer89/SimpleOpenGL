@@ -1,4 +1,4 @@
-# Simple OpenGL
+# Simple OpenGL Renderer
 
 ### Features
 * Blinn-Phong lighting
@@ -32,7 +32,7 @@ Physically Based Rendering
 <br/>
 An implementation of shadow mapping
 
-https://github.com/azer89/SimpleOpenGL/assets/790432/ff9fa67f-afdc-4da1-bdb6-108bc7d7864e
+https://github.com/azer89/SimpleOpenGL/assets/790432/db15de7a-8b37-4918-ae9d-0a51fdbf7e22
 
 
 <br/>
@@ -58,6 +58,7 @@ Some other cool results
 * [glTF Assets](https://github.com/KhronosGroup/glTF-Sample-Assets)
 * Skybox textures from [humus.name](https://www.humus.name/index.php?page=Textures)
 * [Polyhaven](https://polyhaven.com/)
+* [Zaku Model](https://sketchfab.com/3d-models/zaku-ii-730a08b171aa4ac0a43131752150acfb)
 
 
 
