@@ -32,8 +32,7 @@ Physically Based Rendering
 <br/>
 An implementation of shadow mapping
 
-https://github.com/azer89/SimpleOpenGL/assets/790432/db15de7a-8b37-4918-ae9d-0a51fdbf7e22
-
+https://github.com/azer89/SimpleOpenGL/assets/790432/a369d096-6087-4043-9993-def77f409dad
 
 <br/>
 <br/>
