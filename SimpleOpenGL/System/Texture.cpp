@@ -11,9 +11,10 @@
 
 #include <iostream>
 
-Texture::Texture()
+Texture::Texture() :
+	id (GL_INVALID_VALUE),
+	textureType(TextureType::TEXTURE_NONE)
 {
-	id = GL_INVALID_VALUE;
 }
 
 Texture::Texture(const std::string& fullFilePath)
@@ -23,9 +24,9 @@ Texture::Texture(const std::string& fullFilePath)
 
 Texture::Texture(TextureType texType, const std::string& texName) :
 	textureType(texType),
-	textureName(texName)
+	textureName(texName),
+	id(GL_INVALID_VALUE)
 {
-	id = GL_INVALID_VALUE;
 }
 
 unsigned int Texture::GetID()

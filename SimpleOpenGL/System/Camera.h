@@ -38,6 +38,11 @@ public:
 	float MouseSensitivity;
 	float Zoom;
 
+private:
+	glm::mat4 projectionMatrix;
+	glm::mat4 viewMatrix;
+
+public:
 	Camera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f), 
 		glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), 
 		float yaw = CAMERA_YAW,
@@ -51,10 +56,6 @@ public:
 	void ProcessKeyboard(CameraMovement direction, float deltaTime);
 	void ProcessMouseMovement(float xoffset, float yoffset, bool constrainPitch = true);
 	void ProcessMouseScroll(float yoffset);
-
-private:
-	glm::mat4 projectionMatrix;
-	glm::mat4 viewMatrix;
 	
 private:
 	void UpdateInternal();

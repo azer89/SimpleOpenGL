@@ -4,28 +4,36 @@
 #include <glm/glm.hpp>
 
 Camera::Camera(glm::vec3 position, glm::vec3 up, float yaw, float pitch) : 
-	Front(glm::vec3(0.0f, 0.0f, -1.0f)), 
+	Position(position),
+	Front(glm::vec3(0.0f, 0.0f, -1.0f)),
+	Up(glm::vec3(0.f, 1.f, 0.f)),
+	Right(glm::vec3(1.f, 0.f, 0.f)),
+	WorldUp(up),
+	Yaw(yaw),
+	Pitch(pitch),
 	MovementSpeed(CAMERA_SPEED),
 	MouseSensitivity(CAMERA_SENSITIVITY),
-	Zoom(CAMERA_ZOOM)
+	Zoom(CAMERA_ZOOM),
+	projectionMatrix(glm::mat4(1.f)),
+	viewMatrix(glm::mat4(1.f))
 {
-	Position = position;
-	WorldUp = up;
-	Yaw = yaw;
-	Pitch = pitch;
 	UpdateInternal();
 }
 
 Camera::Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch) : 
+	Position(glm::vec3(posX, posY, posZ)),
 	Front(glm::vec3(0.0f, 0.0f, -1.0f)), 
+	Up(glm::vec3(0.f, 1.f, 0.f)),
+	Right(glm::vec3(1.f, 0.f, 0.f)),
+	WorldUp(glm::vec3(upX, upY, upZ)),
+	Yaw(yaw),
+	Pitch(pitch),
 	MovementSpeed(CAMERA_SPEED), 
 	MouseSensitivity(CAMERA_SENSITIVITY),
-	Zoom(CAMERA_ZOOM)
+	Zoom(CAMERA_ZOOM),
+	projectionMatrix(glm::mat4(1.f)),
+	viewMatrix(glm::mat4(1.f))
 {
-	Position = glm::vec3(posX, posY, posZ);
-	WorldUp = glm::vec3(upX, upY, upZ);
-	Yaw = yaw;
-	Pitch = pitch;
 	UpdateInternal();
 }
 
