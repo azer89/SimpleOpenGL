@@ -1,5 +1,5 @@
 
-#include "AppIrradianceCubemap.h"
+#include "AppIBL.h"
 
 #include "AppSettings.h"
 #include "Shader.h"
@@ -7,7 +7,7 @@
 
 void renderCube();
 
-int AppIrradianceCubemap::MainLoop()
+int AppIBL::MainLoop()
 {
 	glEnable(GL_DEPTH_TEST);
 
@@ -15,10 +15,10 @@ int AppIrradianceCubemap::MainLoop()
 
 	// Init
 	glDepthFunc(GL_LEQUAL); // Set depth function to less than AND equal for skybox depth trick.
-	Shader pbrShader("IrradianceCubemap//pbr.vertex", "IrradianceCubemap//pbr.fragment");
-	Shader equirectangularToCubemapShader("IrradianceCubemap//cubemap.vertex", "IrradianceCubemap//equirectangular_to_cubemap.fragment");
-	Shader irradianceShader("IrradianceCubemap//cubemap.vertex", "IrradianceCubemap//irradiance_convolution.fragment");
-	Shader backgroundShader("IrradianceCubemap//background.vertex", "IrradianceCubemap//background.fragment");
+	Shader pbrShader("IBL//pbr.vertex", "IBL//pbr.fragment");
+	Shader equirectangularToCubemapShader("IBL//cubemap.vertex", "IBL//equirectangular_to_cubemap.fragment");
+	Shader irradianceShader("IBL//cubemap.vertex", "IBL//irradiance_convolution.fragment");
+	Shader backgroundShader("IBL//background.vertex", "IBL//background.fragment");
 
 	pbrShader.Use();
 	pbrShader.SetInt("irradianceMap", 0);
