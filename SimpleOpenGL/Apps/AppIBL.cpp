@@ -1,6 +1,5 @@
 
 #include "AppIBL.h"
-
 #include "AppSettings.h"
 #include "Shader.h"
 #include "Texture.h"
@@ -37,18 +36,35 @@ int AppIBL::MainLoop()
 	Shader backgroundShader("IBL//background.vertex", "IBL//background.fragment");
 
 	pbrShader.Use();
-	pbrShader.SetInt("irradianceMap", 0);
-	pbrShader.SetInt("prefilterMap", 1);
-	pbrShader.SetInt("brdfLUT", 2);
-	pbrShader.SetInt("albedoMap", 3);
-	pbrShader.SetInt("normalMap", 4);
-	pbrShader.SetInt("metallicMap", 5);
-	pbrShader.SetInt("roughnessMap", 6);
-	pbrShader.SetInt("aoMap", 7);
+
+	pbrShader.SetInt("irradianceMap", 5);
+	pbrShader.SetInt("prefilterMap", 6);
+	pbrShader.SetInt("brdfLUT", 7);
+
+	pbrShader.SetInt("albedoMap", 0);
+	pbrShader.SetInt("normalMap", 1);
+	pbrShader.SetInt("metallicMap", 2);
+	pbrShader.SetInt("roughnessMap", 3);
+	pbrShader.SetInt("aoMap", 4);
 
 
 	backgroundShader.Use();
 	backgroundShader.SetInt("environmentMap", 0);
+
+	// Light
+	glm::vec3 lightPositions[] = {
+		glm::vec3(-10.0f,  10.0f, 10.0f),
+		glm::vec3(10.0f,  10.0f, 10.0f),
+		glm::vec3(-10.0f, -10.0f, 10.0f),
+		glm::vec3(10.0f, -10.0f, 10.0f),
+	};
+	glm::vec3 lightColors[] = {
+		glm::vec3(300.0f, 300.0f, 300.0f),
+		glm::vec3(300.0f, 300.0f, 300.0f),
+		glm::vec3(300.0f, 300.0f, 300.0f),
+		glm::vec3(300.0f, 300.0f, 300.0f)
+	};
+
 
 	// PBR setup framebuffer
 	unsigned int captureFBO;
@@ -63,7 +79,7 @@ int AppIBL::MainLoop()
 
 	// PBR load the HDR environment map
 	Texture hdrTexture;
-	hdrTexture.CreateFromHDRFile(AppSettings::TextureFolder + "hdr//the_sky_is_on_fire_4k.hdr");
+	hdrTexture.CreateFromHDRFile(AppSettings::TextureFolder + "hdr//belfast_sunset_puresky_4k.hdr");
 
 	// PBR setup cubemap to render to and attach to framebuffer
 	unsigned int envCubemap;
@@ -251,22 +267,31 @@ int AppIBL::MainLoop()
 		pbrShader.SetVec3("camPos", camera->Position);
 
 		// Bind pre-computed IBL data
-		glActiveTexture(GL_TEXTURE0);
+		glActiveTexture(GL_TEXTURE5);
 		glBindTexture(GL_TEXTURE_CUBE_MAP, irradianceMap);
-		glActiveTexture(GL_TEXTURE1);
+		glActiveTexture(GL_TEXTURE6);
 		glBindTexture(GL_TEXTURE_CUBE_MAP, prefilterMap);
-		glActiveTexture(GL_TEXTURE2);
+		glActiveTexture(GL_TEXTURE7);
 		glBindTexture(GL_TEXTURE_2D, brdfLUTTexture);
 
-		albedo.Bind(GL_TEXTURE3);
-		normal.Bind(GL_TEXTURE4);
-		metallic.Bind(GL_TEXTURE5);
-		roughness.Bind(GL_TEXTURE6);
-		ao.Bind(GL_TEXTURE7);
+		albedo.Bind(GL_TEXTURE0);
+		normal.Bind(GL_TEXTURE1);
+		metallic.Bind(GL_TEXTURE2);
+		roughness.Bind(GL_TEXTURE3);
+		ao.Bind(GL_TEXTURE4);
+
+		// Lights
+		for (unsigned int i = 0; i < 4; ++i)
+		{
+			pbrShader.SetVec3("lightPositions[" + std::to_string(i) + "]", lightPositions[i]);
+			pbrShader.SetVec3("lightColors[" + std::to_string(i) + "]", lightColors[i]);
+		}
 
 		// Render
 		glm::mat4 model = glm::mat4(1.0f);
+		model = glm::rotate(model, static_cast<float>(acos(-1)), glm::vec3(0.0f, 1.0f, 0.0f));
 		pbrShader.SetMat4("model", model);
+		pbrShader.SetMat3("normalMatrix", glm::transpose(glm::inverse(glm::mat3(model))));
 		bool skipTextureBinding = true;
 		dragonModel.Draw(pbrShader, skipTextureBinding);
 
@@ -375,6 +400,7 @@ void renderQuad()
 			 1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
 			 1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
 		};
+
 		// setup plane VAO
 		glGenVertexArrays(1, &quadVAO);
 		glGenBuffers(1, &quadVBO);
