@@ -26,7 +26,7 @@ Screen Space Ambient Occlusion <em>(The robot model is taken from Unity)</em>
 <br/>
 Physically Based Rendering
 <br/>
-<img width="800" height="600" alt="image" src="https://github.com/azer89/SimpleOpenGL/assets/790432/0caa67ef-2900-4f76-b544-fe07dd1564da">
+<img width="800" height="600" alt="image" src="https://github.com/azer89/SimpleOpenGL/assets/790432/5ea68f43-008a-4891-ac8d-cdf2a275fa3e">
 
 <br/>
 <br/>
