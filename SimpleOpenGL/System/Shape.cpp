@@ -1,10 +1,7 @@
 #include "Shape.h"
 
-#include "glm/glm.hpp"
-#include "glm/ext/scalar_constants.hpp"
-#include "glad/glad.h"
-
 #include <vector>
+
 
 Sphere::Sphere()
 {
@@ -164,6 +161,8 @@ Cube::Cube()
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(2);
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+
+	glBindVertexArray(0);
 }
 Cube::~Cube()
 {
@@ -178,28 +177,34 @@ void Cube::Draw()
 
 Quad::Quad()
 {
-	std::vector<float> vertices =
+	std::vector<float> data = GetQuadData();
+	SetUpVAOVBO(data);
+}
+Quad::Quad(float rotation, glm::vec3 rotationAxis)
+{
+	std::vector<float> data = GetQuadData();
+
+	glm::mat4 rotationMatrix(1.0f);
+	rotationMatrix = glm::rotate(rotationMatrix, rotation, rotationAxis);
+
+	for (unsigned int i = 0; i < 6; ++i)
 	{
-		// Positions		 // Normals			// Texcoords
-		 1.0f, 0.0f,  1.0f,  0.0f, 1.0f, 0.0f,  1.0f, 0.0f,
-		-1.0f, 0.0f,  1.0f,  0.0f, 1.0f, 0.0f,  0.0f, 0.0f,
-		-1.0f, 0.0f, -1.0f,  0.0f, 1.0f, 0.0f,  0.0f, 1.0f,
+		unsigned int index = i * 8;
+		glm::vec4 vertex(data[index], data[index + 1], data[index + 2], 0.f);
+		glm::vec4 normal(data[index + 3], data[index + 4], data[index + 5], 0.f);
 
-		 1.0f, 0.0f,  1.0f,  0.0f, 1.0f, 0.0f,  1.0f, 0.0f,
-		-1.0f, 0.0f, -1.0f,  0.0f, 1.0f, 0.0f,  0.0f, 1.0f,
-		 1.0f, 0.0f, -1.0f,  0.0f, 1.0f, 0.0f,  1.0f, 1.0f
-	};
+		vertex = rotationMatrix * vertex;
+		normal = rotationMatrix * normal;
 
-	glGenVertexArrays(1, &VAO);
-	glBindVertexArray(VAO);
+		data[index] = vertex[0];
+		data[index + 1] = vertex[1];
+		data[index + 2] = vertex[2];
+		data[index + 3] = normal[0];
+		data[index + 4] = normal[1];
+		data[index + 5] = normal[2];
+	}
 
-	glGenBuffers(1, &VBO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.size(), vertices.data(), GL_STATIC_DRAW);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-	glBindVertexArray(0);
+	SetUpVAOVBO(data);
 }
 Quad::~Quad()
 {
@@ -210,4 +215,36 @@ void Quad::Draw()
 {
 	glBindVertexArray(VAO);
 	glDrawArrays(GL_TRIANGLES, 0, 6);
+}
+void Quad::SetUpVAOVBO(const std::vector<float>& vertices)
+{
+	glGenVertexArrays(1, &VAO);
+	glBindVertexArray(VAO);
+
+	glGenBuffers(1, &VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertices.size(), vertices.data(), GL_STATIC_DRAW);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+
+	glBindVertexArray(0);
+}
+std::vector<float> Quad::GetQuadData()
+{
+	return
+	{
+		// Positions		// Normals		  // Texcoords
+		1.0f,  0.0f,  1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
+		-1.0f, 0.0f,  1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
+		-1.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+
+		1.0f,  0.0f,  1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
+		-1.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+		1.0f,  0.0f, -1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f
+	};
 }

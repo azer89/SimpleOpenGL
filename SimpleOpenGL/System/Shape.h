@@ -1,6 +1,13 @@
 #ifndef __SHAPE_H__
 #define __SHAPE_H__
 
+#include "glm/glm.hpp"
+#include "glm/ext/scalar_constants.hpp"
+#include <glm/ext/matrix_transform.hpp>
+#include "glad/glad.h"
+
+#include <vector>
+
 class Shape
 {
 protected:
@@ -38,8 +45,13 @@ class Quad : Shape
 {
 public:
 	Quad();
+	Quad(float rotation, glm::vec3 rotationAxis);
 	~Quad();
 	void Draw() override;
+
+private:
+	std::vector<float> GetQuadData();
+	void SetUpVAOVBO(const std::vector<float>& vertices);
 };
 
 #endif
