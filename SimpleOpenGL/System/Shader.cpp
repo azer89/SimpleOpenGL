@@ -31,10 +31,10 @@ Shader::Shader(const char* vertexFilename,
 		auto geom = CreateShaderProgram(geomCode.c_str(), GL_GEOMETRY_SHADER);
 		glAttachShader(ID, geom);
 	}
-	
+
 	glLinkProgram(ID);
 	CheckCompileErrors(ID, ObjectType::ProgramObject);
-	
+
 	// Delete the shaders as they're linked into our program now and no longer necessary
 	glDeleteShader(vertex);
 	glDeleteShader(fragment);
@@ -125,31 +125,35 @@ unsigned int Shader::CreateShaderProgram(const char* source, GLenum shaderType)
 
 std::string Shader::LoadTextFile(const char* filePath)
 {
-	std::ifstream file;
-	// Ensure ifstream objects can throw exceptions:
-	file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-	try
+	const char whitespace = ' ';
+	const std::string includeIdentifier = "#include ";
+
+	std::string shaderCode = "";
+	std::ifstream file(filePath);
+
+	if (!file.is_open())
 	{
-		// Open files
-		file.open(filePath);
-
-		// Read file's buffer contents into stream
-		std::stringstream sStream;
-		sStream << file.rdbuf();
-
-		// Close file handler
-		file.close();
-
-		auto str = sStream.str();
-
-		// Convert stream into string
-		return sStream.str().c_str();
+		throw std::runtime_error("Failed to load shader file " + std::string(filePath));
 	}
-	catch (std::ifstream::failure& e)
+
+	std::string lineBuffer;
+	while (std::getline(file, lineBuffer))
 	{
-		std::cerr << "Error cannot read file: " << e.what() << std::endl;
-		return std::string();
+		if (lineBuffer.find(includeIdentifier) != lineBuffer.npos)
+		{
+			std::size_t index = lineBuffer.find_last_of(whitespace);
+			std::string includeFullPath = AppSettings::ShaderFolder + lineBuffer.substr(index + 1);
+			shaderCode += LoadTextFile(includeFullPath.c_str());
+		}
+		else
+		{
+			shaderCode += lineBuffer + '\n';
+		}
 	}
+
+	file.close();
+
+	return shaderCode;
 }
 
 void Shader::CheckCompileErrors(unsigned int shader, ObjectType objectType)

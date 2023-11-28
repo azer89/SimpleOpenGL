@@ -7,14 +7,14 @@
 #include "AppDeferred.h"
 #include "AppDeferredSponza.h"
 #include "AppGeom.h"
-#include "AppIBL.h"
 #include "AppSSAO.h"
 #include "AppPBRTextured.h"
 #include "AppPBRModel.h"
+#include "AppIBL.h"
 
 int main()
 {
-	AppIBL app;
+	AppPBRTextured app;
 	auto returnValue = app.MainLoop();
 	return returnValue;
 }

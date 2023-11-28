@@ -390,5 +390,8 @@
     <None Include="..\Shaders\IBL\prefilter.fragment">
       <Filter>Resource Files\Shaders\IBL</Filter>
     </None>
+    <None Include="..\Shaders\PBR\pbr_include.fragment">
+      <Filter>Resource Files\Shaders\PBR</Filter>
+    </None>
   </ItemGroup>
 </Project>
