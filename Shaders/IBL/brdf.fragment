@@ -3,8 +3,7 @@
 out vec2 FragColor;
 in vec2 TexCoords;
 
-const float PI = 3.14159265359;
-
+const float PI = acos(-1.0);
 
 // http://holger.dammertz.org/stuff/notes_HammersleyOnHemisphere.html
 // Efficient VanDerCorput calculation.
@@ -25,7 +24,7 @@ vec2 Hammersley(uint i, uint N)
 
 vec3 ImportanceSampleGGX(vec2 Xi, vec3 N, float roughness)
 {
-	float a = roughness*roughness;
+	float a = roughness * roughness;
 	
 	float phi = 2.0 * PI * Xi.x;
 	float cosTheta = sqrt((1.0 - Xi.y) / (1.0 + (a*a - 1.0) * Xi.y));
