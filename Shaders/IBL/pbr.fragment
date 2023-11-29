@@ -92,8 +92,8 @@ void main()
 	// Material properties
 	vec3 albedo = pow(texture(texture_diffuse1, TexCoords).rgb, vec3(2.2));
     vec3 emissive = texture(texture_emissive1, TexCoords).rgb;
-    float metallic = texture(texture_metalness1, TexCoords).r;
-	float roughness = texture(texture_roughness1, TexCoords).r;
+    float metallic = texture(texture_metalness1, TexCoords).b;
+	float roughness = texture(texture_roughness1, TexCoords).g;
 	float ao = texture(texture_ao1, TexCoords).r;
 	
 	vec3 tangentNormal = texture(texture_normal1, TexCoords).xyz * 2.0 - 1.0;
