@@ -10,19 +10,6 @@ int AppPBRTextured::MainLoop()
 
 	Shader shader("PBR//pbr.vertex", "PBR//pbr.fragment");
 
-	Texture albedo(AppSettings::TextureFolder + "pbr//rusted_iron//albedo.png");
-	Texture normal(AppSettings::TextureFolder + "pbr//rusted_iron//normal.png");
-	Texture metallic(AppSettings::TextureFolder + "pbr//rusted_iron//metallic.png");
-	Texture roughness(AppSettings::TextureFolder + "pbr//rusted_iron//roughness.png");
-	Texture ao(AppSettings::TextureFolder + "pbr//rusted_iron//ao.png");
-
-	shader.Use();
-	shader.SetInt("texture_diffuse1", 0);
-	shader.SetInt("texture_normal1", 1);
-	shader.SetInt("texture_metalness1", 2);
-	shader.SetInt("texture_roughness1", 3);
-	shader.SetInt("texture_ao1", 4);
-
 	glm::mat4 projection = camera->GetProjectionMatrix();
 	shader.Use();
 	shader.SetMat4("projection", projection);
@@ -41,12 +28,6 @@ int AppPBRTextured::MainLoop()
 		shader.Use();
 		shader.SetMat4("view", camera->GetViewMatrix());
 		shader.SetVec3("camPos", camera->Position);
-
-		albedo.Bind(GL_TEXTURE0);
-		normal.Bind(GL_TEXTURE1);
-		metallic.Bind(GL_TEXTURE2);
-		roughness.Bind(GL_TEXTURE3);
-		ao.Bind(GL_TEXTURE4);
 
 		for (unsigned int i = 0; i < lights.size(); ++i)
 		{
@@ -67,12 +48,19 @@ int AppPBRTextured::MainLoop()
 void AppPBRTextured::InitScene()
 {
 	dragonModel = std::make_unique<Model>(AppSettings::ModelFolder + "Dragon//Dragon.obj");
+
+	dragonModel->AddTextureIfEmpty(TEXTURE_DIFFUSE, AppSettings::TextureFolder + "pbr//rusted_iron//albedo.png");
+	dragonModel->AddTextureIfEmpty(TEXTURE_NORMAL, AppSettings::TextureFolder + "pbr//rusted_iron//normal.png");
+	dragonModel->AddTextureIfEmpty(TEXTURE_METALNESS, AppSettings::TextureFolder + "pbr//rusted_iron//metallic.png");
+	dragonModel->AddTextureIfEmpty(TEXTURE_ROUGHNESS, AppSettings::TextureFolder + "pbr//rusted_iron//roughness.png");
+	dragonModel->AddTextureIfEmpty(TEXTURE_AO, AppSettings::TextureFolder + "pbr//rusted_iron//ao.png");
+	dragonModel->AddTextureIfEmpty(TEXTURE_EMISSIVE, AppSettings::TextureFolder + "Black1x1.png");
 }
 
 void AppPBRTextured::RenderScene(const Shader& shader)
 {
 	glm::mat4 model = glm::mat4(1.0f);
 	shader.SetMat4("model", model);
-	bool skipTextureBinding = true;
+	bool skipTextureBinding = false;
 	dragonModel->Draw(shader, skipTextureBinding);
 }

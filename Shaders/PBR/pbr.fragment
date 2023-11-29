@@ -25,9 +25,9 @@ uniform vec3 camPos;
 void main()
 {
     vec3 albedo = pow(texture(texture_diffuse1, TexCoords).rgb, vec3(2.2));
-    float metallic = texture(texture_metalness1, TexCoords).r;
-    float roughness = texture(texture_roughness1, TexCoords).r;
-    float ao = texture(texture_ao1, TexCoords).r;
+    float metallic = texture(texture_metalness1, TexCoords).r; // Red channel
+    float roughness = texture(texture_roughness1, TexCoords).r; // Red channel
+    float ao = texture(texture_ao1, TexCoords).r; // Red channel
 
     vec3 tangentNormal = texture(texture_normal1, TexCoords).xyz * 2.0 - 1.0;
     vec3 N = getNormalFromMap(tangentNormal, WorldPos, Normal, TexCoords);
