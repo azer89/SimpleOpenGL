@@ -36,6 +36,17 @@ void Mesh::Delete()
 	glDeleteBuffers(1, &EBO);
 }
 
+void Mesh::AddTextureIfEmpty(TextureType tType, const std::string& filePath)
+{
+	if (textureMap.find(tType) != textureMap.end())
+	{
+		return;
+	}
+	Texture texture(tType, filePath);
+	texture.CreateFromImageFile(filePath);
+	textureMap[tType] = texture;
+}
+
 // Render the mesh
 void Mesh::Draw(const Shader& shader, bool skipTexture)
 {

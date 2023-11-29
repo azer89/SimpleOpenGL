@@ -6,11 +6,12 @@ in vec3 WorldPos;
 in vec3 Normal;
 
 // material parameters
-uniform sampler2D albedoMap;
-uniform sampler2D normalMap;
-uniform sampler2D metallicMap;
-uniform sampler2D roughnessMap;
-uniform sampler2D aoMap;
+uniform sampler2D texture_diffuse1;
+uniform sampler2D texture_normal1;
+uniform sampler2D texture_metalness1;
+uniform sampler2D texture_roughness1;
+uniform sampler2D texture_ao1;
+uniform sampler2D texture_emissive1;
 
 // IBL
 uniform samplerCube irradianceMap;
@@ -18,8 +19,8 @@ uniform samplerCube prefilterMap;
 uniform sampler2D brdfLUT;
 
 // lights
-uniform vec3 lightPositions[4] ;
-uniform vec3 lightColors[4] ;
+uniform vec3 lightPositions[4];
+uniform vec3 lightColors[4];
 
 uniform vec3 camPos;
 
@@ -89,12 +90,13 @@ vec3 fresnelSchlickRoughness(float cosTheta, vec3 F0, float roughness)
 void main()
 {
 	// Material properties
-	vec3 albedo = pow(texture(albedoMap, TexCoords).rgb, vec3(2.2));
-	float metallic = texture(metallicMap, TexCoords).r;
-	float roughness = texture(roughnessMap, TexCoords).r;
-	float ao = texture(aoMap, TexCoords).r;
+	vec3 albedo = pow(texture(texture_diffuse1, TexCoords).rgb, vec3(2.2));
+    vec3 emissive = texture(texture_emissive1, TexCoords).rgb;
+    float metallic = texture(texture_metalness1, TexCoords).r;
+	float roughness = texture(texture_roughness1, TexCoords).r;
+	float ao = texture(texture_ao1, TexCoords).r;
 	
-	vec3 tangentNormal = texture(normalMap, TexCoords).xyz * 2.0 - 1.0;
+	vec3 tangentNormal = texture(texture_normal1, TexCoords).xyz * 2.0 - 1.0;
 
     // Input lighting data
     vec3 N = getNormalFromMap(tangentNormal, WorldPos, Normal, TexCoords);
@@ -162,7 +164,7 @@ void main()
 
 	vec3 ambient = (kD * diffuse + specular) * ao;
 
-	vec3 color = ambient + Lo;
+	vec3 color = ambient + emissive + Lo;
 
 	// HDR tonemapping
 	color = color / (color + vec3(1.0));

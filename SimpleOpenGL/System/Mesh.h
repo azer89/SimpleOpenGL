@@ -48,6 +48,8 @@ public:
 	Mesh(std::vector<Vertex>&& vertices, std::vector<unsigned int>&& indices, std::unordered_map<TextureType, Texture>&& textures);
 	Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices, const std::unordered_map<TextureType, Texture>& textures);
 
+	void AddTextureIfEmpty(TextureType tType, const std::string& filePath);
+
 	// Render the mesh
 	void Draw(const Shader& shader, bool skipTexture);
 

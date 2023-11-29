@@ -13,21 +13,23 @@
 
 class Model
 {
-public:
+private:
 	// Model data 
 	std::unordered_map<std::string, Texture> textureMap; // key is the filename
-	std::vector<Mesh>  meshes;
+	std::vector<Mesh> meshes;
 	std::string directory;
-	bool gammaCorrection;
 
+public:
 	// Constructor, expects a filepath to a 3D model.
-	Model(const std::string& path, bool gamma = false);
+	Model(const std::string& path);
 
 	// Destructor
 	~Model();
 
 	// Draws the model, and thus all its meshes
 	void Draw(const Shader& shader, bool skipTexture = false);
+
+	void AddTextureIfEmpty(TextureType tType, const std::string& filePath);
 
 private:
 	// Loads a model with supported ASSIMP extensions from file and stores the resulting meshes in the meshes vector.

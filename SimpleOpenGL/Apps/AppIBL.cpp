@@ -16,20 +16,22 @@ int AppIBL::MainLoop()
 	glDepthFunc(GL_LEQUAL);
 	// Enable seamless cubemap sampling for lower mip levels in the pre-filter map.
 	glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
-
-	Texture albedo(AppSettings::TextureFolder + "pbr//rusted_iron//albedo.png");
-	Texture normal(AppSettings::TextureFolder + "pbr//rusted_iron//normal.png");
-	Texture metallic(AppSettings::TextureFolder + "pbr//rusted_iron//metallic.png");
-	Texture roughness(AppSettings::TextureFolder + "pbr//rusted_iron//roughness.png");
-	Texture ao(AppSettings::TextureFolder + "pbr//rusted_iron//ao.png");
-
-	Model dragonModel(AppSettings::ModelFolder + "Dragon//Dragon.obj");
 	
+	// Cube
 	Cube cube;
 
+	// Quad
 	float quadRotation = acos(0);
 	glm::vec3 quadRotationAxis(1.f, 0.f, 0.f);
 	Quad quad(quadRotation, quadRotationAxis);
+
+	Model dragonModel(AppSettings::ModelFolder + "Dragon//Dragon.obj");
+	dragonModel.AddTextureIfEmpty(TEXTURE_DIFFUSE, AppSettings::TextureFolder + "pbr//rusted_iron//albedo.png");
+	dragonModel.AddTextureIfEmpty(TEXTURE_NORMAL, AppSettings::TextureFolder + "pbr//rusted_iron//normal.png");
+	dragonModel.AddTextureIfEmpty(TEXTURE_METALNESS, AppSettings::TextureFolder + "pbr//rusted_iron//metallic.png");
+	dragonModel.AddTextureIfEmpty(TEXTURE_ROUGHNESS, AppSettings::TextureFolder + "pbr//rusted_iron//roughness.png");
+	dragonModel.AddTextureIfEmpty(TEXTURE_AO, AppSettings::TextureFolder + "pbr//rusted_iron//ao.png");
+	dragonModel.AddTextureIfEmpty(TEXTURE_EMISSIVE, AppSettings::TextureFolder + "Black1x1.png");
 
 	Shader pbrShader("IBL//pbr.vertex", "IBL//pbr.fragment");
 	Shader equirectangularToCubemapShader("IBL//cubemap.vertex", "IBL//equirectangular_to_cubemap.fragment");
@@ -39,16 +41,9 @@ int AppIBL::MainLoop()
 	Shader backgroundShader("IBL//background.vertex", "IBL//background.fragment");
 
 	pbrShader.Use();
-
-	pbrShader.SetInt("albedoMap", 0);
-	pbrShader.SetInt("normalMap", 1);
-	pbrShader.SetInt("metallicMap", 2);
-	pbrShader.SetInt("roughnessMap", 3);
-	pbrShader.SetInt("aoMap", 4);
-
-	pbrShader.SetInt("irradianceMap", 5);
-	pbrShader.SetInt("prefilterMap", 6);
-	pbrShader.SetInt("brdfLUT", 7);
+	pbrShader.SetInt("irradianceMap", 6);
+	pbrShader.SetInt("prefilterMap", 7);
+	pbrShader.SetInt("brdfLUT", 8);
 
 	backgroundShader.Use();
 	backgroundShader.SetInt("environmentMap", 0);
@@ -254,9 +249,6 @@ int AppIBL::MainLoop()
 	backgroundShader.SetMat4("projection", projection);
 
 	// Configure the viewport to the original framebuffer's screen dimensions
-	//int scrWidth, scrHeight;
-	//glfwGetFramebufferSize(window, &scrWidth, &scrHeight);
-	//glViewport(0, 0, scrWidth, scrHeight);
 	glViewport(0, 0, AppSettings::ScreenWidth, AppSettings::ScreenHeight);
 
 	while (!GLFWWindowShouldClose())
@@ -272,18 +264,12 @@ int AppIBL::MainLoop()
 		pbrShader.SetVec3("camPos", camera->Position);
 
 		// Bind pre-computed IBL data
-		glActiveTexture(GL_TEXTURE5);
-		glBindTexture(GL_TEXTURE_CUBE_MAP, irradianceMap);
 		glActiveTexture(GL_TEXTURE6);
-		glBindTexture(GL_TEXTURE_CUBE_MAP, prefilterMap);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, irradianceMap);
 		glActiveTexture(GL_TEXTURE7);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, prefilterMap);
+		glActiveTexture(GL_TEXTURE8);
 		glBindTexture(GL_TEXTURE_2D, brdfLUTTexture);
-
-		albedo.Bind(GL_TEXTURE0);
-		normal.Bind(GL_TEXTURE1);
-		metallic.Bind(GL_TEXTURE2);
-		roughness.Bind(GL_TEXTURE3);
-		ao.Bind(GL_TEXTURE4);
 
 		// Lights
 		for (unsigned int i = 0; i < 4; ++i)
@@ -297,7 +283,7 @@ int AppIBL::MainLoop()
 		model = glm::rotate(model, static_cast<float>(acos(-1)), glm::vec3(0.0f, 1.0f, 0.0f));
 		pbrShader.SetMat4("model", model);
 		pbrShader.SetMat3("normalMatrix", glm::transpose(glm::inverse(glm::mat3(model))));
-		bool skipTextureBinding = true;
+		bool skipTextureBinding = false;
 		dragonModel.Draw(pbrShader, skipTextureBinding);
 
 		backgroundShader.Use();

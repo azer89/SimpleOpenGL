@@ -20,8 +20,7 @@ inline glm::mat4 mat4_cast(const aiMatrix4x4& m)
 }
 
 // Constructor, expects a filepath to a 3D model.
-Model::Model(const std::string& path, bool gamma) :
-	gammaCorrection(gamma)
+Model::Model(const std::string& path)
 {
 	LoadModel(path);
 }
@@ -31,6 +30,14 @@ Model::~Model()
 	for (Mesh& mesh : meshes)
 	{
 		mesh.Delete();
+	}
+}
+
+void Model::AddTextureIfEmpty(TextureType tType, const std::string& filePath)
+{
+	for (Mesh& mesh : meshes)
+	{
+		mesh.AddTextureIfEmpty(tType, filePath);
 	}
 }
 
