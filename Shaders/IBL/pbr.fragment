@@ -90,7 +90,7 @@ vec3 fresnelSchlickRoughness(float cosTheta, vec3 F0, float roughness)
 void main()
 {
 	// Material properties
-	vec3 albedo = pow(texture(texture_diffuse1, TexCoords).rgb, vec3(2.2));
+	vec3 albedo = texture(texture_diffuse1, TexCoords).rgb;
     vec3 emissive = texture(texture_emissive1, TexCoords).rgb;
     float metallic = texture(texture_metalness1, TexCoords).b;
 	float roughness = texture(texture_roughness1, TexCoords).g;

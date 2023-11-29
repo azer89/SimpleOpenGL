@@ -25,13 +25,7 @@ int AppIBL::MainLoop()
 	glm::vec3 quadRotationAxis(1.f, 0.f, 0.f);
 	Quad quad(quadRotation, quadRotationAxis);
 
-	Model dragonModel(AppSettings::ModelFolder + "Dragon//Dragon.obj");
-	dragonModel.AddTextureIfEmpty(TEXTURE_DIFFUSE, AppSettings::TextureFolder + "pbr//rusted_iron//albedo.png");
-	dragonModel.AddTextureIfEmpty(TEXTURE_NORMAL, AppSettings::TextureFolder + "pbr//rusted_iron//normal.png");
-	dragonModel.AddTextureIfEmpty(TEXTURE_METALNESS, AppSettings::TextureFolder + "pbr//rusted_iron//metallic.png");
-	dragonModel.AddTextureIfEmpty(TEXTURE_ROUGHNESS, AppSettings::TextureFolder + "pbr//rusted_iron//roughness.png");
-	dragonModel.AddTextureIfEmpty(TEXTURE_AO, AppSettings::TextureFolder + "pbr//rusted_iron//ao.png");
-	dragonModel.AddTextureIfEmpty(TEXTURE_EMISSIVE, AppSettings::TextureFolder + "Black1x1.png");
+	Model renderModel(AppSettings::ModelFolder + "DamagedHelmet//DamagedHelmet.gltf");
 
 	Shader pbrShader("IBL//pbr.vertex", "IBL//pbr.fragment");
 	Shader equirectangularToCubemapShader("IBL//cubemap.vertex", "IBL//equirectangular_to_cubemap.fragment");
@@ -190,7 +184,7 @@ int AppIBL::MainLoop()
 	glBindTexture(GL_TEXTURE_CUBE_MAP, envCubemap);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, captureFBO);
-	unsigned int maxMipLevels = 5;
+	constexpr unsigned int maxMipLevels = 5;
 	for (unsigned int mip = 0; mip < maxMipLevels; ++mip)
 	{
 		// Resize framebuffer according to mip-level size.
@@ -284,7 +278,7 @@ int AppIBL::MainLoop()
 		pbrShader.SetMat4("model", model);
 		pbrShader.SetMat3("normalMatrix", glm::transpose(glm::inverse(glm::mat3(model))));
 		bool skipTextureBinding = false;
-		dragonModel.Draw(pbrShader, skipTextureBinding);
+		renderModel.Draw(pbrShader, skipTextureBinding);
 
 		backgroundShader.Use();
 		backgroundShader.SetMat4("view", camera->GetViewMatrix());
