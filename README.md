@@ -2,7 +2,7 @@
 
 ### Features
 * Blinn-Phong shading
-* glTFloader that supports PBR materials
+* glTF loader
 * Shadow mapping
 * Deferred shading
 * Cubemap
