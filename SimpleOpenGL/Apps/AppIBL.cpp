@@ -4,6 +4,7 @@
 #include "Texture.h"
 #include "Model.h"
 #include "Shape.h"
+#include "Light.h"
 
 int AppIBL::MainLoop()
 {
@@ -42,19 +43,12 @@ int AppIBL::MainLoop()
 	backgroundShader.Use();
 	backgroundShader.SetInt("environmentMap", 0);
 
-	// Light
-	glm::vec3 lightPositions[] = {
-		glm::vec3(-10.0f,  10.0f, 10.0f),
-		glm::vec3(10.0f,  10.0f, 10.0f),
-		glm::vec3(-10.0f, -10.0f, 10.0f),
-		glm::vec3(10.0f, -10.0f, 10.0f),
-	};
-	glm::vec3 lightColors[] = {
-		glm::vec3(300.0f, 300.0f, 300.0f),
-		glm::vec3(300.0f, 300.0f, 300.0f),
-		glm::vec3(300.0f, 300.0f, 300.0f),
-		glm::vec3(300.0f, 300.0f, 300.0f)
-	};
+	Shader lightSphereShader("Misc//light_sphere.vertex", "Misc//light_sphere.fragment");
+	std::vector<Light> lights;
+	lights.emplace_back(glm::vec3(-1.0f, 1.0f, 5.0f), glm::vec3(1.f));
+	lights.emplace_back(glm::vec3(1.0f, 1.0f, 5.0f), glm::vec3(1.f));
+	lights.emplace_back(glm::vec3(-1.0f, -1.0f, 5.0f), glm::vec3(1.f));
+	lights.emplace_back(glm::vec3(1.0f, -1.0f, 5.0f), glm::vec3(1.f));
 
 	// PBR setup framebuffer
 	unsigned int captureFBO;
@@ -69,7 +63,7 @@ int AppIBL::MainLoop()
 
 	// PBR load the HDR environment map
 	Texture hdrTexture;
-	hdrTexture.CreateFromHDRFile(AppSettings::TextureFolder + "hdr//belfast_sunset_puresky_4k.hdr");
+	hdrTexture.CreateFromHDRFile(AppSettings::TextureFolder + "hdr//the_sky_is_on_fire_4k.hdr");
 
 	// PBR setup cubemap to render to and attach to framebuffer
 	unsigned int envCubemap;
@@ -89,12 +83,12 @@ int AppIBL::MainLoop()
 	glm::mat4 captureProjection = glm::perspective(glm::radians(90.0f), 1.0f, 0.1f, 10.0f);
 	glm::mat4 captureViews[] =
 	{
-		glm::lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f,  0.0f,  0.0f), glm::vec3(0.0f, -1.0f,  0.0f)),
-		glm::lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(-1.0f,  0.0f,  0.0f), glm::vec3(0.0f, -1.0f,  0.0f)),
-		glm::lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f,  1.0f,  0.0f), glm::vec3(0.0f,  0.0f,  1.0f)),
-		glm::lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, -1.0f,  0.0f), glm::vec3(0.0f,  0.0f, -1.0f)),
-		glm::lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f,  0.0f,  1.0f), glm::vec3(0.0f, -1.0f,  0.0f)),
-		glm::lookAt(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f,  0.0f, -1.0f), glm::vec3(0.0f, -1.0f,  0.0f))
+		glm::lookAt(glm::vec3(0.0f), glm::vec3(1.0f,  0.0f,  0.0f), glm::vec3(0.0f, -1.0f,  0.0f)),
+		glm::lookAt(glm::vec3(0.0f), glm::vec3(-1.0f,  0.0f,  0.0f), glm::vec3(0.0f, -1.0f,  0.0f)),
+		glm::lookAt(glm::vec3(0.0f), glm::vec3(0.0f,  1.0f,  0.0f), glm::vec3(0.0f,  0.0f,  1.0f)),
+		glm::lookAt(glm::vec3(0.0f), glm::vec3(0.0f, -1.0f,  0.0f), glm::vec3(0.0f,  0.0f, -1.0f)),
+		glm::lookAt(glm::vec3(0.0f), glm::vec3(0.0f,  0.0f,  1.0f), glm::vec3(0.0f, -1.0f,  0.0f)),
+		glm::lookAt(glm::vec3(0.0f), glm::vec3(0.0f,  0.0f, -1.0f), glm::vec3(0.0f, -1.0f,  0.0f))
 	};
 
 	// PBR convert HDR equirectangular environment map to cubemap equivalent
@@ -266,10 +260,10 @@ int AppIBL::MainLoop()
 		glBindTexture(GL_TEXTURE_2D, brdfLUTTexture);
 
 		// Lights
-		for (unsigned int i = 0; i < 4; ++i)
+		for (unsigned int i = 0; i < lights.size(); ++i)
 		{
-			pbrShader.SetVec3("lightPositions[" + std::to_string(i) + "]", lightPositions[i]);
-			pbrShader.SetVec3("lightColors[" + std::to_string(i) + "]", lightColors[i]);
+			pbrShader.SetVec3("lightPositions[" + std::to_string(i) + "]", lights[i].Position);
+			pbrShader.SetVec3("lightColors[" + std::to_string(i) + "]", lights[i].Color);
 		}
 
 		// Render
@@ -279,6 +273,14 @@ int AppIBL::MainLoop()
 		pbrShader.SetMat3("normalMatrix", glm::transpose(glm::inverse(glm::mat3(model))));
 		bool skipTextureBinding = false;
 		renderModel.Draw(pbrShader, skipTextureBinding);
+
+		lightSphereShader.Use();
+		lightSphereShader.SetMat4("projection", camera->GetProjectionMatrix());
+		lightSphereShader.SetMat4("view", camera->GetViewMatrix());
+		for (auto& l : lights)
+		{
+			l.Render(lightSphereShader);
+		}
 
 		backgroundShader.Use();
 		backgroundShader.SetMat4("view", camera->GetViewMatrix());
@@ -291,7 +293,8 @@ int AppIBL::MainLoop()
 
 		//brdfShader.Use();
 		//renderQuad();
-
+		
+			
 		SwapBuffers();
 	}
 
