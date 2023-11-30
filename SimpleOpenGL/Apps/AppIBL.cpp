@@ -65,11 +65,23 @@ int AppIBL::MainLoop()
 	Texture hdrTexture;
 	hdrTexture.CreateFromHDRFile(AppSettings::TextureFolder + "hdr//the_sky_is_on_fire_4k.hdr");
 
+	// PBR set up projection and view matrices for capturing data onto the 6 cubemap face directions
+	glm::mat4 captureProjection = glm::perspective(glm::radians(90.0f), 1.0f, 0.1f, 10.0f);
+	std::vector<glm::mat4> captureViews =
+	{
+		glm::lookAt(glm::vec3(0.0f), glm::vec3(1.0f,  0.0f,  0.0f), glm::vec3(0.0f, -1.0f,  0.0f)),
+		glm::lookAt(glm::vec3(0.0f), glm::vec3(-1.0f,  0.0f,  0.0f), glm::vec3(0.0f, -1.0f,  0.0f)),
+		glm::lookAt(glm::vec3(0.0f), glm::vec3(0.0f,  1.0f,  0.0f), glm::vec3(0.0f,  0.0f,  1.0f)),
+		glm::lookAt(glm::vec3(0.0f), glm::vec3(0.0f, -1.0f,  0.0f), glm::vec3(0.0f,  0.0f, -1.0f)),
+		glm::lookAt(glm::vec3(0.0f), glm::vec3(0.0f,  0.0f,  1.0f), glm::vec3(0.0f, -1.0f,  0.0f)),
+		glm::lookAt(glm::vec3(0.0f), glm::vec3(0.0f,  0.0f, -1.0f), glm::vec3(0.0f, -1.0f,  0.0f))
+	};
+
 	// PBR setup cubemap to render to and attach to framebuffer
 	unsigned int envCubemap;
 	glGenTextures(1, &envCubemap);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, envCubemap);
-	for (unsigned int i = 0; i < 6; ++i)
+	for (unsigned int i = 0; i < captureViews.size(); ++i)
 	{
 		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB16F, CUBE_SIZE, CUBE_SIZE, 0, GL_RGB, GL_FLOAT, nullptr);
 	}
@@ -79,17 +91,7 @@ int AppIBL::MainLoop()
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-	// PBR set up projection and view matrices for capturing data onto the 6 cubemap face directions
-	glm::mat4 captureProjection = glm::perspective(glm::radians(90.0f), 1.0f, 0.1f, 10.0f);
-	glm::mat4 captureViews[] =
-	{
-		glm::lookAt(glm::vec3(0.0f), glm::vec3(1.0f,  0.0f,  0.0f), glm::vec3(0.0f, -1.0f,  0.0f)),
-		glm::lookAt(glm::vec3(0.0f), glm::vec3(-1.0f,  0.0f,  0.0f), glm::vec3(0.0f, -1.0f,  0.0f)),
-		glm::lookAt(glm::vec3(0.0f), glm::vec3(0.0f,  1.0f,  0.0f), glm::vec3(0.0f,  0.0f,  1.0f)),
-		glm::lookAt(glm::vec3(0.0f), glm::vec3(0.0f, -1.0f,  0.0f), glm::vec3(0.0f,  0.0f, -1.0f)),
-		glm::lookAt(glm::vec3(0.0f), glm::vec3(0.0f,  0.0f,  1.0f), glm::vec3(0.0f, -1.0f,  0.0f)),
-		glm::lookAt(glm::vec3(0.0f), glm::vec3(0.0f,  0.0f, -1.0f), glm::vec3(0.0f, -1.0f,  0.0f))
-	};
+	
 
 	// PBR convert HDR equirectangular environment map to cubemap equivalent
 	equirectangularToCubemapShader.Use();
@@ -101,7 +103,7 @@ int AppIBL::MainLoop()
 
 	glViewport(0, 0, CUBE_SIZE, CUBE_SIZE); // don't forget to configure the viewport to the capture dimensions.
 	glBindFramebuffer(GL_FRAMEBUFFER, captureFBO);
-	for (unsigned int i = 0; i < 6; ++i)
+	for (unsigned int i = 0; i < captureViews.size(); ++i)
 	{
 		equirectangularToCubemapShader.SetMat4("view", captureViews[i]);
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, envCubemap, 0);
@@ -120,7 +122,7 @@ int AppIBL::MainLoop()
 	unsigned int irradianceMap;
 	glGenTextures(1, &irradianceMap);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, irradianceMap);
-	for (unsigned int i = 0; i < 6; ++i)
+	for (unsigned int i = 0; i < captureViews.size(); ++i)
 	{
 		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB16F, 32, 32, 0, GL_RGB, GL_FLOAT, nullptr);
 	}
@@ -143,7 +145,7 @@ int AppIBL::MainLoop()
 
 	glViewport(0, 0, 32, 32); // don't forget to configure the viewport to the capture dimensions.
 	glBindFramebuffer(GL_FRAMEBUFFER, captureFBO);
-	for (unsigned int i = 0; i < 6; ++i)
+	for (unsigned int i = 0; i < captureViews.size(); ++i)
 	{
 		irradianceShader.SetMat4("view", captureViews[i]);
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, irradianceMap, 0);
@@ -158,7 +160,7 @@ int AppIBL::MainLoop()
 	unsigned int prefilterMap;
 	glGenTextures(1, &prefilterMap);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, prefilterMap);
-	for (unsigned int i = 0; i < 6; ++i)
+	for (unsigned int i = 0; i < captureViews.size(); ++i)
 	{
 		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB16F, 128, 128, 0, GL_RGB, GL_FLOAT, nullptr);
 	}
@@ -190,7 +192,7 @@ int AppIBL::MainLoop()
 
 		float roughness = (float)mip / (float)(maxMipLevels - 1);
 		prefilterShader.SetFloat("roughness", roughness);
-		for (unsigned int i = 0; i < 6; ++i)
+		for (unsigned int i = 0; i < captureViews.size(); ++i)
 		{
 			prefilterShader.SetMat4("view", captureViews[i]);
 			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, prefilterMap, mip);
