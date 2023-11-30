@@ -25,12 +25,12 @@ https://github.com/azer89/SimpleOpenGL/assets/790432/8b271124-2d3b-49db-8ea7-695
 
 
 <br/>
-An example of deferred shading with 200 light sources and the Blinn-Phong shading
+An example of deferred shading with 300 light sources
 
-https://github.com/azer89/SimpleOpenGL/assets/790432/8185affd-2fa8-4f66-a43b-236b1047be56
+https://github.com/azer89/SimpleOpenGL/assets/790432/fdf0cf68-ba97-4452-8a0e-b8d4dd12b4a7
 
 <br/>
-Screen Space Ambient Occlusion <em>(The robot model is taken from Unity)</em>
+Screen Space Ambient Occlusion <em>(The robot model is from Unity)</em>
 <img width="800" height="600" alt="image" src="https://github.com/azer89/SimpleOpenGL/assets/790432/a870c6c7-adfd-4c83-9dc0-0f7ec5dc712c">
 
 
