@@ -7,8 +7,8 @@
 #include "glm/gtc/type_ptr.hpp"
 
 PipelineIBL::PipelineIBL(
-	std::string pbrShaderFile,
-	std::string hdrFile,
+	const std::string& pbrShaderFile,
+	const std::string& hdrFile,
 	float cubeSize, 
 	int _textureIndexGap) :
 	textureIndexGap(_textureIndexGap)
@@ -16,7 +16,10 @@ PipelineIBL::PipelineIBL(
 	Init(pbrShaderFile, hdrFile, cubeSize);
 }
 
-void PipelineIBL::Init(std::string pbrShaderFile, std::string hdrFile, float cubeSize)
+void PipelineIBL::Init(
+	const std::string& pbrShaderFile,
+	const std::string& hdrFile,
+	float cubeSize)
 {
 	// Set depth function to less than AND equal for skybox depth trick
 	glDepthFunc(GL_LEQUAL);

@@ -23,12 +23,10 @@ int AppIBL::MainLoop()
 
 	Model renderModel(AppSettings::ModelFolder + "DamagedHelmet//DamagedHelmet.gltf");
 
-	glm::mat4 projection = camera->GetProjectionMatrix();
-
 	Shader backgroundShader("IBL//background.vertex", "IBL//background.fragment");
 	backgroundShader.Use();
 	backgroundShader.SetInt("environmentMap", 0);
-	backgroundShader.SetMat4("projection", projection);
+	backgroundShader.SetMat4("projection", camera->GetProjectionMatrix());
 
 	Shader lightSphereShader("Misc//light_sphere.vertex", "Misc//light_sphere.fragment");
 	std::vector<Light> lights;
@@ -47,6 +45,7 @@ int AppIBL::MainLoop()
 			GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT
 		);
 
+		glm::mat4 projection = camera->GetProjectionMatrix();
 		glm::mat4 view = camera->GetViewMatrix();
 
 		ibl.SetCameraData(projection, view, camera->Position);
