@@ -209,11 +209,20 @@ void PipelineDeferredSSAO::EndGeometryPass()
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void PipelineDeferredSSAO::StartSSAOPass(const glm::mat4& projection)
+void PipelineDeferredSSAO::StartSSAOPass
+(
+	const glm::mat4& projection,
+	int kernelSize,
+	float radius,
+	float bias
+)
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, ssaoFBO);
 	glClear(GL_COLOR_BUFFER_BIT);
 	shaderSSAO->Use();
+	shaderSSAO->SetInt("kernelSize", kernelSize);
+	shaderSSAO->SetFloat("radius", radius);
+	shaderSSAO->SetFloat("bias", bias);
 	// Send kernel + rotation 
 	for (unsigned int i = 0; i < 64; ++i)
 	{

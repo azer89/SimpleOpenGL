@@ -24,7 +24,13 @@ public:
 
 	void StartGeometryPass(const glm::mat4& projection, const glm::mat4& view);
 	void EndGeometryPass();
-	void StartSSAOPass(const glm::mat4& projection);
+	void StartSSAOPass
+	(
+		const glm::mat4& projection,
+		int kernelSize,
+		float radius,
+		float bias
+	);
 	void StartBlurPass();
 	void StartLightingPass(const std::vector<Light>& lights, 
 		const glm::mat4& cameraview,

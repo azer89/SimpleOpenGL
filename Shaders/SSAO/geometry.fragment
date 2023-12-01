@@ -14,6 +14,6 @@ void main()
 {
 	gPosition = FragPos;
 	gNormal = normalize(Normal);
-	//gAlbedo.rgb = vec3(1.0);
-    gAlbedo.rgb = texture(texture_diffuse1, TexCoords).rgb;
+	gAlbedo.rgb = vec3(1.0);
+    //gAlbedo.rgb = texture(texture_diffuse1, TexCoords).rgb;
 }

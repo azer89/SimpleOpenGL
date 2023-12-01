@@ -19,6 +19,10 @@ int AppSSAO::MainLoop()
 		"SSAO//ssao.vertex", "SSAO//blur.fragment"
 	);
 
+	int kernelSize = 64;
+	float radius = 0.5f;
+	float bias = 0.025f;
+
 	// Game loop
 	while (!GLFWWindowShouldClose())
 	{
@@ -36,7 +40,7 @@ int AppSSAO::MainLoop()
 		pipeline.EndGeometryPass();
 
 		// 2 SSAO
-		pipeline.StartSSAOPass(projection);
+		pipeline.StartSSAOPass(projection, kernelSize, radius, bias);
 
 		// 3 Blur SSAO texture to remove noise
 		pipeline.StartBlurPass();
@@ -48,6 +52,22 @@ int AppSSAO::MainLoop()
 		pipeline.Blit();
 
 		//RenderLights();
+
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+		ImGui::SetNextWindowSize(ImVec2(500, 100));
+
+		ImGui::Begin("SSAO");
+
+		ImGui::SliderInt("Kernel Size", &kernelSize, 4, 1024);
+		ImGui::SliderFloat("Radius", &radius, 0.0f, 2.0f);
+		ImGui::SliderFloat("Bias", &bias, 0.0f, 0.5f);
+
+		ImGui::End();
+
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
 		SwapBuffers();
 	}
