@@ -402,5 +402,11 @@
     <None Include="..\TODO.md">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="..\Shaders\IBL\pbr_sketchfab.fragment">
+      <Filter>Resource Files\Shaders\IBL</Filter>
+    </None>
+    <None Include="..\Shaders\IBL\pbr_include.fragment">
+      <Filter>Resource Files\Shaders\IBL</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -28,8 +28,15 @@ uniform vec3 camPos;
 
 void main()
 {
-	// Material properties
-	vec3 albedo = texture(texture_diffuse1, TexCoords).rgb;
+    // Material properties
+    vec4 albedo4 = texture(texture_diffuse1, TexCoords).rgba;
+
+    if (albedo4.a < 0.5)
+    {
+        discard;
+    }
+
+    vec3 albedo = pow(albedo4.rgb, vec3(2.2)); ;
     vec3 emissive = texture(texture_emissive1, TexCoords).rgb;
     float metallic = texture(texture_metalness1, TexCoords).b;
 	float roughness = texture(texture_roughness1, TexCoords).g;
@@ -103,7 +110,7 @@ void main()
 
 	vec3 ambient = (kD * diffuse + specular) * ao;
 
-	vec3 color = ambient + emissive + Lo;
+	vec3 color = ambient + Lo;
 
 	// HDR tonemapping
 	color = color / (color + vec3(1.0));
@@ -111,5 +118,6 @@ void main()
 	// Gamma correction
 	color = pow(color, vec3(1.0 / 2.2));
 
-	FragColor = vec4(color, 1.0);
+    FragColor = vec4(color, 1.0);
+    //FragColor = vec4(emissive, 1.0);
 }

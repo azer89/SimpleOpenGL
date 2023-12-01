@@ -13,7 +13,11 @@
 class PipelineIBL
 {
 public:
-	PipelineIBL(std::string hdrFullFilePath, float cubeSize, int _textureIndexGap);
+	PipelineIBL(
+		std::string pbrShaderFile,
+		std::string hdrFile, 
+		float cubeSize, 
+		int _textureIndexGap);
 
 	void SetCameraData(const glm::mat4& cameraProjectionMatrix, const glm::mat4& cameraViewMatrix, const glm::vec3& cameraPosition);
 	void SetLights(const std::vector<Light>& lights);
@@ -30,7 +34,7 @@ public:
 	}
 
 private:
-	void Init(std::string hdrFullFilePath, float cubeSize);
+	void Init(std::string pbrShaderFile, std::string hdrFile, float cubeSize);
 
 private:
 	int textureIndexGap;

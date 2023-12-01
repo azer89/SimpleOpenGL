@@ -6,13 +6,17 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
 
-PipelineIBL::PipelineIBL(std::string hdrFullFilePath, float cubeSize, int _textureIndexGap) :
+PipelineIBL::PipelineIBL(
+	std::string pbrShaderFile,
+	std::string hdrFile,
+	float cubeSize, 
+	int _textureIndexGap) :
 	textureIndexGap(_textureIndexGap)
 {
-	Init(hdrFullFilePath, cubeSize);
+	Init(pbrShaderFile, hdrFile, cubeSize);
 }
 
-void PipelineIBL::Init(std::string hdrFullFilePath, float cubeSize)
+void PipelineIBL::Init(std::string pbrShaderFile, std::string hdrFile, float cubeSize)
 {
 	// Set depth function to less than AND equal for skybox depth trick
 	glDepthFunc(GL_LEQUAL);
@@ -27,7 +31,7 @@ void PipelineIBL::Init(std::string hdrFullFilePath, float cubeSize)
 	glm::vec3 quadRotationAxis(1.f, 0.f, 0.f);
 	Quad quad(quadRotation, quadRotationAxis);
 
-	pbrShader = std::make_unique<Shader>("IBL//pbr.vertex", "IBL//pbr.fragment");
+	pbrShader = std::make_unique<Shader>("IBL//pbr.vertex", pbrShaderFile.c_str());
 	Shader equirectangularToCubemapShader("IBL//cubemap.vertex", "IBL//equirectangular_to_cubemap.fragment");
 	Shader irradianceShader("IBL//cubemap.vertex", "IBL//irradiance_convolution.fragment");
 	Shader prefilterShader("IBL//cubemap.vertex", "IBL//prefilter.fragment");
@@ -51,7 +55,7 @@ void PipelineIBL::Init(std::string hdrFullFilePath, float cubeSize)
 
 	// PBR load the HDR environment map
 	Texture hdrTexture;
-	hdrTexture.CreateFromHDRFile(hdrFullFilePath);
+	hdrTexture.CreateFromHDRFile(AppSettings::TextureFolder + hdrFile);
 
 	// PBR set up projection and view matrices for capturing data onto the 6 cubemap face directions
 	glm::mat4 captureProjection = glm::perspective(glm::radians(90.0f), 1.0f, 0.1f, 10.0f);

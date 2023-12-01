@@ -235,6 +235,8 @@
     <None Include="..\Shaders\IBL\irradiance_convolution.fragment" />
     <None Include="..\Shaders\IBL\pbr.fragment" />
     <None Include="..\Shaders\IBL\pbr.vertex" />
+    <None Include="..\Shaders\IBL\pbr_include.fragment" />
+    <None Include="..\Shaders\IBL\pbr_sketchfab.fragment" />
     <None Include="..\Shaders\IBL\prefilter.fragment" />
     <None Include="..\Shaders\Misc\camera.fragment" />
     <None Include="..\Shaders\Misc\camera.vertex" />

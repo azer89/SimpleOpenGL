@@ -13,7 +13,8 @@ int AppIBL::MainLoop()
 
 	PipelineIBL ibl
 	(
-		AppSettings::TextureFolder + "hdr//the_sky_is_on_fire_4k.hdr",
+		"IBL//pbr.fragment",
+		"hdr//the_sky_is_on_fire_4k.hdr",
 		1024,
 		6
 	);
@@ -31,10 +32,10 @@ int AppIBL::MainLoop()
 
 	Shader lightSphereShader("Misc//light_sphere.vertex", "Misc//light_sphere.fragment");
 	std::vector<Light> lights;
-	lights.emplace_back(glm::vec3(-1.0f, 1.0f, 5.0f), glm::vec3(1.f));
-	lights.emplace_back(glm::vec3(1.0f, 1.0f, 5.0f), glm::vec3(1.f));
-	lights.emplace_back(glm::vec3(-1.0f, -1.0f, 5.0f), glm::vec3(1.f));
-	lights.emplace_back(glm::vec3(1.0f, -1.0f, 5.0f), glm::vec3(1.f));
+	lights.emplace_back(glm::vec3(-1.0f, 0.1f, 1.0f ), glm::vec3(5.7f));
+	lights.emplace_back(glm::vec3(1.0f, 0.1f, 1.0f), glm::vec3(5.7f));
+	lights.emplace_back(glm::vec3(-1.0f, 0.1f, -1.0f), glm::vec3(5.7f));
+	lights.emplace_back(glm::vec3(1.0f, 0.1f, -1.0f), glm::vec3(5.7f));
 
 	// Configure the viewport to the original framebuffer's screen dimensions
 	glViewport(0, 0, AppSettings::ScreenWidth, AppSettings::ScreenHeight);
@@ -62,13 +63,13 @@ int AppIBL::MainLoop()
 		bool skipTextureBinding = false;
 		renderModel.Draw(*pbrShader, skipTextureBinding);
 
-		lightSphereShader.Use();
+		/*lightSphereShader.Use();
 		lightSphereShader.SetMat4("projection", camera->GetProjectionMatrix());
 		lightSphereShader.SetMat4("view", camera->GetViewMatrix());
 		for (auto& l : lights)
 		{
 			l.Render(lightSphereShader);
-		}
+		}*/
 
 		backgroundShader.Use();
 		backgroundShader.SetMat4("view", camera->GetViewMatrix());
@@ -79,7 +80,7 @@ int AppIBL::MainLoop()
 		//renderQuad();
 
 		// Imgui
-		ImGui_ImplOpenGL3_NewFrame();
+		/*ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 		ImGui::SetNextWindowSize(ImVec2(500, 100));
@@ -88,7 +89,7 @@ int AppIBL::MainLoop()
 		ImGui::End();
 
 		ImGui::Render();
-		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());*/
 			
 		SwapBuffers();
 	}
