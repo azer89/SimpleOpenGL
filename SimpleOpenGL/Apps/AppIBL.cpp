@@ -7,6 +7,10 @@
 #include "Shape.h"
 #include "Light.h"
 
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
+
 int AppIBL::MainLoop()
 {
 	glEnable(GL_DEPTH_TEST);
@@ -77,6 +81,18 @@ int AppIBL::MainLoop()
 		cube.Draw();
 		//brdfShader.Use();
 		//renderQuad();
+
+		// Imgui
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+		ImGui::SetNextWindowSize(ImVec2(500, 100));
+
+		ImGui::Begin("IBL");
+		ImGui::End();
+
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 			
 		SwapBuffers();
 	}

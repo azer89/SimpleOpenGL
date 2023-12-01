@@ -17,8 +17,10 @@ public:
 protected:
 	void FrameBufferSizeCallback(GLFWwindow* window, int width, int height);
 	void MouseCallback(GLFWwindow* window, double xpos, double ypos);
+	void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
 	void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset);
 	
+	void InitIMGUI();
 	void InitGLFW();
 	void InitGlad();
 	void InitCamera();
@@ -35,12 +37,15 @@ protected:
 private:
 	GLFWwindow* glfwWindow;
 
+	std::string glslVersion;
+
 protected:
 	// Camera
 	std::unique_ptr<Camera> camera;
 	float lastX;
 	float lastY;
 	bool firstMouse;
+	bool middleMousePressed;
 
 	// Timing
 	float deltaTime; // Time between current frame and last frame

@@ -2,3 +2,4 @@
 * Clean up shader files and code, especially hard-coded variables.
 * Add imgui for debugging purpose
 * Deferred + SSAO demo
+* Zoom does not work (mouse scroll)

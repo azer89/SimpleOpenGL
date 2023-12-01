@@ -2,6 +2,10 @@
 #include "AppSettings.h"
 #include "XMLReader.h"
 
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
+
 #include <iostream>
 
 AppBase::AppBase()
@@ -9,12 +13,15 @@ AppBase::AppBase()
 	XMLReader::LoadSettings();
 	InitGLFW();
 	InitGlad();
+	InitIMGUI();
 	InitCamera();
 	InitTiming();
 }
 
 void AppBase::InitGLFW()
 {
+	glslVersion = "#version 130";
+
 	// GLFW: initialize and configure
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -50,6 +57,13 @@ void AppBase::InitGLFW()
 		glfwSetCursorPosCallback(glfwWindow, func);
 	}
 	{
+		auto func = [](GLFWwindow* window, int button, int action, int mods)
+			{
+				static_cast<AppBase*>(glfwGetWindowUserPointer(window))->MouseButtonCallback(window, button, action, mods);
+			};
+		glfwSetMouseButtonCallback(glfwWindow, func);
+	}
+	{
 		auto func = [](GLFWwindow* window, double xoffset, double yoffset)
 		{
 			static_cast<AppBase*>(glfwGetWindowUserPointer(window))->ScrollCallback(window, xoffset, yoffset);
@@ -58,7 +72,19 @@ void AppBase::InitGLFW()
 	}
 
 	// Tell GLFW to capture our mouse
-	glfwSetInputMode(glfwWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	glfwSetInputMode(glfwWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+}
+
+void AppBase::InitIMGUI()
+{
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGui::StyleColorsDark();
+	//ImGui::StyleColorsLight();
+
+	// Setup Platform/Renderer backends
+	ImGui_ImplGlfw_InitForOpenGL(glfwWindow, true);
+	ImGui_ImplOpenGL3_Init(glslVersion.c_str());
 }
 
 void AppBase::InitGlad()
@@ -121,6 +147,11 @@ void AppBase::ProcessLoop(glm::vec4 clearColor, GLbitfield mask)
 
 void AppBase::Terminate()
 {
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplGlfw_Shutdown();
+	ImGui::DestroyContext();
+
+	glfwDestroyWindow(glfwWindow);
 	glfwTerminate();
 }
 
@@ -134,6 +165,11 @@ void AppBase::FrameBufferSizeCallback(GLFWwindow* window, int width, int height)
 
 void AppBase::MouseCallback(GLFWwindow* window, double xposIn, double yposIn)
 {
+	if (!middleMousePressed)
+	{
+		return;
+	}
+
 	float xpos = static_cast<float>(xposIn);
 	float ypos = static_cast<float>(yposIn);
 	if (firstMouse)
@@ -147,6 +183,19 @@ void AppBase::MouseCallback(GLFWwindow* window, double xposIn, double yposIn)
 	lastX = xpos;
 	lastY = ypos;
 	camera->ProcessMouseMovement(xoffset, yoffset);
+}
+
+void AppBase::MouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
+{
+	if (button == GLFW_MOUSE_BUTTON_MIDDLE && action == GLFW_PRESS)
+	{
+		middleMousePressed = true;
+	}
+	else if (button == GLFW_MOUSE_BUTTON_MIDDLE && action == GLFW_RELEASE)
+	{
+		middleMousePressed = false;
+		firstMouse = true;
+	}
 }
 
 void AppBase::ScrollCallback(GLFWwindow* window, double xoffset, double yoffset)

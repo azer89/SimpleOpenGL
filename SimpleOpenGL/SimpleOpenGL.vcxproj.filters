@@ -399,5 +399,8 @@
     <None Include="..\Shaders\PBR\pbr_include.fragment">
       <Filter>Resource Files\Shaders\PBR</Filter>
     </None>
+    <None Include="..\TODO.md">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

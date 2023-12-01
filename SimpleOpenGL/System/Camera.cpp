@@ -1,7 +1,10 @@
 #include "Camera.h"
 #include "AppSettings.h"
 
-#include <glm/glm.hpp>
+#include "glm/glm.hpp"
+
+#include <iostream>
+
 
 Camera::Camera(glm::vec3 position, glm::vec3 up, float yaw, float pitch) : 
 	Position(position),
