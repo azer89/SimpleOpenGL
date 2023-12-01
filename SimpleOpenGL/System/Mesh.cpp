@@ -122,4 +122,13 @@ void Mesh::SetupMesh()
 	glEnableVertexAttribArray(6);
 	glVertexAttribPointer(6, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, m_Weights));
 	glBindVertexArray(0);
+
+#if _DEBUG
+	std::cout << "Mesh vertex count " << vertices.size() << '\n';
+	for (auto& it : textureMap)
+	{
+		std::cout << "Texture " << it.first << ", " << it.second.GetName() << '\n';
+	}
+	std::cout << '\n';
+#endif
 }

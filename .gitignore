@@ -402,3 +402,6 @@ FodyWeavers.xsd
 
 #Rider
 .idea/
+
+#imgui
+SimpleOpenGL/imgui.ini

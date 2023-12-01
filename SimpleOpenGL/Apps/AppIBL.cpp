@@ -7,10 +7,6 @@
 #include "Shape.h"
 #include "Light.h"
 
-#include "imgui.h"
-#include "imgui_impl_glfw.h"
-#include "imgui_impl_opengl3.h"
-
 int AppIBL::MainLoop()
 {
 	glEnable(GL_DEPTH_TEST);
