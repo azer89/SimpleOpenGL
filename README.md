@@ -63,7 +63,7 @@ Some other cool results
 </div>
 
 ### Build
-* The project and external dependencies are built using Visual Studio 2022 x64 and c++20
+* The project and external dependencies are built using Visual Studio 2022 x64 and C++20
 
 ### Credit
 * [learnopengl.com](https://learnopengl.com/)
