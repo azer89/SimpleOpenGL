@@ -62,6 +62,9 @@ Some other cool results
 
 </div>
 
+### Build
+* The project and external dependencies are built using Visual Studio 2022 x64 and c++20
+
 ### Credit
 * [learnopengl.com](https://learnopengl.com/)
 * [glTF Assets](https://github.com/KhronosGroup/glTF-Sample-Assets)
