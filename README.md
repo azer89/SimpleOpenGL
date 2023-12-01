@@ -75,6 +75,7 @@ Some other cool results
 * Skybox textures from [humus.name](https://www.humus.name/index.php?page=Textures)
 * [Polyhaven](https://polyhaven.com/)
 * [Zaku Model](https://sketchfab.com/3d-models/zaku-ii-730a08b171aa4ac0a43131752150acfb)
+* [Freya Model](https://sketchfab.com/3d-models/freya-crescent-6d8eae57c17f4a81a23301ee0afda8cf)
 
 
 
