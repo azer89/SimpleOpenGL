@@ -26,7 +26,7 @@ void main()
     vec2 noiseScale = vec2(screen_width / noise_size, screen_height / noise_size);
 
     // Get input for SSAO algorithm
-    vec3 fragPos = texture(gPosition, TexCoords).xyz;
+    vec4 fragPos = texture(gPosition, TexCoords).xyzw;
 	vec3 normal = normalize(texture(gNormal, TexCoords).rgb);
 	vec3 randomVec = normalize(texture(texNoise, TexCoords * noiseScale).xyz);
 	
@@ -41,7 +41,7 @@ void main()
 	{
 		// Get sample position
 		vec3 samplePos = TBN * samples[i]; // From tangent to view-space
-		samplePos = fragPos + samplePos * radius;
+		samplePos = fragPos.xyz + samplePos * radius;
 
 		// Project sample position (to sample texture) (to get position on screen/texture)
 		vec4 offset = vec4(samplePos, 1.0);
@@ -52,13 +52,11 @@ void main()
 		// Get sample depth
 		float sampleDepth = texture(gPosition, offset.xy).z; // Get depth value of kernel sample
 
-        // The value of empty backround is < 1.0 so
-        // if you want to remove ssao calculation on empty background / far away object
-        //float depthThreshold = 0.2;
-        //float depthFactor = 1.0 - step(depthThreshold, sampleDepth);
+        // w = 1.0 if background, 0.0 if foreground
+        float discardFactor = 1.0 - fragPos.w;
 
         // Range check & accumulate
-        float rangeCheck = smoothstep(0.0, 1.0, radius / abs(fragPos.z - sampleDepth)); // * depthFactor;
+        float rangeCheck = smoothstep(0.0, 1.0, radius / abs(fragPos.z - sampleDepth)) * discardFactor;
 		occlusion += (sampleDepth >= samplePos.z + bias ? 1.0 : 0.0) * rangeCheck;
 	}
 	occlusion = 1.0 - (occlusion / kernelSize);
