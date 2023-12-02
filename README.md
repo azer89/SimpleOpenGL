@@ -32,7 +32,8 @@ https://github.com/azer89/SimpleOpenGL/assets/790432/8b1dfae3-98b0-49e8-91e8-043
 <br/>
 Screen Space Ambient Occlusion
 
-<img width="800" height="600" alt="image" src="https://github.com/azer89/SimpleOpenGL/assets/790432/13b6dd2c-6ba8-4489-96da-01489e4f2493">
+<img width="800" height="600" alt="image" src="https://github.com/azer89/SimpleOpenGL/assets/790432/a5a9ae9e-a544-469c-b159-90a3bd94ca25">
+
 
 
 <br/>
