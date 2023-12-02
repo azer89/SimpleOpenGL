@@ -52,7 +52,8 @@ void main()
 		// Get sample depth
 		float sampleDepth = texture(gPosition, offset.xy).z; // Get depth value of kernel sample
 
-        // If you want to remove ssao calculation on empty background / far away object
+        // The value of empty backround is < 1.0 so
+        // if you want to remove ssao calculation on empty background / far away object
         //float depthThreshold = 0.2;
         //float depthFactor = 1.0 - step(depthThreshold, sampleDepth);
 
