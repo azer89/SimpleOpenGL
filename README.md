@@ -75,6 +75,7 @@ Some other cool results
 * [Polyhaven](https://polyhaven.com/)
 * [Zaku Model](https://sketchfab.com/3d-models/zaku-ii-730a08b171aa4ac0a43131752150acfb)
 * [Freya Model](https://sketchfab.com/3d-models/freya-crescent-6d8eae57c17f4a81a23301ee0afda8cf)
+* [Unicorn Gundam](https://sketchfab.com/3d-models/gundam-unicorn-1410ff9dd1c94807a00b8a0936170196)
 
 
 
