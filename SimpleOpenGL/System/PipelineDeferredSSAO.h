@@ -19,7 +19,8 @@ public:
 		const char* ssaoVertexShader,
 		const char* ssaoFragmentShader,
 		const char* blurVertexShader,
-		const char* blurFragmentShader
+		const char* blurFragmentShader,
+		int kernelSize
 	);
 
 	void StartGeometryPass(const glm::mat4& projection, const glm::mat4& view);
@@ -55,7 +56,8 @@ private:
 		const char* ssaoVertexShader,
 		const char* ssaoFragmentShader,
 		const char* blurVertexShader,
-		const char* blurFragmentShader
+		const char* blurFragmentShader,
+		int kernelSize
 	);
 
 	void RenderQuad();
@@ -81,6 +83,8 @@ private:
 	unsigned int ssaoBlurFBO;
 
 	unsigned int noiseTexture;
+
+	int noiseSize;
 };
 
 #endif

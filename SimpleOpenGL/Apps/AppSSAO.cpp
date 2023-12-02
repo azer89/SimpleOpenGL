@@ -12,16 +12,17 @@ int AppSSAO::MainLoop()
 	InitScene();
 	InitLights();
 
+	int kernelSize = 64;
+	float radius = 0.5f;
+	float bias = 0.025f;
+
 	PipelineDeferredSSAO pipeline(
 		"SSAO//geometry.vertex", "SSAO//geometry.fragment",
 		"SSAO//ssao.vertex", "SSAO//lighting.fragment",
 		"SSAO//ssao.vertex", "SSAO//ssao.fragment",
-		"SSAO//ssao.vertex", "SSAO//blur.fragment"
+		"SSAO//ssao.vertex", "SSAO//blur.fragment",
+		kernelSize
 	);
-
-	int kernelSize = 64;
-	float radius = 0.5f;
-	float bias = 0.025f;
 
 	// Game loop
 	while (!GLFWWindowShouldClose())

@@ -14,7 +14,7 @@
 
 int main()
 {
-	AppIBL app;
+	AppSSAO app;
 	auto returnValue = app.MainLoop();
 	return returnValue;
 }

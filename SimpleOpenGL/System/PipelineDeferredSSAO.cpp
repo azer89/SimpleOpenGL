@@ -13,7 +13,8 @@ PipelineDeferredSSAO::PipelineDeferredSSAO(
 	const char* ssaoVertexShader,
 	const char* ssaoFragmentShader,
 	const char* blurVertexShader,
-	const char* blurFragmentShader
+	const char* blurFragmentShader,
+	int kernelSize
 )
 {
 	Init(
@@ -24,7 +25,8 @@ PipelineDeferredSSAO::PipelineDeferredSSAO(
 		ssaoVertexShader,
 		ssaoFragmentShader,
 		blurVertexShader,
-		blurFragmentShader
+		blurFragmentShader,
+		kernelSize
 	);
 }
 
@@ -36,9 +38,13 @@ void PipelineDeferredSSAO::Init(
 	const char* ssaoVertexShader,
 	const char* ssaoFragmentShader,
 	const char* blurVertexShader,
-	const char* blurFragmentShader
+	const char* blurFragmentShader,
+	int kernelSize
 )
 {
+	noiseSize = 4;
+	int noiseSizeSq = noiseSize * noiseSize;
+
 	shaderGeometry = std::make_unique<Shader>(geomVertexShader, geomFragmentShader);
 	shaderLighting = std::make_unique<Shader>(lightVertexShader, lightFragmentShader);
 	shaderSSAO = std::make_unique<Shader>(ssaoVertexShader, ssaoFragmentShader);
@@ -124,14 +130,15 @@ void PipelineDeferredSSAO::Init(
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	// Sample kernel
-	for (unsigned int i = 0; i < 64; ++i)
+	float kernelSizeF = static_cast<float>(kernelSize);
+	for (unsigned int i = 0; i < kernelSize; ++i)
 	{
 		glm::vec3 sample(Utility::RandomNumber<float>(-1.0f, 1.0f),
 			Utility::RandomNumber<float>(-1.0f, 1.0f),
 			Utility::RandomNumber<float>()); // Half hemisphere
 		sample = glm::normalize(sample);
 		sample *= Utility::RandomNumber<float>();
-		float scale = float(i) / 64.0f;
+		float scale = static_cast<float>(i) / kernelSizeF;
 
 		// Scale samples s.t. they're more aligned to center of kernel
 		scale = Utility::Lerp<float>(0.1f, 1.0f, scale * scale);
@@ -141,7 +148,7 @@ void PipelineDeferredSSAO::Init(
 
 	// Noise texture
 	std::vector<glm::vec3> ssaoNoise;
-	for (unsigned int i = 0; i < 16; ++i)
+	for (unsigned int i = 0; i < noiseSizeSq; ++i)
 	{
 		glm::vec3 noise(
 			Utility::RandomNumber<float>() * 2.0 - 1.0,
@@ -167,6 +174,9 @@ void PipelineDeferredSSAO::Init(
 	shaderSSAO->SetInt("gPosition", 0);
 	shaderSSAO->SetInt("gNormal", 1);
 	shaderSSAO->SetInt("texNoise", 2);
+	shaderSSAO->SetFloat("screen_width", AppSettings::ScreenWidth);
+	shaderSSAO->SetFloat("screen_height", AppSettings::ScreenHeight);
+	shaderSSAO->SetFloat("noise_size", static_cast<float>(noiseSize));
 
 	shaderBlur->Use();
 	shaderBlur->SetInt("ssaoInput", 0);
@@ -224,7 +234,7 @@ void PipelineDeferredSSAO::StartSSAOPass
 	shaderSSAO->SetFloat("radius", radius);
 	shaderSSAO->SetFloat("bias", bias);
 	// Send kernel + rotation 
-	for (unsigned int i = 0; i < 64; ++i)
+	for (unsigned int i = 0; i < kernelSize; ++i)
 	{
 		shaderSSAO->SetVec3("samples[" + std::to_string(i) + "]", ssaoKernel[i]);
 	}
