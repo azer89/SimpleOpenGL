@@ -47,6 +47,11 @@ public:
 		return shaderGeometry.get();
 	}
 
+	int GetNoiseSize()
+	{
+		return noiseSize;
+	}
+
 private:
 	void Init(
 		const char* geomVertexShader,
@@ -84,6 +89,7 @@ private:
 
 	unsigned int noiseTexture;
 
+	// Init parameters
 	int noiseSize;
 };
 
