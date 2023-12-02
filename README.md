@@ -12,9 +12,6 @@
 
 ### Demo
 <div align="center">
-
-<br/>
-<br/>
 Physically Based Rendering
 <br/>
 
