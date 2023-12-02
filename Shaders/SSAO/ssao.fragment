@@ -52,8 +52,12 @@ void main()
 		// Get sample depth
 		float sampleDepth = texture(gPosition, offset.xy).z; // Get depth value of kernel sample
 
-		// Range check & accumulate
-		float rangeCheck = smoothstep(0.0, 1.0, radius / abs(fragPos.z - sampleDepth));
+        // If you want to remove ssao calculation on empty background / far away object
+        //float depthThreshold = 0.2;
+        //float depthFactor = 1.0 - step(depthThreshold, sampleDepth);
+
+        // Range check & accumulate
+        float rangeCheck = smoothstep(0.0, 1.0, radius / abs(fragPos.z - sampleDepth)); // * depthFactor;
 		occlusion += (sampleDepth >= samplePos.z + bias ? 1.0 : 0.0) * rangeCheck;
 	}
 	occlusion = 1.0 - (occlusion / kernelSize);
