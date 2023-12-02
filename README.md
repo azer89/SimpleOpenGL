@@ -30,9 +30,9 @@ An example of deferred shading with 300 light sources
 https://github.com/azer89/SimpleOpenGL/assets/790432/8b1dfae3-98b0-49e8-91e8-043eaa2f3098
 
 <br/>
-Screen Space Ambient Occlusion <em>(The robot model is from Unity)</em>
-<img width="800" height="600" alt="image" src="https://github.com/azer89/SimpleOpenGL/assets/790432/a870c6c7-adfd-4c83-9dc0-0f7ec5dc712c">
+Screen Space Ambient Occlusion
 
+<img width="800" height="600" alt="image" src="https://github.com/azer89/SimpleOpenGL/assets/790432/13b6dd2c-6ba8-4489-96da-01489e4f2493">
 
 
 <br/>
