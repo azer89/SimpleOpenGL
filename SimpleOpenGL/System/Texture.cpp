@@ -209,14 +209,14 @@ void Texture::CreateCubeMap(const std::vector<std::string>& files, const std::st
 	glBindTexture(GL_TEXTURE_CUBE_MAP, id);
 	
 	stbi_set_flip_vertically_on_load(false);
-	int width, height, nrChannels;
+	int width, height;
 	for (unsigned int i = 0; i < files.size(); ++i)
 	{
 		auto filePath = directory + files[i];
-		unsigned char* data = stbi_load(filePath.c_str(), &width, &height, &nrChannels, 0);
+		unsigned char* data = stbi_load(filePath.c_str(), &width, &height, nullptr, STBI_rgb_alpha);
 		if (data)
 		{
-			glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+			glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 		}
 		else
 		{
@@ -256,7 +256,12 @@ void Texture::CreateCubeMap(const std::vector<std::string>& files, const std::st
 			throw std::runtime_error("Cubemap texture failed to load: " + files[i]);
 		}
 		stbi_image_free(data);
-	}*/
+	}
+	glTextureParameteri(id, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTextureParameteri(id, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTextureParameteri(id, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTextureParameteri(id, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTextureParameteri(id, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);*/
 }
 
 void Texture::Bind(GLenum textureIndex)
