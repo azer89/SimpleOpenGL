@@ -54,12 +54,16 @@ int AppShadowMapping::MainLoop()
 	glm::mat4 lightView;
 	glm::mat4 lightSpaceMatrix;
 	
-	// Parameters
+	// Shadow parameters
 	float minBias = 0.005;
 	float maxBias = 0.05;
 	float shadowNearPlane = 1.0f;
 	float shadowFarPlane = 20;
+
+	// Light parameter
 	bool moveLight = true;
+	float ambientPower = 0.5;
+	int specularPower = 32;
 
 	// Render loop
 	while (!GLFWWindowShouldClose())
@@ -104,7 +108,9 @@ int AppShadowMapping::MainLoop()
 		// Render Scene
 		mainShader.Use();
 		mainShader.SetFloat("minBias", minBias);
-		mainShader.SetFloat("maxBias", maxBias);
+		mainShader.SetFloat("ambientPower", ambientPower);
+		mainShader.SetInt("specularPower", specularPower);
+		mainShader.SetInt("maxBias", maxBias);
 		mainShader.SetMat4("projection", camera->GetProjectionMatrix());
 		mainShader.SetMat4("view", camera->GetViewMatrix());
 		mainShader.SetVec3("viewPos", camera->Position);
@@ -147,7 +153,11 @@ int AppShadowMapping::MainLoop()
 		ImGui::SliderFloat("Max Bias", &maxBias, 0.001f, 0.1f);
 		ImGui::SliderFloat("Shadow Near Plane", &shadowNearPlane, 0.1f, 5.0f);
 		ImGui::SliderFloat("Shadow Far Plane", &shadowFarPlane, 10.0f, 500.0f);
+
+		ImGui::Spacing();
 		ImGui::Checkbox("Move Light", &moveLight);
+		ImGui::SliderFloat("Ambient", &ambientPower, 0.01f, 1.0f);
+		ImGui::SliderInt("Specular", &specularPower, 2, 128);
 
 		ImGui::End();
 
