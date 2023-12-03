@@ -98,7 +98,7 @@ int AppShadowMapping::MainLoop()
 		glBindFramebuffer(GL_FRAMEBUFFER, depthFBO);
 		glClear(GL_DEPTH_BUFFER_BIT);
 		RenderPlane(depthShader);
-		RenderFoxes(depthShader);
+		RenderModel(depthShader);
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 		// Reset
@@ -123,17 +123,17 @@ int AppShadowMapping::MainLoop()
 		
 		mainShader.SetMat4("model", model);
 		depthTexture.Bind(GL_TEXTURE1);
-		RenderFoxes(mainShader);
+		RenderModel(mainShader);
 
 		// Debug light
-		lightCubeShader.Use();
+		/*lightCubeShader.Use();
 		lightCubeShader.SetMat4("projection", camera->GetProjectionMatrix());
 		lightCubeShader.SetMat4("view", camera->GetViewMatrix());
 		model = glm::mat4(1.0f);
 		model = glm::translate(model, lightPos);
 		model = glm::scale(model, glm::vec3(0.2f));
 		lightCubeShader.SetMat4("model", model);
-		cube.Draw();
+		cube.Draw();*/
 
 		// Debug depth map
 		/*debugShader.Use();
@@ -142,27 +142,30 @@ int AppShadowMapping::MainLoop()
 		depthTexture.Bind(GL_TEXTURE0);
 		RenderQuad();*/
 
-		ImGui_ImplOpenGL3_NewFrame();
-		ImGui_ImplGlfw_NewFrame();
-		ImGui::NewFrame();
-		ImGui::SetNextWindowSize(ImVec2(500, 200));
+		if (showImgui)
+		{
+			ImGui_ImplOpenGL3_NewFrame();
+			ImGui_ImplGlfw_NewFrame();
+			ImGui::NewFrame();
+			ImGui::SetNextWindowSize(ImVec2(500, 200));
 
-		ImGui::Begin("Shadow Mapping");
+			ImGui::Begin("Shadow Mapping");
 
-		ImGui::SliderFloat("Min Bias", &minBias, 0.0001f, 0.01f);
-		ImGui::SliderFloat("Max Bias", &maxBias, 0.001f, 0.1f);
-		ImGui::SliderFloat("Shadow Near Plane", &shadowNearPlane, 0.1f, 5.0f);
-		ImGui::SliderFloat("Shadow Far Plane", &shadowFarPlane, 10.0f, 500.0f);
+			ImGui::SliderFloat("Min Bias", &minBias, 0.00001f, 0.01f);
+			ImGui::SliderFloat("Max Bias", &maxBias, 0.001f, 0.1f);
+			ImGui::SliderFloat("Shadow Near Plane", &shadowNearPlane, 0.1f, 5.0f);
+			ImGui::SliderFloat("Shadow Far Plane", &shadowFarPlane, 10.0f, 500.0f);
 
-		ImGui::Spacing();
-		ImGui::Checkbox("Move Light", &moveLight);
-		ImGui::SliderFloat("Ambient", &ambientPower, 0.01f, 1.0f);
-		ImGui::SliderInt("Specular", &specularPower, 2, 128);
+			ImGui::Spacing();
+			ImGui::Checkbox("Move Light", &moveLight);
+			ImGui::SliderFloat("Ambient", &ambientPower, 0.01f, 1.0f);
+			ImGui::SliderInt("Specular", &specularPower, 2, 128);
 
-		ImGui::End();
+			ImGui::End();
 
-		ImGui::Render();
-		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+			ImGui::Render();
+			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		}
 
 		SwapBuffers();
 	}
@@ -180,7 +183,7 @@ void AppShadowMapping::RenderPlane(const Shader& shader)
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 }
 
-void AppShadowMapping::RenderFoxes(const Shader& shader)
+void AppShadowMapping::RenderModel(const Shader& shader)
 {
 	glm::mat4 model = glm::mat4(1.0f);
 	model = glm::translate(model, glm::vec3(2.0f, 0.0f, 1.0f));
@@ -207,7 +210,7 @@ void AppShadowMapping::RenderQuad()
 
 void AppShadowMapping::InitScene()
 {
-	// Fox
+	// Model
 	renderModel = std::make_unique<Model>(AppSettings::ModelFolder + "Zaku//scene.gltf");
 
 	// Plane

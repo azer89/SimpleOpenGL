@@ -23,6 +23,7 @@ protected:
 	void MouseCallback(GLFWwindow* window, double xpos, double ypos);
 	void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
 	void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset);
+	void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 	
 	void InitIMGUI();
 	void InitGLFW();
@@ -50,6 +51,7 @@ protected:
 	float lastY;
 	bool firstMouse;
 	bool middleMousePressed;
+	bool showImgui;
 
 	// Timing
 	float deltaTime; // Time between current frame and last frame

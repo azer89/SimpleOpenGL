@@ -14,7 +14,7 @@ private:
 	void InitScene();
 
 	void RenderPlane(const Shader& shader);
-	void RenderFoxes(const Shader& shader);
+	void RenderModel(const Shader& shader);
 	void RenderQuad();
 
 private:

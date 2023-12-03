@@ -61,10 +61,17 @@ void AppBase::InitGLFW()
 	}
 	{
 		auto func = [](GLFWwindow* window, double xoffset, double yoffset)
-		{
-			static_cast<AppBase*>(glfwGetWindowUserPointer(window))->ScrollCallback(window, xoffset, yoffset);
-		};
+			{
+				static_cast<AppBase*>(glfwGetWindowUserPointer(window))->ScrollCallback(window, xoffset, yoffset);
+			};
 		glfwSetScrollCallback(glfwWindow, func);
+	}
+	{
+		auto func = [](GLFWwindow* window, int key, int scancode, int action, int mods)
+		{
+			static_cast<AppBase*>(glfwGetWindowUserPointer(window))->KeyCallback(window, key, scancode, action, mods);
+		};
+		glfwSetKeyCallback(glfwWindow, func);
 	}
 
 	// Tell GLFW to capture our mouse
@@ -73,6 +80,8 @@ void AppBase::InitGLFW()
 
 void AppBase::InitIMGUI()
 {
+	showImgui = true;
+
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGui::StyleColorsDark();
@@ -197,6 +206,15 @@ void AppBase::MouseButtonCallback(GLFWwindow* window, int button, int action, in
 void AppBase::ScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
 {
 	camera->ProcessMouseScroll(static_cast<float>(yoffset));
+}
+
+void AppBase::KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+	if (key == GLFW_KEY_I && action == GLFW_PRESS)
+	{
+		// Toggle imgui window
+		showImgui = !showImgui;
+	}
 }
 
 // Process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
