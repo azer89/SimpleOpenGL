@@ -11,6 +11,43 @@
 
 #include <iostream>
 
+int GetNumMipMapLevels2D(int w, int h)
+{
+	int levels = 1;
+	while ((w | h) >> levels)
+	{
+		levels += 1;
+	}
+	return levels;
+}
+
+/// Draw a checkerboard on a pre-allocated square RGB image.
+uint8_t* genDefaultCheckerboardImage(int* width, int* height)
+{
+	const int w = 128;
+	const int h = 128;
+
+	uint8_t* imgData = (uint8_t*)malloc(w * h * 3); // stbi_load() uses malloc(), so this is safe
+
+	assert(imgData && w > 0 && h > 0);
+	assert(w == h);
+
+	if (!imgData || w <= 0 || h <= 0) return nullptr;
+	if (w != h) return nullptr;
+
+	for (int i = 0; i < w * h; i++)
+	{
+		const int row = i / w;
+		const int col = i % w;
+		imgData[i * 3 + 0] = imgData[i * 3 + 1] = imgData[i * 3 + 2] = 0xFF * ((row + col) % 2);
+	}
+
+	if (width) *width = w;
+	if (height) *height = h;
+
+	return imgData;
+}
+
 Texture::Texture() :
 	id (GL_INVALID_VALUE),
 	textureType(TextureType::TEXTURE_NONE)
@@ -46,39 +83,31 @@ const char* Texture::GetName()
 
 void Texture::CreateFromImageFile(const std::string& fullFilePath, bool flipVertical)
 {
-	glGenTextures(1, &id);
-
-	// Load image
-	int width, height, nrComponents;
+	int width;
+	int height;
 	stbi_set_flip_vertically_on_load(flipVertical);
-	unsigned char* data = stbi_load(fullFilePath.c_str(), &width, &height, &nrComponents, 0);
+	uint8_t* data = stbi_load(fullFilePath.c_str(), &width, &height, nullptr, STBI_rgb_alpha);
 	if (data)
 	{
-		GLenum format;
-		if (nrComponents == 1)
-		{
-			format = GL_RED;
-		}
-		else if (nrComponents == 3)
-		{
-			format = GL_RGB;
-		}
-		else if (nrComponents == 4)
-		{
-			format = GL_RGBA;
-		}
+		GLenum clamp = GL_REPEAT;
+		int numMipmaps = GetNumMipMapLevels2D(width, height);
 
-		glBindTexture(GL_TEXTURE_2D, id);
-		glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
-		glGenerateMipmap(GL_TEXTURE_2D);
+		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+		glCreateTextures(GL_TEXTURE_2D, 1, &id);
 
-		// Wrapping
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTextureParameteri(id, GL_TEXTURE_MAX_LEVEL, 0);
+		glTextureParameteri(id, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTextureParameteri(id, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTextureParameteri(id, GL_TEXTURE_WRAP_S, clamp);
+		glTextureParameteri(id, GL_TEXTURE_WRAP_T, clamp);
 
-		// Filtering
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		
+		glTextureStorage2D(id, numMipmaps, GL_RGBA8, width, height);
+		glTextureSubImage2D(id, 0, 0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		glGenerateTextureMipmap(id);
+		glTextureParameteri(id, GL_TEXTURE_MAX_LEVEL, numMipmaps - 1);
+		glTextureParameteri(id, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glTextureParameteri(id, GL_TEXTURE_MAX_ANISOTROPY, 16);
 	}
 	else
 	{
@@ -91,12 +120,12 @@ void Texture::CreateFromHDRFile(const std::string& fullFilePath)
 {
 	stbi_set_flip_vertically_on_load(true);
 	int width, height, nrComponents;
-	float *data = stbi_loadf(fullFilePath.c_str(), &width, &height, &nrComponents, 0);
-	unsigned int hdrTexture;
+	float* data = stbi_loadf(fullFilePath.c_str(), &width, &height, &nrComponents, 0);
 	if (data)
 	{
-		glGenTextures(1, &hdrTexture);
-		glBindTexture(GL_TEXTURE_2D, hdrTexture);
+		glGenTextures(1, &id);
+		glBindTexture(GL_TEXTURE_2D, id);
+
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, width, height, 0, GL_RGB, GL_FLOAT, data); // note how we specify the texture's data value to be float
 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
