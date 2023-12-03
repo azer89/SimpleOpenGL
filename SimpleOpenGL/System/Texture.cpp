@@ -115,8 +115,9 @@ void Texture::CreateFromImageFile(const std::string& fullFilePath, bool flipVert
 		glTextureParameteri(id, GL_TEXTURE_WRAP_S, clamp);
 		glTextureParameteri(id, GL_TEXTURE_WRAP_T, clamp);
 
-		
+		// Allocate the memory and set the format
 		glTextureStorage2D(id, numMipmaps, GL_RGBA8, width, height);
+		// Upload the data
 		glTextureSubImage2D(id, 0, 0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, data);
 		glGenerateTextureMipmap(id);
 		glTextureParameteri(id, GL_TEXTURE_MAX_LEVEL, numMipmaps - 1);
@@ -203,8 +204,10 @@ void Texture::CreateDepthMap(unsigned int width, unsigned int height)
 
 void Texture::CreateCubeMap(const std::vector<std::string>& files, const std::string& directory)
 {
+	// Non DSA
 	glGenTextures(1, &id);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, id);
+	
 	stbi_set_flip_vertically_on_load(false);
 	int width, height, nrChannels;
 	for (unsigned int i = 0; i < files.size(); ++i)
@@ -226,6 +229,34 @@ void Texture::CreateCubeMap(const std::vector<std::string>& files, const std::st
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+	// DSA
+	/*glCreateTextures(GL_TEXTURE_CUBE_MAP, 1, &id);
+
+	stbi_set_flip_vertically_on_load(false);
+	int width, height;
+	for (int i = 0; i < files.size(); ++i)
+	{
+		auto filePath = directory + files[i];
+		uint8_t* data = stbi_load(filePath.c_str(), &width, &height, nullptr, STBI_rgb_alpha);
+
+		if (i == 0)
+		{
+			// Allocate the memory and set the format
+			glTextureStorage2D(id, 1, GL_RGBA8, width, height);
+		}
+		
+		if (data)
+		{
+			// Upload the data
+			glTextureSubImage3D(id, 0, 0, 0, i, width, height, 1, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		}
+		else
+		{
+			throw std::runtime_error("Cubemap texture failed to load: " + files[i]);
+		}
+		stbi_image_free(data);
+	}*/
 }
 
 void Texture::Bind(GLenum textureIndex)
