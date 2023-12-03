@@ -53,8 +53,13 @@ int AppShadowMapping::MainLoop()
 	glm::mat4 lightProjection;
 	glm::mat4 lightView;
 	glm::mat4 lightSpaceMatrix;
-	constexpr float near_plane = 1.0f;
-	constexpr float far_plane = 20;
+	
+	// Parameters
+	float minBias = 0.005;
+	float maxBias = 0.05;
+	float shadowNearPlane = 1.0f;
+	float shadowFarPlane = 20;
+	bool moveLight = true;
 
 	// Render loop
 	while (!GLFWWindowShouldClose())
@@ -69,14 +74,17 @@ int AppShadowMapping::MainLoop()
 		model = glm::scale(model, glm::vec3(0.02f));
 
 		// Calculate light position
-		lightPos = glm::vec3(
-			glm::sin(lightTimer) * lightRadius,
-			lightY,
-			glm::cos(lightTimer) * lightRadius);
-		lightTimer += deltaTime * lightSpeed;
+		if (moveLight)
+		{
+			lightPos = glm::vec3(
+				glm::sin(lightTimer) * lightRadius,
+				lightY,
+				glm::cos(lightTimer) * lightRadius);
+			lightTimer += deltaTime * lightSpeed;
+		}
 
 		// Render depth
-		lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, near_plane, far_plane);
+		lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, shadowNearPlane, shadowFarPlane);
 		lightView = glm::lookAt(lightPos, glm::vec3(0.0f), glm::vec3(0.0, 1.0, 0.0));
 		lightSpaceMatrix = lightProjection * lightView;
 		depthShader.Use();
@@ -95,11 +103,14 @@ int AppShadowMapping::MainLoop()
 
 		// Render Scene
 		mainShader.Use();
+		mainShader.SetFloat("minBias", minBias);
+		mainShader.SetFloat("maxBias", maxBias);
 		mainShader.SetMat4("projection", camera->GetProjectionMatrix());
 		mainShader.SetMat4("view", camera->GetViewMatrix());
 		mainShader.SetVec3("viewPos", camera->Position);
 		mainShader.SetVec3("lightPos", lightPos);
 		mainShader.SetMat4("lightSpaceMatrix", lightSpaceMatrix);
+		
 		planeTexture.Bind(GL_TEXTURE0);
 		depthTexture.Bind(GL_TEXTURE1);
 		RenderPlane(mainShader);
@@ -124,6 +135,24 @@ int AppShadowMapping::MainLoop()
 		debugShader.SetFloat("far_plane", far_plane);
 		depthTexture.Bind(GL_TEXTURE0);
 		RenderQuad();*/
+
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+		ImGui::SetNextWindowSize(ImVec2(500, 200));
+
+		ImGui::Begin("Shadow Mapping");
+
+		ImGui::SliderFloat("Min Bias", &minBias, 0.0001f, 0.01f);
+		ImGui::SliderFloat("Max Bias", &maxBias, 0.001f, 0.1f);
+		ImGui::SliderFloat("Shadow Near Plane", &shadowNearPlane, 0.1f, 5.0f);
+		ImGui::SliderFloat("Shadow Far Plane", &shadowFarPlane, 10.0f, 500.0f);
+		ImGui::Checkbox("Move Light", &moveLight);
+
+		ImGui::End();
+
+		ImGui::Render();
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
 		SwapBuffers();
 	}

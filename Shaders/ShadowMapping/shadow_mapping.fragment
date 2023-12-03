@@ -15,6 +15,9 @@ uniform sampler2D shadowMap;
 uniform vec3 lightPos;
 uniform vec3 viewPos;
 
+uniform float minBias; // 0.005
+uniform float maxBias; // 0.05
+
 float ShadowCalculation(vec4 fragPosLightSpace)
 {
 	// Perform perspective divide
@@ -33,7 +36,7 @@ float ShadowCalculation(vec4 fragPosLightSpace)
 	vec3 normal = normalize(fs_in.Normal);
 	vec3 lightDir = normalize(lightPos - fs_in.FragPos);
 	// Bias equation #1
-	float bias = max(0.05 * (1.0 - dot(normal, lightDir)), 0.005);
+	float bias = max(maxBias * (1.0 - dot(normal, lightDir)), minBias);
 	// Bias equation #2
 	//float cosTheta = clamp(dot(normal, lightDir), 0, 1);
 	//float bias = 0.005 * tan(acos(cosTheta));

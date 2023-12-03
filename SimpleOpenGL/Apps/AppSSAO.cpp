@@ -62,7 +62,7 @@ int AppSSAO::MainLoop()
 		ImGui::Begin("SSAO");
 
 		ImGui::SliderInt("Kernel Size", &kernelSize, 4, 1024);
-		ImGui::SliderFloat("Radius", &radius, 0.0f, 2.0f);
+		ImGui::SliderFloat("Radius", &radius, 0.0f, 10.0f);
 		ImGui::SliderFloat("Bias", &bias, 0.0f, 0.5f);
 
 		ImGui::End();
