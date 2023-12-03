@@ -89,14 +89,28 @@ void Texture::CreateFromImageFile(const std::string& fullFilePath, bool flipVert
 	uint8_t* data = stbi_load(fullFilePath.c_str(), &width, &height, nullptr, STBI_rgb_alpha);
 	if (data)
 	{
+		// Pre DSA
+		/*
+		glBindTexture(GL_TEXTURE_2D, id);
+		glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+
+		// Wrapping
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+		// Filtering
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		 */
+
 		GLenum clamp = GL_REPEAT;
 		int numMipmaps = GetNumMipMapLevels2D(width, height);
-
-		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+		int maxAnisotropy = 16;
+		
+		// DSA
 		glCreateTextures(GL_TEXTURE_2D, 1, &id);
-
-		glTextureParameteri(id, GL_TEXTURE_MAX_LEVEL, 0);
-		glTextureParameteri(id, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		
 		glTextureParameteri(id, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTextureParameteri(id, GL_TEXTURE_WRAP_S, clamp);
 		glTextureParameteri(id, GL_TEXTURE_WRAP_T, clamp);
@@ -107,7 +121,8 @@ void Texture::CreateFromImageFile(const std::string& fullFilePath, bool flipVert
 		glGenerateTextureMipmap(id);
 		glTextureParameteri(id, GL_TEXTURE_MAX_LEVEL, numMipmaps - 1);
 		glTextureParameteri(id, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-		glTextureParameteri(id, GL_TEXTURE_MAX_ANISOTROPY, 16);
+		
+		glTextureParameteri(id, GL_TEXTURE_MAX_ANISOTROPY, maxAnisotropy);
 	}
 	else
 	{
@@ -123,7 +138,8 @@ void Texture::CreateFromHDRFile(const std::string& fullFilePath)
 	float* data = stbi_loadf(fullFilePath.c_str(), &width, &height, &nrComponents, 0);
 	if (data)
 	{
-		glGenTextures(1, &id);
+		// Pre DSA
+		/*glGenTextures(1, &id);
 		glBindTexture(GL_TEXTURE_2D, id);
 
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, width, height, 0, GL_RGB, GL_FLOAT, data); // note how we specify the texture's data value to be float
@@ -131,14 +147,32 @@ void Texture::CreateFromHDRFile(const std::string& fullFilePath)
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);*/
 
-		stbi_image_free(data);
+		// DSA
+		const GLenum clamp = GL_CLAMP_TO_EDGE;
+		const int numMipmaps = 1;
+		int maxAnisotropy = 16;
+
+		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+		glCreateTextures(GL_TEXTURE_2D, 1, &id);
+
+		glTextureParameteri(id, GL_TEXTURE_MAX_LEVEL, 0);
+		glTextureParameteri(id, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTextureParameteri(id, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTextureParameteri(id, GL_TEXTURE_WRAP_S, clamp);
+		glTextureParameteri(id, GL_TEXTURE_WRAP_T, clamp);
+		
+		glTextureStorage2D(id, numMipmaps, GL_RGB16F, width, height);
+		glTextureSubImage2D(id, 0, 0, 0, width, height, GL_RGB, GL_FLOAT, data);
+		glTextureParameteri(id, GL_TEXTURE_MAX_ANISOTROPY, maxAnisotropy);
 	}
 	else
 	{
 		throw std::runtime_error("Failed to load HDR image " + fullFilePath);
 	}
+
+	stbi_image_free(data);
 }
 
 void Texture::CreateDepthMap(unsigned int width, unsigned int height)
