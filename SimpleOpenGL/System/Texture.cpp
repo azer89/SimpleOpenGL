@@ -140,18 +140,19 @@ void Texture::CreateFromHDRFile(const std::string& fullFilePath)
 	if (data)
 	{
 		// Non DSA
-		/*glGenTextures(1, &id);
-		glBindTexture(GL_TEXTURE_2D, id);
+		//glGenTextures(1, &id);
+		//glBindTexture(GL_TEXTURE_2D, id);
+		glCreateTextures(GL_TEXTURE_2D, 1, &id);
 
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, width, height, 0, GL_RGB, GL_FLOAT, data); // note how we specify the texture's data value to be float
 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);*/
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 		// DSA
-		const GLenum clamp = GL_CLAMP_TO_EDGE;
+		/*const GLenum clamp = GL_CLAMP_TO_EDGE;
 		const int numMipmaps = 1;
 		int maxAnisotropy = 16;
 
@@ -165,7 +166,7 @@ void Texture::CreateFromHDRFile(const std::string& fullFilePath)
 		
 		glTextureStorage2D(id, numMipmaps, GL_RGB16F, width, height);
 		glTextureSubImage2D(id, 0, 0, 0, width, height, GL_RGB, GL_FLOAT, data);
-		glTextureParameteri(id, GL_TEXTURE_MAX_ANISOTROPY, maxAnisotropy);
+		glTextureParameteri(id, GL_TEXTURE_MAX_ANISOTROPY, maxAnisotropy);*/
 	}
 	else
 	{
@@ -205,8 +206,9 @@ void Texture::CreateDepthMap(unsigned int width, unsigned int height)
 void Texture::CreateCubeMap(const std::vector<std::string>& files, const std::string& directory)
 {
 	// Non DSA
-	glGenTextures(1, &id);
-	glBindTexture(GL_TEXTURE_CUBE_MAP, id);
+	//glGenTextures(1, &id);
+	//glBindTexture(GL_TEXTURE_CUBE_MAP, id);
+	glCreateTextures(GL_TEXTURE_CUBE_MAP, 1, &id);
 	
 	stbi_set_flip_vertically_on_load(false);
 	int width, height;
@@ -267,9 +269,9 @@ void Texture::CreateCubeMap(const std::vector<std::string>& files, const std::st
 void Texture::Bind(GLenum textureIndex)
 {
 	// Non DSA
-	glActiveTexture(textureIndex);
-	glBindTexture(GL_TEXTURE_2D, id);
+	//glActiveTexture(textureIndex);
+	//glBindTexture(GL_TEXTURE_2D, id);
 
 	// DSA
-	//glBindTextureUnit(textureIndex, id);
+	glBindTextureUnit(textureIndex, id);
 }
