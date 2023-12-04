@@ -157,19 +157,17 @@ void Texture::CreateFromHDRFile(const std::string& fullFilePath)
 
 		// DSA
 		/*const int numMipmaps = 1;
-		int maxAnisotropy = 16;
 
 		glCreateTextures(GL_TEXTURE_2D, 1, &id);
 
-		glTextureParameteri(id, GL_TEXTURE_MAX_LEVEL, 0);
+		glTextureParameteri(id, GL_TEXTURE_MAX_LEVEL, numMipmaps - 1);
 		glTextureParameteri(id, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		glTextureParameteri(id, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 		glTextureParameteri(id, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTextureParameteri(id, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		
 		glTextureStorage2D(id, numMipmaps, GL_RGB16F, width, height);
-		glTextureSubImage2D(id, 0, 0, 0, width, height, GL_RGB, GL_FLOAT, data);
-		glTextureParameteri(id, GL_TEXTURE_MAX_ANISOTROPY, maxAnisotropy);*/
+		glTextureSubImage2D(id, 0, 0, 0, width, height, GL_RGB, GL_FLOAT, data);*/
 	}
 	else
 	{
