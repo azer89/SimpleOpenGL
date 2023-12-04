@@ -144,7 +144,7 @@ void Texture::CreateFromHDRFile(const std::string& fullFilePath)
 	if (data)
 	{
 		// Non DSA
-		glGenTextures(1, &id);
+		/*glGenTextures(1, &id);
 		glBindTexture(GL_TEXTURE_2D, id);
 
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, width, height, 0, GL_RGB, GL_FLOAT, data);
@@ -153,21 +153,21 @@ void Texture::CreateFromHDRFile(const std::string& fullFilePath)
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);*/
 
 		// DSA
-		/*const int numMipmaps = 1;
+		const int numMipmaps = 1;
 
 		glCreateTextures(GL_TEXTURE_2D, 1, &id);
-
+		
 		glTextureParameteri(id, GL_TEXTURE_MAX_LEVEL, numMipmaps - 1);
 		glTextureParameteri(id, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		glTextureParameteri(id, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 		glTextureParameteri(id, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTextureParameteri(id, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		
-		glTextureStorage2D(id, numMipmaps, GL_RGB16F, width, height);
-		glTextureSubImage2D(id, 0, 0, 0, width, height, GL_RGB, GL_FLOAT, data);*/
+		glTextureStorage2D(id, numMipmaps, GL_RGB32F, width, height);
+		glTextureSubImage2D(id, 0, 0, 0, width, height, GL_RGB, GL_FLOAT, data);
 	}
 	else
 	{
@@ -265,12 +265,16 @@ void Texture::CreateCubeMap(const std::vector<std::string>& files, const std::st
 	glTextureParameteri(id, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);*/
 }
 
+// TODO This should be delete after DSA migration
 void Texture::Bind(GLenum textureIndex)
 {
 	// Non DSA
 	glActiveTexture(textureIndex);
 	glBindTexture(GL_TEXTURE_2D, id);
+}
 
+void Texture::BindDSA(unsigned int textureUnit)
+{
 	// DSA
-	//glBindTextureUnit(textureIndex, id);
+	glBindTextureUnit(textureUnit, id);
 }

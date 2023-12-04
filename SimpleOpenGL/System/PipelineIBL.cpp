@@ -89,7 +89,7 @@ void PipelineIBL::Init(
 	equirectangularToCubemapShader.Use();
 	equirectangularToCubemapShader.SetInt("equirectangularMap", 0);
 	equirectangularToCubemapShader.SetMat4("projection", captureProjection);
-	hdrTexture.Bind(GL_TEXTURE0);
+	hdrTexture.BindDSA(0);
 
 	glViewport(0, 0, cubeSize, cubeSize); // Don't forget to configure the viewport to the capture dimensions.
 	glBindFramebuffer(GL_FRAMEBUFFER, captureFBO);

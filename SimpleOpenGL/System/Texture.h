@@ -27,6 +27,8 @@ public:
 	void CreateCubeMap(const std::vector<std::string>& files, const std::string& directory);
 	void Bind(GLenum textureIndex);
 
+	void BindDSA(unsigned int textureUnit);
+
 	unsigned int GetID();
 	TextureType GetType();
 	const char* GetName();
