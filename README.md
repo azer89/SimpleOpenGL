@@ -17,7 +17,8 @@ Physically Based Rendering
 <br/>
 
 
-https://github.com/azer89/SimpleOpenGL/assets/790432/8b271124-2d3b-49db-8ea7-69531526e2f0
+
+https://github.com/azer89/SimpleOpenGL/assets/790432/6107d114-b5c8-4789-8f28-86413e40a931
 
 
 
