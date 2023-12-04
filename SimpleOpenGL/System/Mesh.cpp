@@ -55,11 +55,12 @@ void Mesh::Draw(const Shader& shader, bool skipTexture)
 		// Currently only supports one texture per type
 		for (unsigned int i = 0; i < TextureMapper::NUM_TEXTURE_TYPE; ++i) // Iterate over TextureType elements
 		{
-			glActiveTexture(GL_TEXTURE0 + i);
+			//glActiveTexture(GL_TEXTURE0 + i); // Non-DSA
 			TextureType tType = static_cast<TextureType>(i + 1); // Casting
 			if (textureMap.find(tType) == textureMap.end())
 			{
-				glBindTexture(GL_TEXTURE_2D, 0); // Flush
+				//glBindTexture(GL_TEXTURE_2D, 0); // Flush Non-DSA
+				glBindTextureUnit(i, 0); // Flush DSA
 				continue;
 			}
 
@@ -67,7 +68,8 @@ void Mesh::Draw(const Shader& shader, bool skipTexture)
 			std::string name = TextureMapper::GetTextureString(tType) + "1";
 
 			glUniform1i(glGetUniformLocation(shader.ID, name.c_str()), i);
-			glBindTexture(GL_TEXTURE_2D, texture.GetID());
+			//glBindTexture(GL_TEXTURE_2D, texture.GetID()); // Non-DSA
+			glBindTextureUnit(i, texture.GetID()); // DSA
 		}
 	}
 
@@ -77,7 +79,7 @@ void Mesh::Draw(const Shader& shader, bool skipTexture)
 	glBindVertexArray(0);
 
 	// Set back to defaults once configured.
-	glActiveTexture(GL_TEXTURE0);
+	//glActiveTexture(GL_TEXTURE0); // Non-DSA
 }
 
 void Mesh::SetupMesh()
