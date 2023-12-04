@@ -195,7 +195,7 @@ void Texture::CreateDepthMap(unsigned int width, unsigned int height)
 	glTextureParameteri(id, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTextureStorage2D(id, numMipmaps, GL_DEPTH_COMPONENT24, width, height);
 	
-	const GLfloat border[] ={ 1.0, 1.0, 1.0, 1.0 };
+	const GLfloat border[] = { 1.0, 1.0, 1.0, 1.0 };
 	glTextureParameterfv(id, GL_TEXTURE_BORDER_COLOR, border);
 	glTextureParameteri(id, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
 	glTextureParameteri(id, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
@@ -267,9 +267,9 @@ void Texture::CreateCubeMap(const std::vector<std::string>& files, const std::st
 void Texture::Bind(GLenum textureIndex)
 {
 	// Non DSA
-	//glActiveTexture(textureIndex);
-	//glBindTexture(GL_TEXTURE_2D, id);
+	glActiveTexture(textureIndex);
+	glBindTexture(GL_TEXTURE_2D, id);
 
 	// DSA
-	glBindTextureUnit(textureIndex, id);
+	//glBindTextureUnit(textureIndex, id);
 }

@@ -82,8 +82,44 @@ void Mesh::Draw(const Shader& shader, bool skipTexture)
 
 void Mesh::SetupMesh()
 {
+	// DSA
+	glCreateBuffers(1, &VBO);
+	glNamedBufferStorage(VBO, sizeof(Vertex) * vertices.size(), &vertices[0], GL_DYNAMIC_STORAGE_BIT);
+	
+	glCreateBuffers(1, &EBO);
+	glNamedBufferStorage(EBO, sizeof(unsigned int) * indices.size(),  &indices[0], GL_DYNAMIC_STORAGE_BIT);
+
+	glCreateVertexArrays(1, &VAO);
+	glVertexArrayVertexBuffer(VAO, 0, VBO, 0, sizeof(Vertex));
+	glVertexArrayElementBuffer(VAO, EBO);
+	
+	glEnableVertexArrayAttrib(VAO, 0);
+	glEnableVertexArrayAttrib(VAO, 1);
+	glEnableVertexArrayAttrib(VAO, 2);
+	glEnableVertexArrayAttrib(VAO, 3);
+	glEnableVertexArrayAttrib(VAO, 4);
+	glEnableVertexArrayAttrib(VAO, 5);
+	glEnableVertexArrayAttrib(VAO, 6);
+
+	glVertexArrayAttribFormat(VAO, 0, 3, GL_FLOAT, GL_FALSE, offsetof(Vertex, Position));
+	glVertexArrayAttribFormat(VAO, 1, 3, GL_FLOAT, GL_FALSE, offsetof(Vertex, Normal));
+	glVertexArrayAttribFormat(VAO, 2, 2, GL_FLOAT, GL_FALSE, offsetof(Vertex, TexCoords));
+	glVertexArrayAttribFormat(VAO, 3, 3, GL_FLOAT, GL_FALSE, offsetof(Vertex, Tangent));
+	glVertexArrayAttribFormat(VAO, 4, 3, GL_FLOAT, GL_FALSE, offsetof(Vertex, Bitangent));
+	glVertexArrayAttribIFormat(VAO, 5, 4, GL_INT, offsetof(Vertex, m_BoneIDs));
+	glVertexArrayAttribFormat(VAO, 6, 4, GL_FLOAT, GL_FALSE, offsetof(Vertex, m_Weights));
+
+	glVertexArrayAttribBinding(VAO, 0, 0);
+	glVertexArrayAttribBinding(VAO, 1, 0);
+	glVertexArrayAttribBinding(VAO, 2, 0);
+	glVertexArrayAttribBinding(VAO, 3, 0);
+	glVertexArrayAttribBinding(VAO, 4, 0);
+	glVertexArrayAttribBinding(VAO, 5, 0);
+	glVertexArrayAttribBinding(VAO, 6, 0);
+
+	// Non DSA
 	// Create buffers/arrays
-	glGenVertexArrays(1, &VAO);
+	/*glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
 	glGenBuffers(1, &EBO);
 
@@ -121,7 +157,7 @@ void Mesh::SetupMesh()
 	// Weights
 	glEnableVertexAttribArray(6);
 	glVertexAttribPointer(6, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, m_Weights));
-	glBindVertexArray(0);
+	glBindVertexArray(0);*/
 
 #if _DEBUG
 	std::cout << "Mesh vertex count " << vertices.size() << '\n';
