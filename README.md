@@ -9,6 +9,7 @@
 * Geometry shader
 * Ambient occlusion
 * Physically Based Rendering
+* Direct State Access <em>(work in progress)</em>
 
 ### Demo
 <div align="center">
