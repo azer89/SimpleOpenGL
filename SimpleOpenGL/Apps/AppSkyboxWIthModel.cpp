@@ -65,7 +65,7 @@ int AppSkyboxWithModel::MainLoop()
 		auto skyboxView = glm::mat4(glm::mat3(view)); // Remove translation from the view matrix
 		skyboxShader.SetMat4("view", skyboxView);
 		skyboxShader.SetMat4("projection", projection);
-		skyboxTexture.Bind(GL_TEXTURE0);
+		skyboxTexture.BindDSA(0);
 		cube.Draw();
 		glBindVertexArray(0);
 		glDepthFunc(GL_LESS); // Set depth function back to default

@@ -57,8 +57,8 @@ int AppSkyboxWithCube::MainLoop()
 		cubeShader.SetMat4("view", view);
 		cubeShader.SetMat4("projection", projection);
 		cubeShader.SetVec3("cameraPos", camera->Position);
-		skyboxTexture.Bind(GL_TEXTURE0);
-		cubeTexture.Bind(GL_TEXTURE1);
+		skyboxTexture.BindDSA(0);
+		cubeTexture.BindDSA(1);
 		cube.Draw();
 		glBindVertexArray(0);
 
@@ -68,7 +68,7 @@ int AppSkyboxWithCube::MainLoop()
 		auto skyboxView = glm::mat4(glm::mat3(view)); // Remove translation from the view matrix
 		skyboxShader.SetMat4("view", skyboxView);
 		skyboxShader.SetMat4("projection", projection);
-		skyboxTexture.Bind(GL_TEXTURE0);
+		skyboxTexture.BindDSA(0);
 		cube.Draw();
 		glBindVertexArray(0);
 		glDepthFunc(GL_LESS); // Set depth function back to default
