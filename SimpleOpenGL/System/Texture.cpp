@@ -179,7 +179,7 @@ void Texture::CreateFromHDRFile(const std::string& fullFilePath)
 
 void Texture::CreateDepthMap(unsigned int width, unsigned int height)
 {
-	glGenTextures(1, &id);
+	/*glGenTextures(1, &id);
 	glBindTexture(GL_TEXTURE_2D, id);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, width, height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -187,10 +187,10 @@ void Texture::CreateDepthMap(unsigned int width, unsigned int height)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
 	float borderColor[] = { 1.0, 1.0, 1.0, 1.0 };
-	glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
+	glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);*/
 
 	// DSA
-	/*glCreateTextures(GL_TEXTURE_2D, 1, &id);
+	glCreateTextures(GL_TEXTURE_2D, 1, &id);
 
 	const int numMipmaps = 1;
 	glTextureParameteri(id, GL_TEXTURE_MAX_LEVEL, numMipmaps - 1);
@@ -202,7 +202,7 @@ void Texture::CreateDepthMap(unsigned int width, unsigned int height)
 	const GLfloat border[] = { 1.0, 1.0, 1.0, 1.0 };
 	glTextureParameterfv(id, GL_TEXTURE_BORDER_COLOR, border);
 	glTextureParameteri(id, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-	glTextureParameteri(id, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);*/
+	glTextureParameteri(id, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
 }
 
 void Texture::CreateCubeMap(const std::vector<std::string>& files, const std::string& directory)

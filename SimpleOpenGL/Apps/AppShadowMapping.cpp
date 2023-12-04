@@ -55,8 +55,8 @@ int AppShadowMapping::MainLoop()
 	glm::mat4 lightSpaceMatrix;
 	
 	// Shadow parameters
-	float minBias = 0.005;
-	float maxBias = 0.05;
+	float minBias = 0.005f;
+	float maxBias = 0.05f;
 	float shadowNearPlane = 1.0f;
 	float shadowFarPlane = 20;
 
@@ -108,21 +108,21 @@ int AppShadowMapping::MainLoop()
 		// Render Scene
 		mainShader.Use();
 		mainShader.SetFloat("minBias", minBias);
+		mainShader.SetFloat("maxBias", maxBias);
 		mainShader.SetFloat("ambientPower", ambientPower);
 		mainShader.SetInt("specularPower", specularPower);
-		mainShader.SetInt("maxBias", maxBias);
 		mainShader.SetMat4("projection", camera->GetProjectionMatrix());
 		mainShader.SetMat4("view", camera->GetViewMatrix());
 		mainShader.SetVec3("viewPos", camera->Position);
 		mainShader.SetVec3("lightPos", lightPos);
 		mainShader.SetMat4("lightSpaceMatrix", lightSpaceMatrix);
 		
-		planeTexture.Bind(GL_TEXTURE0);
-		depthTexture.Bind(GL_TEXTURE1);
+		planeTexture.BindDSA(0);
+		depthTexture.BindDSA(1);
 		RenderPlane(mainShader);
 		
 		mainShader.SetMat4("model", model);
-		depthTexture.Bind(GL_TEXTURE1);
+		depthTexture.BindDSA(1);
 		RenderModel(mainShader);
 
 		// Debug light
