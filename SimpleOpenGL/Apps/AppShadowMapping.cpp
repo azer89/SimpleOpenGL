@@ -35,11 +35,8 @@ int AppShadowMapping::MainLoop()
 
 	// FBO
 	unsigned int depthFBO;
-	glGenFramebuffers(1, &depthFBO);
-	glBindFramebuffer(GL_FRAMEBUFFER, depthFBO);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthTexture.GetID(), 0);
-	glDrawBuffer(GL_NONE);
-	glReadBuffer(GL_NONE);
+	glCreateFramebuffers(1, &depthFBO);
+	glNamedFramebufferTexture(depthFBO, GL_DEPTH_ATTACHMENT, depthTexture.GetID(), 0);
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	// Light
@@ -139,7 +136,7 @@ int AppShadowMapping::MainLoop()
 		/*debugShader.Use();
 		debugShader.SetFloat("near_plane", near_plane);
 		debugShader.SetFloat("far_plane", far_plane);
-		depthTexture.Bind(GL_TEXTURE0);
+		depthTexture.BindDSA(0);
 		RenderQuad();*/
 
 		if (showImgui)
