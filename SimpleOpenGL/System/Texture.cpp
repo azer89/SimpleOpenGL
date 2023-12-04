@@ -90,10 +90,13 @@ void Texture::CreateFromImageFile(const std::string& fullFilePath, bool flipVert
 	if (data)
 	{
 		// Non DSA
-		/*
+		/*glGenTextures(1, &id);
 		glBindTexture(GL_TEXTURE_2D, id);
-		glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
-		glGenerateMipmap(GL_TEXTURE_2D);
+
+		const int numMipmaps = 1;
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, numMipmaps-1);
+		
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 
 		// Wrapping
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -101,8 +104,7 @@ void Texture::CreateFromImageFile(const std::string& fullFilePath, bool flipVert
 
 		// Filtering
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		 */
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);*/
 
 		GLenum clamp = GL_REPEAT;
 		int numMipmaps = GetNumMipMapLevels2D(width, height);
@@ -119,6 +121,8 @@ void Texture::CreateFromImageFile(const std::string& fullFilePath, bool flipVert
 		glTextureStorage2D(id, numMipmaps, GL_RGBA8, width, height);
 		// Upload the data
 		glTextureSubImage2D(id, 0, 0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, data);
+
+		// Mipmap
 		glGenerateTextureMipmap(id);
 		glTextureParameteri(id, GL_TEXTURE_MAX_LEVEL, numMipmaps - 1);
 		glTextureParameteri(id, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
