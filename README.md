@@ -75,6 +75,7 @@ Some other cool results
 
 ### Credit
 * [learnopengl.com](https://learnopengl.com/)
+* [3D Graphics Rendering Cookbook](https://github.com/PacktPublishing/3D-Graphics-Rendering-Cookbook)
 * [glTF Assets](https://github.com/KhronosGroup/glTF-Sample-Assets)
 * Skybox textures from [humus.name](https://www.humus.name/index.php?page=Textures)
 * [Polyhaven](https://polyhaven.com/)
