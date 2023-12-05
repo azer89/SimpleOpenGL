@@ -71,6 +71,7 @@ Some other cool results
 
 ### Build
 * The project and external dependencies are built using Visual Studio 2022 x64 and C++20
+* OpenGL 4.6 is used but the porting to Direct State Access (DSA) is still ongoing.
 
 ### Credit
 * [learnopengl.com](https://learnopengl.com/)
