@@ -74,8 +74,11 @@ Some other cool results
 * OpenGL 4.6 is used but the porting to Direct State Access (DSA) is still ongoing.
 
 ### Credit
-* [learnopengl.com](https://learnopengl.com/)
-* [3D Graphics Rendering Cookbook](https://github.com/PacktPublishing/3D-Graphics-Rendering-Cookbook)
+Technical Resources:
+* [learnopengl.com](https://learnopengl.com/) for rendering techniques
+* [3D Graphics Rendering Cookbook](https://github.com/PacktPublishing/3D-Graphics-Rendering-Cookbook) for DSA reference
+
+Assets:
 * [glTF Assets](https://github.com/KhronosGroup/glTF-Sample-Assets)
 * Skybox textures from [humus.name](https://www.humus.name/index.php?page=Textures)
 * [Polyhaven](https://polyhaven.com/)
