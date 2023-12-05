@@ -39,28 +39,41 @@ void PipelineDeferred::Init(
 	};
 
 	unsigned int quadVBO;
-	glGenVertexArrays(1, &quadVAO);
-	glGenBuffers(1, &quadVBO);
-	glBindVertexArray(quadVAO);
-	glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), &quadVertices, GL_STATIC_DRAW);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+	glCreateBuffers(1, &quadVBO);
+	glNamedBufferStorage(quadVBO, sizeof(quadVertices), &quadVertices, GL_DYNAMIC_STORAGE_BIT);
+	glCreateVertexArrays(1, &quadVAO);
+	glVertexArrayVertexBuffer(quadVAO, 0, quadVBO, 0, 5 * sizeof(float));
+
+	glEnableVertexArrayAttrib(quadVAO, 0);
+	glEnableVertexArrayAttrib(quadVAO, 1);
+
+	glVertexArrayAttribFormat(quadVAO, 0, 3, GL_FLOAT, GL_FALSE, 0);
+	glVertexArrayAttribFormat(quadVAO, 1, 2, GL_FLOAT, GL_FALSE, 3 * sizeof(float));
+
+	glVertexArrayAttribBinding(quadVAO, 0, 0);
+	glVertexArrayAttribBinding(quadVAO, 1, 0);
 
 	// G-buffer
-	glGenFramebuffers(1, &gBuffer);
+	//glGenFramebuffers(1, &gBuffer);
+	glCreateFramebuffers(1, &gBuffer);
 	glBindFramebuffer(GL_FRAMEBUFFER, gBuffer);
 
 	// Position
 	glGenTextures(1, &gPosition);
 	glBindTexture(GL_TEXTURE_2D, gPosition);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, AppSettings::ScreenWidth, AppSettings::ScreenHeight, 0, GL_RGBA, GL_FLOAT, NULL);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, AppSettings::ScreenWidth, AppSettings::ScreenHeight, 0, GL_RGBA, GL_FLOAT, nullptr);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, gPosition, 0); // Attach texture to framebuffer
-
+	
+	/*glCreateTextures(GL_TEXTURE_2D, 1, &gPosition);
+	glTextureParameteri(gPosition, GL_TEXTURE_MAX_LEVEL, 0);
+	glTextureParameteri(gPosition, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTextureParameteri(gPosition, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTextureStorage2D(gPosition, 0, GL_RGBA32F, AppSettings::ScreenWidth, AppSettings::ScreenHeight);
+	glTextureSubImage2D(gPosition, 0, 0, 0, AppSettings::ScreenWidth, AppSettings::ScreenHeight, GL_RGBA, GL_FLOAT, nullptr);
+	glNamedFramebufferTexture(gBuffer, GL_COLOR_ATTACHMENT0, gPosition, 0);*/
+	
 	// Normal
 	glGenTextures(1, &gNormal);
 	glBindTexture(GL_TEXTURE_2D, gNormal);
@@ -68,23 +81,38 @@ void PipelineDeferred::Init(
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, gNormal, 0); // Attach texture to framebuffer
-
+	
+	/*glCreateTextures(GL_TEXTURE_2D, 1, &gNormal);
+	glTextureParameteri(gNormal, GL_TEXTURE_MAX_LEVEL, 0);
+	glTextureParameteri(gNormal, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTextureParameteri(gNormal, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTextureStorage2D(gNormal, 0, GL_RGBA32F, AppSettings::ScreenWidth, AppSettings::ScreenHeight);
+	glTextureSubImage2D(gNormal, 0, 0, 0, AppSettings::ScreenWidth, AppSettings::ScreenHeight, GL_RGBA, GL_FLOAT, nullptr);
+	glNamedFramebufferTexture(gBuffer, GL_COLOR_ATTACHMENT1, gNormal, 0);*/
+	
 	// Color + Specular
 	glGenTextures(1, &gAlbedoSpec);
 	glBindTexture(GL_TEXTURE_2D, gAlbedoSpec);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, AppSettings::ScreenWidth, AppSettings::ScreenHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, AppSettings::ScreenWidth, AppSettings::ScreenHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, gAlbedoSpec, 0); // Attach texture to framebuffer
-
+	
+	/*glCreateTextures(GL_TEXTURE_2D, 1, &gAlbedoSpec);
+	glTextureParameteri(gAlbedoSpec, GL_TEXTURE_MAX_LEVEL, 0);
+	glTextureParameteri(gAlbedoSpec, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTextureParameteri(gAlbedoSpec, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTextureStorage2D(gAlbedoSpec, 0, GL_RGBA8, AppSettings::ScreenWidth, AppSettings::ScreenHeight);
+	glTextureSubImage2D(gAlbedoSpec, 0, 0, 0, AppSettings::ScreenWidth, AppSettings::ScreenHeight, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+	glNamedFramebufferTexture(gBuffer, GL_COLOR_ATTACHMENT2, gAlbedoSpec, 0);*/
+	
 	unsigned int attachments[3] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
 	glDrawBuffers(3, attachments);
-
+	
 	// Depth render buffer
-	glGenRenderbuffers(1, &rboDepth);
-	glBindRenderbuffer(GL_RENDERBUFFER, rboDepth);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, AppSettings::ScreenWidth, AppSettings::ScreenHeight);
-	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, rboDepth);
+	glCreateRenderbuffers(1, &rboDepth);
+	glNamedRenderbufferStorage(rboDepth, GL_DEPTH_COMPONENT, AppSettings::ScreenWidth, AppSettings::ScreenHeight);
+	glNamedFramebufferRenderbuffer(gBuffer, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, rboDepth);
 
 	// Check if framebuffer is complete
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
