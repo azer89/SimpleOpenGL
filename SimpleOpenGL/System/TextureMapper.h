@@ -83,7 +83,7 @@ namespace TextureMapper
 
 	static TextureType GetTextureType(aiTextureType aiTType)
 	{
-		if (TextureMapper::assimpTextureToTextureType.find(aiTType) == TextureMapper::assimpTextureToTextureType.end())
+		if (!TextureMapper::assimpTextureToTextureType.contains(aiTType))
 		{
 			return TEXTURE_NONE;
 		}
@@ -92,7 +92,7 @@ namespace TextureMapper
 
 	static std::string GetTextureString(TextureType tType)
 	{
-		if (TextureMapper::textureTypeToString.find(tType) == TextureMapper::textureTypeToString.end())
+		if (!TextureMapper::textureTypeToString.contains(tType))
 		{
 			return "";
 		}

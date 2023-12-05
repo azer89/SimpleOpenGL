@@ -168,14 +168,14 @@ Mesh Model::ProcessMesh(aiMesh* mesh, const aiScene* scene, const glm::mat4& tra
 			std::string key = str.C_Str();
 			TextureType tType = TextureMapper::GetTextureType(aiTType);
 
-			if (textureMap.find(key) == textureMap.end()) // Make sure never loaded before
+			if (!textureMap.contains(key)) // Make sure never loaded before
 			{
 				Texture texture(tType, str.C_Str());
 				texture.CreateFromImageFile(this->directory + '/' + str.C_Str());
 				textureMap[key] = texture;
 			}
 
-			if (textures.find(tType) == textures.end()) // Only support one image per texture type
+			if (!textures.contains(tType)) // Only support one image per texture type
 			{
 				textures[tType] = textureMap[key];
 			}

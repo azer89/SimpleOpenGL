@@ -38,7 +38,7 @@ void Mesh::Delete()
 
 void Mesh::AddTextureIfEmpty(TextureType tType, const std::string& filePath)
 {
-	if (textureMap.find(tType) != textureMap.end())
+	if (textureMap.contains(tType)) // C++20 Feature
 	{
 		return;
 	}
@@ -57,9 +57,8 @@ void Mesh::Draw(const Shader& shader, bool skipTexture)
 		{
 			//glActiveTexture(GL_TEXTURE0 + i); // Non-DSA
 			TextureType tType = static_cast<TextureType>(i + 1); // Casting
-			if (textureMap.find(tType) == textureMap.end())
+			if (!textureMap.contains(tType))
 			{
-				//glBindTexture(GL_TEXTURE_2D, 0); // Flush Non-DSA
 				glBindTextureUnit(i, 0); // Flush DSA
 				continue;
 			}
