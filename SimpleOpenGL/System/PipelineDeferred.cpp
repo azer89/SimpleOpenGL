@@ -104,7 +104,7 @@ void PipelineDeferred::Init(
 	glNamedFramebufferTexture(gBuffer, GL_COLOR_ATTACHMENT2, gAlbedoSpec, 0);
 	
 	unsigned int attachments[3] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
-	glDrawBuffers(3, attachments);
+	glNamedFramebufferDrawBuffers(gBuffer, 3, attachments);
 	
 	// Depth render buffer
 	glCreateRenderbuffers(1, &rboDepth);
@@ -140,12 +140,11 @@ void PipelineDeferred::StartLightingPass(const std::vector<Light>& lights, const
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	lightingShader->Use();
 	lightingShader->SetVec3("viewPos", cameraPosition);
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, gPosition);
-	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, gNormal);
-	glActiveTexture(GL_TEXTURE2);
-	glBindTexture(GL_TEXTURE_2D, gAlbedoSpec);
+
+	glBindTextureUnit(0, gPosition);
+	glBindTextureUnit(1, gNormal);
+	glBindTextureUnit(2, gAlbedoSpec);
+
 	// Send light relevant uniforms
 	constexpr float linear = 0.7f;
 	constexpr float quadratic = 1.8f;
@@ -165,11 +164,9 @@ void PipelineDeferred::StartLightingPass(const std::vector<Light>& lights, const
 void PipelineDeferred::Blit() 
 {
 	// 3 Copy content of geometry's depth buffer to default framebuffer's depth buffer
-	glBindFramebuffer(GL_READ_FRAMEBUFFER, gBuffer);
-	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0); // write to default framebuffer
-	// Blit to default framebuffer. Note that this may or may not work as the internal formats of both the FBO and default framebuffer have to match.
-	// the internal formats are implementation defined. This works on all of my systems, but if it doesn't on yours you'll likely have to write to the 		
-	// depth buffer in another shader stage (or somehow see to match the default framebuffer's internal format with the FBO's internal format).
-	glBlitFramebuffer(0, 0, AppSettings::ScreenWidth, AppSettings::ScreenHeight, 0, 0, AppSettings::ScreenWidth, AppSettings::ScreenHeight, GL_DEPTH_BUFFER_BIT, GL_NEAREST);
+	glBlitNamedFramebuffer(
+		gBuffer, // Source
+		0, // Destination
+		0, 0, AppSettings::ScreenWidth, AppSettings::ScreenHeight, 0, 0, AppSettings::ScreenWidth, AppSettings::ScreenHeight, GL_DEPTH_BUFFER_BIT, GL_NEAREST);
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
