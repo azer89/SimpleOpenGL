@@ -14,7 +14,8 @@ PipelineDeferredSSAO::PipelineDeferredSSAO(
 	const char* ssaoFragmentShader,
 	const char* blurVertexShader,
 	const char* blurFragmentShader,
-	int kernelSize
+	int kernelSize,
+	int noiseSize
 )
 {
 	Init(
@@ -26,7 +27,8 @@ PipelineDeferredSSAO::PipelineDeferredSSAO(
 		ssaoFragmentShader,
 		blurVertexShader,
 		blurFragmentShader,
-		kernelSize
+		kernelSize,
+		noiseSize
 	);
 }
 
@@ -39,12 +41,10 @@ void PipelineDeferredSSAO::Init(
 	const char* ssaoFragmentShader,
 	const char* blurVertexShader,
 	const char* blurFragmentShader,
-	int kernelSize
+	int kernelSize,
+	int noiseSize
 )
 {
-	noiseSize = 4;
-	int noiseSizeSq = noiseSize * noiseSize;
-
 	shaderGeometry = std::make_unique<Shader>(geomVertexShader, geomFragmentShader);
 	shaderLighting = std::make_unique<Shader>(lightVertexShader, lightFragmentShader);
 	shaderSSAO = std::make_unique<Shader>(ssaoVertexShader, ssaoFragmentShader);
@@ -148,6 +148,7 @@ void PipelineDeferredSSAO::Init(
 
 	// Noise texture
 	std::vector<glm::vec3> ssaoNoise;
+	const int noiseSizeSq = noiseSize * noiseSize;
 	for (unsigned int i = 0; i < noiseSizeSq; ++i)
 	{
 		glm::vec3 noise(
@@ -157,7 +158,7 @@ void PipelineDeferredSSAO::Init(
 	}
 	glGenTextures(1, &noiseTexture);
 	glBindTexture(GL_TEXTURE_2D, noiseTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, 4, 4, 0, GL_RGB, GL_FLOAT, &ssaoNoise[0]);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, noiseSize, noiseSize, 0, GL_RGB, GL_FLOAT, &ssaoNoise[0]);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);

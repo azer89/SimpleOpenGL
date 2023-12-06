@@ -20,7 +20,8 @@ public:
 		const char* ssaoFragmentShader,
 		const char* blurVertexShader,
 		const char* blurFragmentShader,
-		int kernelSize
+		int kernelSize,
+		int noiseSize
 	);
 
 	void StartGeometryPass(const glm::mat4& projection, const glm::mat4& view);
@@ -47,11 +48,6 @@ public:
 		return shaderGeometry.get();
 	}
 
-	int GetNoiseSize()
-	{
-		return noiseSize;
-	}
-
 private:
 	void Init(
 		const char* geomVertexShader,
@@ -62,7 +58,8 @@ private:
 		const char* ssaoFragmentShader,
 		const char* blurVertexShader,
 		const char* blurFragmentShader,
-		int kernelSize
+		int kernelSize,
+		int noiseSize
 	);
 
 	void RenderQuad();
@@ -88,9 +85,6 @@ private:
 	unsigned int ssaoBlurFBO;
 
 	unsigned int noiseTexture;
-
-	// Init parameters
-	int noiseSize;
 };
 
 #endif

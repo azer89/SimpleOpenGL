@@ -12,6 +12,7 @@ int AppSSAO::MainLoop()
 	InitScene();
 	InitLights();
 
+	int noiseSize = 4;
 	int kernelSize = 64;
 	float radius = 0.5f;
 	float bias = 0.025f;
@@ -21,7 +22,8 @@ int AppSSAO::MainLoop()
 		"SSAO//ssao.vertex", "SSAO//lighting.fragment",
 		"SSAO//ssao.vertex", "SSAO//ssao.fragment",
 		"SSAO//ssao.vertex", "SSAO//blur.fragment",
-		kernelSize
+		kernelSize,
+		noiseSize
 	);
 
 	// Game loop
@@ -61,7 +63,6 @@ int AppSSAO::MainLoop()
 
 		ImGui::Begin("SSAO");
 
-		ImGui::SliderInt("Kernel Size", &kernelSize, 4, 1024);
 		ImGui::SliderFloat("Radius", &radius, 0.0f, 10.0f);
 		ImGui::SliderFloat("Bias", &bias, 0.0f, 0.5f);
 
@@ -80,23 +81,23 @@ int AppSSAO::MainLoop()
 
 void AppSSAO::InitScene()
 {
-	sponzaModel = std::make_unique<Model>(AppSettings::ModelFolder + "Sponza//Sponza.gltf");
-	adamModel = std::make_unique<Model>(AppSettings::ModelFolder + "adamHead//adamHead.gltf");
+	//sponzaModel = std::make_unique<Model>(AppSettings::ModelFolder + "Sponza//Sponza.gltf");
+	renderModel = std::make_unique<Model>(AppSettings::ModelFolder + "UnicornGundam//UnicornGundam.gltf");
 }
 
 void AppSSAO::RenderScene(const Shader& shader)
 {
 	glm::mat4 model = glm::mat4(1.0f);
-	model = glm::translate(model, glm::vec3(8.0f, 0.0f, 1.0f));
+	/*model = glm::translate(model, glm::vec3(8.0f, 0.0f, 1.0f));
 	model = glm::scale(model, glm::vec3(2.0f));
 	shader.SetMat4("model", model);
-	sponzaModel->Draw(shader);
+	sponzaModel->Draw(shader);*/
 
 	model = glm::mat4(1.f);
 	model = glm::translate(model, glm::vec3(0.0f, 0.75f, 0.0f));
 	model = glm::scale(model, glm::vec3(0.5f));
 	shader.SetMat4("model", model);
-	adamModel->Draw(shader);
+	renderModel->Draw(shader);
 }
 
 void AppSSAO::InitLights()
