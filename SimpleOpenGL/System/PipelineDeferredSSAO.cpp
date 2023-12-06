@@ -51,38 +51,44 @@ void PipelineDeferredSSAO::Init(
 	shaderBlur = std::make_unique<Shader>(blurVertexShader, blurFragmentShader);
 
 	// G Buffer
-	glGenFramebuffers(1, &gBufferFBO);
-	glBindFramebuffer(GL_FRAMEBUFFER, gBufferFBO);
-
+	glCreateFramebuffers(1, &gBufferFBO);
+	glBindFramebuffer(GL_FRAMEBUFFER, gBufferFBO); // Needed because we are not fully DSA
+	
+	const int numMipmaps = 1;
+	
 	// Position
-	glGenTextures(1, &gPositionTexture);
-	glBindTexture(GL_TEXTURE_2D, gPositionTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, AppSettings::ScreenWidth, AppSettings::ScreenHeight, 0, GL_RGBA, GL_FLOAT, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, gPositionTexture, 0);
-
+	glCreateTextures(GL_TEXTURE_2D, 1, &gPositionTexture);
+	glTextureParameteri(gPositionTexture, GL_TEXTURE_MAX_LEVEL, numMipmaps - 1);
+	glTextureParameteri(gPositionTexture, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTextureParameteri(gPositionTexture, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTextureParameteri(gPositionTexture, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTextureParameteri(gPositionTexture, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTextureStorage2D(gPositionTexture, numMipmaps, GL_RGBA16F, AppSettings::ScreenWidth, AppSettings::ScreenHeight);
+	glNamedFramebufferTexture(gBufferFBO, GL_COLOR_ATTACHMENT0, gPositionTexture, 0);
+	
 	// Normal
-	glGenTextures(1, &gNormalTexture);
-	glBindTexture(GL_TEXTURE_2D, gNormalTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, AppSettings::ScreenWidth, AppSettings::ScreenHeight, 0, GL_RGBA, GL_FLOAT, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, gNormalTexture, 0);
-
+	glCreateTextures(GL_TEXTURE_2D, 1, &gNormalTexture);
+	glTextureParameteri(gNormalTexture, GL_TEXTURE_MAX_LEVEL, numMipmaps - 1);
+	glTextureParameteri(gNormalTexture, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTextureParameteri(gNormalTexture, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTextureParameteri(gNormalTexture, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTextureParameteri(gNormalTexture, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTextureStorage2D(gNormalTexture, numMipmaps, GL_RGBA16F, AppSettings::ScreenWidth, AppSettings::ScreenHeight);
+	glNamedFramebufferTexture(gBufferFBO, GL_COLOR_ATTACHMENT1, gNormalTexture, 0);
+	
 	// Color + Specular
-	glGenTextures(1, &gAlbedoTexture);
-	glBindTexture(GL_TEXTURE_2D, gAlbedoTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, AppSettings::ScreenWidth, AppSettings::ScreenHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, gAlbedoTexture, 0);
-
+	glCreateTextures(GL_TEXTURE_2D, 1, &gAlbedoTexture);
+	glTextureParameteri(gAlbedoTexture, GL_TEXTURE_MAX_LEVEL, numMipmaps - 1);
+	glTextureParameteri(gAlbedoTexture, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTextureParameteri(gAlbedoTexture, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTextureParameteri(gAlbedoTexture, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTextureParameteri(gAlbedoTexture, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTextureStorage2D(gAlbedoTexture, numMipmaps, GL_RGBA8, AppSettings::ScreenWidth, AppSettings::ScreenHeight);
+	glNamedFramebufferTexture(gBufferFBO, GL_COLOR_ATTACHMENT2, gAlbedoTexture, 0);
+	
 	// Attachments
 	unsigned int attachments[3] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
-	glDrawBuffers(3, attachments);
+	glNamedFramebufferDrawBuffers(gBufferFBO, 3, attachments);
 
 	// Depth render buffer
 	glGenRenderbuffers(1, &depthRBO);
