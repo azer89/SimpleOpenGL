@@ -159,17 +159,20 @@ void PipelineDeferredSSAO::Init(
 	{
 		glm::vec3 noise(
 			Utility::RandomNumber<float>() * 2.0 - 1.0,
-			Utility::RandomNumber<float>() * 2.0 - 1.0, 0.0f); // rotate around z-axis (in tangent space)
+			Utility::RandomNumber<float>() * 2.0 - 1.0,
+			0.0f);
 		ssaoNoise.push_back(noise);
 	}
-	glGenTextures(1, &noiseTexture);
-	glBindTexture(GL_TEXTURE_2D, noiseTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, noiseSize, noiseSize, 0, GL_RGB, GL_FLOAT, &ssaoNoise[0]);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
+	glCreateTextures(GL_TEXTURE_2D, 1, &noiseTexture);
+	glTextureParameteri(gAlbedoTexture, noiseTexture, numMipmaps - 1);
+	glTextureParameteri(noiseTexture, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTextureParameteri(noiseTexture, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTextureParameteri(noiseTexture, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTextureParameteri(noiseTexture, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTextureStorage2D(noiseTexture, numMipmaps, GL_RGB32F, noiseSize, noiseSize);
+	glTextureSubImage2D(noiseTexture, 0, 0, 0, noiseSize, noiseSize, GL_RGB, GL_FLOAT, &ssaoNoise[0]);
+	
 	// Shader configuration
 	shaderLighting->Use();
 	shaderLighting->SetInt("gPosition", 0);
