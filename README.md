@@ -43,8 +43,10 @@ Screen Space Ambient Occlusion
 Shadow mapping
 
 
+https://github.com/azer89/SimpleOpenGL/assets/790432/83678402-3b19-46b1-b73b-80cc48ddc9c9
 
-https://github.com/azer89/SimpleOpenGL/assets/790432/b88c1e4e-9151-4f4a-be1a-7a4b7ed70461
+
+
 
 
 
