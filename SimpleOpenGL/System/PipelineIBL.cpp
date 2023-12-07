@@ -48,13 +48,13 @@ void PipelineIBL::Init(
 	// PBR setup framebuffer
 	unsigned int captureFBO;
 	unsigned int captureRBO;
-	glGenFramebuffers(1, &captureFBO);
-	glGenRenderbuffers(1, &captureRBO);
 
+	glCreateFramebuffers(1, &captureFBO);
 	glBindFramebuffer(GL_FRAMEBUFFER, captureFBO);
+	glCreateRenderbuffers(1, &captureRBO);
 	glBindRenderbuffer(GL_RENDERBUFFER, captureRBO);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, cubeSize, cubeSize);
-	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, captureRBO);
+	glNamedRenderbufferStorage(captureRBO, GL_DEPTH_COMPONENT24, cubeSize, cubeSize);
+	glNamedFramebufferRenderbuffer(captureRBO, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, captureRBO);
 
 	// PBR load the HDR environment map
 	Texture hdrTexture;
@@ -238,12 +238,7 @@ void PipelineIBL::SetLights(const std::vector<Light>& lights)
 void PipelineIBL::BindTextures()
 {
 	// Bind pre-computed IBL data
-	glActiveTexture(GL_TEXTURE0 + textureIndexGap);
-	glBindTexture(GL_TEXTURE_CUBE_MAP, irradianceMap);
-
-	glActiveTexture(GL_TEXTURE0 + textureIndexGap + 1);
-	glBindTexture(GL_TEXTURE_CUBE_MAP, prefilterMap);
-
-	glActiveTexture(GL_TEXTURE0 + textureIndexGap + 2);
-	glBindTexture(GL_TEXTURE_2D, brdfLUTTexture);
+	glBindTextureUnit(textureIndexGap, irradianceMap);
+	glBindTextureUnit(textureIndexGap + 1, prefilterMap);
+	glBindTextureUnit(textureIndexGap + 2, brdfLUTTexture);
 }
