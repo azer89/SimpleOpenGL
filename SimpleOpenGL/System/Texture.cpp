@@ -68,10 +68,6 @@ Texture::Texture(TextureType texType, const std::string& texName) :
 
 Texture::~Texture()
 {
-	if (id)
-	{
-		glDeleteTextures(1, &id);
-	}
 }
 
 unsigned int Texture::GetID()
