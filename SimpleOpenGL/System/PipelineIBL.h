@@ -16,7 +16,9 @@ public:
 	PipelineIBL(
 		const std::string& pbrShaderFile,
 		const std::string& hdrFile,
-		float cubeSize, 
+		int environmentCubeSize, 
+		int prefilterCubeSize,
+		int irradianceCubeSize,
 		int _textureIndexGap);
 
 	void SetCameraData(
@@ -31,16 +33,29 @@ public:
 		return pbrShader.get();
 	}
 
-	unsigned int GetEnvironmentCubemap()
+	unsigned int GetEnvironmentCubemap() const
 	{
 		return envCubemap;
+	}
+
+	unsigned int GetIrradianceCubemap() const
+	{
+		return irradianceMap;
+	}
+
+	unsigned int GetPrefilterCubemap() const
+	{
+		return prefilterMap;
 	}
 
 private:
 	void Init(
 		const std::string& pbrShaderFile,
 		const std::string& hdrFile,
-		float cubeSize);
+		int environmentCubeSize,
+		int prefilterCubeSize,
+		int irradianceCubeSize
+		);
 
 private:
 	int textureIndexGap;

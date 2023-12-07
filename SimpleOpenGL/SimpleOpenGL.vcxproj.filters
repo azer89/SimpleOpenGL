@@ -414,5 +414,11 @@
     <None Include="..\Shaders\IBL\pbr_include.fragment">
       <Filter>Resource Files\Shaders\IBL</Filter>
     </None>
+    <None Include="..\Shaders\IBL\simple_cube.fragment">
+      <Filter>Resource Files\Shaders\IBL</Filter>
+    </None>
+    <None Include="..\Shaders\IBL\simple_cube.vertex">
+      <Filter>Resource Files\Shaders\IBL</Filter>
+    </None>
   </ItemGroup>
 </Project>

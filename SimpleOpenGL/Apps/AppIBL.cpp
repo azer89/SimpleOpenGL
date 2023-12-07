@@ -16,8 +16,12 @@ int AppIBL::MainLoop()
 		"IBL//pbr.fragment",
 		"hdr//the_sky_is_on_fire_4k.hdr",
 		1024,
+		128,
+		32,
 		6
 	);
+
+	InitDebugCubes();
 
 	Cube cube;
 
@@ -89,6 +93,9 @@ int AppIBL::MainLoop()
 
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());*/
+
+		// Debugging
+		RenderDebugCubes(cube, ibl);
 			
 		SwapBuffers();
 	}
@@ -96,4 +103,38 @@ int AppIBL::MainLoop()
 	Terminate();
 
 	return 0;
+}
+
+void AppIBL::InitDebugCubes()
+{
+	simpleCubeShader = std::make_unique<Shader>("IBL//simple_cube.vertex", "IBL//simple_cube.fragment");
+	simpleCubeShader->SetInt("skybox", 0);
+}
+
+void AppIBL::RenderDebugCubes(const Cube& cube, const PipelineIBL& ibl)
+{
+	simpleCubeShader->Use();
+	simpleCubeShader->SetMat4("projection", camera->GetProjectionMatrix());
+	simpleCubeShader->SetMat4("view", camera->GetViewMatrix());
+
+	glm::mat4 model(1.0f);
+	model = glm::scale(model, glm::vec3(0.2));
+	model = glm::translate(model, glm::vec3(-4.f, -8.f, 0.f));
+	simpleCubeShader->SetMat4("model", model);
+	glBindTextureUnit(0, ibl.GetEnvironmentCubemap());
+	cube.Draw();
+
+	model = glm::mat4(1.0f);
+	model = glm::scale(model, glm::vec3(0.2));
+	model = glm::translate(model, glm::vec3(0.f, -8.f, 0.f));
+	simpleCubeShader->SetMat4("model", model);
+	glBindTextureUnit(0, ibl.GetIrradianceCubemap());
+	cube.Draw();
+
+	model = glm::mat4(1.0f);
+	model = glm::scale(model, glm::vec3(0.2));
+	model = glm::translate(model, glm::vec3(4.f, -8.f, 0.f));
+	simpleCubeShader->SetMat4("model", model);
+	glBindTextureUnit(0, ibl.GetPrefilterCubemap());
+	cube.Draw();
 }

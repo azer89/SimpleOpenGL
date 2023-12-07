@@ -15,7 +15,7 @@ protected:
 	unsigned int VBO;
 
 public:
-	virtual void Draw() = 0;
+	virtual void Draw() const = 0;
 	unsigned int GetVAO()
 	{
 		return VAO;
@@ -27,7 +27,7 @@ class Sphere : Shape
 public:
 	Sphere();
 	~Sphere();
-	void Draw() override;
+	void Draw() const override;
 
 private:
 	unsigned int indexCount;
@@ -38,7 +38,7 @@ class Cube : Shape
 public:
 	Cube();
 	~Cube();
-	void Draw() override;
+	void Draw() const override;
 };
 
 class Quad : Shape
@@ -47,7 +47,7 @@ public:
 	Quad();
 	Quad(float rotation, glm::vec3 rotationAxis);
 	~Quad();
-	void Draw() override;
+	void Draw() const override;
 
 private:
 	std::vector<float> GetQuadData();

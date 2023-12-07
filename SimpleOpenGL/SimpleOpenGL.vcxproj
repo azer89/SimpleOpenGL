@@ -240,6 +240,8 @@
     <None Include="..\Shaders\IBL\pbr_include.fragment" />
     <None Include="..\Shaders\IBL\pbr_sketchfab.fragment" />
     <None Include="..\Shaders\IBL\prefilter.fragment" />
+    <None Include="..\Shaders\IBL\simple_cube.fragment" />
+    <None Include="..\Shaders\IBL\simple_cube.vertex" />
     <None Include="..\Shaders\Misc\camera.fragment" />
     <None Include="..\Shaders\Misc\camera.vertex" />
     <None Include="..\Shaders\Misc\colored_triangle.fragment" />

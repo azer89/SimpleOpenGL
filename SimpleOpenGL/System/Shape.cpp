@@ -94,7 +94,7 @@ Sphere::~Sphere()
 	glDeleteVertexArrays(1, &VAO);
 	glDeleteBuffers(1, &VBO);
 }
-void Sphere::Draw()
+void Sphere::Draw() const
 {
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLE_STRIP, indexCount, GL_UNSIGNED_INT, 0);
@@ -169,7 +169,7 @@ Cube::~Cube()
 	glDeleteVertexArrays(1, &VAO);
 	glDeleteBuffers(1, &VBO);
 }
-void Cube::Draw()
+void Cube::Draw() const
 {
 	glBindVertexArray(VAO);
 	glDrawArrays(GL_TRIANGLES, 0, 36);
@@ -211,7 +211,7 @@ Quad::~Quad()
 	glDeleteVertexArrays(1, &VAO);
 	glDeleteBuffers(1, &VBO);
 }
-void Quad::Draw()
+void Quad::Draw() const
 {
 	glBindVertexArray(VAO);
 	glDrawArrays(GL_TRIANGLES, 0, 6);

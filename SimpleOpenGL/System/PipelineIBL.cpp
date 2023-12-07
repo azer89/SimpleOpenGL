@@ -9,17 +9,22 @@
 PipelineIBL::PipelineIBL(
 	const std::string& pbrShaderFile,
 	const std::string& hdrFile,
-	float cubeSize, 
+	int environmentCubeSize, 
+	int prefilterCubeSize,
+	int irradianceCubeSize,
 	int _textureIndexGap) :
 	textureIndexGap(_textureIndexGap)
 {
-	Init(pbrShaderFile, hdrFile, cubeSize);
+	Init(pbrShaderFile, hdrFile, environmentCubeSize, prefilterCubeSize, irradianceCubeSize);
 }
 
 void PipelineIBL::Init(
 	const std::string& pbrShaderFile,
 	const std::string& hdrFile,
-	float cubeSize)
+	int environmentCubeSize, // 1024
+	int prefilterCubeSize, // 128
+	int irradianceCubeSize // 32
+)
 {
 	// Set depth function to less than AND equal for skybox depth trick
 	glDepthFunc(GL_LEQUAL);
@@ -53,7 +58,7 @@ void PipelineIBL::Init(
 	glBindFramebuffer(GL_FRAMEBUFFER, captureFBO);
 	glCreateRenderbuffers(1, &captureRBO);
 	glBindRenderbuffer(GL_RENDERBUFFER, captureRBO);
-	glNamedRenderbufferStorage(captureRBO, GL_DEPTH_COMPONENT24, cubeSize, cubeSize);
+	glNamedRenderbufferStorage(captureRBO, GL_DEPTH_COMPONENT24, environmentCubeSize, environmentCubeSize);
 	glNamedFramebufferRenderbuffer(captureRBO, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, captureRBO);
 
 	// PBR load the HDR environment map
@@ -77,7 +82,7 @@ void PipelineIBL::Init(
 	glBindTexture(GL_TEXTURE_CUBE_MAP, envCubemap);
 	for (unsigned int i = 0; i < captureViews.size(); ++i)
 	{
-		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB16F, cubeSize, cubeSize, 0, GL_RGB, GL_FLOAT, nullptr);
+		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB16F, environmentCubeSize, environmentCubeSize, 0, GL_RGB, GL_FLOAT, nullptr);
 	}
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
@@ -91,7 +96,7 @@ void PipelineIBL::Init(
 	equirectangularToCubemapShader.SetMat4("projection", captureProjection);
 	hdrTexture.BindDSA(0);
 
-	glViewport(0, 0, cubeSize, cubeSize); // Don't forget to configure the viewport to the capture dimensions.
+	glViewport(0, 0, environmentCubeSize, environmentCubeSize); // Don't forget to configure the viewport to the capture dimensions.
 	glBindFramebuffer(GL_FRAMEBUFFER, captureFBO);
 	for (unsigned int i = 0; i < captureViews.size(); ++i)
 	{
@@ -112,7 +117,7 @@ void PipelineIBL::Init(
 	glBindTexture(GL_TEXTURE_CUBE_MAP, irradianceMap);
 	for (unsigned int i = 0; i < captureViews.size(); ++i)
 	{
-		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB16F, 32, 32, 0, GL_RGB, GL_FLOAT, nullptr);
+		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB16F, irradianceCubeSize, irradianceCubeSize, 0, GL_RGB, GL_FLOAT, nullptr);
 	}
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
@@ -122,7 +127,7 @@ void PipelineIBL::Init(
 
 	glBindFramebuffer(GL_FRAMEBUFFER, captureFBO);
 	glBindRenderbuffer(GL_RENDERBUFFER, captureRBO);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, 32, 32);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, irradianceCubeSize, irradianceCubeSize);
 
 	// PBR solve diffuse integral by convolution to create an irradiance (cube)map
 	irradianceShader.Use();
@@ -131,7 +136,7 @@ void PipelineIBL::Init(
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, envCubemap);
 
-	glViewport(0, 0, 32, 32); // don't forget to configure the viewport to the capture dimensions.
+	glViewport(0, 0, irradianceCubeSize, irradianceCubeSize); // don't forget to configure the viewport to the capture dimensions.
 	glBindFramebuffer(GL_FRAMEBUFFER, captureFBO);
 	for (unsigned int i = 0; i < captureViews.size(); ++i)
 	{
@@ -148,7 +153,7 @@ void PipelineIBL::Init(
 	glBindTexture(GL_TEXTURE_CUBE_MAP, prefilterMap);
 	for (unsigned int i = 0; i < captureViews.size(); ++i)
 	{
-		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB16F, 128, 128, 0, GL_RGB, GL_FLOAT, nullptr);
+		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB16F, prefilterCubeSize, prefilterCubeSize, 0, GL_RGB, GL_FLOAT, nullptr);
 	}
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
@@ -170,8 +175,8 @@ void PipelineIBL::Init(
 	for (unsigned int mip = 0; mip < maxMipLevels; ++mip)
 	{
 		// Resize framebuffer according to mip-level size.
-		unsigned int mipWidth = static_cast<unsigned int>(128 * std::pow(0.5, mip));
-		unsigned int mipHeight = static_cast<unsigned int>(128 * std::pow(0.5, mip));
+		unsigned int mipWidth = static_cast<unsigned int>(prefilterCubeSize * std::pow(0.5, mip));
+		unsigned int mipHeight = static_cast<unsigned int>(prefilterCubeSize * std::pow(0.5, mip));
 		glBindRenderbuffer(GL_RENDERBUFFER, captureRBO);
 		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, mipWidth, mipHeight);
 		glViewport(0, 0, mipWidth, mipHeight);
@@ -182,9 +187,7 @@ void PipelineIBL::Init(
 		{
 			prefilterShader.SetMat4("view", captureViews[i]);
 			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, prefilterMap, mip);
-
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 			cube.Draw();
 		}
 	}
@@ -195,7 +198,7 @@ void PipelineIBL::Init(
 
 	// Pre-allocate enough memory for the LUT texture.
 	glBindTexture(GL_TEXTURE_2D, brdfLUTTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RG16F, cubeSize, cubeSize, 0, GL_RG, GL_FLOAT, 0);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RG16F, environmentCubeSize, environmentCubeSize, 0, GL_RG, GL_FLOAT, 0);
 	// Be sure to set wrapping mode to GL_CLAMP_TO_EDGE
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
@@ -205,10 +208,10 @@ void PipelineIBL::Init(
 	// Then re-configure capture framebuffer object and render screen-space quad with BRDF shader.
 	glBindFramebuffer(GL_FRAMEBUFFER, captureFBO);
 	glBindRenderbuffer(GL_RENDERBUFFER, captureRBO);
-	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, cubeSize, cubeSize);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, environmentCubeSize, environmentCubeSize);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, brdfLUTTexture, 0);
 
-	glViewport(0, 0, cubeSize, cubeSize);
+	glViewport(0, 0, environmentCubeSize, environmentCubeSize);
 	brdfShader.Use();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
