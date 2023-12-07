@@ -59,13 +59,6 @@ void PipelineDeferred::Init(
 	glBindFramebuffer(GL_FRAMEBUFFER, gBuffer);
 
 	// Position
-	/*glGenTextures(1, &gPosition);
-	glBindTexture(GL_TEXTURE_2D, gPosition);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, AppSettings::ScreenWidth, AppSettings::ScreenHeight, 0, GL_RGBA, GL_FLOAT, nullptr);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, gPosition, 0);*/
-	
 	glCreateTextures(GL_TEXTURE_2D, 1, &gPosition);
 	glTextureParameteri(gPosition, GL_TEXTURE_MAX_LEVEL, 0);
 	glTextureParameteri(gPosition, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -74,13 +67,6 @@ void PipelineDeferred::Init(
 	glNamedFramebufferTexture(gBuffer, GL_COLOR_ATTACHMENT0, gPosition, 0);
 	
 	// Normal
-	/*glGenTextures(1, &gNormal);
-	glBindTexture(GL_TEXTURE_2D, gNormal);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, AppSettings::ScreenWidth, AppSettings::ScreenHeight, 0, GL_RGBA, GL_FLOAT, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, gNormal, 0);*/ 
-	
 	glCreateTextures(GL_TEXTURE_2D, 1, &gNormal);
 	glTextureParameteri(gNormal, GL_TEXTURE_MAX_LEVEL, 0);
 	glTextureParameteri(gNormal, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -89,13 +75,6 @@ void PipelineDeferred::Init(
 	glNamedFramebufferTexture(gBuffer, GL_COLOR_ATTACHMENT1, gNormal, 0);
 	
 	// Color + Specular
-	/*glGenTextures(1, &gAlbedoSpec);
-	glBindTexture(GL_TEXTURE_2D, gAlbedoSpec);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, AppSettings::ScreenWidth, AppSettings::ScreenHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, gAlbedoSpec, 0);*/ 
-	
 	glCreateTextures(GL_TEXTURE_2D, 1, &gAlbedoSpec);
 	glTextureParameteri(gAlbedoSpec, GL_TEXTURE_MAX_LEVEL, 0);
 	glTextureParameteri(gAlbedoSpec, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
