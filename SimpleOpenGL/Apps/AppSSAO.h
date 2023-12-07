@@ -24,8 +24,6 @@ private:
 	// Scene
 	std::unique_ptr<Model> sponzaModel;
 	std::unique_ptr<Model> renderModel;
-	std::unique_ptr<Texture> grassTexture;
-	unsigned int planeVAO = 0;
 
 	// Lights
 	std::unique_ptr<Shader> lightSphereShader;

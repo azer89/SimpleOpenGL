@@ -141,6 +141,9 @@
     <ClCompile Include="System\PipelineIBL.cpp">
       <Filter>Source Files\System</Filter>
     </ClCompile>
+    <ClCompile Include="Apps\AppDeferredSSAO.cpp">
+      <Filter>Source Files\App</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Settings\main.xml">
@@ -231,6 +234,9 @@
     </ClInclude>
     <ClInclude Include="System\PipelineIBL.h">
       <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Apps\AppDeferredSSAO.h">
+      <Filter>Header Files\Apps</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

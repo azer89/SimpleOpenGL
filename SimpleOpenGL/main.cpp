@@ -6,6 +6,7 @@
 #include "AppSkyboxWithCube.h"
 #include "AppDeferred.h"
 #include "AppDeferredSponza.h"
+#include "AppDeferredSSAO.h"
 #include "AppGeom.h"
 #include "AppSSAO.h"
 #include "AppPBRTextured.h"
@@ -14,7 +15,7 @@
 
 int main()
 {
-	AppSSAO app;
+	AppDeferredSSAO app;
 	auto returnValue = app.MainLoop();
 	return returnValue;
 }
