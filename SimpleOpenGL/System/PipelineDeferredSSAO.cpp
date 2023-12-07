@@ -165,7 +165,7 @@ void PipelineDeferredSSAO::Init(
 	}
 
 	glCreateTextures(GL_TEXTURE_2D, 1, &noiseTexture);
-	glTextureParameteri(gAlbedoTexture, noiseTexture, numMipmaps - 1);
+	glTextureParameteri(noiseTexture, GL_TEXTURE_MAX_LEVEL, numMipmaps - 1);
 	glTextureParameteri(noiseTexture, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTextureParameteri(noiseTexture, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTextureParameteri(noiseTexture, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -249,12 +249,9 @@ void PipelineDeferredSSAO::StartSSAOPass
 		shaderSSAO->SetVec3("samples[" + std::to_string(i) + "]", ssaoKernel[i]);
 	}
 	shaderSSAO->SetMat4("projection", projection);
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, gPositionTexture);
-	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, gNormalTexture);
-	glActiveTexture(GL_TEXTURE2);
-	glBindTexture(GL_TEXTURE_2D, noiseTexture);
+	glBindTextureUnit(0, gPositionTexture);
+	glBindTextureUnit(1, gNormalTexture);
+	glBindTextureUnit(2, noiseTexture);
 	RenderQuad();
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
@@ -264,8 +261,7 @@ void PipelineDeferredSSAO::StartBlurPass()
 	glBindFramebuffer(GL_FRAMEBUFFER, ssaoBlurFBO);
 	glClear(GL_COLOR_BUFFER_BIT);
 	shaderBlur->Use();
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, ssaoColorTexture);
+	glBindTextureUnit(0, ssaoColorTexture);
 	RenderQuad();
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
@@ -289,14 +285,10 @@ void PipelineDeferredSSAO::StartLightingPass(const std::vector<Light>& lights,
 	shaderLighting->SetFloat("linear", linear);
 	shaderLighting->SetFloat("quadratic", quadratic);
 	shaderLighting->SetVec3("viewPos", cameraPosition);
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, gPositionTexture);
-	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, gNormalTexture);
-	glActiveTexture(GL_TEXTURE2);
-	glBindTexture(GL_TEXTURE_2D, gAlbedoTexture);
-	glActiveTexture(GL_TEXTURE3); // add extra SSAO texture to lighting pass
-	glBindTexture(GL_TEXTURE_2D, ssaoBlurTexture);
+	glBindTextureUnit(0, gPositionTexture);
+	glBindTextureUnit(1, gNormalTexture);
+	glBindTextureUnit(2, gAlbedoTexture);
+	glBindTextureUnit(3, ssaoBlurTexture);
 	RenderQuad();
 }
 

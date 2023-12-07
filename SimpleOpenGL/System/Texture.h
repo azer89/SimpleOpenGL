@@ -21,6 +21,7 @@ public:
 	Texture();
 	Texture(const std::string& fullFilePath);
 	Texture(TextureType textureType, const std::string& textureName);
+	~Texture();
 	void CreateFromImageFile(const std::string& fullFilePath, bool flipVertical = false);
 	void CreateFromHDRFile(const std::string& fullFilePath);
 	void CreateDepthMap(unsigned int width, unsigned int height);
