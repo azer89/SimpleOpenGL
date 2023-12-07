@@ -66,13 +66,9 @@ int AppShadowMapping::MainLoop()
 	while (!GLFWWindowShouldClose())
 	{
 		ProcessLoop(
-			glm::vec4(0.2f, 0.3f, 0.3f, 1.0f),
+			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),
 			GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT
 		);
-
-		glm::mat4 model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, -0.5f, 0.0f));
-		model = glm::scale(model, glm::vec3(0.02f));
 
 		// Calculate light position
 		if (moveLight)
@@ -116,10 +112,13 @@ int AppShadowMapping::MainLoop()
 		
 		planeTexture.BindDSA(0);
 		depthTexture.BindDSA(1);
+		glm::mat4 model = glm::mat4(1.0f);
 		RenderPlane(mainShader);
-		
+
+		model = glm::translate(model, glm::vec3(0.0f, -0.5f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.02f));
 		mainShader.SetMat4("model", model);
-		depthTexture.BindDSA(1);
+		//depthTexture.BindDSA(1);
 		RenderModel(mainShader);
 
 		// Debug light
@@ -134,8 +133,8 @@ int AppShadowMapping::MainLoop()
 
 		// Debug depth map
 		/*debugShader.Use();
-		debugShader.SetFloat("near_plane", near_plane);
-		debugShader.SetFloat("far_plane", far_plane);
+		debugShader.SetFloat("near_plane", shadowNearPlane);
+		debugShader.SetFloat("far_plane", shadowFarPlane);
 		depthTexture.BindDSA(0);
 		RenderQuad();*/
 
