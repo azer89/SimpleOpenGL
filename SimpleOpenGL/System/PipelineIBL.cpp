@@ -133,8 +133,7 @@ void PipelineIBL::Init(
 	irradianceShader.Use();
 	irradianceShader.SetInt("environmentMap", 0);
 	irradianceShader.SetMat4("projection", captureProjection);
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_CUBE_MAP, envCubemap);
+	glBindTextureUnit(0, envCubemap);
 
 	glViewport(0, 0, irradianceCubeSize, irradianceCubeSize); // don't forget to configure the viewport to the capture dimensions.
 	glBindFramebuffer(GL_FRAMEBUFFER, captureFBO);
@@ -167,8 +166,7 @@ void PipelineIBL::Init(
 	prefilterShader.Use();
 	prefilterShader.SetInt("environmentMap", 0);
 	prefilterShader.SetMat4("projection", captureProjection);
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_CUBE_MAP, envCubemap);
+	glBindTextureUnit(0, envCubemap);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, captureFBO);
 	constexpr unsigned int maxMipLevels = 5;
