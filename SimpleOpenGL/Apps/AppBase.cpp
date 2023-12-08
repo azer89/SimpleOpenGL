@@ -4,7 +4,7 @@
 
 #include <iostream>
 
-void APIENTRY glDebugOutput(GLenum source,
+void APIENTRY GLDebugOutput(GLenum source,
 	GLenum type,
 	unsigned int id,
 	GLenum severity,
@@ -108,14 +108,14 @@ void AppBase::InitGlad()
 		throw std::runtime_error("Failed to initialize GLAD");
 	}
 
-	// enable OpenGL debug context if context allows for debug context
+	// Enable OpenGL debug context if context allows for debug context
 	int flags;
 	glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
 	if (flags & GL_CONTEXT_FLAG_DEBUG_BIT)
 	{
 		glEnable(GL_DEBUG_OUTPUT);
 		glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS); // makes sure errors are displayed synchronously
-		glDebugMessageCallback(glDebugOutput, nullptr);
+		glDebugMessageCallback(GLDebugOutput, nullptr);
 		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
 	}
 
@@ -292,7 +292,7 @@ void AppBase::ProcessInput()
 	return 0;
 }*/
 
-void APIENTRY glDebugOutput(GLenum source,
+void APIENTRY GLDebugOutput(GLenum source,
 	GLenum type,
 	unsigned int id,
 	GLenum severity,
