@@ -27,9 +27,9 @@ namespace Utility
 		return a + f * (b - a);
 	}
 
-	int NumMipmap(int width, int height)
+	inline int NumMipmap(int width, int height)
 	{
-		return floor(log2(std::max(width, height))) + 1;
+		return static_cast<int>(floor(log2(std::max(width, height)))) + 1;
 	}
 }
 

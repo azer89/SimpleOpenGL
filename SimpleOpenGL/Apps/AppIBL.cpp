@@ -79,8 +79,6 @@ int AppIBL::MainLoop()
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_CUBE_MAP, ibl.GetEnvironmentCubemap());
 		cube.Draw();
-		//brdfShader.Use();
-		//renderQuad();
 
 		// Imgui
 		/*ImGui_ImplOpenGL3_NewFrame();

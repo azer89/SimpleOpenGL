@@ -1,6 +1,7 @@
 #include "PipelineIBL.h"
 #include "Texture.h"
 #include "AppSettings.h"
+#include "Utility.h"
 
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
@@ -78,17 +79,14 @@ void PipelineIBL::Init(
 	};
 
 	// PBR setup cubemap to render to and attach to framebuffer
-	glGenTextures(1, &envCubemap);
-	glBindTexture(GL_TEXTURE_CUBE_MAP, envCubemap);
-	for (unsigned int i = 0; i < captureViews.size(); ++i)
-	{
-		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB16F, environmentCubeSize, environmentCubeSize, 0, GL_RGB, GL_FLOAT, nullptr);
-	}
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	const int envMipmapLevel = Utility::NumMipmap(environmentCubeSize, environmentCubeSize);
+	glCreateTextures(GL_TEXTURE_CUBE_MAP, 1, &envCubemap);
+	glTextureStorage2D(envCubemap, envMipmapLevel, GL_RGB16F, environmentCubeSize, environmentCubeSize);
+	glTextureParameteri(envCubemap, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTextureParameteri(envCubemap, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTextureParameteri(envCubemap, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+	glTextureParameteri(envCubemap, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glTextureParameteri(envCubemap, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	// PBR convert HDR equirectangular environment map to cubemap equivalent
 	equirectangularToCubemapShader.Use();
@@ -109,21 +107,17 @@ void PipelineIBL::Init(
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	// Then let OpenGL generate mipmaps from first mip face (combatting visible dots artifact)
-	glBindTexture(GL_TEXTURE_CUBE_MAP, envCubemap);
-	glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
+	glGenerateTextureMipmap(envCubemap);
 
 	// PBR create an irradiance cubemap, and re-scale capture FBO to irradiance scale
-	glGenTextures(1, &irradianceMap);
-	glBindTexture(GL_TEXTURE_CUBE_MAP, irradianceMap);
-	for (unsigned int i = 0; i < captureViews.size(); ++i)
-	{
-		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB16F, irradianceCubeSize, irradianceCubeSize, 0, GL_RGB, GL_FLOAT, nullptr);
-	}
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	const int irradianceMipmapLevel = Utility::NumMipmap(irradianceCubeSize, irradianceCubeSize); // Is mipmap needed?
+	glCreateTextures(GL_TEXTURE_CUBE_MAP, 1, &irradianceMap);
+	glTextureStorage2D(irradianceMap, irradianceMipmapLevel, GL_RGB16F, irradianceCubeSize, irradianceCubeSize);
+	glTextureParameteri(irradianceMap, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTextureParameteri(irradianceMap, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTextureParameteri(irradianceMap, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+	glTextureParameteri(irradianceMap, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTextureParameteri(irradianceMap, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, captureFBO);
 	glBindRenderbuffer(GL_RENDERBUFFER, captureRBO);
@@ -148,19 +142,15 @@ void PipelineIBL::Init(
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	// PBR create a pre-filter cubemap, and re-scale capture FBO to pre-filter scale
-	glGenTextures(1, &prefilterMap);
-	glBindTexture(GL_TEXTURE_CUBE_MAP, prefilterMap);
-	for (unsigned int i = 0; i < captureViews.size(); ++i)
-	{
-		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB16F, prefilterCubeSize, prefilterCubeSize, 0, GL_RGB, GL_FLOAT, nullptr);
-	}
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR); // be sure to set minification filter to mip_linear 
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	// Generate mipmaps for the cubemap so OpenGL automatically allocates the required memory.
-	glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
+	const int prefilterMipmapLevel = Utility::NumMipmap(prefilterCubeSize, prefilterCubeSize); 
+	glCreateTextures(GL_TEXTURE_CUBE_MAP, 1, &prefilterMap);
+	glTextureStorage2D(prefilterMap, prefilterMipmapLevel, GL_RGB16F, prefilterCubeSize, prefilterCubeSize);
+	glTextureParameteri(prefilterMap, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTextureParameteri(prefilterMap, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTextureParameteri(prefilterMap, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+	glTextureParameteri(prefilterMap, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR); // Be sure to set minification filter to mip_linear 
+	glTextureParameteri(prefilterMap, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glGenerateTextureMipmap(prefilterMap);
 
 	// PBR Run a quasi monte-carlo simulation on the environment lighting to create a prefilter (cube)map
 	prefilterShader.Use();
@@ -191,18 +181,14 @@ void PipelineIBL::Init(
 	}
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-	// PBR Generate a 2D LUT from the BRDF equations used
-	glGenTextures(1, &brdfLUTTexture);
-
-	// Pre-allocate enough memory for the LUT texture.
-	glBindTexture(GL_TEXTURE_2D, brdfLUTTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RG16F, environmentCubeSize, environmentCubeSize, 0, GL_RG, GL_FLOAT, 0);
-	// Be sure to set wrapping mode to GL_CLAMP_TO_EDGE
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
+	// PBR Generate a 2D LUT from the BRDF equations
+	glCreateTextures(GL_TEXTURE_2D, 1, &brdfLUTTexture);
+	glTextureStorage2D(brdfLUTTexture, 1, GL_RGB16F, environmentCubeSize, environmentCubeSize);
+	glTextureParameteri(brdfLUTTexture, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTextureParameteri(brdfLUTTexture, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTextureParameteri(brdfLUTTexture, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTextureParameteri(brdfLUTTexture, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	
 	// Then re-configure capture framebuffer object and render screen-space quad with BRDF shader.
 	glBindFramebuffer(GL_FRAMEBUFFER, captureFBO);
 	glBindRenderbuffer(GL_RENDERBUFFER, captureRBO);
