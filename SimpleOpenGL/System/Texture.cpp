@@ -1,4 +1,5 @@
 #include "Texture.h"
+#include "Utility.h"
 
 #include "glad/glad.h"
 
@@ -10,43 +11,6 @@
 #include "stb_image_write.h"
 
 #include <iostream>
-
-int GetNumMipMapLevels2D(int w, int h)
-{
-	int levels = 1;
-	while ((w | h) >> levels)
-	{
-		levels += 1;
-	}
-	return levels;
-}
-
-/// Draw a checkerboard on a pre-allocated square RGB image.
-uint8_t* genDefaultCheckerboardImage(int* width, int* height)
-{
-	const int w = 128;
-	const int h = 128;
-
-	uint8_t* imgData = (uint8_t*)malloc(w * h * 3); // stbi_load() uses malloc(), so this is safe
-
-	assert(imgData && w > 0 && h > 0);
-	assert(w == h);
-
-	if (!imgData || w <= 0 || h <= 0) return nullptr;
-	if (w != h) return nullptr;
-
-	for (int i = 0; i < w * h; i++)
-	{
-		const int row = i / w;
-		const int col = i % w;
-		imgData[i * 3 + 0] = imgData[i * 3 + 1] = imgData[i * 3 + 2] = 0xFF * ((row + col) % 2);
-	}
-
-	if (width) *width = w;
-	if (height) *height = h;
-
-	return imgData;
-}
 
 Texture::Texture() :
 	id (GL_INVALID_VALUE),
@@ -111,7 +75,7 @@ void Texture::CreateFromImageFile(const std::string& fullFilePath, bool flipVert
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);*/
 
 		GLenum clamp = GL_REPEAT;
-		int numMipmaps = GetNumMipMapLevels2D(width, height);
+		int numMipmaps = Utility::NumMipmap(width, height);
 		int maxAnisotropy = 16;
 		
 		// DSA
@@ -120,6 +84,9 @@ void Texture::CreateFromImageFile(const std::string& fullFilePath, bool flipVert
 		glTextureParameteri(id, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTextureParameteri(id, GL_TEXTURE_WRAP_S, clamp);
 		glTextureParameteri(id, GL_TEXTURE_WRAP_T, clamp);
+		glTextureParameteri(id, GL_TEXTURE_MAX_LEVEL, numMipmaps - 1);
+		glTextureParameteri(id, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glTextureParameteri(id, GL_TEXTURE_MAX_ANISOTROPY, maxAnisotropy);
 
 		// Allocate the memory and set the format
 		glTextureStorage2D(id, numMipmaps, GL_RGBA8, width, height);
@@ -128,10 +95,6 @@ void Texture::CreateFromImageFile(const std::string& fullFilePath, bool flipVert
 
 		// Mipmap
 		glGenerateTextureMipmap(id);
-		glTextureParameteri(id, GL_TEXTURE_MAX_LEVEL, numMipmaps - 1);
-		glTextureParameteri(id, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-		
-		glTextureParameteri(id, GL_TEXTURE_MAX_ANISOTROPY, maxAnisotropy);
 	}
 	else
 	{
@@ -160,18 +123,19 @@ void Texture::CreateFromHDRFile(const std::string& fullFilePath)
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);*/
 
 		// DSA
-		const int numMipmaps = 1;
+		const int numMipmaps = Utility::NumMipmap(width, height);;
 
 		glCreateTextures(GL_TEXTURE_2D, 1, &id);
-		
+		glTextureStorage2D(id, numMipmaps, GL_RGB32F, width, height);
+		glTextureSubImage2D(id, 0, 0, 0, width, height, GL_RGB, GL_FLOAT, data);
+
 		glTextureParameteri(id, GL_TEXTURE_MAX_LEVEL, numMipmaps - 1);
 		glTextureParameteri(id, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		glTextureParameteri(id, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 		glTextureParameteri(id, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTextureParameteri(id, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		
-		glTextureStorage2D(id, numMipmaps, GL_RGB32F, width, height);
-		glTextureSubImage2D(id, 0, 0, 0, width, height, GL_RGB, GL_FLOAT, data);
+
+		glGenerateTextureMipmap(id);
 	}
 	else
 	{
