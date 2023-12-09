@@ -120,9 +120,6 @@
     <ClCompile Include="Apps\AppGeom.cpp">
       <Filter>Source Files\App</Filter>
     </ClCompile>
-    <ClCompile Include="Apps\AppSettings.cpp">
-      <Filter>Source Files\System</Filter>
-    </ClCompile>
     <ClCompile Include="System\PipelineDeferredSSAO.cpp">
       <Filter>Source Files\System</Filter>
     </ClCompile>
@@ -143,6 +140,9 @@
     </ClCompile>
     <ClCompile Include="Apps\AppDeferredSSAO.cpp">
       <Filter>Source Files\App</Filter>
+    </ClCompile>
+    <ClCompile Include="System\AppSettings.cpp">
+      <Filter>Source Files\System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -214,9 +214,6 @@
     <ClInclude Include="System\PipelineDeferredSSAO.h">
       <Filter>Header Files\System</Filter>
     </ClInclude>
-    <ClInclude Include="Apps\AppSettings.h">
-      <Filter>Header Files\System</Filter>
-    </ClInclude>
     <ClInclude Include="System\TextureMapper.h">
       <Filter>Header Files\System</Filter>
     </ClInclude>
@@ -237,6 +234,9 @@
     </ClInclude>
     <ClInclude Include="Apps\AppDeferredSSAO.h">
       <Filter>Header Files\Apps</Filter>
+    </ClInclude>
+    <ClInclude Include="System\AppSettings.h">
+      <Filter>Header Files\System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

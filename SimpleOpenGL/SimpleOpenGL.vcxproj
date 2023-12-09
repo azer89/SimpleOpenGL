@@ -158,12 +158,12 @@
     <ClCompile Include="Apps\AppModelLoading.cpp" />
     <ClCompile Include="Apps\AppPBRModel.cpp" />
     <ClCompile Include="Apps\AppPBRTextured.cpp" />
-    <ClCompile Include="Apps\AppSettings.cpp" />
     <ClCompile Include="Apps\AppShadowMapping.cpp" />
     <ClCompile Include="Apps\AppSkyboxWithCube.cpp" />
     <ClCompile Include="Apps\AppSkyboxWithModel.cpp" />
     <ClCompile Include="Apps\AppSSAO.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="System\AppSettings.cpp" />
     <ClCompile Include="System\Camera.cpp" />
     <ClCompile Include="System\PipelineDeferred.cpp" />
     <ClCompile Include="System\Light.cpp" />
@@ -191,11 +191,11 @@
     <ClInclude Include="Apps\AppModelLoading.h" />
     <ClInclude Include="Apps\AppPBRModel.h" />
     <ClInclude Include="Apps\AppPBRTextured.h" />
-    <ClInclude Include="Apps\AppSettings.h" />
     <ClInclude Include="Apps\AppShadowMapping.h" />
     <ClInclude Include="Apps\AppSkyboxWithCube.h" />
     <ClInclude Include="Apps\AppSkyboxWithModel.h" />
     <ClInclude Include="Apps\AppSSAO.h" />
+    <ClInclude Include="System\AppSettings.h" />
     <ClInclude Include="System\Camera.h" />
     <ClInclude Include="System\PipelineDeferred.h" />
     <ClInclude Include="System\Light.h" />
