@@ -9,7 +9,6 @@
 * Geometry shader
 * Ambient occlusion
 * Physically Based Rendering
-* Direct State Access
 
   
 ### Demo
@@ -19,7 +18,7 @@ Physically Based Rendering
 
 
 
-https://github.com/azer89/SimpleOpenGL/assets/790432/5ea228af-54c6-4d97-bec9-dd4df3b4e9dd
+https://github.com/azer89/SimpleOpenGL/assets/790432/e564b947-7f07-44a9-9e96-2f06b825e15e
 
 
 
@@ -82,7 +81,7 @@ https://github.com/azer89/SimpleOpenGL/assets/790432/6107d114-b5c8-4789-8f28-864
 </div>
 
 ### Build
-* OpenGL 4.6 
+* OpenGL 4.6 / Direct State Access
 * The project and external dependencies are built using Visual Studio 2022 x64 and C++20
 
 ### Credit
