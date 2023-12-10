@@ -9,8 +9,9 @@
 * Geometry shader
 * Ambient occlusion
 * Physically Based Rendering
-* Direct State Access <em>(work in progress)</em>
+* Direct State Access
 
+  
 ### Demo
 <div align="center">
 Physically Based Rendering
@@ -18,7 +19,10 @@ Physically Based Rendering
 
 
 
-https://github.com/azer89/SimpleOpenGL/assets/790432/6107d114-b5c8-4789-8f28-86413e40a931
+https://github.com/azer89/SimpleOpenGL/assets/790432/5ea228af-54c6-4d97-bec9-dd4df3b4e9dd
+
+
+
 
 
 
@@ -56,6 +60,9 @@ https://github.com/azer89/SimpleOpenGL/assets/790432/83678402-3b19-46b1-b73b-80c
 Some other cool results
 
 <br/>
+
+https://github.com/azer89/SimpleOpenGL/assets/790432/6107d114-b5c8-4789-8f28-86413e40a931
+
 <img width="800" height="600" alt="image" src="https://github.com/azer89/SimpleOpenGL/assets/790432/9d3efcf9-bea8-4562-a200-db6ace329e85">
 
 <img width="800" height="600" alt="image" src="https://github.com/azer89/SimpleOpenGL/assets/790432/bab88bd1-6a79-4218-b553-32599bed920b">
@@ -75,8 +82,8 @@ Some other cool results
 </div>
 
 ### Build
+* OpenGL 4.6 
 * The project and external dependencies are built using Visual Studio 2022 x64 and C++20
-* OpenGL 4.6 is used but the porting to Direct State Access (DSA) is still ongoing.
 
 ### Credit
 Technical Resources:
@@ -87,8 +94,9 @@ Assets:
 * [glTF Assets](https://github.com/KhronosGroup/glTF-Sample-Assets)
 * Skybox textures from [humus.name](https://www.humus.name/index.php?page=Textures)
 * [Polyhaven](https://polyhaven.com/)
-* [Zaku Model](https://sketchfab.com/3d-models/zaku-ii-730a08b171aa4ac0a43131752150acfb)
-* [Freya Model](https://sketchfab.com/3d-models/freya-crescent-6d8eae57c17f4a81a23301ee0afda8cf)
+* [Armor model](https://sketchfab.com/3d-models/boss-emiss-test-afa4846713ba4e43910f2041977ea969)
+* [Zaku model](https://sketchfab.com/3d-models/zaku-ii-730a08b171aa4ac0a43131752150acfb)
+* [Freya model](https://sketchfab.com/3d-models/freya-crescent-6d8eae57c17f4a81a23301ee0afda8cf)
 * [Unicorn Gundam](https://sketchfab.com/3d-models/gundam-unicorn-1410ff9dd1c94807a00b8a0936170196)
 
 
