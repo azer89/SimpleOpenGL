@@ -15,36 +15,15 @@ int AppShadowMapping::MainLoop()
 	constexpr int depthHeight = 2000;
 	PipelineShadowMapping pipeline(depthWidth, depthHeight);
 
-	Shader mainShader("ShadowMapping//shadow_mapping.vertex", "ShadowMapping//shadow_mapping.fragment");
-	//Shader depthShader("ShadowMapping//shadow_mapping_depth.vertex", "ShadowMapping//shadow_mapping_depth.fragment");
-	//Shader debugShader("ShadowMapping//shadow_mapping_debug.vertex", "ShadowMapping//shadow_mapping_debug.fragment");
-	//Shader lightCubeShader("Misc//light_cube.vertex", "Misc//light_cube.fragment");
 	Shader lightShader("Misc//light_sphere.vertex", "Misc//light_sphere.fragment");
 
+	Shader mainShader("ShadowMapping//shadow_mapping.vertex", "ShadowMapping//shadow_mapping.fragment");
 	mainShader.Use();
-	//mainShader.SetInt("diffuseTexture", 0);
 	mainShader.SetInt("shadowMap", 1);
-	//debugShader.Use();
-	//debugShader.SetInt("depthMap", 0);
 
 	// Textures
 	Texture planeTexture;
 	planeTexture.CreateFromImageFile(AppSettings::TextureFolder + "White1x1.png");
-
-	// Depth
-	//constexpr unsigned int DEPTH_WIDTH = 2000;
-	//constexpr unsigned int DEPTH_HEIGHT = 2000;
-	//Texture depthTexture;
-	//depthTexture.CreateDepthMap(DEPTH_WIDTH, DEPTH_HEIGHT);
-
-	// FBO
-	//unsigned int depthFBO;
-	//glCreateFramebuffers(1, &depthFBO);
-	//glNamedFramebufferTexture(depthFBO, GL_DEPTH_ATTACHMENT, depthTexture.GetID(), 0);
-	//glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-	// Light debugging
-	//Cube cube;
 
 	// Light
 	constexpr float lightY = 6.0f;
@@ -52,14 +31,8 @@ int AppShadowMapping::MainLoop()
 	constexpr float lightSpeed = 0.5f;
 	float lightTimer = 0.0f;
 	bool moveLight = true;
-	//glm::vec3 lightPos;
 	Light light(glm::vec3(0.f), glm::vec3(1.f));
 	glm::vec3 target(0.f);
-
-	// For depth rendering
-	//glm::mat4 lightProjection;
-	//glm::mat4 lightView;
-	//glm::mat4 lightSpaceMatrix;
 	
 	// Shadow parameters
 	float minBias = 0.005f;
@@ -89,34 +62,7 @@ int AppShadowMapping::MainLoop()
 			lightTimer += deltaTime * lightSpeed;
 		}
 
-		// Render depth
-		/*lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, shadowNearPlane, shadowFarPlane);
-		lightView = glm::lookAt(lightPos, glm::vec3(0.0f), glm::vec3(0.0, 1.0, 0.0));
-		lightSpaceMatrix = lightProjection * lightView;
-		depthShader.Use();
-		depthShader.SetMat4("lightSpaceMatrix", lightSpaceMatrix);
-
-		glViewport(0, 0, DEPTH_WIDTH, DEPTH_HEIGHT);
-		glBindFramebuffer(GL_FRAMEBUFFER, depthFBO);
-		glClear(GL_DEPTH_BUFFER_BIT);*/
-
-		/*pipeline.SetInfo(
-		{
-			.specularPower = specularPower,
-			.ambientPower = ambientPower,
-			.minBias = minBias,
-			.maxBias = maxBias,
-			.shadowNearPlane = shadowNearPlane,
-			.shadowFarPlane = shadowFarPlane,
-
-			.lightPosition = lightPos,
-			.target = target,
-
-			.cameraPosition = camera->Position,
-			.cameraView = camera->GetViewMatrix(),
-			.cameraProjection = camera->GetProjectionMatrix(),
-		});*/
-
+		// Generate depth
 		pipeline.StartRenderDepth(
 			shadowNearPlane,
 			shadowFarPlane,
@@ -124,14 +70,8 @@ int AppShadowMapping::MainLoop()
 			target
 		);
 		Shader* depthShader = pipeline.GetDepthShader();
-		//RenderPlane(*depthShader);
 		RenderScene(*depthShader);
 		pipeline.StopRenderDepth();
-
-		// Reset
-		//glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		//glViewport(0, 0, AppSettings::ScreenWidth, AppSettings::ScreenHeight);
-		//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		// Render Scene
 		mainShader.Use();
@@ -146,17 +86,8 @@ int AppShadowMapping::MainLoop()
 		mainShader.SetMat4("lightSpaceMatrix", pipeline.GetLightSpaceMatrix());
 		
 		planeTexture.BindDSA(0);
-		//depthTexture.BindDSA(1);
-		//Shader* mainShader = pipeline.GetMainShader();
-		mainShader.Use();
 		pipeline.BindDepthTexture(1);
-		//glm::mat4 model = glm::mat4(1.0f);
-		//RenderPlane(mainShader);
 
-		//model = glm::translate(model, glm::vec3(0.0f, -0.5f, 0.0f));
-		//model = glm::scale(model, glm::vec3(0.02f));
-		//mainShader.SetMat4("model", model);
-		//depthTexture.BindDSA(1);
 		RenderScene(mainShader);
 
 		// Debug light
@@ -164,21 +95,9 @@ int AppShadowMapping::MainLoop()
 		lightShader.SetMat4("projection", camera->GetProjectionMatrix());
 		lightShader.SetMat4("view", camera->GetViewMatrix());
 		light.Render(lightShader);
-		/*lightCubeShader.Use();
-		lightCubeShader.SetMat4("projection", camera->GetProjectionMatrix());
-		lightCubeShader.SetMat4("view", camera->GetViewMatrix());
-		model = glm::mat4(1.0f);
-		model = glm::translate(model, lightPos);
-		model = glm::scale(model, glm::vec3(0.2f));
-		lightCubeShader.SetMat4("model", model);
-		cube.Draw();*/
 
-		// Debug depth map
-		/*debugShader.Use();
-		debugShader.SetFloat("near_plane", shadowNearPlane);
-		debugShader.SetFloat("far_plane", shadowFarPlane);
-		depthTexture.BindDSA(0);
-		RenderQuad();*/
+		// Debug depth
+		//pipeline.DebugDepth();
 
 		if (showImgui)
 		{
@@ -213,10 +132,6 @@ int AppShadowMapping::MainLoop()
 	return 0;
 }
 
-//void AppShadowMapping::RenderPlane(const Shader& shader)
-//{
-//}
-
 void AppShadowMapping::RenderScene(const Shader& shader)
 {
 	glm::mat4 model = glm::mat4(1.0f);
@@ -239,13 +154,6 @@ void AppShadowMapping::RenderScene(const Shader& shader)
 	shader.SetMat4("model", model);
 	renderModel->Draw(shader);
 }
-
-//void AppShadowMapping::RenderQuad()
-//{
-//	glBindVertexArray(quadVAO);
-//	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-//	glBindVertexArray(0);
-//}
 
 void AppShadowMapping::InitScene()
 {
@@ -275,23 +183,4 @@ void AppShadowMapping::InitScene()
 	glEnableVertexAttribArray(2);
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
 	glBindVertexArray(0);
-
-	// Quad (for debugging)
-	/*constexpr float quadVertices[] = {
-		// positions		// texture Coords
-		-1.0f,  1.0f, 0.0f, 0.0f, 1.0f,
-		-1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
-		 1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
-		 1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
-	};
-	glGenVertexArrays(1, &quadVAO);
-	glGenBuffers(1, &quadVBO);
-	glBindVertexArray(quadVAO);
-	glBindBuffer(GL_ARRAY_BUFFER, quadVBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), &quadVertices, GL_STATIC_DRAW);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-	glBindVertexArray(0);*/
 }
