@@ -119,11 +119,14 @@ void Camera::ProcessMouseScroll(float yoffset)
 void Camera::UpdateInternal()
 {
 	// Recalculate front vector
-	glm::vec3 front;
-	front.x = cos(glm::radians(Yaw)) * cos(glm::radians(Pitch));
-	front.y = sin(glm::radians(Pitch));
-	front.z = sin(glm::radians(Yaw)) * cos(glm::radians(Pitch));
-	Front = glm::normalize(front);
+	Front = glm::normalize(
+		glm::vec3
+		(
+			cos(glm::radians(Yaw)) * cos(glm::radians(Pitch)), // x
+			sin(glm::radians(Pitch)), // y
+			sin(glm::radians(Yaw)) * cos(glm::radians(Pitch)) // z
+		)
+	);
 	
 	// Recalculate right and up vector
 	Right = glm::normalize(glm::cross(Front, WorldUp));  // Normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.

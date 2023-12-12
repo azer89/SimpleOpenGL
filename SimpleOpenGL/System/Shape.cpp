@@ -2,7 +2,6 @@
 
 #include <vector>
 
-
 Sphere::Sphere()
 {
 	glGenVertexArrays(1, &VAO);

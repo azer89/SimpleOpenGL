@@ -57,23 +57,6 @@ void Texture::CreateFromImageFile(const std::string& fullFilePath, bool flipVert
 	uint8_t* data = stbi_load(fullFilePath.c_str(), &width, &height, nullptr, STBI_rgb_alpha);
 	if (data)
 	{
-		// Non DSA
-		/*glGenTextures(1, &id);
-		glBindTexture(GL_TEXTURE_2D, id);
-
-		const int numMipmaps = 1;
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, numMipmaps-1);
-		
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-
-		// Wrapping
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
-		// Filtering
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);*/
-
 		GLenum clamp = GL_REPEAT;
 		int numMipmaps = Utility::NumMipmap(width, height);
 		int maxAnisotropy = 16;
@@ -110,18 +93,6 @@ void Texture::CreateFromHDRFile(const std::string& fullFilePath)
 	float* data = stbi_loadf(fullFilePath.c_str(), &width, &height, &nrComponents, 0);
 	if (data)
 	{
-		// Non DSA
-		/*glGenTextures(1, &id);
-		glBindTexture(GL_TEXTURE_2D, id);
-
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, width, height, 0, GL_RGB, GL_FLOAT, data);
-
-		glTextureParameteri(id, GL_TEXTURE_MAX_LEVEL, 0);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);*/
-
 		// DSA
 		const int numMipmaps = Utility::NumMipmap(width, height);;
 
@@ -147,16 +118,6 @@ void Texture::CreateFromHDRFile(const std::string& fullFilePath)
 
 void Texture::CreateDepthMap(unsigned int width, unsigned int height)
 {
-	/*glGenTextures(1, &id);
-	glBindTexture(GL_TEXTURE_2D, id);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, width, height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
-	float borderColor[] = { 1.0, 1.0, 1.0, 1.0 };
-	glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);*/
-
 	// DSA
 	glCreateTextures(GL_TEXTURE_2D, 1, &id);
 
@@ -175,32 +136,6 @@ void Texture::CreateDepthMap(unsigned int width, unsigned int height)
 
 void Texture::CreateCubeMap(const std::vector<std::string>& files, const std::string& directory)
 {
-	// Non DSA
-	/*glGenTextures(1, &id);
-	glBindTexture(GL_TEXTURE_CUBE_MAP, id);
-	
-	stbi_set_flip_vertically_on_load(false);
-	int width, height;
-	for (unsigned int i = 0; i < files.size(); ++i)
-	{
-		auto filePath = directory + files[i];
-		unsigned char* data = stbi_load(filePath.c_str(), &width, &height, nullptr, STBI_rgb_alpha);
-		if (data)
-		{
-			glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-		}
-		else
-		{
-			throw std::runtime_error("Cubemap texture failed to load: " + files[i]);
-		}
-		stbi_image_free(data);
-	}
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);*/
-
 	// DSA
 	glCreateTextures(GL_TEXTURE_CUBE_MAP, 1, &id);
 
