@@ -56,7 +56,7 @@ void PipelineShadowMapping::StartRenderDepth()
 	glClear(GL_DEPTH_BUFFER_BIT);
 }
 
-void PipelineShadowMapping::SopRenderDepth()
+void PipelineShadowMapping::StopRenderDepth()
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glViewport(0, 0, AppSettings::ScreenWidth, AppSettings::ScreenHeight);

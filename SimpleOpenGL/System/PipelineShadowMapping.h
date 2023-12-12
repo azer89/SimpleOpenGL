@@ -59,7 +59,7 @@ private:
 
 	void SetInfo(ShadowInfo info);
 	void StartRenderDepth();
-	void SopRenderDepth();
+	void StopRenderDepth();
 
 	void SetMainShader();
 

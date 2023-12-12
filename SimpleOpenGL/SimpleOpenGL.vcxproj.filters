@@ -144,6 +144,9 @@
     <ClCompile Include="System\AppSettings.cpp">
       <Filter>Source Files\System</Filter>
     </ClCompile>
+    <ClCompile Include="System\PipelineShadowMapping.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Settings\main.xml">
@@ -236,6 +239,9 @@
       <Filter>Header Files\Apps</Filter>
     </ClInclude>
     <ClInclude Include="System\AppSettings.h">
+      <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="System\PipelineShadowMapping.h">
       <Filter>Header Files\System</Filter>
     </ClInclude>
   </ItemGroup>
