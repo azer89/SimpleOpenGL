@@ -29,51 +29,64 @@ float lightTimer = 0.0f;*/
 
 */
 
-struct ShadowInfo
+/*struct ShadowInfo
 {
-	glm::vec3 lightPosition;
-	glm::vec3 target;
+	int specularPower;
+	float ambientPower;
 
 	float minBias;
 	float maxBias;
 	float shadowNearPlane;
 	float shadowFarPlane;
 
-	glm::mat4 cameraProjection;
-	glm::mat4 cameraView;
-	glm::vec3 cameraPosition;
+	glm::vec3 lightPosition;
+	glm::vec3 target;
 
-	float ambientPower;
-	int specularPower;
-};
+	glm::vec3 cameraPosition;
+	glm::mat4 cameraView;
+	glm::mat4 cameraProjection;
+};*/
 
 class PipelineShadowMapping
 {
 public:
-	PipelineShadowMapping();
+	PipelineShadowMapping(int depthWidth_, int depthHeight_);
 
-	Shader* GetMainShader() { return mainShader.get(); }
+	Shader* GetDepthShader() { return depthShader.get(); }
+	//Shader* GetMainShader() { return mainShader.get(); }
+	void BindDepthTexture(unsigned int index) { depthTexture->BindDSA(index); }
+	glm::mat4 GetLightSpaceMatrix() { return lightSpaceMatrix; }
+
+	//void SetInfo(ShadowInfo info);
+	void StartRenderDepth(float nearPlane_, float farPlane_, glm::vec3 lightPosition, glm::vec3 target);
+	void StopRenderDepth();
+	
+	void DebugDepth();
 
 private:
 	void Init();
-
-	void SetInfo(ShadowInfo info);
-	void StartRenderDepth();
-	void StopRenderDepth();
-
-	void SetMainShader();
+	void InitQuad();
+	//void SetMainShader();
 
 private:
 	// Data
-	ShadowInfo currInfo;
+	//ShadowInfo currInfo;
 	glm::mat4 lightSpaceMatrix;
 
-	std::unique_ptr<Shader> mainShader;
+	//std::unique_ptr<Shader> mainShader;
 	std::unique_ptr<Shader> depthShader;
 	std::unique_ptr<Shader> debugShader;
 
+	int depthWidth;
+	int depthHeight;
 	std::unique_ptr<Texture> depthTexture;
 	unsigned int depthFBO;
+
+	float nearPlane;
+	float farPlane;
+
+	unsigned int quadVAO = 0;
+	unsigned int quadVBO = 0;
 };
 
 #endif
