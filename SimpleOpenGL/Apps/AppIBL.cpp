@@ -106,6 +106,7 @@ int AppIBL::MainLoop()
 void AppIBL::InitDebugCubes()
 {
 	simpleCubeShader = std::make_unique<Shader>("IBL//simple_cube.vertex", "IBL//simple_cube.fragment");
+	simpleCubeShader->Use();
 	simpleCubeShader->SetInt("skybox", 0);
 }
 
