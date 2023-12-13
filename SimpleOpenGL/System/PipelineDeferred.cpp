@@ -53,33 +53,34 @@ void PipelineDeferred::Init(
 	glVertexArrayAttribBinding(quadVAO, 0, 0);
 	glVertexArrayAttribBinding(quadVAO, 1, 0);
 
+	const int numMipmaps = 1;
+
 	// G-buffer
-	//glGenFramebuffers(1, &gBuffer);
 	glCreateFramebuffers(1, &gBuffer);
 	glBindFramebuffer(GL_FRAMEBUFFER, gBuffer);
 
 	// Position
 	glCreateTextures(GL_TEXTURE_2D, 1, &gPosition);
-	glTextureParameteri(gPosition, GL_TEXTURE_MAX_LEVEL, 0);
+	glTextureParameteri(gPosition, GL_TEXTURE_MAX_LEVEL, numMipmaps - 1);
 	glTextureParameteri(gPosition, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTextureParameteri(gPosition, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTextureStorage2D(gPosition, 1, GL_RGBA32F, AppSettings::ScreenWidth, AppSettings::ScreenHeight);
+	glTextureStorage2D(gPosition, numMipmaps, GL_RGBA32F, AppSettings::ScreenWidth, AppSettings::ScreenHeight);
 	glNamedFramebufferTexture(gBuffer, GL_COLOR_ATTACHMENT0, gPosition, 0);
 	
 	// Normal
 	glCreateTextures(GL_TEXTURE_2D, 1, &gNormal);
-	glTextureParameteri(gNormal, GL_TEXTURE_MAX_LEVEL, 0);
+	glTextureParameteri(gNormal, GL_TEXTURE_MAX_LEVEL, numMipmaps - 1);
 	glTextureParameteri(gNormal, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTextureParameteri(gNormal, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTextureStorage2D(gNormal, 1, GL_RGBA32F, AppSettings::ScreenWidth, AppSettings::ScreenHeight);
+	glTextureStorage2D(gNormal, numMipmaps, GL_RGBA32F, AppSettings::ScreenWidth, AppSettings::ScreenHeight);
 	glNamedFramebufferTexture(gBuffer, GL_COLOR_ATTACHMENT1, gNormal, 0);
 	
 	// Color + Specular
 	glCreateTextures(GL_TEXTURE_2D, 1, &gAlbedoSpec);
-	glTextureParameteri(gAlbedoSpec, GL_TEXTURE_MAX_LEVEL, 0);
+	glTextureParameteri(gAlbedoSpec, GL_TEXTURE_MAX_LEVEL, numMipmaps - 1);
 	glTextureParameteri(gAlbedoSpec, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTextureParameteri(gAlbedoSpec, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTextureStorage2D(gAlbedoSpec, 1, GL_RGBA8, AppSettings::ScreenWidth, AppSettings::ScreenHeight);
+	glTextureStorage2D(gAlbedoSpec, numMipmaps, GL_RGBA8, AppSettings::ScreenWidth, AppSettings::ScreenHeight);
 	glNamedFramebufferTexture(gBuffer, GL_COLOR_ATTACHMENT2, gAlbedoSpec, 0);
 	
 	unsigned int attachments[3] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
