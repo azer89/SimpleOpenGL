@@ -55,11 +55,7 @@ https://github.com/azer89/SimpleOpenGL/assets/790432/83678402-3b19-46b1-b73b-80c
 Bloom postprocessing
 <br/>
 
-<img width="800" height="600" alt="image" src="https://github.com/azer89/SimpleOpenGL/assets/790432/d34c33bd-a232-4195-93ed-f95ce57375f1">
-
-
-
-
+<img width="800" height="600" alt="image" src="https://github.com/azer89/SimpleOpenGL/assets/790432/da456381-d72f-481f-8c70-2592a98e1c3d">
 
 <br/>
 <br/>
