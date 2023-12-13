@@ -58,6 +58,9 @@
     <Filter Include="Resource Files\Shaders\IBL">
       <UniqueIdentifier>{4bcf86bb-a717-49bf-b3d5-edbdda14a54e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Shaders\Bloom">
+      <UniqueIdentifier>{8bebaee8-fa97-420c-be94-5495980206f7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -431,6 +434,12 @@
     </None>
     <None Include="..\Shaders\IBL\simple_cube.vertex">
       <Filter>Resource Files\Shaders\IBL</Filter>
+    </None>
+    <None Include="..\Shaders\Bloom\first_pass.fragment">
+      <Filter>Resource Files\Shaders\Bloom</Filter>
+    </None>
+    <None Include="..\Shaders\Bloom\first_pass.vertex">
+      <Filter>Resource Files\Shaders\Bloom</Filter>
     </None>
   </ItemGroup>
 </Project>

@@ -217,6 +217,8 @@
   <ItemGroup>
     <None Include="..\Shaders\BlinnPhong\blinn_phong.fragment" />
     <None Include="..\Shaders\BlinnPhong\blinn_phong.vertex" />
+    <None Include="..\Shaders\Bloom\first_pass.fragment" />
+    <None Include="..\Shaders\Bloom\first_pass.vertex" />
     <None Include="..\Shaders\Cubemap\blinn_phong_skybox.fragment" />
     <None Include="..\Shaders\Cubemap\blinn_phong_skybox.vertex" />
     <None Include="..\Shaders\Cubemap\cube.fragment" />

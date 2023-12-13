@@ -3,6 +3,7 @@
 #include "Shader.h"
 #include "Model.h"
 #include "Shape.h"
+#include "Light.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -15,11 +16,13 @@ int AppBloom::MainLoop()
 
 	Cube cube;
 
-	Shader mainShader("ModelLoading//model_loading.vertex", "ModelLoading//model_loading.fragment");
-	Shader lightCubeShader("Misc//light_cube.vertex", "Misc//light_cube.fragment");
+	Shader mainShader("Bloom//first_pass.vertex", "Bloom//first_pass.fragment");
+	//Shader lightCubeShader("Misc//light_cube.vertex", "Misc//light_cube.fragment");
+	Shader lightShader("Misc//light_sphere.vertex", "Misc//light_sphere.fragment");
 	Model obj(AppSettings::ModelFolder + "Zaku//scene.gltf");
 
-	glm::vec3 lightPos(0.0f, 0.5f, 5.0f);
+	//glm::vec3 lightPos(0.0f, 0.5f, 5.0f);
+	Light light(glm::vec3(0.0f, 0.5f, 5.0f), glm::vec3(1.f));
 
 	auto modelRotation = acos(-1.f);
 
@@ -39,7 +42,7 @@ int AppBloom::MainLoop()
 		mainShader.SetMat4("projection", projection);
 		mainShader.SetMat4("view", view);
 		mainShader.SetVec3("viewPos", camera->Position);
-		mainShader.SetVec3("lightPos", lightPos);
+		mainShader.SetVec3("lightPos", light.Position);
 		
 		glm::mat4 model = glm::mat4(1.0f);
 		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
@@ -49,14 +52,10 @@ int AppBloom::MainLoop()
 		obj.Draw(mainShader);
 
 		// Cube light
-		lightCubeShader.Use();
-		lightCubeShader.SetMat4("projection", projection);
-		lightCubeShader.SetMat4("view", view);
-		model = glm::mat4(1.0f);
-		model = glm::translate(model, lightPos);
-		model = glm::scale(model, glm::vec3(0.2f));
-		lightCubeShader.SetMat4("model", model);
-		cube.Draw();
+		lightShader.Use();
+		lightShader.SetMat4("projection", projection);
+		lightShader.SetMat4("view", view);
+		light.Render(lightShader);
 
 		SwapBuffers();
 	}
