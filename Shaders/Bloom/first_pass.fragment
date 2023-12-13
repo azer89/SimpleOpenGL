@@ -17,7 +17,6 @@ uniform sampler2D texture_roughness1;
 uniform sampler2D texture_ao1;
 uniform sampler2D texture_emissive1;
 
-
 uniform vec3 lightPos;
 uniform vec3 viewPos;
 

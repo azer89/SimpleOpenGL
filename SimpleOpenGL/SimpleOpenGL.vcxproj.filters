@@ -441,5 +441,17 @@
     <None Include="..\Shaders\Bloom\first_pass.vertex">
       <Filter>Resource Files\Shaders\Bloom</Filter>
     </None>
+    <None Include="..\Shaders\Bloom\blur.fragment">
+      <Filter>Resource Files\Shaders\Bloom</Filter>
+    </None>
+    <None Include="..\Shaders\Bloom\blur.vertex">
+      <Filter>Resource Files\Shaders\Bloom</Filter>
+    </None>
+    <None Include="..\Shaders\Bloom\final.fragment">
+      <Filter>Resource Files\Shaders\Bloom</Filter>
+    </None>
+    <None Include="..\Shaders\Bloom\final.vertex">
+      <Filter>Resource Files\Shaders\Bloom</Filter>
+    </None>
   </ItemGroup>
 </Project>
