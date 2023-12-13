@@ -4,6 +4,7 @@
 * Blinn-Phong shading
 * glTF loader
 * Shadow mapping
+* Bloom postprocessing
 * Deferred shading
 * Cubemap
 * Geometry shader
@@ -49,6 +50,12 @@ Shadow mapping
 https://github.com/azer89/SimpleOpenGL/assets/790432/83678402-3b19-46b1-b73b-80cc48ddc9c9
 
 
+<br/>
+<br/>
+Bloom postprocessing
+<br/>
+
+<img width="800" height="600" alt="image" src="https://github.com/azer89/SimpleOpenGL/assets/790432/d34c33bd-a232-4195-93ed-f95ce57375f1">
 
 
 
