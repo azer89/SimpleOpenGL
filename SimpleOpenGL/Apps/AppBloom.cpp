@@ -17,11 +17,9 @@ int AppBloom::MainLoop()
 	Cube cube;
 
 	Shader mainShader("Bloom//first_pass.vertex", "Bloom//first_pass.fragment");
-	//Shader lightCubeShader("Misc//light_cube.vertex", "Misc//light_cube.fragment");
 	Shader lightShader("Misc//light_sphere.vertex", "Misc//light_sphere.fragment");
 	Model obj(AppSettings::ModelFolder + "Zaku//scene.gltf");
 
-	//glm::vec3 lightPos(0.0f, 0.5f, 5.0f);
 	Light light(glm::vec3(0.0f, 0.5f, 5.0f), glm::vec3(1.f));
 
 	auto modelRotation = acos(-1.f);
@@ -47,7 +45,6 @@ int AppBloom::MainLoop()
 		glm::mat4 model = glm::mat4(1.0f);
 		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
 		model = glm::rotate(model, modelRotation, glm::vec3(0.0f, 1.0f, 0.0f));
-		//modelRotation += deltaTime;
 		mainShader.SetMat4("model", model);
 		obj.Draw(mainShader);
 

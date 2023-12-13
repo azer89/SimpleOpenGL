@@ -1,6 +1,7 @@
-#version 330 core
+#version 460 core
 
-out vec4 FragColor;
+layout(location = 0) out vec4 FragColor;
+layout(location = 1) out vec4 BrightColor;
 
 in VS_OUT 
 {
@@ -9,7 +10,14 @@ in VS_OUT
 	vec2 TexCoords;
 } fs_in;
 
-uniform sampler2D texture_diffuse1; // Texture from glTF model
+uniform sampler2D texture_diffuse1;
+uniform sampler2D texture_normal1;
+uniform sampler2D texture_metalness1;
+uniform sampler2D texture_roughness1;
+uniform sampler2D texture_ao1;
+uniform sampler2D texture_emissive1;
+
+
 uniform vec3 lightPos;
 uniform vec3 viewPos;
 
@@ -17,9 +25,10 @@ uniform vec3 viewPos;
 void main()
 {
 	vec3 color = texture(texture_diffuse1, fs_in.TexCoords).rgb;
-	
-	// ambient
-	vec3 ambient = 0.05 * color;
+    vec3 emissive = texture(texture_emissive1, fs_in.TexCoords).rgb;
+
+    // ambient
+    vec3 ambient = 0.05 * color;
 	
 	// diffuse
 	vec3 lightDir = normalize(lightPos - fs_in.FragPos);
@@ -37,4 +46,6 @@ void main()
 
 	vec3 specular = vec3(0.3) * spec; // assuming bright white light color
 	FragColor = vec4(ambient + diffuse + specular, 1.0);
+
+    BrightColor = vec4(emissive, 1.0);
 }
