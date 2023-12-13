@@ -11,6 +11,7 @@ Models/Zaku/* filter=lfs diff=lfs merge=lfs -text
 Models/SirFrog/* filter=lfs diff=lfs merge=lfs -text
 Models/Freya/* filter=lfs diff=lfs merge=lfs -text
 Models/UnicornGundam/* filter=lfs diff=lfs merge=lfs -text
+Models/Tachikoma/* filter=lfs diff=lfs merge=lfs -text
 Models/BossEmission/* filter=lfs diff=lfs merge=lfs -text
 Models/BossEmission/textures/* filter=lfs diff=lfs merge=lfs -text
 
