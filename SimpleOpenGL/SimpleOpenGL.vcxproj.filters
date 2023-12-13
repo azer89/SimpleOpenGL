@@ -147,6 +147,9 @@
     <ClCompile Include="System\PipelineShadowMapping.cpp">
       <Filter>Source Files\System</Filter>
     </ClCompile>
+    <ClCompile Include="Apps\AppBloom.cpp">
+      <Filter>Source Files\App</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Settings\main.xml">
@@ -243,6 +246,9 @@
     </ClInclude>
     <ClInclude Include="System\PipelineShadowMapping.h">
       <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Apps\AppBloom.h">
+      <Filter>Header Files\Apps</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

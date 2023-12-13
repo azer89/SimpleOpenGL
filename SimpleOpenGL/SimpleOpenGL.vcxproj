@@ -149,6 +149,7 @@
   <ItemGroup>
     <ClCompile Include="Apps\AppBase.cpp" />
     <ClCompile Include="Apps\AppBlinnPhong.cpp" />
+    <ClCompile Include="Apps\AppBloom.cpp" />
     <ClCompile Include="Apps\AppBoxes.cpp" />
     <ClCompile Include="Apps\AppDeferred.cpp" />
     <ClCompile Include="Apps\AppDeferredSponza.cpp" />
@@ -183,6 +184,7 @@
   <ItemGroup>
     <ClInclude Include="Apps\AppBase.h" />
     <ClInclude Include="Apps\AppBlinnPhong.h" />
+    <ClInclude Include="Apps\AppBloom.h" />
     <ClInclude Include="Apps\AppBoxes.h" />
     <ClInclude Include="Apps\AppDeferred.h" />
     <ClInclude Include="Apps\AppDeferredSponza.h" />

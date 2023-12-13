@@ -4,6 +4,7 @@
 #include "AppModelLoading.h"
 #include "AppSkyboxWithModel.h"
 #include "AppSkyboxWithCube.h"
+#include "AppBloom.h"
 #include "AppDeferred.h"
 #include "AppDeferredSponza.h"
 #include "AppDeferredSSAO.h"
@@ -15,7 +16,7 @@
 
 int main()
 {
-	AppDeferredSSAO app;
+	AppBloom app;
 	auto returnValue = app.MainLoop();
 	return returnValue;
 }
