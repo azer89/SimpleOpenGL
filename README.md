@@ -43,6 +43,12 @@ Shadow mapping
 
 https://github.com/azer89/SimpleOpenGL/assets/790432/83678402-3b19-46b1-b73b-80cc48ddc9c9
 
+<br/>
+<br/>
+Edge detection
+<br/>
+<img width="800" height="600" alt="image" src="https://github.com/azer89/SimpleOpenGL/assets/790432/cf635396-ca5b-46f1-b465-3ed6c27efd9f">
+
 
 <br/>
 <br/>
@@ -94,6 +100,7 @@ Assets:
 3D Models
 * [Armor](https://sketchfab.com/3d-models/boss-emiss-test-afa4846713ba4e43910f2041977ea969)
 * [Zaku](https://sketchfab.com/3d-models/zaku-ii-730a08b171aa4ac0a43131752150acfb)
+* [Zodd](https://sketchfab.com/3d-models/zodd-the-inmortal-947061412ae24abc84d391f07c1b0618)
 * [Freya](https://sketchfab.com/3d-models/freya-crescent-6d8eae57c17f4a81a23301ee0afda8cf)
 * [Tachikoma](https://sketchfab.com/3d-models/tachikoma-7ec03deb78de4a1b908d2bc736ff0f15)
 * [Unicorn Gundam](https://sketchfab.com/3d-models/gundam-unicorn-1410ff9dd1c94807a00b8a0936170196)
