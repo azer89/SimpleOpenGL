@@ -4,6 +4,7 @@
 #include "AppModelLoading.h"
 #include "AppSkyboxWithModel.h"
 #include "AppSkyboxWithCube.h"
+#include "AppEdge.h"
 #include "AppBloom.h"
 #include "AppDeferred.h"
 #include "AppDeferredSponza.h"
@@ -13,7 +14,6 @@
 #include "AppPBRTextured.h"
 #include "AppPBRModel.h"
 #include "AppIBL.h"
-#include "AppEdge.h"
 
 int main()
 {

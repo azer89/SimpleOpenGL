@@ -29,7 +29,7 @@ int AppEdge::MainLoop()
 	compositeShader.SetFloat("screen_width", AppSettings::ScreenWidth);
 	compositeShader.SetFloat("screen_height", AppSettings::ScreenHeight);
 
-	Model obj(AppSettings::ModelFolder + "Dragon//Dragon.obj");
+	Model obj(AppSettings::ModelFolder + "Dragon/Dragon.obj");
 	auto modelRotation = glm::radians(180.f);
 
 	//glm::vec3 lightPos(0.0f, 0.5f, 5.0f);
@@ -51,7 +51,7 @@ int AppEdge::MainLoop()
 	glTextureParameteri(gPositionTexture, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTextureParameteri(gPositionTexture, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTextureParameteri(gPositionTexture, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glTextureStorage2D(gPositionTexture, numMipmaps, GL_RGBA32F, AppSettings::ScreenWidth, AppSettings::ScreenHeight);
+	glTextureStorage2D(gPositionTexture, numMipmaps, GL_RGBA16F, AppSettings::ScreenWidth, AppSettings::ScreenHeight);
 	glNamedFramebufferTexture(gBufferFBO, GL_COLOR_ATTACHMENT0, gPositionTexture, 0);
 
 	unsigned int attachments[1] = { GL_COLOR_ATTACHMENT0};
