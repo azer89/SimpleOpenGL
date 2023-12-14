@@ -16,11 +16,7 @@ Physically Based Rendering
 <br/>
 
 
-
-https://github.com/azer89/SimpleOpenGL/assets/790432/e564b947-7f07-44a9-9e96-2f06b825e15e
-
-
-
+https://github.com/azer89/SimpleOpenGL/assets/790432/76d58314-39bd-4a4c-8f52-4ffdc2287738
 
 
 
@@ -61,24 +57,20 @@ Some other cool results
 
 <br/>
 
-https://github.com/azer89/SimpleOpenGL/assets/790432/6107d114-b5c8-4789-8f28-86413e40a931
-
-<img width="800" height="600" alt="image" src="https://github.com/azer89/SimpleOpenGL/assets/790432/b3c45b14-c5d7-4961-be3c-27a598dcf143">
+https://github.com/azer89/SimpleOpenGL/assets/790432/e564b947-7f07-44a9-9e96-2f06b825e15e
 
 <img width="800" height="600" alt="image" src="https://github.com/azer89/SimpleOpenGL/assets/790432/9d3efcf9-bea8-4562-a200-db6ace329e85">
 
-<img width="800" height="600" alt="image" src="https://github.com/azer89/SimpleOpenGL/assets/790432/bab88bd1-6a79-4218-b553-32599bed920b">
+<!--Dragon PBR PBR-->
+<!--img width="800" height="600" alt="image" src="https://github.com/azer89/SimpleOpenGL/assets/790432/bab88bd1-6a79-4218-b553-32599bed920b"-->
 
-
+<!--Damaged Helmet PBR-->
+<!--https://github.com/azer89/SimpleOpenGL/assets/790432/6107d114-b5c8-4789-8f28-86413e40a931--> <!--Damaged Helmet PBR-->
 
 <!--<img width="400" height="300" alt="PBR" src="https://github.com/azer89/SimpleOpenGL/assets/790432/d4c44a9b-ee31-40cb-94ec-15010058768d">
-
 <img width="400" height="300" alt="PBR" src="https://github.com/azer89/SimpleOpenGL/assets/790432/d9b9ea15-20c3-46c1-8169-9a4599501179">
-
 <img width="400" height="300" alt="PBR" src="https://github.com/azer89/SimpleOpenGL/assets/790432/2205127f-b56c-4b49-a4d9-ea9b1d1b7c52">
-
 <img width="400" height="300" alt="Deferred Shading" src="https://github.com/azer89/SimpleOpenGL/assets/790432/1c01a0ad-c3c3-4374-bc8e-9bd71313e499">
-
 <img width="400" height="300" alt="Skybox" src="https://github.com/azer89/SimpleOpenGL/assets/790432/ae47eeea-0464-442c-85f2-d3223554585a">-->
 
 
