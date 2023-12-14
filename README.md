@@ -65,9 +65,13 @@ Some other cool results
 
 https://github.com/azer89/SimpleOpenGL/assets/790432/6107d114-b5c8-4789-8f28-86413e40a931
 
+<img width="800" height="600" alt="image" src="https://github.com/azer89/SimpleOpenGL/assets/790432/b3c45b14-c5d7-4961-be3c-27a598dcf143">
+
 <img width="800" height="600" alt="image" src="https://github.com/azer89/SimpleOpenGL/assets/790432/9d3efcf9-bea8-4562-a200-db6ace329e85">
 
 <img width="800" height="600" alt="image" src="https://github.com/azer89/SimpleOpenGL/assets/790432/bab88bd1-6a79-4218-b553-32599bed920b">
+
+
 
 <!--<img width="400" height="300" alt="PBR" src="https://github.com/azer89/SimpleOpenGL/assets/790432/d4c44a9b-ee31-40cb-94ec-15010058768d">
 
@@ -78,6 +82,7 @@ https://github.com/azer89/SimpleOpenGL/assets/790432/6107d114-b5c8-4789-8f28-864
 <img width="400" height="300" alt="Deferred Shading" src="https://github.com/azer89/SimpleOpenGL/assets/790432/1c01a0ad-c3c3-4374-bc8e-9bd71313e499">
 
 <img width="400" height="300" alt="Skybox" src="https://github.com/azer89/SimpleOpenGL/assets/790432/ae47eeea-0464-442c-85f2-d3223554585a">-->
+
 
 
 
@@ -100,6 +105,7 @@ Assets:
 * [Zaku model](https://sketchfab.com/3d-models/zaku-ii-730a08b171aa4ac0a43131752150acfb)
 * [Freya model](https://sketchfab.com/3d-models/freya-crescent-6d8eae57c17f4a81a23301ee0afda8cf)
 * [Unicorn Gundam](https://sketchfab.com/3d-models/gundam-unicorn-1410ff9dd1c94807a00b8a0936170196)
+* [Tachikoma](https://sketchfab.com/3d-models/tachikoma-7ec03deb78de4a1b908d2bc736ff0f15)
 
 
 
