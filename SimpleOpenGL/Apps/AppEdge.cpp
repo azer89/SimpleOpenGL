@@ -69,6 +69,8 @@ int AppEdge::MainLoop()
 		depthTexture.BindDSA(1);
 		mainShader.SetFloat("near_plane", NEAR_PLANE);
 		mainShader.SetFloat("far_plane", FAR_PLANE);
+		mainShader.SetFloat("screen_width", AppSettings::ScreenWidth);
+		mainShader.SetFloat("screen_height", AppSettings::ScreenHeight);
 		obj.Draw(mainShader);
 
 		// Light
