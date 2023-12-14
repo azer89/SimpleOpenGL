@@ -21,14 +21,13 @@ int AppEdge::MainLoop()
 
 	InitQuad();
 
-	Shader mainShader("Edge//composite.vertex", "Edge//composite.fragment");
-	mainShader.Use();
-	mainShader.SetInt("texture_diffuse1", 0);
-	mainShader.SetInt("texture_depth1", 1);
-	mainShader.SetFloat("near_plane", NEAR_PLANE);
-	mainShader.SetFloat("far_plane", FAR_PLANE);
-	mainShader.SetFloat("screen_width", AppSettings::ScreenWidth);
-	mainShader.SetFloat("screen_height", AppSettings::ScreenHeight);
+	Shader compositeShader("Edge//composite.vertex", "Edge//composite.fragment");
+	compositeShader.Use();
+	compositeShader.SetInt("texture_depth1", 0);
+	compositeShader.SetFloat("near_plane", NEAR_PLANE);
+	compositeShader.SetFloat("far_plane", FAR_PLANE);
+	compositeShader.SetFloat("screen_width", AppSettings::ScreenWidth);
+	compositeShader.SetFloat("screen_height", AppSettings::ScreenHeight);
 
 	Model obj(AppSettings::ModelFolder + "Dragon//Dragon.obj");
 	auto modelRotation = glm::radians(180.f);
@@ -93,26 +92,17 @@ int AppEdge::MainLoop()
 		depthShader.Use();
 		depthShader.SetMat4("projection", projection);
 		depthShader.SetMat4("view", view);
-		glBindFramebuffer(GL_FRAMEBUFFER, gBufferFBO);
-		glClear(GL_DEPTH_BUFFER_BIT);
-		glEnable(GL_DEPTH_TEST);
 		depthShader.SetMat4("model", model);
+		glBindFramebuffer(GL_FRAMEBUFFER, gBufferFBO);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		obj.Draw(depthShader);
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
 		// Main shader
-		mainShader.Use();
-		mainShader.SetMat4("projection", projection);
-		mainShader.SetMat4("view", view);
-		mainShader.SetVec3("viewPos", camera->Position);
-		mainShader.SetVec3("lightPos", light.Position);
-		mainShader.SetMat4("model", model);
-		
+		compositeShader.Use();
 		glBindTextureUnit(0, gPositionTexture);
 		RenderQuad();
-
-		//obj.Draw(mainShader);
 
 		// Light
 		lightShader.Use();
