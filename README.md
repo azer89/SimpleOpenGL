@@ -2,11 +2,9 @@
 
 ### Features
 * Blinn-Phong shading
-* glTF loader
 * Shadow mapping
 * Bloom postprocessing
 * Deferred shading
-* Cubemap
 * Geometry shader
 * Ambient occlusion
 * Physically Based Rendering
