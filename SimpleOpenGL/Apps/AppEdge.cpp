@@ -4,6 +4,7 @@
 #include "Light.h"
 #include "Texture.h"
 #include "AppSettings.h"
+#include <stdexcept>
 
 int AppEdge::MainLoop()
 {
@@ -13,6 +14,14 @@ int AppEdge::MainLoop()
 	Shader depthShader("Edge//depth.vertex", "Edge//depth.fragment");
 
 	Shader mainShader("Edge//composite.vertex", "Edge//composite.fragment");
+	mainShader.Use();
+	mainShader.SetInt("texture_diffuse1", 0);
+	mainShader.SetInt("texture_depth1", 1);
+	mainShader.SetFloat("near_plane", NEAR_PLANE);
+	mainShader.SetFloat("far_plane", FAR_PLANE);
+	mainShader.SetFloat("screen_width", AppSettings::ScreenWidth);
+	mainShader.SetFloat("screen_height", AppSettings::ScreenHeight);
+
 	Model obj(AppSettings::ModelFolder + "Dragon//Dragon.obj");
 	auto modelRotation = glm::radians(180.f);
 
@@ -20,14 +29,39 @@ int AppEdge::MainLoop()
 	Shader lightShader("Misc//light_sphere.vertex", "Misc//light_sphere.fragment");
 	Light light(glm::vec3(0.0f, 0.5f, 5.0f), glm::vec3(1.0f));
 
-	// Depth
-	Texture depthTexture;
-	depthTexture.CreateDepthMap(AppSettings::ScreenWidth, AppSettings::ScreenHeight);
-
 	// Depth FBO
-	unsigned int depthFBO;
-	glCreateFramebuffers(1, &depthFBO);
-	glNamedFramebufferTexture(depthFBO, GL_DEPTH_ATTACHMENT, depthTexture.GetID(), 0);
+	unsigned int gBufferFBO;
+	glCreateFramebuffers(1, &gBufferFBO);
+	glBindFramebuffer(GL_FRAMEBUFFER, gBufferFBO);
+
+	const int numMipmaps = 1;
+
+	// Position
+	unsigned int gPositionTexture;
+	glCreateTextures(GL_TEXTURE_2D, 1, &gPositionTexture);
+	glTextureParameteri(gPositionTexture, GL_TEXTURE_MAX_LEVEL, numMipmaps - 1);
+	glTextureParameteri(gPositionTexture, GL_TEXTURE_MIN_FILTER, GL_NEAREST); 
+	glTextureParameteri(gPositionTexture, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTextureParameteri(gPositionTexture, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTextureParameteri(gPositionTexture, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTextureStorage2D(gPositionTexture, numMipmaps, GL_RGBA16F, AppSettings::ScreenWidth, AppSettings::ScreenHeight);
+	glNamedFramebufferTexture(gBufferFBO, GL_COLOR_ATTACHMENT0, gPositionTexture, 0);
+
+	unsigned int attachments[1] = { GL_COLOR_ATTACHMENT0};
+	glNamedFramebufferDrawBuffers(gBufferFBO, 1, attachments);
+
+	// Depth render buffer
+	unsigned int depthRBO;
+	glGenRenderbuffers(1, &depthRBO);
+	glBindRenderbuffer(GL_RENDERBUFFER, depthRBO);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, AppSettings::ScreenWidth, AppSettings::ScreenHeight);
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthRBO);
+
+	// Check frame buffer
+	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+	{
+		throw std::runtime_error("Framebuffer not complete!\n");
+	}
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	// Render loop
@@ -51,7 +85,7 @@ int AppEdge::MainLoop()
 		depthShader.Use();
 		depthShader.SetMat4("projection", projection);
 		depthShader.SetMat4("view", view);
-		glBindFramebuffer(GL_FRAMEBUFFER, depthFBO);
+		glBindFramebuffer(GL_FRAMEBUFFER, gBufferFBO);
 		glClear(GL_DEPTH_BUFFER_BIT);
 		glEnable(GL_DEPTH_TEST);
 		depthShader.SetMat4("model", model);
@@ -66,12 +100,9 @@ int AppEdge::MainLoop()
 		mainShader.SetVec3("viewPos", camera->Position);
 		mainShader.SetVec3("lightPos", light.Position);
 		mainShader.SetMat4("model", model);
-		mainShader.SetInt("texture_depth1", 1);
-		depthTexture.BindDSA(1);
-		mainShader.SetFloat("near_plane", NEAR_PLANE);
-		mainShader.SetFloat("far_plane", FAR_PLANE);
-		mainShader.SetFloat("screen_width", AppSettings::ScreenWidth);
-		mainShader.SetFloat("screen_height", AppSettings::ScreenHeight);
+		
+		glBindTextureUnit(1, gPositionTexture);
+		
 		obj.Draw(mainShader);
 
 		// Light
