@@ -9,8 +9,7 @@ int AppEdge::MainLoop()
 	// Configure global opengl state
 	glEnable(GL_DEPTH_TEST);
 
-	Shader mainShader("ModelLoading//model_loading.vertex", "ModelLoading//model_loading.fragment");
-	Shader lightCubeShader("Misc//light_cube.vertex", "Misc//light_cube.fragment");
+	Shader mainShader("Edge//composite.vertex", "Edge//composite.fragment");
 	Model obj(AppSettings::ModelFolder + "Tachikoma//scene.gltf");
 
 	//glm::vec3 lightPos(0.0f, 0.5f, 5.0f);
