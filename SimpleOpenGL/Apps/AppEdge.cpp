@@ -13,7 +13,7 @@ int AppEdge::MainLoop()
 	Shader depthShader("Edge//depth.vertex", "Edge//depth.fragment");
 
 	Shader mainShader("Edge//composite.vertex", "Edge//composite.fragment");
-	Model obj(AppSettings::ModelFolder + "Zaku//scene.gltf");
+	Model obj(AppSettings::ModelFolder + "Dragon//Dragon.obj");
 	auto modelRotation = glm::radians(180.f);
 
 	//glm::vec3 lightPos(0.0f, 0.5f, 5.0f);
@@ -40,7 +40,6 @@ int AppEdge::MainLoop()
 
 		auto projection = camera->GetProjectionMatrix();
 		auto view = camera->GetViewMatrix();
-		auto projectionView = projection * view;
 
 		// Model matrix
 		glm::mat4 model = glm::mat4(1.0f);
@@ -50,9 +49,11 @@ int AppEdge::MainLoop()
 
 		// Render depth
 		depthShader.Use();
-		depthShader.SetMat4("projectionView", projectionView);
+		depthShader.SetMat4("projection", projection);
+		depthShader.SetMat4("view", view);
 		glBindFramebuffer(GL_FRAMEBUFFER, depthFBO);
 		glClear(GL_DEPTH_BUFFER_BIT);
+		glEnable(GL_DEPTH_TEST);
 		depthShader.SetMat4("model", model);
 		obj.Draw(depthShader);
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);

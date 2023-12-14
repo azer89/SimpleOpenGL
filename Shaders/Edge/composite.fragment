@@ -80,11 +80,18 @@ float DetectSilho(vec2 tPos)
         );
 }
 
+float LinearizeDepth(float depth)
+{
+    float z = depth * 2.0 - 1.0; // Back to NDC 
+    return (2.0 * near_plane * far_plane) / (far_plane + near_plane - z * (far_plane - near_plane));
+}
+
 // Blinn-Phong with glTF model
 void main()
 {
-    /*vec3 color = texture(texture_diffuse1, fs_in.TexCoords).rgb;
     float depth = texture(texture_depth1, fs_in.TexCoords).r;
+    /*vec3 color = texture(texture_diffuse1, fs_in.TexCoords).rgb;
+   
 
     // ambient
     vec3 ambient = 0.05 * color;
@@ -106,7 +113,7 @@ void main()
 	vec3 specular = vec3(0.3) * spec; // assuming bright white light color
 	//FragColor = vec4(ambient + diffuse + specular, 1.0);*/
 
-    float s = DetectSilho(fs_in.TexCoords);
+    //float s = DetectSilho(fs_in.TexCoords);
 
-    FragColor = vec4(s, s, s, 1.0);
+    FragColor = vec4(vec3(depth), 1.0);
 }
