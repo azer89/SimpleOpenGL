@@ -12,8 +12,6 @@
 
 #include <iostream>
 
-void RenderQuad();
-
 int AppBloom::MainLoop()
 {
 	// Configure global opengl state
@@ -63,7 +61,7 @@ int AppBloom::MainLoop()
 		// Third pass
 		pipeline.RenderComposite();
 
-		// Cube light
+		// Light
 		lightShader.Use();
 		lightShader.SetMat4("projection", projection);
 		lightShader.SetMat4("view", view);

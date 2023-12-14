@@ -156,6 +156,9 @@
     <ClCompile Include="System\PipelineBloom.cpp">
       <Filter>Source Files\System</Filter>
     </ClCompile>
+    <ClCompile Include="Apps\AppEdge.cpp">
+      <Filter>Source Files\App</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Settings\main.xml">
@@ -258,6 +261,9 @@
     </ClInclude>
     <ClInclude Include="System\PipelineBloom.h">
       <Filter>Header Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Apps\AppEdge.h">
+      <Filter>Header Files\Apps</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

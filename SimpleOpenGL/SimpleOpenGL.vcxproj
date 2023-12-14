@@ -154,6 +154,7 @@
     <ClCompile Include="Apps\AppDeferred.cpp" />
     <ClCompile Include="Apps\AppDeferredSponza.cpp" />
     <ClCompile Include="Apps\AppDeferredSSAO.cpp" />
+    <ClCompile Include="Apps\AppEdge.cpp" />
     <ClCompile Include="Apps\AppGeom.cpp" />
     <ClCompile Include="Apps\AppIBL.cpp" />
     <ClCompile Include="Apps\AppModelLoading.cpp" />
@@ -190,6 +191,7 @@
     <ClInclude Include="Apps\AppDeferred.h" />
     <ClInclude Include="Apps\AppDeferredSponza.h" />
     <ClInclude Include="Apps\AppDeferredSSAO.h" />
+    <ClInclude Include="Apps\AppEdge.h" />
     <ClInclude Include="Apps\AppGeom.h" />
     <ClInclude Include="Apps\AppIBL.h" />
     <ClInclude Include="Apps\AppModelLoading.h" />

@@ -13,10 +13,11 @@
 #include "AppPBRTextured.h"
 #include "AppPBRModel.h"
 #include "AppIBL.h"
+#include "AppEdge.h"
 
 int main()
 {
-	AppIBL app;
+	AppEdge app;
 	auto returnValue = app.MainLoop();
 	return returnValue;
 }
