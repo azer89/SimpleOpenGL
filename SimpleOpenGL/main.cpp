@@ -16,7 +16,7 @@
 
 int main()
 {
-	AppBloom app;
+	AppIBL app;
 	auto returnValue = app.MainLoop();
 	return returnValue;
 }

@@ -14,7 +14,7 @@ int AppIBL::MainLoop()
 	PipelineIBL ibl
 	(
 		"IBL//pbr_sketchfab.fragment",
-		"hdr//the_sky_is_on_fire_4k.hdr",
+		"hdr//neon_photostudio_4k.hdr",
 		1024,
 		128,
 		32,
@@ -34,13 +34,15 @@ int AppIBL::MainLoop()
 
 	Shader lightSphereShader("Misc//light_sphere.vertex", "Misc//light_sphere.fragment");
 	std::vector<Light> lights;
-	lights.emplace_back(glm::vec3(-1.0f, 0.1f, 1.0f ), glm::vec3(5.7f));
-	lights.emplace_back(glm::vec3(1.0f, 0.1f, 1.0f), glm::vec3(5.7f));
-	lights.emplace_back(glm::vec3(-1.0f, 0.1f, -1.0f), glm::vec3(5.7f));
-	lights.emplace_back(glm::vec3(1.0f, 0.1f, -1.0f), glm::vec3(5.7f));
+	lights.emplace_back(glm::vec3(-1.5f, 0.7f, 1.5f ), glm::vec3(15.7f, 10.f, 10.f));
+	lights.emplace_back(glm::vec3(1.5f, 0.7f, 1.5f), glm::vec3(15.7f, 10.f, 10.f));
+	lights.emplace_back(glm::vec3(-1.5f, 0.7f, -1.5f), glm::vec3(15.7f, 10.f, 10.f));
+	lights.emplace_back(glm::vec3(1.5f, 0.7f, -1.5f), glm::vec3(15.7f, 10.f, 10.f));
 
 	// Configure the viewport to the original framebuffer's screen dimensions
 	glViewport(0, 0, AppSettings::ScreenWidth, AppSettings::ScreenHeight);
+
+	float rotation = 0;
 
 	while (!GLFWWindowShouldClose())
 	{
@@ -60,19 +62,20 @@ int AppIBL::MainLoop()
 
 		// Render
 		glm::mat4 model = glm::mat4(1.0f);
-		//model = glm::rotate(model, static_cast<float>(acos(-1)), glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, rotation, glm::vec3(0.0f, 1.0f, 0.0f));
+		rotation += deltaTime * 0.2f;
 		pbrShader->SetMat4("model", model);
 		pbrShader->SetMat3("normalMatrix", glm::transpose(glm::inverse(glm::mat3(model))));
 		bool skipTextureBinding = false;
 		renderModel.Draw(*pbrShader, skipTextureBinding);
 
-		/*lightSphereShader.Use();
+		lightSphereShader.Use();
 		lightSphereShader.SetMat4("projection", camera->GetProjectionMatrix());
 		lightSphereShader.SetMat4("view", camera->GetViewMatrix());
 		for (auto& l : lights)
 		{
 			l.Render(lightSphereShader);
-		}*/
+		}
 
 		backgroundShader.Use();
 		backgroundShader.SetMat4("view", camera->GetViewMatrix());
