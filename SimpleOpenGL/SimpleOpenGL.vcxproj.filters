@@ -61,6 +61,9 @@
     <Filter Include="Resource Files\Shaders\Bloom">
       <UniqueIdentifier>{8bebaee8-fa97-420c-be94-5495980206f7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Shaders\Edge">
+      <UniqueIdentifier>{2c53a4a5-8468-4d7f-951b-fb27bf29601e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -464,6 +467,18 @@
     </None>
     <None Include="..\Shaders\Bloom\final.vertex">
       <Filter>Resource Files\Shaders\Bloom</Filter>
+    </None>
+    <None Include="..\Shaders\Edge\composite.fragment">
+      <Filter>Resource Files\Shaders\Edge</Filter>
+    </None>
+    <None Include="..\Shaders\Edge\composite.vertex">
+      <Filter>Resource Files\Shaders\Edge</Filter>
+    </None>
+    <None Include="..\Shaders\Edge\depth.fragment">
+      <Filter>Resource Files\Shaders\Edge</Filter>
+    </None>
+    <None Include="..\Shaders\Edge\depth.vertex">
+      <Filter>Resource Files\Shaders\Edge</Filter>
     </None>
   </ItemGroup>
 </Project>

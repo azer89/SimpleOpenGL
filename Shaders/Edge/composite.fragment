@@ -10,16 +10,27 @@ in VS_OUT
 } fs_in;
 
 uniform sampler2D texture_diffuse1; // Texture from glTF model
+uniform sampler2D texture_depth1;
 uniform vec3 lightPos;
 uniform vec3 viewPos;
+
+uniform float near_plane;
+uniform float far_plane;
+
+float LinearizeDepth(float depth)
+{
+    float z = depth * 2.0 - 1.0; // Back to NDC 
+    return (2.0 * near_plane * far_plane) / (far_plane + near_plane - z * (far_plane - near_plane));
+}
 
 // Blinn-Phong with glTF model
 void main()
 {
 	vec3 color = texture(texture_diffuse1, fs_in.TexCoords).rgb;
-	
-	// ambient
-	vec3 ambient = 0.05 * color;
+    float depth = texture(texture_depth1, fs_in.TexCoords).r;
+
+    // ambient
+    vec3 ambient = 0.05 * color;
 	
 	// diffuse
 	vec3 lightDir = normalize(lightPos - fs_in.FragPos);
@@ -36,5 +47,6 @@ void main()
 	spec = pow(max(dot(normal, halfwayDir), 0.0), 32.0);
 
 	vec3 specular = vec3(0.3) * spec; // assuming bright white light color
-	FragColor = vec4(ambient + diffuse + specular, 1.0);
+	//FragColor = vec4(ambient + diffuse + specular, 1.0);
+    FragColor = vec4(depth, depth, depth, 1.0);
 }

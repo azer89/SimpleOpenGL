@@ -135,7 +135,7 @@ void Camera::UpdateInternal()
 	// Matrices
 	projectionMatrix = glm::perspective(glm::radians(Zoom), 
 		static_cast<float>(AppSettings::ScreenWidth) / static_cast<float>(AppSettings::ScreenHeight),
-		0.1f, 
-		100.0f);
+		NEAR_PLANE,
+		FAR_PLANE);
 	viewMatrix = glm::lookAt(Position, Position + Front, Up);
 }

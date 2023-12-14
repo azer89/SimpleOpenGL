@@ -2,6 +2,7 @@
 #include "Shader.h"
 #include "Model.h"
 #include "Light.h"
+#include "Texture.h"
 #include "AppSettings.h"
 
 int AppEdge::MainLoop()
@@ -9,14 +10,25 @@ int AppEdge::MainLoop()
 	// Configure global opengl state
 	glEnable(GL_DEPTH_TEST);
 
+	Shader depthShader("Edge//depth.vertex", "Edge//depth.fragment");
+
 	Shader mainShader("Edge//composite.vertex", "Edge//composite.fragment");
-	Model obj(AppSettings::ModelFolder + "Tachikoma//scene.gltf");
+	Model obj(AppSettings::ModelFolder + "Zaku//scene.gltf");
+	auto modelRotation = glm::radians(180.f);
 
 	//glm::vec3 lightPos(0.0f, 0.5f, 5.0f);
 	Shader lightShader("Misc//light_sphere.vertex", "Misc//light_sphere.fragment");
 	Light light(glm::vec3(0.0f, 0.5f, 5.0f), glm::vec3(1.0f));
 
-	auto modelRotation = 0.0f;
+	// Depth
+	Texture depthTexture;
+	depthTexture.CreateDepthMap(AppSettings::ScreenWidth, AppSettings::ScreenHeight);
+
+	// Depth FBO
+	unsigned int depthFBO;
+	glCreateFramebuffers(1, &depthFBO);
+	glNamedFramebufferTexture(depthFBO, GL_DEPTH_ATTACHMENT, depthTexture.GetID(), 0);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	// Render loop
 	while (!GLFWWindowShouldClose())
@@ -28,19 +40,35 @@ int AppEdge::MainLoop()
 
 		auto projection = camera->GetProjectionMatrix();
 		auto view = camera->GetViewMatrix();
+		auto projectionView = projection * view;
 
-		// Object
+		// Model matrix
+		glm::mat4 model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
+		model = glm::rotate(model, modelRotation, glm::vec3(0.0f, 1.0f, 0.0f));
+		//modelRotation += deltaTime * 0.2f;
+
+		// Render depth
+		depthShader.Use();
+		depthShader.SetMat4("projectionView", projectionView);
+		glBindFramebuffer(GL_FRAMEBUFFER, depthFBO);
+		glClear(GL_DEPTH_BUFFER_BIT);
+		depthShader.SetMat4("model", model);
+		obj.Draw(depthShader);
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		
+		// Main shader
 		mainShader.Use();
 		mainShader.SetMat4("projection", projection);
 		mainShader.SetMat4("view", view);
 		mainShader.SetVec3("viewPos", camera->Position);
 		mainShader.SetVec3("lightPos", light.Position);
-
-		glm::mat4 model = glm::mat4(1.0f);
-		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
-		model = glm::rotate(model, modelRotation, glm::vec3(0.0f, 1.0f, 0.0f));
-		modelRotation += deltaTime * 0.2f;
 		mainShader.SetMat4("model", model);
+		mainShader.SetInt("texture_depth1", 1);
+		depthTexture.BindDSA(1);
+		mainShader.SetFloat("near_plane", NEAR_PLANE);
+		mainShader.SetFloat("far_plane", FAR_PLANE);
 		obj.Draw(mainShader);
 
 		// Light

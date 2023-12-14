@@ -18,6 +18,8 @@ constexpr float CAMERA_PITCH = 0.0f;
 constexpr float CAMERA_SPEED = 2.5f;
 constexpr float CAMERA_SENSITIVITY = 0.1f;
 constexpr float CAMERA_ZOOM = 45.0f;
+constexpr float NEAR_PLANE = 0.1f;
+constexpr float FAR_PLANE = 100.0f;
 
 class Camera
 {
