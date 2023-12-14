@@ -2,6 +2,7 @@
 
 ### Features
 * Blinn-Phong shading
+* Edge detection
 * Shadow mapping
 * Bloom postprocessing
 * Deferred shading
@@ -47,7 +48,8 @@ https://github.com/azer89/SimpleOpenGL/assets/790432/83678402-3b19-46b1-b73b-80c
 <br/>
 Edge detection
 <br/>
-<img width="800" height="600" alt="image" src="https://github.com/azer89/SimpleOpenGL/assets/790432/cf635396-ca5b-46f1-b465-3ed6c27efd9f">
+<img width="800" height="600" alt="image" src="https://github.com/azer89/SimpleOpenGL/assets/790432/caa5006f-f31d-4174-941f-ce530785b52d">
+
 
 
 <br/>
