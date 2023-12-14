@@ -99,13 +99,14 @@ Technical Resources:
 
 Assets:
 * [glTF Assets](https://github.com/KhronosGroup/glTF-Sample-Assets)
-* Skybox textures from [humus.name](https://www.humus.name/index.php?page=Textures)
 * [Polyhaven](https://polyhaven.com/)
-* [Armor model](https://sketchfab.com/3d-models/boss-emiss-test-afa4846713ba4e43910f2041977ea969)
-* [Zaku model](https://sketchfab.com/3d-models/zaku-ii-730a08b171aa4ac0a43131752150acfb)
-* [Freya model](https://sketchfab.com/3d-models/freya-crescent-6d8eae57c17f4a81a23301ee0afda8cf)
-* [Unicorn Gundam](https://sketchfab.com/3d-models/gundam-unicorn-1410ff9dd1c94807a00b8a0936170196)
+
+3D Models
+* [Armor](https://sketchfab.com/3d-models/boss-emiss-test-afa4846713ba4e43910f2041977ea969)
+* [Zaku](https://sketchfab.com/3d-models/zaku-ii-730a08b171aa4ac0a43131752150acfb)
+* [Freyal](https://sketchfab.com/3d-models/freya-crescent-6d8eae57c17f4a81a23301ee0afda8cf)
 * [Tachikoma](https://sketchfab.com/3d-models/tachikoma-7ec03deb78de4a1b908d2bc736ff0f15)
+* [Unicorn Gundam](https://sketchfab.com/3d-models/gundam-unicorn-1410ff9dd1c94807a00b8a0936170196)
 
 
 
