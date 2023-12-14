@@ -13,7 +13,7 @@ int AppIBL::MainLoop()
 
 	PipelineIBL ibl
 	(
-		"IBL//pbr.fragment",
+		"IBL//pbr_sketchfab.fragment",
 		"hdr//the_sky_is_on_fire_4k.hdr",
 		1024,
 		128,
@@ -25,7 +25,7 @@ int AppIBL::MainLoop()
 
 	Cube cube;
 
-	Model renderModel(AppSettings::ModelFolder + "DamagedHelmet//DamagedHelmet.gltf");
+	Model renderModel(AppSettings::ModelFolder + "Tachikoma//scene.gltf");
 
 	Shader backgroundShader("IBL//background.vertex", "IBL//background.fragment");
 	backgroundShader.Use();
@@ -60,7 +60,7 @@ int AppIBL::MainLoop()
 
 		// Render
 		glm::mat4 model = glm::mat4(1.0f);
-		model = glm::rotate(model, static_cast<float>(acos(-1)), glm::vec3(0.0f, 1.0f, 0.0f));
+		//model = glm::rotate(model, static_cast<float>(acos(-1)), glm::vec3(0.0f, 1.0f, 0.0f));
 		pbrShader->SetMat4("model", model);
 		pbrShader->SetMat3("normalMatrix", glm::transpose(glm::inverse(glm::mat3(model))));
 		bool skipTextureBinding = false;

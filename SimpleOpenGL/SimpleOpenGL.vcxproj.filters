@@ -153,6 +153,9 @@
     <ClCompile Include="Apps\AppBloom.cpp">
       <Filter>Source Files\App</Filter>
     </ClCompile>
+    <ClCompile Include="System\PipelineBloom.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Settings\main.xml">
@@ -252,6 +255,9 @@
     </ClInclude>
     <ClInclude Include="Apps\AppBloom.h">
       <Filter>Header Files\Apps</Filter>
+    </ClInclude>
+    <ClInclude Include="System\PipelineBloom.h">
+      <Filter>Header Files\System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -166,6 +166,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="System\AppSettings.cpp" />
     <ClCompile Include="System\Camera.cpp" />
+    <ClCompile Include="System\PipelineBloom.cpp" />
     <ClCompile Include="System\PipelineDeferred.cpp" />
     <ClCompile Include="System\Light.cpp" />
     <ClCompile Include="System\Mesh.cpp" />
@@ -200,6 +201,7 @@
     <ClInclude Include="Apps\AppSSAO.h" />
     <ClInclude Include="System\AppSettings.h" />
     <ClInclude Include="System\Camera.h" />
+    <ClInclude Include="System\PipelineBloom.h" />
     <ClInclude Include="System\PipelineDeferred.h" />
     <ClInclude Include="System\Light.h" />
     <ClInclude Include="System\Mesh.h" />
