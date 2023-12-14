@@ -71,6 +71,9 @@ int AppEdge::MainLoop()
 	}
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
+	// Uniform
+	float edgeThreshold = 0.01;
+
 	// Render loop
 	while (!GLFWWindowShouldClose())
 	{
@@ -101,6 +104,7 @@ int AppEdge::MainLoop()
 		
 		// Main shader
 		compositeShader.Use();
+		compositeShader.SetFloat("edgeThreshold", edgeThreshold);
 		glBindTextureUnit(0, gPositionTexture);
 		RenderQuad();
 
@@ -109,6 +113,23 @@ int AppEdge::MainLoop()
 		lightShader.SetMat4("projection", projection);
 		lightShader.SetMat4("view", view);
 		light.Render(lightShader);
+
+		if (showImgui)
+		{
+			ImGui_ImplOpenGL3_NewFrame();
+			ImGui_ImplGlfw_NewFrame();
+			ImGui::NewFrame();
+			ImGui::SetNextWindowSize(ImVec2(500, 200));
+
+			ImGui::Begin("Edge Detection");
+
+			ImGui::SliderFloat("Threshold", &edgeThreshold, 0.001f, 1.0f);
+
+			ImGui::End();
+
+			ImGui::Render();
+			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		}
 
 		SwapBuffers();
 	}
