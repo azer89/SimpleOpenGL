@@ -8,7 +8,9 @@ uniform sampler2D depthMap;
 
 void main()
 {
-    vec3 depth = texture(depthMap, TexCoords).rgb;
+    vec3 posValue = texture(depthMap, TexCoords).rgb;
+    //float depth = posValue.z ;
 
-    FragColor = vec4(depth, 1.0);
+    FragColor = vec4(posValue, 1.0);
+    //FragColor = vec4(vec3(depth), 1.0);
 }
