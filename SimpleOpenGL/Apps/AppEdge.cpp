@@ -29,7 +29,7 @@ int AppEdge::MainLoop()
 	compositeShader.SetFloat("screen_width", AppSettings::ScreenWidth);
 	compositeShader.SetFloat("screen_height", AppSettings::ScreenHeight);
 
-	Model obj(AppSettings::ModelFolder + "Dragon/Dragon.obj");
+	Model obj(AppSettings::ModelFolder + "Zodd/scene.gltf");
 	auto modelRotation = glm::radians(180.f);
 
 	//glm::vec3 lightPos(0.0f, 0.5f, 5.0f);
