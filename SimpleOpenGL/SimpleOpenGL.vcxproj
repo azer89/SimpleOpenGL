@@ -241,8 +241,8 @@
     <None Include="..\Shaders\Deferred\deferred_lighting.vertex" />
     <None Include="..\Shaders\Edge\composite.fragment" />
     <None Include="..\Shaders\Edge\composite.vertex" />
-    <None Include="..\Shaders\Edge\depth.fragment" />
-    <None Include="..\Shaders\Edge\depth.vertex" />
+    <None Include="..\Shaders\Edge\g_buffer.fragment" />
+    <None Include="..\Shaders\Edge\g_buffer.vertex" />
     <None Include="..\Shaders\GeometryShader\geom.fragment" />
     <None Include="..\Shaders\GeometryShader\geom.geometry" />
     <None Include="..\Shaders\GeometryShader\geom.vertex" />

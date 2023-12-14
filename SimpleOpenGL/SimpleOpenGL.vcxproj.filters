@@ -474,10 +474,10 @@
     <None Include="..\Shaders\Edge\composite.vertex">
       <Filter>Resource Files\Shaders\Edge</Filter>
     </None>
-    <None Include="..\Shaders\Edge\depth.fragment">
+    <None Include="..\Shaders\Edge\g_buffer.fragment">
       <Filter>Resource Files\Shaders\Edge</Filter>
     </None>
-    <None Include="..\Shaders\Edge\depth.vertex">
+    <None Include="..\Shaders\Edge\g_buffer.vertex">
       <Filter>Resource Files\Shaders\Edge</Filter>
     </None>
   </ItemGroup>

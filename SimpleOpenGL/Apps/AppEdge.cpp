@@ -17,20 +17,22 @@ int AppEdge::MainLoop()
 	// Configure global opengl state
 	glEnable(GL_DEPTH_TEST);
 
-	Shader depthShader("Edge//depth.vertex", "Edge//depth.fragment");
+	Shader gShader("Edge//g_buffer.vertex", "Edge//g_buffer.fragment");
 
 	InitQuad();
 
 	Shader compositeShader("Edge//composite.vertex", "Edge//composite.fragment");
 	compositeShader.Use();
-	compositeShader.SetInt("texture_depth1", 0);
+	compositeShader.SetInt("gPosition", 0);
+	compositeShader.SetInt("gNormal", 1);
+	compositeShader.SetInt("gAlbedo", 2);
 	compositeShader.SetFloat("near_plane", NEAR_PLANE);
 	compositeShader.SetFloat("far_plane", FAR_PLANE);
 	compositeShader.SetFloat("screen_width", AppSettings::ScreenWidth);
 	compositeShader.SetFloat("screen_height", AppSettings::ScreenHeight);
 
 	Model obj(AppSettings::ModelFolder + "Zodd/scene.gltf");
-	auto modelRotation = glm::radians(180.f);
+	float modelRotation = 0;
 
 	//glm::vec3 lightPos(0.0f, 0.5f, 5.0f);
 	Shader lightShader("Misc//light_sphere.vertex", "Misc//light_sphere.fragment");
@@ -54,8 +56,30 @@ int AppEdge::MainLoop()
 	glTextureStorage2D(gPositionTexture, numMipmaps, GL_RGBA16F, AppSettings::ScreenWidth, AppSettings::ScreenHeight);
 	glNamedFramebufferTexture(gBufferFBO, GL_COLOR_ATTACHMENT0, gPositionTexture, 0);
 
-	unsigned int attachments[1] = { GL_COLOR_ATTACHMENT0};
-	glNamedFramebufferDrawBuffers(gBufferFBO, 1, attachments);
+	// Normal
+	unsigned int gNormalTexture;
+	glCreateTextures(GL_TEXTURE_2D, 1, &gNormalTexture);
+	glTextureParameteri(gNormalTexture, GL_TEXTURE_MAX_LEVEL, numMipmaps - 1);
+	glTextureParameteri(gNormalTexture, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTextureParameteri(gNormalTexture, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTextureParameteri(gNormalTexture, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTextureParameteri(gNormalTexture, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTextureStorage2D(gNormalTexture, numMipmaps, GL_RGBA16F, AppSettings::ScreenWidth, AppSettings::ScreenHeight);
+	glNamedFramebufferTexture(gBufferFBO, GL_COLOR_ATTACHMENT1, gNormalTexture, 0);
+
+	// Albedo
+	unsigned int gAlbedoTexture;
+	glCreateTextures(GL_TEXTURE_2D, 1, &gAlbedoTexture);
+	glTextureParameteri(gAlbedoTexture, GL_TEXTURE_MAX_LEVEL, numMipmaps - 1);
+	glTextureParameteri(gAlbedoTexture, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTextureParameteri(gAlbedoTexture, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTextureParameteri(gAlbedoTexture, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTextureParameteri(gAlbedoTexture, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTextureStorage2D(gAlbedoTexture, numMipmaps, GL_RGBA8, AppSettings::ScreenWidth, AppSettings::ScreenHeight);
+	glNamedFramebufferTexture(gBufferFBO, GL_COLOR_ATTACHMENT2, gAlbedoTexture, 0);
+
+	unsigned int attachments[3] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
+	glNamedFramebufferDrawBuffers(gBufferFBO, 3, attachments);
 
 	// Depth render buffer
 	unsigned int depthRBO;
@@ -79,7 +103,7 @@ int AppEdge::MainLoop()
 	while (!GLFWWindowShouldClose())
 	{
 		ProcessLoop(
-			glm::vec4(0.2f, 0.3f, 0.3f, 1.0f),
+			glm::vec4(1.0f, 1.0f, 1.0f, 1.0f),
 			GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT
 		);
 
@@ -93,13 +117,13 @@ int AppEdge::MainLoop()
 		//modelRotation += deltaTime * 0.2f;
 
 		// Render depth
-		depthShader.Use();
-		depthShader.SetMat4("projection", projection);
-		depthShader.SetMat4("view", view);
-		depthShader.SetMat4("model", model);
+		gShader.Use();
+		gShader.SetMat4("projection", projection);
+		gShader.SetMat4("view", view);
+		gShader.SetMat4("model", model);
 		glBindFramebuffer(GL_FRAMEBUFFER, gBufferFBO);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		obj.Draw(depthShader);
+		obj.Draw(gShader);
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
@@ -108,6 +132,8 @@ int AppEdge::MainLoop()
 		compositeShader.SetFloat("edgeThreshold", edgeThreshold);
 		compositeShader.SetInt("inflate", lineThickness - 1);
 		glBindTextureUnit(0, gPositionTexture);
+		glBindTextureUnit(1, gNormalTexture);
+		glBindTextureUnit(2, gAlbedoTexture);
 		RenderQuad();
 
 		// Light
@@ -121,7 +147,7 @@ int AppEdge::MainLoop()
 			ImGui_ImplOpenGL3_NewFrame();
 			ImGui_ImplGlfw_NewFrame();
 			ImGui::NewFrame();
-			ImGui::SetNextWindowSize(ImVec2(500, 200));
+			ImGui::SetNextWindowSize(ImVec2(1000, 200));
 
 			ImGui::Begin("Edge Detection");
 
