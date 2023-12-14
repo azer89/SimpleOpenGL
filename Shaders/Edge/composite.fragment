@@ -1,119 +1,14 @@
-#version 330 core
+#version 460 core
 
 out vec4 FragColor;
 
-in VS_OUT 
-{
-	vec3 FragPos;
-	vec3 Normal;
-	vec2 TexCoords;
-} fs_in;
+in vec2 TexCoords;
 
-uniform sampler2D texture_diffuse1; // Texture from glTF model
-uniform sampler2D texture_depth1;
-uniform vec3 lightPos;
-uniform vec3 viewPos;
+uniform sampler2D depthMap;
 
-uniform float near_plane;
-uniform float far_plane;
-uniform float screen_width;
-uniform float screen_height;
-
-float GetTolerance(float d, float k)
-{
-    // -------------------------------------------
-    // Find a tolerance for depth that is constant
-    // in view space (k in view space).
-    //
-    // tol = k*ddx(ZtoDepth(z))
-    // -------------------------------------------
-
-    float A = -(far_plane + near_plane) / (far_plane - near_plane);
-    float B = -2.0 * far_plane * near_plane / (far_plane - near_plane);
-    d = d * 2.0 - 1.0;
-    return -k * (d + A) * (d + A) / B;
-}
-
-float DetectSilho(vec2 tPos, vec2 dir)
-{
-    // -------------------------------------------
-    //   x0 ___ x1----o 
-    //          :\    : 
-    //       r0 : \   : r1
-    //          :  \  : 
-    //          o---x2 ___ x3
-    //
-    // r0 and r1 are the differences between actual
-    // and expected (as if x0..3 where on the same
-    // plane) depth values.
-    // -------------------------------------------
-
-    //vec2 sz(1.0/screen_width, 1.0/screen_height);
-
-    //float x0 = abs(texelFetch(iChannel0, (fragCoord + dir*-2), 0).a);
-    //float x1 = abs(texelFetch(iChannel0, (fragCoord + dir*-1), 0).a);
-    //float x2 = abs(texelFetch(iChannel0, (fragCoord + dir* 0), 0).a);
-    //float x3 = abs(texelFetch(iChannel0, (fragCoord + dir* 1), 0).a);
-    vec2 offst = vec2(dir.x / screen_width, dir.y / screen_height);
-
-    float x0 = texture(texture_depth1, tPos + offst * -2.0).r;
-    float x1 = texture(texture_depth1, tPos + offst * -1.0).r;
-    float x2 = texture(texture_depth1, tPos + offst *  0.0).r;
-    float x3 = texture(texture_depth1, tPos + offst *  1.0).r;
-
-    float d0 = (x1 - x0);
-    float d1 = (x2 - x3);
-
-    float r0 = x1 + d0 - x2;
-    float r1 = x2 + d1 - x1;
-
-    float tol = GetTolerance(x2, 0.04);
-
-    return smoothstep(0.0, tol * tol, max(-r0 * r1, 0.0));
-}
-
-float DetectSilho(vec2 tPos)
-{
-    return max(
-        DetectSilho(tPos, vec2(1, 0)), // Horizontal
-        DetectSilho(tPos, vec2(0, 1))  // Vertical
-        );
-}
-
-float LinearizeDepth(float depth)
-{
-    float z = depth * 2.0 - 1.0; // Back to NDC 
-    return (2.0 * near_plane * far_plane) / (far_plane + near_plane - z * (far_plane - near_plane));
-}
-
-// Blinn-Phong with glTF model
 void main()
 {
-    vec3 posBuffer = texture(texture_depth1, fs_in.TexCoords).rgb;
-    /*vec3 color = texture(texture_diffuse1, fs_in.TexCoords).rgb;
-   
+    vec3 depth = texture(depthMap, TexCoords).rgb;
 
-    // ambient
-    vec3 ambient = 0.05 * color;
-	
-	// diffuse
-	vec3 lightDir = normalize(lightPos - fs_in.FragPos);
-	vec3 normal = normalize(fs_in.Normal);
-	float diff = max(dot(lightDir, normal), 0.0);
-	vec3 diffuse = diff * color;
-	
-	// specular
-	vec3 viewDir = normalize(viewPos - fs_in.FragPos);
-	vec3 reflectDir = reflect(-lightDir, normal);
-	float spec = 0.0;
-
-	vec3 halfwayDir = normalize(lightDir + viewDir);  
-	spec = pow(max(dot(normal, halfwayDir), 0.0), 32.0);
-
-	vec3 specular = vec3(0.3) * spec; // assuming bright white light color
-	//FragColor = vec4(ambient + diffuse + specular, 1.0);*/
-
-    //float s = DetectSilho(fs_in.TexCoords);
-
-    FragColor = vec4(posBuffer, 1.0);
+    FragColor = vec4(depth, 1.0);
 }

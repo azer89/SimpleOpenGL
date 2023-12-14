@@ -6,12 +6,20 @@
 #include "AppSettings.h"
 #include <stdexcept>
 
+unsigned int quadVAO;
+unsigned int quadVBO;
+void InitQuad();
+
+void RenderQuad();
+
 int AppEdge::MainLoop()
 {
 	// Configure global opengl state
 	glEnable(GL_DEPTH_TEST);
 
 	Shader depthShader("Edge//depth.vertex", "Edge//depth.fragment");
+
+	InitQuad();
 
 	Shader mainShader("Edge//composite.vertex", "Edge//composite.fragment");
 	mainShader.Use();
@@ -101,9 +109,10 @@ int AppEdge::MainLoop()
 		mainShader.SetVec3("lightPos", light.Position);
 		mainShader.SetMat4("model", model);
 		
-		glBindTextureUnit(1, gPositionTexture);
-		
-		obj.Draw(mainShader);
+		glBindTextureUnit(0, gPositionTexture);
+		RenderQuad();
+
+		//obj.Draw(mainShader);
 
 		// Light
 		lightShader.Use();
@@ -117,4 +126,37 @@ int AppEdge::MainLoop()
 	Terminate();
 
 	return 0;
+}
+
+void InitQuad()
+{
+	// Quad
+	constexpr float quadVertices[] = {
+		// Positions		// Texture Coords
+		-1.0f,  1.0f, 0.0f, 0.0f, 1.0f,
+		-1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
+		 1.0f,  1.0f, 0.0f, 1.0f, 1.0f,
+		 1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
+	};
+
+	glCreateBuffers(1, &quadVBO);
+	glNamedBufferStorage(quadVBO, sizeof(quadVertices), &quadVertices, GL_DYNAMIC_STORAGE_BIT);
+	glCreateVertexArrays(1, &quadVAO);
+	glVertexArrayVertexBuffer(quadVAO, 0, quadVBO, 0, 5 * sizeof(float));
+
+	glEnableVertexArrayAttrib(quadVAO, 0);
+	glEnableVertexArrayAttrib(quadVAO, 1);
+
+	glVertexArrayAttribFormat(quadVAO, 0, 3, GL_FLOAT, GL_FALSE, 0);
+	glVertexArrayAttribFormat(quadVAO, 1, 2, GL_FLOAT, GL_FALSE, 3 * sizeof(float));
+
+	glVertexArrayAttribBinding(quadVAO, 0, 0);
+	glVertexArrayAttribBinding(quadVAO, 1, 0);
+}
+
+void RenderQuad()
+{
+	glBindVertexArray(quadVAO);
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	glBindVertexArray(0);
 }
