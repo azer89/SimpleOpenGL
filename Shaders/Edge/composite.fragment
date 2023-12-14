@@ -7,19 +7,20 @@ in vec2 TexCoords;
 uniform sampler2D depthMap;
 
 uniform float edgeThreshold;
+uniform int inflate = 3;
 
 float GetEdge(vec2 coord)
 {
     vec2 texelSize = 1.0 / textureSize(depthMap, 0);
 
-    float s00 = texture(depthMap, coord + ivec2(-1, 1) * texelSize).z;
-    float s10 = texture(depthMap, coord + ivec2(-1, 0) * texelSize).z;
-    float s20 = texture(depthMap, coord + ivec2(-1, -1) * texelSize).z;
-    float s01 = texture(depthMap, coord + ivec2(0, 1) * texelSize).z;
-    float s21 = texture(depthMap, coord + ivec2(0, -1) * texelSize).z;
-    float s02 = texture(depthMap, coord + ivec2(1, 1) * texelSize).z;
-    float s12 = texture(depthMap, coord + ivec2(1, 0) * texelSize).z;
-    float s22 = texture(depthMap, coord + ivec2(1, -1) * texelSize).z;
+    float s00 = texture(depthMap, coord + vec2(-1, 1) * texelSize).z;
+    float s10 = texture(depthMap, coord + vec2(-1, 0) * texelSize).z;
+    float s20 = texture(depthMap, coord + vec2(-1, -1) * texelSize).z;
+    float s01 = texture(depthMap, coord + vec2(0, 1) * texelSize).z;
+    float s21 = texture(depthMap, coord + vec2(0, -1) * texelSize).z;
+    float s02 = texture(depthMap, coord + vec2(1, 1) * texelSize).z;
+    float s12 = texture(depthMap, coord + vec2(1, 0) * texelSize).z;
+    float s22 = texture(depthMap, coord + vec2(1, -1) * texelSize).z;
 
     float sx = s00 + 2 * s10 + s20 - (s02 + 2 * s12 + s22);
     float sy = s00 + 2 * s01 + s02 - (s20 + 2 * s21 + s22);
@@ -35,7 +36,16 @@ float GetEdge(vec2 coord)
 
 void main()
 {
+    vec2 texelSize = 1.0 / textureSize(depthMap, 0);
     float edge = GetEdge(TexCoords);
+
+    // Makes silhouettes thicker
+    for (int i = 1; i <= inflate; i++)
+    {
+        edge = max(edge, GetEdge(TexCoords + vec2(i, 0) * texelSize));
+        edge = max(edge, GetEdge(TexCoords + vec2(0, i) * texelSize));
+    }
+
     if (edge > 0.0)
     {
         FragColor = vec4(0.0, 0.0, 0.0, 1.0);

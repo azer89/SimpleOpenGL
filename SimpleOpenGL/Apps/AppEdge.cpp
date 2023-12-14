@@ -73,6 +73,7 @@ int AppEdge::MainLoop()
 
 	// Uniform
 	float edgeThreshold = 0.01;
+	float lineThickness = 1;
 
 	// Render loop
 	while (!GLFWWindowShouldClose())
@@ -105,6 +106,7 @@ int AppEdge::MainLoop()
 		// Main shader
 		compositeShader.Use();
 		compositeShader.SetFloat("edgeThreshold", edgeThreshold);
+		compositeShader.SetInt("inflate", lineThickness - 1);
 		glBindTextureUnit(0, gPositionTexture);
 		RenderQuad();
 
@@ -124,6 +126,7 @@ int AppEdge::MainLoop()
 			ImGui::Begin("Edge Detection");
 
 			ImGui::SliderFloat("Threshold", &edgeThreshold, 0.001f, 1.0f);
+			ImGui::SliderFloat("Line thickness", &lineThickness, 1, 5);
 
 			ImGui::End();
 
