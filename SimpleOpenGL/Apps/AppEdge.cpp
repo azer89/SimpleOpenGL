@@ -34,9 +34,8 @@ int AppEdge::MainLoop()
 	Model obj(AppSettings::ModelFolder + "Zodd/scene.gltf");
 	float modelRotation = 0;
 
-	//glm::vec3 lightPos(0.0f, 0.5f, 5.0f);
-	Shader lightShader("Misc//light_sphere.vertex", "Misc//light_sphere.fragment");
-	Light light(glm::vec3(0.0f, 0.5f, 5.0f), glm::vec3(1.0f));
+	//Shader lightShader("Misc//light_sphere.vertex", "Misc//light_sphere.fragment");
+	//Light light(glm::vec3(0.0f, 0.5f, 5.0f), glm::vec3(1.0f));
 
 	// Depth FBO
 	unsigned int gBufferFBO;
@@ -98,6 +97,7 @@ int AppEdge::MainLoop()
 	// Uniform
 	float edgeThreshold = 0.01;
 	float lineThickness = 1;
+	float ambient = 0.f;
 
 	// Render loop
 	while (!GLFWWindowShouldClose())
@@ -131,16 +131,17 @@ int AppEdge::MainLoop()
 		compositeShader.Use();
 		compositeShader.SetFloat("edgeThreshold", edgeThreshold);
 		compositeShader.SetInt("inflate", lineThickness - 1);
+		compositeShader.SetFloat("ambient", ambient);
 		glBindTextureUnit(0, gPositionTexture);
 		glBindTextureUnit(1, gNormalTexture);
 		glBindTextureUnit(2, gAlbedoTexture);
 		RenderQuad();
 
 		// Light
-		lightShader.Use();
+		/*lightShader.Use();
 		lightShader.SetMat4("projection", projection);
 		lightShader.SetMat4("view", view);
-		light.Render(lightShader);
+		light.Render(lightShader);*/
 
 		if (showImgui)
 		{
@@ -153,6 +154,7 @@ int AppEdge::MainLoop()
 
 			ImGui::SliderFloat("Threshold", &edgeThreshold, 0.001f, 1.0f);
 			ImGui::SliderFloat("Line thickness", &lineThickness, 1, 5);
+			ImGui::SliderFloat("Ambient light", &ambient, 0, 1);
 
 			ImGui::End();
 
