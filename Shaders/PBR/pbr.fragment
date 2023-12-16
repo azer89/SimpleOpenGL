@@ -19,7 +19,7 @@ uniform vec3 lightColors[MAX_LIGHT_COUNT] ;
 
 uniform vec3 camPos;
 
-// PBR Functions in a sperate file
+// PBR Functions in a separate file
 #include PBR//pbr_include.fragment
 
 void main()

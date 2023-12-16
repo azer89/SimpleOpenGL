@@ -128,14 +128,14 @@ void AppIBL::RenderDebugCubes(const Cube& cube, const PipelineIBL& ibl)
 
 	model = glm::mat4(1.0f);
 	model = glm::scale(model, glm::vec3(0.2));
-	model = glm::translate(model, glm::vec3(0.f, -8.f, 0.f));
+	model = glm::translate(model, glm::vec3(0.f, -7.f, 0.f));
 	simpleCubeShader->SetMat4("model", model);
 	glBindTextureUnit(0, ibl.GetIrradianceCubemap());
 	cube.Draw();
 
 	model = glm::mat4(1.0f);
 	model = glm::scale(model, glm::vec3(0.2));
-	model = glm::translate(model, glm::vec3(4.f, -8.f, 0.f));
+	model = glm::translate(model, glm::vec3(4.f, -6.f, 0.f));
 	simpleCubeShader->SetMat4("model", model);
 	glBindTextureUnit(0, ibl.GetPrefilterCubemap());
 	cube.Draw();
