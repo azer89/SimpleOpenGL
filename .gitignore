@@ -405,3 +405,5 @@ FodyWeavers.xsd
 
 #imgui
 SimpleOpenGL/imgui.ini
+
+External/VS_Projects/assimp/*
