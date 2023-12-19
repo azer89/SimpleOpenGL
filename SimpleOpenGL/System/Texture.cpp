@@ -173,7 +173,7 @@ void Texture::CreateCubeMap(const std::vector<std::string>& files, const std::st
 	glTextureParameteri(id, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 }
 
-void Texture::BindDSA(unsigned int textureUnit)
+void Texture::Bind(unsigned int textureUnit)
 {
 	// DSA
 	glBindTextureUnit(textureUnit, id);

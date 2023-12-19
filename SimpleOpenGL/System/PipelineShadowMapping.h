@@ -14,7 +14,7 @@ public:
 	PipelineShadowMapping(int depthWidth_, int depthHeight_);
 
 	Shader* GetDepthShader() { return depthShader.get(); }
-	void BindDepthTexture(unsigned int index) { depthTexture->BindDSA(index); }
+	void BindDepthTexture(unsigned int index) { depthTexture->Bind(index); }
 	glm::mat4 GetLightSpaceMatrix() { return lightSpaceMatrix; }
 
 	void StartRenderDepth(float nearPlane_, float farPlane_, glm::vec3 lightPosition, glm::vec3 target);

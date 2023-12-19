@@ -77,7 +77,7 @@ int AppBlinnPhong::MainLoop()
 
 		// floor
 		glBindVertexArray(VAO);
-		texture.BindDSA(0);
+		texture.Bind(0);
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 
 		SwapBuffers();

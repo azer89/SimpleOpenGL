@@ -169,7 +169,7 @@ void AppDeferred::RenderScene(const Shader& shader)
 
 	model = glm::mat4(1.0f);
 	shader.SetMat4("model", model);
-	grassTexture->BindDSA(0);
+	grassTexture->Bind(0);
 	glBindVertexArray(planeVAO);
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 }

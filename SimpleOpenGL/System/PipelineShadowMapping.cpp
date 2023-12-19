@@ -85,7 +85,7 @@ void PipelineShadowMapping::DebugDepth()
 	debugShader->Use();
 	debugShader->SetFloat("near_plane", nearPlane);
 	debugShader->SetFloat("far_plane", farPlane);
-	depthTexture->BindDSA(0);
+	depthTexture->Bind(0);
 	
 	glBindVertexArray(quadVAO);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);

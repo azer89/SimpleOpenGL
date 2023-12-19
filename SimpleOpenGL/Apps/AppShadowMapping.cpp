@@ -85,7 +85,7 @@ int AppShadowMapping::MainLoop()
 		mainShader.SetVec3("lightPos", light.Position);
 		mainShader.SetMat4("lightSpaceMatrix", pipeline.GetLightSpaceMatrix());
 		
-		planeTexture.BindDSA(0);
+		planeTexture.Bind(0);
 		pipeline.BindDepthTexture(1);
 
 		RenderScene(mainShader);

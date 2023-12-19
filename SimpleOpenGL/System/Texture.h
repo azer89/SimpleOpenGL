@@ -27,7 +27,7 @@ public:
 	void CreateDepthMap(unsigned int width, unsigned int height);
 	void CreateCubeMap(const std::vector<std::string>& files, const std::string& directory);
 
-	void BindDSA(unsigned int textureUnit);
+	void Bind(unsigned int textureUnit);
 
 	unsigned int GetID();
 	TextureType GetType();
