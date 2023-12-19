@@ -173,14 +173,6 @@ void Texture::CreateCubeMap(const std::vector<std::string>& files, const std::st
 	glTextureParameteri(id, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 }
 
-// TODO This should be delete after DSA migration
-void Texture::Bind(GLenum textureIndex)
-{
-	// Non DSA
-	glActiveTexture(textureIndex);
-	glBindTexture(GL_TEXTURE_2D, id);
-}
-
 void Texture::BindDSA(unsigned int textureUnit)
 {
 	// DSA

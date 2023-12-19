@@ -56,7 +56,7 @@ int AppBoxes::MainLoop()
 			GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT
 		);
 
-		texture.Bind(GL_TEXTURE0);
+		texture.BindDSA(0);
 
 		shader.Use();
 		shader.SetMat4("projection", camera->GetProjectionMatrix());
