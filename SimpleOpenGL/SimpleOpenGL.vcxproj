@@ -116,14 +116,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\azer\workspace\SimpleOpenGL\External\GLAD\GLAD\include;C:\Users\azer\workspace\SimpleOpenGL\External\GLFW\include;C:\Users\azer\workspace\SimpleOpenGL\External\STB;C:\Users\azer\workspace\SimpleOpenGL\External\TinyXML\TinyXML;C:\Users\azer\workspace\SimpleOpenGL\External\GLM;C:\Users\azer\workspace\SimpleOpenGL\External\ASSIMP\include;C:\Users\azer\workspace\SimpleOpenGL\SimpleOpenGL\Apps;C:\Users\azer\workspace\SimpleOpenGL\SimpleOpenGL\System;C:\Users\azer\workspace\SimpleOpenGL\External\imgui;C:\Users\azer\workspace\SimpleOpenGL\External\imgui\backends</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\azer\workspace\SimpleOpenGL\External\GLAD\GLAD\include;C:\Users\azer\workspace\SimpleOpenGL\External\GLFW\include;C:\Users\azer\workspace\SimpleOpenGL\External\STB;C:\Users\azer\workspace\SimpleOpenGL\External\TinyXML\TinyXML;C:\Users\azer\workspace\SimpleOpenGL\External\GLM;C:\Users\azer\workspace\SimpleOpenGL\SimpleOpenGL\Apps;C:\Users\azer\workspace\SimpleOpenGL\SimpleOpenGL\System;C:\Users\azer\workspace\SimpleOpenGL\External\imgui;C:\Users\azer\workspace\SimpleOpenGL\External\imgui\backends;C:\Users\azer\workspace\SimpleOpenGL\External\assimp\include;C:\Users\azer\workspace\SimpleOpenGL\External\VS_Projects\assimp\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\azer\workspace\SimpleOpenGL\External\ASSIMP\lib-vc2022\;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.19041.0\um\x64\;C:\Users\azer\workspace\SimpleOpenGL\External\GLAD\x64\Debug\;C:\Users\azer\workspace\SimpleOpenGL\External\GLFW\lib-vc2022\;C:\Users\azer\workspace\SimpleOpenGL\External\TinyXML\x64\Debug\;C:\Users\azer\workspace\SimpleOpenGL\External\VS_Projects\imgui_opengl\x64\Debug\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>GLAD.lib;OpenGL32.Lib;TinyXML.lib;glfw3.lib;glfw3_mt.lib;glfw3dll.lib;assimp-vc142-mtd.lib;imgui_opengl.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\azer\workspace\SimpleOpenGL\External\VS_Projects\assimp\lib\Debug\;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.19041.0\um\x64\;C:\Users\azer\workspace\SimpleOpenGL\External\GLAD\x64\Debug\;C:\Users\azer\workspace\SimpleOpenGL\External\GLFW\lib-vc2022\;C:\Users\azer\workspace\SimpleOpenGL\External\TinyXML\x64\Debug\;C:\Users\azer\workspace\SimpleOpenGL\External\VS_Projects\imgui_opengl\x64\Debug\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>GLAD.lib;OpenGL32.Lib;TinyXML.lib;glfw3.lib;glfw3_mt.lib;glfw3dll.lib;assimp-vc143-mtd.lib;imgui_opengl.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -134,7 +134,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\azer\workspace\SimpleOpenGL\External\GLAD\GLAD\include;C:\Users\azer\workspace\SimpleOpenGL\External\GLFW\include;C:\Users\azer\workspace\SimpleOpenGL\External\STB;C:\Users\azer\workspace\SimpleOpenGL\External\TinyXML\TinyXML;C:\Users\azer\workspace\SimpleOpenGL\External\GLM;C:\Users\azer\workspace\SimpleOpenGL\External\ASSIMP\include;C:\Users\azer\workspace\SimpleOpenGL\SimpleOpenGL\Apps;C:\Users\azer\workspace\SimpleOpenGL\SimpleOpenGL\System;C:\Users\azer\workspace\SimpleOpenGL\External\imgui;C:\Users\azer\workspace\SimpleOpenGL\External\imgui\backends</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\azer\workspace\SimpleOpenGL\External\GLAD\GLAD\include;C:\Users\azer\workspace\SimpleOpenGL\External\GLFW\include;C:\Users\azer\workspace\SimpleOpenGL\External\STB;C:\Users\azer\workspace\SimpleOpenGL\External\TinyXML\TinyXML;C:\Users\azer\workspace\SimpleOpenGL\External\GLM;C:\Users\azer\workspace\SimpleOpenGL\SimpleOpenGL\Apps;C:\Users\azer\workspace\SimpleOpenGL\SimpleOpenGL\System;C:\Users\azer\workspace\SimpleOpenGL\External\imgui;C:\Users\azer\workspace\SimpleOpenGL\External\imgui\backends;C:\Users\azer\workspace\SimpleOpenGL\External\assimp\include;C:\Users\azer\workspace\SimpleOpenGL\External\VS_Projects\assimp\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -142,8 +142,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\azer\workspace\SimpleOpenGL\External\ASSIMP\lib-vc2022\;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.19041.0\um\x64\;C:\Users\azer\workspace\SimpleOpenGL\External\GLAD\x64\Release\;C:\Users\azer\workspace\SimpleOpenGL\External\GLFW\lib-vc2022\;C:\Users\azer\workspace\SimpleOpenGL\External\TinyXML\x64\Release\;C:\Users\azer\workspace\SimpleOpenGL\External\VS_Projects\imgui_opengl\x64\Release\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>GLAD.lib;OpenGL32.Lib;TinyXML.lib;glfw3.lib;glfw3_mt.lib;glfw3dll.lib;assimp-vc142-mtd.lib;imgui_opengl.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\azer\workspace\SimpleOpenGL\External\VS_Projects\assimp\lib\Release\;C:\Program Files (x86)\Windows Kits\10\Lib\10.0.19041.0\um\x64\;C:\Users\azer\workspace\SimpleOpenGL\External\GLAD\x64\Release\;C:\Users\azer\workspace\SimpleOpenGL\External\GLFW\lib-vc2022\;C:\Users\azer\workspace\SimpleOpenGL\External\TinyXML\x64\Release\;C:\Users\azer\workspace\SimpleOpenGL\External\VS_Projects\imgui_opengl\x64\Release\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>GLAD.lib;OpenGL32.Lib;TinyXML.lib;glfw3.lib;glfw3_mt.lib;glfw3dll.lib;assimp-vc143-mt.lib;imgui_opengl.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
