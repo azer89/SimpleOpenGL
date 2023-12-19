@@ -28,8 +28,8 @@ int AppEdge::MainLoop()
 	compositeShader.SetInt("gAlbedo", 2);
 	compositeShader.SetFloat("near_plane", NEAR_PLANE);
 	compositeShader.SetFloat("far_plane", FAR_PLANE);
-	compositeShader.SetFloat("screen_width", AppSettings::ScreenWidth);
-	compositeShader.SetFloat("screen_height", AppSettings::ScreenHeight);
+	compositeShader.SetFloat("screen_width", static_cast<float>(AppSettings::ScreenWidth));
+	compositeShader.SetFloat("screen_height", static_cast<float>(AppSettings::ScreenHeight));
 
 	Model obj(AppSettings::ModelFolder + "Zodd/scene.gltf");
 	float modelRotation = 0;
@@ -95,8 +95,8 @@ int AppEdge::MainLoop()
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	// Uniform
-	float edgeThreshold = 0.01;
-	float lineThickness = 1;
+	float edgeThreshold = 0.01f;
+	float lineThickness = 1.f;
 	float ambient = 0.f;
 
 	// Render loop
