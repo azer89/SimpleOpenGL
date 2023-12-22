@@ -3,7 +3,7 @@
 
 #include "AppBase.h"
 
-class AppBlinnPhong : AppBase
+class AppBlinnPhong final : AppBase
 {
 public:
 	int MainLoop() override;

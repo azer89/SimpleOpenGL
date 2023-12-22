@@ -7,7 +7,7 @@
 
 #include <memory>
 
-class AppPBRTextured : AppBase
+class AppPBRTextured final : AppBase
 {
 public:
 	int MainLoop() override;

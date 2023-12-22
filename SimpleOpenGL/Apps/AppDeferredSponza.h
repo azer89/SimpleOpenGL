@@ -7,7 +7,7 @@
 #include "Light.h"
 #include "Texture.h"
 
-class AppDeferredSponza : AppBase
+class AppDeferredSponza final : AppBase
 {
 public:
 	int MainLoop() override;

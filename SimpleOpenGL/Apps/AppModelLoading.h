@@ -3,7 +3,7 @@
 
 #include "AppBase.h"
 
-class AppModelLoading : AppBase
+class AppModelLoading final : AppBase
 {
 public:
 	int MainLoop() override;

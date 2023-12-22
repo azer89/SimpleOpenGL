@@ -3,7 +3,7 @@
 
 #include "AppBase.h"
 
-class AppBloom : AppBase
+class AppBloom final : AppBase
 {
 public:
 	int MainLoop() override;

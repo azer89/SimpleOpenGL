@@ -5,7 +5,7 @@
 #include "Shader.h"
 #include "Model.h"
 
-class AppShadowMapping : AppBase
+class AppShadowMapping final : AppBase
 {
 public:
 	int MainLoop() override;

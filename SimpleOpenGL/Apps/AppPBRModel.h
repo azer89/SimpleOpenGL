@@ -7,7 +7,7 @@
 
 #include <memory>
 
-class AppPBRModel : AppBase
+class AppPBRModel final : AppBase
 {
 public:
 	int MainLoop() override;

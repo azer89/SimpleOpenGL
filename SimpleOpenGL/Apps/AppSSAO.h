@@ -8,7 +8,7 @@
 
 #include <memory>
 
-class AppSSAO : AppBase
+class AppSSAO final : AppBase
 {
 public:
 	int MainLoop() override;
