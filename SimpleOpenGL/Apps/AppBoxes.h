@@ -3,7 +3,7 @@
 
 #include "AppBase.h"
 
-class AppBoxes : AppBase
+class AppBoxes final : AppBase
 {
 public:
 	AppBoxes();

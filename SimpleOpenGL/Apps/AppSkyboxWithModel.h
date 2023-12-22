@@ -3,7 +3,7 @@
 
 #include "AppBase.h"
 
-class AppSkyboxWithModel : AppBase
+class AppSkyboxWithModel final : AppBase
 {
 public:
 	int MainLoop() override;

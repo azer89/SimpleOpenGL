@@ -3,7 +3,7 @@
 
 #include "AppBase.h"
 
-class AppGeom : AppBase
+class AppGeom final : AppBase
 {
 public:
 	int MainLoop() override;

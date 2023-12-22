@@ -3,7 +3,7 @@
 
 #include "AppBase.h"
 
-class AppEdge : AppBase
+class AppEdge final : AppBase
 {
 public:
 	int MainLoop() override;

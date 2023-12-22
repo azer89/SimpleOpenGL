@@ -7,7 +7,7 @@
 
 #include <memory>
 
-class AppIBL : AppBase
+class AppIBL final : AppBase
 {
 public:
 	int MainLoop() override;
