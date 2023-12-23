@@ -38,7 +38,7 @@ void main()
 	vec3 tangentNormal = texture(texture_normal1, TexCoords).xyz * 2.0 - 1.0;
 
     // Input lighting data
-    vec3 N = getNormalFromMap(tangentNormal, WorldPos, Normal, TexCoords);
+    vec3 N = GetNormalFromMap(tangentNormal, WorldPos, Normal, TexCoords);
 	vec3 V = normalize(camPos - WorldPos);
 	vec3 R = reflect(-V, N);
 

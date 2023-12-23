@@ -30,7 +30,7 @@ void main()
     float ao = texture(texture_ao1, TexCoords).r; // Red channel
 
     vec3 tangentNormal = texture(texture_normal1, TexCoords).xyz * 2.0 - 1.0;
-    vec3 N = getNormalFromMap(tangentNormal, WorldPos, Normal, TexCoords);
+    vec3 N = GetNormalFromMap(tangentNormal, WorldPos, Normal, TexCoords);
 
     vec3 V = normalize(camPos - WorldPos);
 

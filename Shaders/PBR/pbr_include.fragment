@@ -1,7 +1,7 @@
 const float PI = acos(-1.0);
 
 // Easy trick to get tangent-normals to world-space to keep PBR code simplified.
-vec3 getNormalFromMap(vec3 tangentNormal, vec3 worldPos, vec3 normal, vec2 texCoords)
+vec3 GetNormalFromMap(vec3 tangentNormal, vec3 worldPos, vec3 normal, vec2 texCoords)
 {
     vec3 Q1 = dFdx(worldPos);
     vec3 Q2 = dFdy(worldPos);
