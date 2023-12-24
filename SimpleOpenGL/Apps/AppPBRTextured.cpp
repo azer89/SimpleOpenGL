@@ -49,12 +49,12 @@ void AppPBRTextured::InitScene()
 {
 	dragonModel = std::make_unique<Model>(AppSettings::ModelFolder + "Dragon//Dragon.obj");
 
-	dragonModel->AddTextureIfEmpty(TEXTURE_DIFFUSE, AppSettings::TextureFolder + "pbr//rusted_iron//albedo.png");
-	dragonModel->AddTextureIfEmpty(TEXTURE_NORMAL, AppSettings::TextureFolder + "pbr//rusted_iron//normal.png");
-	dragonModel->AddTextureIfEmpty(TEXTURE_METALNESS, AppSettings::TextureFolder + "pbr//rusted_iron//metallic.png");
-	dragonModel->AddTextureIfEmpty(TEXTURE_ROUGHNESS, AppSettings::TextureFolder + "pbr//rusted_iron//roughness.png");
-	dragonModel->AddTextureIfEmpty(TEXTURE_AO, AppSettings::TextureFolder + "pbr//rusted_iron//ao.png");
-	dragonModel->AddTextureIfEmpty(TEXTURE_EMISSIVE, AppSettings::TextureFolder + "Black1x1.png");
+	dragonModel->AddTextureIfEmpty(TextureType::DIFFUSE, AppSettings::TextureFolder + "pbr//rusted_iron//albedo.png");
+	dragonModel->AddTextureIfEmpty(TextureType::NORMAL, AppSettings::TextureFolder + "pbr//rusted_iron//normal.png");
+	dragonModel->AddTextureIfEmpty(TextureType::METALNESS, AppSettings::TextureFolder + "pbr//rusted_iron//metallic.png");
+	dragonModel->AddTextureIfEmpty(TextureType::ROUGHNESS, AppSettings::TextureFolder + "pbr//rusted_iron//roughness.png");
+	dragonModel->AddTextureIfEmpty(TextureType::AO, AppSettings::TextureFolder + "pbr//rusted_iron//ao.png");
+	dragonModel->AddTextureIfEmpty(TextureType::EMISSIVE, AppSettings::TextureFolder + "Black1x1.png");
 }
 
 void AppPBRTextured::RenderScene(const Shader& shader)

@@ -14,7 +14,7 @@
 
 Texture::Texture() :
 	id (GL_INVALID_VALUE),
-	textureType(TextureType::TEXTURE_NONE)
+	textureType(TextureType::NONE)
 {
 }
 

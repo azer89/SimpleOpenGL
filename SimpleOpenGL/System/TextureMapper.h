@@ -6,17 +6,18 @@
 #include <unordered_map>
 #include <string>
 
-enum TextureType
+enum class TextureType
 {
-	TEXTURE_NONE = 0,
-	TEXTURE_DIFFUSE = 1,
-	TEXTURE_NORMAL = 2,
-	TEXTURE_METALNESS = 3,
-	TEXTURE_ROUGHNESS = 4,
-	TEXTURE_AO = 5,
-	TEXTURE_EMISSIVE = 6,
+	NONE = 0,
+	DIFFUSE = 1,
+	NORMAL = 2,
+	METALNESS = 3,
+	ROUGHNESS = 4,
+	AO = 5,
+	EMISSIVE = 6,
 };
 
+// Mapping from ASSIMP textures to PBR textures
 namespace TextureMapper
 {
 	// Corresponds to yhe number of elements in TextureType
@@ -50,42 +51,42 @@ namespace TextureMapper
 	static std::unordered_map<aiTextureType, TextureType> assimpTextureToTextureType =
 	{
 		// Diffuse
-		{aiTextureType_DIFFUSE, TEXTURE_DIFFUSE},
+		{aiTextureType_DIFFUSE, TextureType::DIFFUSE},
 
 		// Specular
-		{aiTextureType_SPECULAR, TEXTURE_METALNESS},
-		{aiTextureType_METALNESS, TEXTURE_METALNESS},
+		{aiTextureType_SPECULAR, TextureType::METALNESS},
+		{aiTextureType_METALNESS, TextureType::METALNESS},
 		
 		// Normal
-		{aiTextureType_NORMALS, TEXTURE_NORMAL},
+		{aiTextureType_NORMALS, TextureType::NORMAL},
 		
 		// Roughness shininess
-		{aiTextureType_DIFFUSE_ROUGHNESS, TEXTURE_ROUGHNESS},
-		{aiTextureType_SHININESS, TEXTURE_ROUGHNESS},
+		{aiTextureType_DIFFUSE_ROUGHNESS, TextureType::ROUGHNESS},
+		{aiTextureType_SHININESS, TextureType::ROUGHNESS},
 		
 		// AO
-		{aiTextureType_AMBIENT_OCCLUSION, TEXTURE_AO},
-		{aiTextureType_LIGHTMAP, TEXTURE_AO},
+		{aiTextureType_AMBIENT_OCCLUSION, TextureType::AO},
+		{aiTextureType_LIGHTMAP, TextureType::AO},
 
 		// Emissive
-		{aiTextureType_EMISSIVE, TEXTURE_EMISSIVE}
+		{aiTextureType_EMISSIVE, TextureType::EMISSIVE}
 	};
 
 	static std::unordered_map<TextureType, std::string> textureTypeToString =
 	{
-		{TEXTURE_DIFFUSE, "texture_diffuse"},
-		{TEXTURE_NORMAL, "texture_normal"},
-		{TEXTURE_METALNESS, "texture_metalness"},
-		{TEXTURE_ROUGHNESS, "texture_roughness"},
-		{TEXTURE_AO, "texture_ao"},
-		{TEXTURE_EMISSIVE, "texture_emissive"},
+		{TextureType::DIFFUSE, "texture_diffuse"},
+		{TextureType::NORMAL, "texture_normal"},
+		{TextureType::METALNESS, "texture_metalness"},
+		{TextureType::ROUGHNESS, "texture_roughness"},
+		{TextureType::AO, "texture_ao"},
+		{TextureType::EMISSIVE, "texture_emissive"},
 	};
 
 	static TextureType GetTextureType(aiTextureType aiTType)
 	{
 		if (!TextureMapper::assimpTextureToTextureType.contains(aiTType))
 		{
-			return TEXTURE_NONE;
+			return TextureType::NONE;
 		}
 		return TextureMapper::assimpTextureToTextureType[aiTType];
 	}
