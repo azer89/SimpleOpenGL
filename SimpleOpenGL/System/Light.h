@@ -1,5 +1,5 @@
-#ifndef __LIGHT_H__
-#define __LIGHT_H__
+#ifndef LIGHT
+#define LIGHT
 
 #include "Shader.h"
 #include "Shape.h"

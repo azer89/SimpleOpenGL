@@ -1,5 +1,5 @@
-#ifndef __APP_DEFERRED_H__
-#define __APP_DEFERRED_H__
+#ifndef APP_DEFERRED
+#define APP_DEFERRED
 
 #include "AppBase.h"
 #include "Shader.h"

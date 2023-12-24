@@ -1,5 +1,5 @@
-#ifndef __APP_DEFERRED_SAAO_H_
-#define __APP_DEFERRED_SAAO_H_
+#ifndef APP_DEFERRED_SAAO
+#define APP_DEFERRED_SAAO
 
 #include "AppBase.h"
 #include "Model.h"

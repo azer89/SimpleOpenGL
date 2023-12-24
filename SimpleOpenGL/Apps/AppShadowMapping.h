@@ -1,5 +1,5 @@
-#ifndef __APP_SHADOW_MAPPING_H_
-#define __APP_SHADOW_MAPPING_H_
+#ifndef APP_SHADOW_MAPPING
+#define APP_SHADOW_MAPPING
 
 #include "AppBase.h"
 #include "Shader.h"

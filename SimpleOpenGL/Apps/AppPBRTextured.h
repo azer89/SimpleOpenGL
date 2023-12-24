@@ -1,5 +1,5 @@
-#ifndef __APP_PBR_TEXTURED_H_
-#define __APP_PBR_TEXTURED_H_
+#ifndef APP_PBR_TEXTURED
+#define APP_PBR_TEXTURED
 
 #include "AppBase.h"
 #include "Model.h"

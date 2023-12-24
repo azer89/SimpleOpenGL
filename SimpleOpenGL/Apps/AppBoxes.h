@@ -1,5 +1,5 @@
-#ifndef __APP_BOXES_H__
-#define __APP_BOXES_H__
+#ifndef APP_BOXES
+#define APP_BOXES
 
 #include "AppBase.h"
 

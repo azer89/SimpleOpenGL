@@ -1,12 +1,12 @@
-#ifndef __SHADER_H__
-#define __SHADER_H__
+#ifndef SHADER
+#define SHADER
 
 #include <string>
 
 #include "glad/glad.h"
 #include "glm/glm.hpp"
 
-enum ObjectType
+enum class ObjectType
 {
 	ShaderObject = 0,
 	ProgramObject = 1,

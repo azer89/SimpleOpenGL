@@ -1,5 +1,5 @@
-#ifndef __APP_EDGE_H__
-#define __APP_EDGE_H__
+#ifndef APP_EDGE
+#define APP_EDGE
 
 #include "AppBase.h"
 

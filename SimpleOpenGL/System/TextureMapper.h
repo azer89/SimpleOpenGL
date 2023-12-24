@@ -1,5 +1,5 @@
-#ifndef __TEXTURE_TYPE_H__
-#define __TEXTURE_TYPE_H__
+#ifndef TEXTURE_TYPE
+#define TEXTURE_TYPE
 
 #include "assimp//material.h"
 

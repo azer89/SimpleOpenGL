@@ -1,5 +1,5 @@
-#ifndef __PIPELINE_DEFERRED_SSAO__
-#define __PIPELINE_DEFERRED_SSAO__
+#ifndef PIPELINE_DEFERRED_SSAO
+#define PIPELINE_DEFERRED_SSAO
 
 #include <vector>
 #include <memory>

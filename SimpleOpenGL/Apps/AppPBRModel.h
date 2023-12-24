@@ -1,5 +1,5 @@
-#ifndef __APP_PBR_MODEL_H_
-#define __APP_PBR_MODEL_H_
+#ifndef APP_PBR_MODEL
+#define APP_PBR_MODEL
 
 #include "AppBase.h"
 #include "Model.h"

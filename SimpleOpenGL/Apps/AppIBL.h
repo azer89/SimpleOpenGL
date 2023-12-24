@@ -1,5 +1,5 @@
-#ifndef __IBL_H__
-#define __IBL_H__
+#ifndef IBL
+#define IBL
 
 #include "AppBase.h"
 #include "Shader.h"

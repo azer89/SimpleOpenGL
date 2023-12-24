@@ -1,5 +1,5 @@
-#ifndef __MESH_H__
-#define __MESH_H__
+#ifndef MESH
+#define MESH
 
 #include <vector>
 #include <unordered_map>
@@ -45,8 +45,14 @@ public:
 	unsigned int VAO;
 
 	// Constructors
-	Mesh(std::vector<Vertex>&& vertices, std::vector<unsigned int>&& indices, std::unordered_map<TextureType, Texture>&& textures);
-	Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices, const std::unordered_map<TextureType, Texture>& textures);
+	Mesh(
+		std::vector<Vertex>&& vertices, 
+		std::vector<unsigned int>&& indices, 
+		std::unordered_map<TextureType, Texture>&& textures);
+	Mesh(
+		const std::vector<Vertex>& vertices, 
+		const std::vector<unsigned int>& indices, 
+		const std::unordered_map<TextureType, Texture>& textures);
 
 	void AddTextureIfEmpty(TextureType tType, const std::string& filePath);
 

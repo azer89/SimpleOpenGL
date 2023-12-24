@@ -1,5 +1,5 @@
-#ifndef __APP_SAAO_H_
-#define __APP_SAAO_H_
+#ifndef APP_SAAO
+#define APP_SAAO
 
 #include "AppBase.h"
 #include "Model.h"

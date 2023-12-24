@@ -1,5 +1,5 @@
-#ifndef __XML_READER_H__
-#define __XML_READER_H__
+#ifndef XML_READER
+#define XML_READER
 
 static class XMLReader
 {	

@@ -1,5 +1,5 @@
-#ifndef __SHAPE_H__
-#define __SHAPE_H__
+#ifndef SHAPE
+#define SHAPE
 
 #include "glm/glm.hpp"
 #include "glm/ext/scalar_constants.hpp"

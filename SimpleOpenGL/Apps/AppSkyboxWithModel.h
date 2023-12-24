@@ -1,5 +1,5 @@
-#ifndef __SKYBOX_WITH_MODEL_H__
-#define __SKYBOX_WITH_MODEL_H__
+#ifndef SKYBOX_WITH_MODEL
+#define SKYBOX_WITH_MODEL
 
 #include "AppBase.h"
 

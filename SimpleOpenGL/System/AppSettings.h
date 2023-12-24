@@ -1,5 +1,5 @@
-#ifndef __APP_SETTINGS_H__
-#define __APP_SETTINGS_H__
+#ifndef APP_SETTINGS
+#define APP_SETTINGS
 
 #include <string>
 

@@ -74,9 +74,6 @@ void Mesh::Draw(const Shader& shader, bool skipTexture)
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, static_cast<unsigned int>(indices.size()), GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
-
-	// Set back to defaults once configured.
-	//glActiveTexture(GL_TEXTURE0); // Non-DSA
 }
 
 void Mesh::SetupMesh()

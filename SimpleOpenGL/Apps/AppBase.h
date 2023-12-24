@@ -1,5 +1,5 @@
-#ifndef __APP_BASE_H__
-#define __APP_BASE_H__
+#ifndef APP_BASE
+#define APP_BASE
 
 #include <memory>
 #include <string>

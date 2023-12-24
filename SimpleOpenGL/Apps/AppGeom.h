@@ -1,5 +1,5 @@
-#ifndef __APP_GEOM_H__
-#define __APP_GEOM_H__
+#ifndef APP_GEOM
+#define APP_GEOM
 
 #include "AppBase.h"
 

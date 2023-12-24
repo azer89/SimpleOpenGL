@@ -1,5 +1,5 @@
-#ifndef __APP_MODEL_LOADING_H__
-#define __APP_MODEL_LOADING_H__
+#ifndef APP_MODEL_LOADING
+#define APP_MODEL_LOADING
 
 #include "AppBase.h"
 

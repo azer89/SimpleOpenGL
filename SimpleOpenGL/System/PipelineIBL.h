@@ -1,5 +1,5 @@
-#ifndef __PIPELINE_IBL_H__
-#define __PIPELINE_IBL_H__
+#ifndef PIPELINE_IBL_H
+#define PIPELINE_IBL_H
 
 #include "Shader.h"
 #include "Light.h"

@@ -146,7 +146,6 @@ Cube::Cube()
 		 -1.0f,  1.0f,  1.0f,  0.0f,  1.0f,  0.0f, 0.0f, 0.0f  // bottom-left
 	};
 
-
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
 

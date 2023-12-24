@@ -1,5 +1,5 @@
-#ifndef __APP_BLOOM_H__
-#define __APP_BLOOM_H__
+#ifndef APP_BLOOM_H
+#define APP_BLOOM_H
 
 #include "AppBase.h"
 

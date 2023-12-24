@@ -1,5 +1,5 @@
-#ifndef __APP_BLINN_PHONG_H__
-#define __APP_BLINN_PHONG_H__
+#ifndef APP_BLINN_PHONG
+#define APP_BLINN_PHONG
 
 #include "AppBase.h"
 

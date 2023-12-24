@@ -1,5 +1,5 @@
-#ifndef __PIPELINE_SHADOW_MAPPING_H__
-#define __PIPELINE_SHADOW_MAPPING_H__
+#ifndef PIPELINE_SHADOW_MAPPING
+#define PIPELINE_SHADOW_MAPPING
 
 #include "Shader.h"
 #include "Texture.h"

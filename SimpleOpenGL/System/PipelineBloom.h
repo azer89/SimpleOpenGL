@@ -1,5 +1,5 @@
-#ifndef __PIPELINE_BLOOM_H__
-#define __PIPELINE_BLOOM_H__
+#ifndef PIPELINE_BLOOM
+#define PIPELINE_BLOOM
 
 #include "Shader.h"
 

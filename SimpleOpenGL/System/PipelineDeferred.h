@@ -1,5 +1,5 @@
-#ifndef __G_BUFFER_H__
-#define __G_BUFFER_H__
+#ifndef PIPELINE_DEFERRED
+#define PIPELINE_DEFERRED
 
 #include "Shader.h"
 #include "Light.h"

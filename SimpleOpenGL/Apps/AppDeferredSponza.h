@@ -1,5 +1,5 @@
-#ifndef __APP_DEFERRED_SPONZA_H__
-#define __APP_DEFERRED_SPONZA_H__
+#ifndef APP_DEFERRED_SPONZA
+#define APP_DEFERRED_SPONZA
 
 #include "AppBase.h"
 #include "Shader.h"
