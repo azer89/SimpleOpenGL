@@ -117,7 +117,7 @@ void Mesh::SetupMesh()
 	std::cout << "Mesh vertex count " << vertices.size() << '\n';
 	for (auto& it : textureMap)
 	{
-		std::cout << "Texture " << it.first << ", " << it.second.GetName() << '\n';
+		std::cout << "Texture " << static_cast<int>(it.first) << ", " << it.second.GetName() << '\n';
 	}
 	std::cout << '\n';
 #endif

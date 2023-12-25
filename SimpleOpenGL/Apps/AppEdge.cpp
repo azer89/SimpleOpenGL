@@ -130,7 +130,7 @@ int AppEdge::MainLoop()
 		// Main shader
 		compositeShader.Use();
 		compositeShader.SetFloat("edgeThreshold", edgeThreshold);
-		compositeShader.SetInt("inflate", lineThickness - 1);
+		compositeShader.SetInt("inflate", static_cast<int>(lineThickness - 1));
 		compositeShader.SetFloat("ambient", ambient);
 		glBindTextureUnit(0, gPositionTexture);
 		glBindTextureUnit(1, gNormalTexture);

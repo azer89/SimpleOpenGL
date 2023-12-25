@@ -29,14 +29,14 @@ namespace TextureMapper
 		// Diffuse
 		aiTextureType_DIFFUSE,
 
-		// Specular
+		// Metalness
 		aiTextureType_SPECULAR,
 		aiTextureType_METALNESS,
 		
 		// Normal
 		aiTextureType_NORMALS,
 		
-		// Roughness shininess
+		// Roughness
 		aiTextureType_DIFFUSE_ROUGHNESS,
 		aiTextureType_SHININESS,
 		

@@ -13,7 +13,7 @@ int AppIBL::MainLoop()
 
 	PipelineIBL ibl
 	(
-		"IBL//pbr_sketchfab.fragment",
+		"IBL//pbr.fragment",
 		"hdr//neon_photostudio_4k.hdr",
 		1024,
 		128,
@@ -25,7 +25,7 @@ int AppIBL::MainLoop()
 
 	Cube cube;
 
-	Model renderModel(AppSettings::ModelFolder + "Tachikoma//scene.gltf");
+	Model renderModel(AppSettings::ModelFolder + "DamagedHelmet//DamagedHelmet.gltf");
 
 	Shader backgroundShader("IBL//background.vertex", "IBL//background.fragment");
 	backgroundShader.Use();
