@@ -1,7 +1,7 @@
 #include "AppSettings.h"
 
 // Make sure this path is correct or the code will not run
-std::string AppSettings::XMLFilePath = "../Settings/main.xml";
+std::string AppSettings::XMLFilePath = "C:/Users/azer/workspace/SimpleOpenGL/Settings/main.xml";
 
 int AppSettings::ScreenWidth = 0;
 int AppSettings::ScreenHeight = 0;
