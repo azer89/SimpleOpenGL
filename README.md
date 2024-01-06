@@ -2,13 +2,14 @@
 
 ### Features
 * Blinn-Phong shading
+* Physically Based Rendering (PBR)
+* Image-Based Lighting (IBL)
 * Sobel edge detection
 * Shadow mapping
 * Bloom postprocessing
 * Deferred shading
 * Geometry shader
-* Ambient occlusion
-* Physically Based Rendering
+* Screen Space Ambient occlusion (SSAO)
 
 ### Demo
 <div align="center">
@@ -81,8 +82,8 @@ https://github.com/azer89/SimpleOpenGL/assets/790432/6107d114-b5c8-4789-8f28-864
 
 ### Credit
 Technical Resources:
-* [learnopengl.com](https://learnopengl.com/) for rendering techniques
-* [3D Graphics Rendering Cookbook](https://github.com/PacktPublishing/3D-Graphics-Rendering-Cookbook) for DSA reference
+* [learnopengl.com](https://learnopengl.com/) 
+* [3D Graphics Rendering Cookbook](https://github.com/PacktPublishing/3D-Graphics-Rendering-Cookbook) 
 
 Assets:
 * [glTF Assets](https://github.com/KhronosGroup/glTF-Sample-Assets)
@@ -95,9 +96,3 @@ Assets:
 * [Freya](https://sketchfab.com/3d-models/freya-crescent-6d8eae57c17f4a81a23301ee0afda8cf)
 * [Tachikoma](https://sketchfab.com/3d-models/tachikoma-7ec03deb78de4a1b908d2bc736ff0f15)
 * [Unicorn Gundam](https://sketchfab.com/3d-models/gundam-unicorn-1410ff9dd1c94807a00b8a0936170196)
-
-
-
-
-
-
