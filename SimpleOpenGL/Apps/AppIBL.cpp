@@ -13,7 +13,7 @@ int AppIBL::MainLoop()
 
 	PipelineIBL ibl
 	(
-		"IBL//pbr.fragment",
+		"IBL//pbr_sketchfab.fragment",
 		"hdr//neon_photostudio_4k.hdr",
 		1024,
 		128,
@@ -25,7 +25,7 @@ int AppIBL::MainLoop()
 
 	Cube cube;
 
-	Model renderModel(AppSettings::ModelFolder + "DamagedHelmet//DamagedHelmet.gltf");
+	Model renderModel(AppSettings::ModelFolder + "Tachikoma//Tachikoma.gltf");
 
 	Shader backgroundShader("IBL//background.vertex", "IBL//background.fragment");
 	backgroundShader.Use();
@@ -34,10 +34,10 @@ int AppIBL::MainLoop()
 
 	Shader lightSphereShader("Misc//light_sphere.vertex", "Misc//light_sphere.fragment");
 	std::vector<Light> lights;
-	lights.emplace_back(glm::vec3(-1.5f, 0.7f, 1.5f ), glm::vec3(15.7f, 10.f, 10.f));
-	lights.emplace_back(glm::vec3(1.5f, 0.7f, 1.5f), glm::vec3(15.7f, 10.f, 10.f));
-	lights.emplace_back(glm::vec3(-1.5f, 0.7f, -1.5f), glm::vec3(15.7f, 10.f, 10.f));
-	lights.emplace_back(glm::vec3(1.5f, 0.7f, -1.5f), glm::vec3(15.7f, 10.f, 10.f));
+	lights.emplace_back(glm::vec3(-1.5f, 0.7f, 1.5f ), glm::vec3(1.f, 1.f, 1.f));
+	lights.emplace_back(glm::vec3(1.5f, 0.7f, 1.5f), glm::vec3(1.f, 1.f, 1.f));
+	lights.emplace_back(glm::vec3(-1.5f, 0.7f, -1.5f), glm::vec3(1.f, 1.f, 1.f));
+	lights.emplace_back(glm::vec3(1.5f, 0.7f, -1.5f), glm::vec3(1.f, 1.f, 1.f));
 
 	// Configure the viewport to the original framebuffer's screen dimensions
 	glViewport(0, 0, AppSettings::ScreenWidth, AppSettings::ScreenHeight);
@@ -63,7 +63,7 @@ int AppIBL::MainLoop()
 		// Render
 		glm::mat4 model = glm::mat4(1.0f);
 		model = glm::rotate(model, rotation, glm::vec3(0.0f, 1.0f, 0.0f));
-		rotation += deltaTime * 0.2f;
+		//rotation += deltaTime * 0.2f;
 		pbrShader->SetMat4("model", model);
 		pbrShader->SetMat3("normalMatrix", glm::transpose(glm::inverse(glm::mat3(model))));
 		bool skipTextureBinding = false;
