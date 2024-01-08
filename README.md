@@ -16,7 +16,7 @@
 <b>Physically Based Rendering</b>
 <br/>
 
-https://github.com/azer89/SimpleOpenGL/assets/790432/76d58314-39bd-4a4c-8f52-4ffdc2287738
+https://github.com/azer89/SimpleOpenGL/assets/790432/7ad64282-2bc0-4425-b689-c80f5143e7d9
 
 <br/>
 <b>Deferred shading</b> with 300 light sources
@@ -55,7 +55,7 @@ https://github.com/azer89/SimpleOpenGL/assets/790432/83678402-3b19-46b1-b73b-80c
 
 https://github.com/azer89/SimpleOpenGL/assets/790432/e564b947-7f07-44a9-9e96-2f06b825e15e
 
-https://github.com/azer89/SimpleOpenGL/assets/790432/6107d114-b5c8-4789-8f28-86413e40a931
+https://github.com/azer89/SimpleOpenGL/assets/790432/db83ad2c-248d-4ca5-be07-b4e65142c686
 
 <img width="800" height="600" alt="image" src="https://github.com/azer89/SimpleOpenGL/assets/790432/9d3efcf9-bea8-4562-a200-db6ace329e85">
 
