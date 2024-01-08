@@ -36,7 +36,7 @@ void main()
         discard;
     }
 
-    vec3 albedo = pow(albedo4.rgb, vec3(2.2)); ;
+    vec3 albedo = pow(albedo4.rgb, vec3(2.2));
     vec3 emissive = texture(texture_emissive1, TexCoords).rgb;
     float metallic = texture(texture_metalness1, TexCoords).b;
 	float roughness = texture(texture_roughness1, TexCoords).g;
