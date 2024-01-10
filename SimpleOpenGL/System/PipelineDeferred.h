@@ -49,7 +49,6 @@ private:
 	unsigned int gAlbedoSpec;
 
 	unsigned int rboDepth;
-
 	unsigned int quadVAO;
 };
 
