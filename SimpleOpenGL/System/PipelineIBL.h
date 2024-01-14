@@ -17,8 +17,8 @@ public:
 		const std::string& pbrShaderFile,
 		const std::string& hdrFile,
 		int environmentCubeSize, 
-		int prefilterCubeSize,
-		int irradianceCubeSize,
+		int specularCubeSize,
+		int diffuseCubeSize,
 		int _textureIndexGap);
 
 	void SetCameraData(
@@ -35,17 +35,19 @@ public:
 
 	unsigned int GetEnvironmentCubemap() const
 	{
-		return envCubemap;
+		return environmentCubemap;
 	}
 
-	unsigned int GetIrradianceCubemap() const
+	// Diffuse / irradiance
+	unsigned int GetDiffuseCubemap() const
 	{
-		return irradianceMap;
+		return diffuseCubemap;
 	}
 
-	unsigned int GetPrefilterCubemap() const
+	// Specular / prefilter
+	unsigned int GetSpecularCubemap() const
 	{
-		return prefilterMap;
+		return specularCubemap;
 	}
 
 private:
@@ -53,17 +55,17 @@ private:
 		const std::string& pbrShaderFile,
 		const std::string& hdrFile,
 		int environmentCubeSize,
-		int prefilterCubeSize,
-		int irradianceCubeSize
+		int specularCubeSize,
+		int diffuseCubeSize
 		);
 
 private:
 	int textureIndexGap;
 
-	unsigned int irradianceMap;
-	unsigned int prefilterMap;
-	unsigned int brdfLUTTexture;
-	unsigned int envCubemap;
+	unsigned int diffuseCubemap;
+	unsigned int specularCubemap;
+	unsigned int brdfLUTImage;
+	unsigned int environmentCubemap;
 
 	std::unique_ptr<Shader> pbrShader;
 };
