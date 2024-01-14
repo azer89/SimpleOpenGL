@@ -69,6 +69,14 @@ int AppIBL::MainLoop()
 		bool skipTextureBinding = false;
 		renderModel.Draw(*pbrShader, skipTextureBinding);
 
+		// Render environment cubemap
+		backgroundShader.Use();
+		backgroundShader.SetMat4("view", camera->GetViewMatrix());
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, ibl.GetEnvironmentCubemap());
+		cube.Draw();
+
+		// Render lights
 		lightSphereShader.Use();
 		lightSphereShader.SetMat4("projection", camera->GetProjectionMatrix());
 		lightSphereShader.SetMat4("view", camera->GetViewMatrix());
@@ -77,11 +85,8 @@ int AppIBL::MainLoop()
 			l.Render(lightSphereShader);
 		}
 
-		backgroundShader.Use();
-		backgroundShader.SetMat4("view", camera->GetViewMatrix());
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_CUBE_MAP, ibl.GetEnvironmentCubemap());
-		cube.Draw();
+		// Render debugging cubes
+		RenderDebugCubes(cube, ibl);
 
 		// Imgui
 		/*ImGui_ImplOpenGL3_NewFrame();
@@ -94,9 +99,6 @@ int AppIBL::MainLoop()
 
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());*/
-
-		// Debugging
-		RenderDebugCubes(cube, ibl);
 			
 		SwapBuffers();
 	}
@@ -130,13 +132,13 @@ void AppIBL::RenderDebugCubes(const Cube& cube, const PipelineIBL& ibl)
 	model = glm::scale(model, glm::vec3(0.2f));
 	model = glm::translate(model, glm::vec3(0.f, -7.f, 0.f));
 	simpleCubeShader->SetMat4("model", model);
-	glBindTextureUnit(0, ibl.GetIrradianceCubemap());
+	glBindTextureUnit(0, ibl.GetDiffuseCubemap());
 	cube.Draw();
 
 	model = glm::mat4(1.0f);
 	model = glm::scale(model, glm::vec3(0.2f));
 	model = glm::translate(model, glm::vec3(4.f, -6.f, 0.f));
 	simpleCubeShader->SetMat4("model", model);
-	glBindTextureUnit(0, ibl.GetPrefilterCubemap());
+	glBindTextureUnit(0, ibl.GetSpecularCubemap());
 	cube.Draw();
 }

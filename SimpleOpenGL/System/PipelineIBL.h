@@ -38,12 +38,14 @@ public:
 		return envCubemap;
 	}
 
-	unsigned int GetIrradianceCubemap() const
+	// Diffuse / irradiance
+	unsigned int GetDiffuseCubemap() const
 	{
 		return irradianceMap;
 	}
 
-	unsigned int GetPrefilterCubemap() const
+	// Specular / prefilter
+	unsigned int GetSpecularCubemap() const
 	{
 		return prefilterMap;
 	}
