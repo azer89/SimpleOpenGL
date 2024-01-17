@@ -17,7 +17,7 @@
 
 int main()
 {
-	AppIBL app;
+	AppPBRTextured app;
 	auto returnValue = app.MainLoop();
 	return returnValue;
 }
