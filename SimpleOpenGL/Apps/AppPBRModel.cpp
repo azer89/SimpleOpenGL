@@ -59,7 +59,7 @@ int AppPBRModel::MainLoop()
 void AppPBRModel::InitScene()
 {
 	renderModel1 = std::make_unique<Model>(AppSettings::ModelFolder + "DamagedHelmet//DamagedHelmet.gltf");
-	renderModel2 = std::make_unique<Model>(AppSettings::ModelFolder + "HorseStatue//horse_statue_01_4k.gltf");
+	renderModel2 = std::make_unique<Model>(AppSettings::ModelFolder + "Tachikoma//Tachikoma.gltf");
 	renderModel3 = std::make_unique<Model>(AppSettings::ModelFolder + "SciFiHelmet//SciFiHelmet.gltf");
 }
 
@@ -73,7 +73,6 @@ void AppPBRModel::RenderScene(const Shader& shader)
 
 	modelMatrix = glm::mat4(1.0f);
 	modelMatrix = glm::translate(modelMatrix, glm::vec3(-2.5f, 0.0f, 0.0f));
-	modelMatrix = glm::scale(modelMatrix, glm::vec3(10.f));
 	shader.SetMat4("model", modelMatrix);
 	renderModel2->Draw(shader, skipTextureBinding);
 
