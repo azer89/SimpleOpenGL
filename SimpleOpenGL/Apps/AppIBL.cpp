@@ -25,7 +25,7 @@ int AppIBL::MainLoop()
 
 	Cube cube;
 
-	Model renderModel(AppSettings::ModelFolder + "Tachikoma//Tachikoma.gltf");
+	Model renderModel(AppSettings::ModelFolder + "Sponza//Sponza.gltf");
 
 	Shader backgroundShader("IBL//background.vertex", "IBL//background.fragment");
 	backgroundShader.Use();
@@ -82,7 +82,7 @@ int AppIBL::MainLoop()
 		lightSphereShader.SetMat4("view", camera->GetViewMatrix());
 		for (auto& l : lights)
 		{
-			l.Render(lightSphereShader);
+			//l.Render(lightSphereShader);
 		}
 
 		// Render debugging cubes
