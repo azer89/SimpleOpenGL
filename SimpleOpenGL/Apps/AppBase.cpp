@@ -192,7 +192,7 @@ void AppBase::FrameBufferSizeCallback(GLFWwindow* window, int width, int height)
 
 void AppBase::MouseCallback(GLFWwindow* window, double xposIn, double yposIn)
 {
-	if (!middleMousePressed)
+	if (!leftMousePressed)
 	{
 		return;
 	}
@@ -214,13 +214,18 @@ void AppBase::MouseCallback(GLFWwindow* window, double xposIn, double yposIn)
 
 void AppBase::MouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
 {
-	if (button == GLFW_MOUSE_BUTTON_MIDDLE && action == GLFW_PRESS)
+	if (const auto& io = ImGui::GetIO(); io.WantCaptureMouse)
 	{
-		middleMousePressed = true;
+		return;
 	}
-	else if (button == GLFW_MOUSE_BUTTON_MIDDLE && action == GLFW_RELEASE)
+
+	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
 	{
-		middleMousePressed = false;
+		leftMousePressed = true;
+	}
+	else if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE)
+	{
+		leftMousePressed = false;
 		firstMouse = true;
 	}
 }
