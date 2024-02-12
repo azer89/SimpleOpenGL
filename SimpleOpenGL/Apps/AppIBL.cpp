@@ -66,7 +66,7 @@ int AppIBL::MainLoop()
 		//rotation += deltaTime * 0.2f;
 		pbrShader->SetMat4("model", model);
 		pbrShader->SetMat3("normalMatrix", glm::transpose(glm::inverse(glm::mat3(model))));
-		bool skipTextureBinding = false;
+		const bool skipTextureBinding = false;
 		renderModel.Draw(*pbrShader, skipTextureBinding);
 
 		// Render environment cubemap
@@ -76,7 +76,7 @@ int AppIBL::MainLoop()
 		glBindTexture(GL_TEXTURE_CUBE_MAP, ibl.GetEnvironmentCubemap());
 		cube.Draw();
 
-		// Render lights
+		// Render lights (for debugging)
 		lightSphereShader.Use();
 		lightSphereShader.SetMat4("projection", camera->GetProjectionMatrix());
 		lightSphereShader.SetMat4("view", camera->GetViewMatrix());
