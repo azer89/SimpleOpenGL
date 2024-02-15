@@ -6,10 +6,10 @@
 #include "glad/glad.h"
 #include "glm/glm.hpp"
 
-enum class ObjectType
+enum class ObjectType : uint8_t
 {
-	ShaderObject = 0,
-	ProgramObject = 1,
+	Shader = 0u,
+	Program = 1u,
 };
 
 class Shader

@@ -33,7 +33,7 @@ Shader::Shader(const char* vertexFilename,
 	}
 
 	glLinkProgram(ID);
-	CheckCompileErrors(ID, ObjectType::ProgramObject);
+	CheckCompileErrors(ID, ObjectType::Program);
 
 	// Delete the shaders as they're linked into our program now and no longer necessary
 	glDeleteShader(vertex);
@@ -118,7 +118,7 @@ unsigned int Shader::CreateShaderProgram(const char* source, GLenum shaderType)
 	glCompileShader(shader);
 
 	// Check for shader compile errors
-	CheckCompileErrors(shader, ObjectType::ShaderObject);
+	CheckCompileErrors(shader, ObjectType::Shader);
 
 	return shader;
 }
@@ -160,7 +160,7 @@ void Shader::CheckCompileErrors(unsigned int shader, ObjectType objectType)
 {
 	int success;
 	char infoLog[1024];
-	if (objectType == ObjectType::ShaderObject)
+	if (objectType == ObjectType::Shader)
 	{
 		glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
 		if (!success)
