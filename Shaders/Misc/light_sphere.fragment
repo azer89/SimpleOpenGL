@@ -14,5 +14,7 @@ void main()
 	{
 		discard;
 	}
-	FragColor = vec4(normalize(lightColor), 1.0);
+	// Blurry edge
+	float alpha = 1.0 - pow(dist, 5.0);
+	FragColor = vec4(normalize(lightColor), alpha);
 }

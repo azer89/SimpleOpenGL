@@ -2,9 +2,6 @@
 #define SHAPE
 
 #include "glm/glm.hpp"
-#include "glm/ext/scalar_constants.hpp"
-#include <glm/ext/matrix_transform.hpp>
-#include "glad/glad.h"
 
 #include <vector>
 
