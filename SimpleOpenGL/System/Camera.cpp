@@ -1,6 +1,7 @@
 #include "Camera.h"
 #include "AppSettings.h"
 
+// Set GLM_FORCE_DEPTH_ZERO_TO_ONE in the preprocessor
 #include "glm/glm.hpp"
 
 #include <iostream>

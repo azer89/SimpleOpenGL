@@ -1,6 +1,5 @@
 #include "Shape.h"
 
-#include "glm/ext/scalar_constants.hpp"
 #include <glm/ext/matrix_transform.hpp>
 #include "glad/glad.h"
 
