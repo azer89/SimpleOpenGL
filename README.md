@@ -1,6 +1,6 @@
 # OpenGL Renderer
 
-A real-time rendering demo using OpenGL and C++.
+A real-time rendering demo built from scratch using OpenGL and C++.
 
 ### Features
 
