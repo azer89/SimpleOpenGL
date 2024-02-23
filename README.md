@@ -11,8 +11,7 @@ A real-time rendering demo built from scratch using OpenGL and C++.
 * Sobel edge detection
 * Shadow mapping
 * Bloom postprocessing
-* Geometry shader
-* Blinn-Phong shading
+* Minor features: Geometry shader, Blinn-Phong shading, Skybox, glTF model loading.
 
 ### Physically-Based Rendering (PBR) and Image-Based Lighting (IBL)
 
@@ -22,7 +21,7 @@ https://github.com/azer89/SimpleOpenGL/assets/790432/7ad64282-2bc0-4425-b689-c80
 
 ### Deferred shading
 
-A Sponza scene with 300 light sources
+A Sponza scene with 300 light sources.
 
 https://github.com/azer89/SimpleOpenGL/assets/790432/8b1dfae3-98b0-49e8-91e8-043eaa2f3098
 
@@ -67,12 +66,10 @@ https://github.com/azer89/SimpleOpenGL/assets/790432/db83ad2c-248d-4ca5-be07-b4e
 <img width="400" height="300" alt="Deferred Shading" src="https://github.com/azer89/SimpleOpenGL/assets/790432/1c01a0ad-c3c3-4374-bc8e-9bd71313e499">
 <img width="400" height="300" alt="Skybox" src="https://github.com/azer89/SimpleOpenGL/assets/790432/ae47eeea-0464-442c-85f2-d3223554585a">-->
 
-</div>
-
 ### Build
 * OpenGL 4.6 / Direct State Access
 * Visual Studio 2022 x64 and C++20
-* Libraries: Assimp, GLAD, GLFW, ImGui, and STB.
+* Libraries: Assimp, glad, glfw, glm, assimp, ImGui, and stb.
 
 ### Credit
 Technical Resources:
@@ -83,7 +80,7 @@ Assets:
 * [glTF Assets](https://github.com/KhronosGroup/glTF-Sample-Assets)
 * [Polyhaven](https://polyhaven.com/)
 
-3D Models
+3D Models:
 * [Armor](https://sketchfab.com/3d-models/boss-emiss-test-afa4846713ba4e43910f2041977ea969)
 * [Zaku](https://sketchfab.com/3d-models/zaku-ii-730a08b171aa4ac0a43131752150acfb)
 * [Zodd](https://sketchfab.com/3d-models/zodd-the-inmortal-947061412ae24abc84d391f07c1b0618)
