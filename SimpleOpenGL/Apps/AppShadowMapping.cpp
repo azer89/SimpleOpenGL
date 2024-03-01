@@ -3,7 +3,10 @@
 #include "Light.h"
 #include "Texture.h"
 #include "AppSettings.h"
-#include "Shape.h"
+
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
 
 int AppShadowMapping::MainLoop()
 {

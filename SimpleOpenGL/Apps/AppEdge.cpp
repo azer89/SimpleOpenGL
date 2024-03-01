@@ -2,9 +2,12 @@
 #include "Shader.h"
 #include "Model.h"
 #include "Light.h"
-#include "Texture.h"
 #include "AppSettings.h"
 #include <stdexcept>
+
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
 
 unsigned int quadVAO;
 unsigned int quadVBO;
