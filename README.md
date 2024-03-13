@@ -34,11 +34,11 @@ This Gundam model looks great with ambient occlusion.
 
 ### Shadow mapping
 
+The sahdow edges are blurred using PCF.
+
 https://github.com/azer89/SimpleOpenGL/assets/790432/83678402-3b19-46b1-b73b-80cc48ddc9c9
 
 ### Sobel edge detection
-
-G buffer is used instead of depth buffer.
 
 <img width="850" alt="image" src="https://github.com/azer89/SimpleOpenGL/assets/790432/caa5006f-f31d-4174-941f-ce530785b52d">
 
