@@ -23,7 +23,8 @@ public:
 	void StartLightingPass(const std::vector<Light>& lights, const glm::vec3& cameraPosition);
 	void Blit();
 
-	Shader* GetGeometryShader()
+	// Get G-Buffer shader
+	[[nodiscard]] Shader* GetGBufferShader()
 	{
 		if (gBufferShader == nullptr)
 		{

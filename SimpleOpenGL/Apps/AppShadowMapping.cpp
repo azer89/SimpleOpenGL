@@ -123,6 +123,8 @@ int AppShadowMapping::MainLoop()
 
 			ImGui::End();
 
+			ImGui::ShowDemoWindow();
+
 			ImGui::Render();
 			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		}

@@ -29,8 +29,8 @@ int AppDeferred::MainLoop()
 
 		// 1 Geometry pass
 		pipeline.StartGeometryPass(projection, view);
-		const Shader* geomShaderPtr = pipeline.GetGeometryShader();
-		RenderScene(*geomShaderPtr);
+		const Shader* gBufferShaderPtr = pipeline.GetGBufferShader();
+		RenderScene(*gBufferShaderPtr);
 		pipeline.EndGeometryPass();
 
 		// 2 Lighting Pass
