@@ -16,8 +16,8 @@ int AppSSAO::MainLoop()
 	InitScene();
 	InitLights();
 
-	int noiseSize = 4;
-	int kernelSize = 64;
+	constexpr int noiseSize = 4;
+	constexpr int kernelSize = 64;
 	float radius = 0.5f;
 	float bias = 0.025f;
 
@@ -108,9 +108,8 @@ void AppSSAO::InitLights()
 {
 	lightSphereShader = std::make_unique<Shader>("Misc//light_sphere.vertex", "Misc//light_sphere.fragment");
 
-	float pi2 = glm::two_pi<float>();
-
-	const int NR_LIGHTS = 200;
+	const float pi2 = glm::two_pi<float>();
+	constexpr int NR_LIGHTS = 200;
 	for (unsigned int i = 0; i < NR_LIGHTS; ++i)
 	{
 		float yPos = Utility::RandomNumber<float>(0.15f, 10.0f);
