@@ -9,7 +9,7 @@
 PipelineIBL::PipelineIBL(
 	const std::string& pbrShaderFile,
 	const std::string& hdrFile,
-	int environmentCubeSize, 
+	int environmentCubeSize,
 	int specularCubeSize,
 	int diffuseCubeSize,
 	int _textureIndexGap) :
@@ -35,7 +35,7 @@ void PipelineIBL::Init(
 	Cube cube;
 
 	// Quad
-	const float quadRotation = acos(0);
+	const float quadRotation = static_cast<float>(acos(0));
 	const glm::vec3 quadRotationAxis(1.f, 0.f, 0.f);
 	const Quad quad(quadRotation, quadRotationAxis);
 
@@ -141,7 +141,7 @@ void PipelineIBL::Init(
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	// PBR create a pre-filter cubemap, and re-scale capture FBO to pre-filter scale
-	const int prefilterMipmapLevel = Utility::NumMipmap(specularCubeSize, specularCubeSize); 
+	const int prefilterMipmapLevel = Utility::NumMipmap(specularCubeSize, specularCubeSize);
 	glCreateTextures(GL_TEXTURE_CUBE_MAP, 1, &specularCubemap);
 	glTextureStorage2D(specularCubemap, prefilterMipmapLevel, GL_RGB16F, specularCubeSize, specularCubeSize);
 	glTextureParameteri(specularCubemap, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -187,7 +187,7 @@ void PipelineIBL::Init(
 	glTextureParameteri(brdfLUTImage, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	glTextureParameteri(brdfLUTImage, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTextureParameteri(brdfLUTImage, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	
+
 	// Then re-configure capture framebuffer object and render screen-space quad with BRDF shader.
 	glBindFramebuffer(GL_FRAMEBUFFER, captureFBO);
 	glBindRenderbuffer(GL_RENDERBUFFER, captureRBO);

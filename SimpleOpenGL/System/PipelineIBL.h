@@ -28,27 +28,15 @@ public:
 	void SetLights(const std::vector<Light>& lights);
 	void BindTextures();
 
-	Shader* GetPBRShader()
-	{
-		return pbrShader.get();
-	}
+	[[nodiscard]] Shader* GetPBRShader() { return pbrShader.get(); }
 
-	unsigned int GetEnvironmentCubemap() const
-	{
-		return environmentCubemap;
-	}
+	[[nodiscard]] unsigned int GetEnvironmentCubemap() const { return environmentCubemap; }
 
 	// Diffuse / irradiance
-	unsigned int GetDiffuseCubemap() const
-	{
-		return diffuseCubemap;
-	}
+	[[nodiscard]] unsigned int GetDiffuseCubemap() const { return diffuseCubemap; }
 
 	// Specular / prefilter
-	unsigned int GetSpecularCubemap() const
-	{
-		return specularCubemap;
-	}
+	[[nodiscard]] unsigned int GetSpecularCubemap() const { return specularCubemap; }
 
 private:
 	void Init(

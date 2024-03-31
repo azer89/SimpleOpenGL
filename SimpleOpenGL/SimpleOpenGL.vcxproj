@@ -118,6 +118,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>..\External\GLAD\GLAD\include;..\External\GLFW\include;..\External\stb;..\External\TinyXML\TinyXML;..\External\GLM;..\SimpleOpenGL\Apps;..\SimpleOpenGL\System;..\External\imgui;..\External\imgui\backends;..\External\assimp\include;..\External\VS_Projects\assimp\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -136,6 +137,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>..\External\GLAD\GLAD\include;..\External\GLFW\include;..\External\stb;..\External\TinyXML\TinyXML;..\External\GLM;..\SimpleOpenGL\Apps;..\SimpleOpenGL\System;..\External\imgui;..\External\imgui\backends;..\External\assimp\include;..\External\VS_Projects\assimp\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
