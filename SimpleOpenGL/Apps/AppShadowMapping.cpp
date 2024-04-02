@@ -102,7 +102,7 @@ int AppShadowMapping::MainLoop()
 		// Debug depth
 		//pipeline.DebugDepth();
 
-		if (showImgui)
+		if (imguiShow)
 		{
 			ImGui_ImplOpenGL3_NewFrame();
 			ImGui_ImplGlfw_NewFrame();

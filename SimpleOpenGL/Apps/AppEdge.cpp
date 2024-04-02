@@ -146,7 +146,7 @@ int AppEdge::MainLoop()
 		lightShader.SetMat4("view", view);
 		light.Render(lightShader);*/
 
-		if (showImgui)
+		if (imguiShow)
 		{
 			ImGui_ImplOpenGL3_NewFrame();
 			ImGui_ImplGlfw_NewFrame();

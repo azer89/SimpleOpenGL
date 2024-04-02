@@ -62,7 +62,7 @@ int AppDeferredSSAO::MainLoop()
 
 		RenderLights();
 
-		if (showImgui)
+		if (imguiShow)
 		{
 			ImGui_ImplOpenGL3_NewFrame();
 			ImGui_ImplGlfw_NewFrame();

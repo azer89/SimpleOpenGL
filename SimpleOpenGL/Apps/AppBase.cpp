@@ -92,7 +92,7 @@ void AppBase::InitGLFW()
 
 void AppBase::InitIMGUI()
 {
-	showImgui = true;
+	imguiShow = true;
 
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -131,9 +131,9 @@ void AppBase::InitCamera()
 {
 	// Can change the camera position later
 	camera = std::make_unique<Camera>(glm::vec3(0.0f, 0.0f, 3.0f));
-	lastX = static_cast<float>(AppSettings::ScreenWidth) / 2.0f;
-	lastY = static_cast<float>(AppSettings::ScreenHeight) / 2.0f;
-	firstMouse = true;
+	mouseLastX = static_cast<float>(AppSettings::ScreenWidth) / 2.0f;
+	mouseLastY = static_cast<float>(AppSettings::ScreenHeight) / 2.0f;
+	mouseFirstUse = true;
 }
 
 void AppBase::InitTiming()
@@ -196,23 +196,23 @@ void AppBase::FrameBufferSizeCallback(GLFWwindow* window, int width, int height)
 
 void AppBase::MouseCallback(GLFWwindow* window, double xposIn, double yposIn)
 {
-	if (!leftMousePressed)
+	if (!mousePressLeft)
 	{
 		return;
 	}
 
 	float xpos = static_cast<float>(xposIn);
 	float ypos = static_cast<float>(yposIn);
-	if (firstMouse)
+	if (mouseFirstUse)
 	{
-		lastX = xpos;
-		lastY = ypos;
-		firstMouse = false;
+		mouseLastX = xpos;
+		mouseLastY = ypos;
+		mouseFirstUse = false;
 	}
-	float xoffset = xpos - lastX;
-	float yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
-	lastX = xpos;
-	lastY = ypos;
+	float xoffset = xpos - mouseLastX;
+	float yoffset = mouseLastY - ypos; // reversed since y-coordinates go from bottom to top
+	mouseLastX = xpos;
+	mouseLastY = ypos;
 	camera->ProcessMouseMovement(xoffset, yoffset);
 }
 
@@ -225,12 +225,12 @@ void AppBase::MouseButtonCallback(GLFWwindow* window, int button, int action, in
 
 	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
 	{
-		leftMousePressed = true;
+		mousePressLeft = true;
 	}
 	else if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE)
 	{
-		leftMousePressed = false;
-		firstMouse = true;
+		mousePressLeft = false;
+		mouseFirstUse = true;
 	}
 }
 
@@ -244,7 +244,7 @@ void AppBase::KeyCallback(GLFWwindow* window, int key, int scancode, int action,
 	if (key == GLFW_KEY_I && action == GLFW_PRESS)
 	{
 		// Toggle imgui window
-		showImgui = !showImgui;
+		imguiShow = !imguiShow;
 	}
 }
 
