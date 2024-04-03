@@ -39,7 +39,7 @@ public:
 		const glm::vec3& cameraPosition);
 	void Blit();
 
-	Shader* GetGeometryShader()
+	[[nodiscard]] Shader* GetGeometryShader()
 	{
 		if (shaderGeometry == nullptr)
 		{
@@ -64,27 +64,27 @@ private:
 
 	void RenderQuad();
 
-	std::vector<glm::vec3> ssaoKernel;
+	std::vector<glm::vec3> ssaoKernel = {};
 
-	std::unique_ptr<Shader> shaderGeometry;
-	std::unique_ptr<Shader> shaderLighting;
-	std::unique_ptr<Shader> shaderSSAO;
-	std::unique_ptr<Shader> shaderBlur;
+	std::unique_ptr<Shader> shaderGeometry = {};
+	std::unique_ptr<Shader> shaderLighting = {};
+	std::unique_ptr<Shader> shaderSSAO = {};
+	std::unique_ptr<Shader> shaderBlur = {};
 
-	unsigned int quadVAO;
+	unsigned int quadVAO = 0;
 
-	unsigned int gBufferFBO;
-	unsigned int gPositionTexture;
-	unsigned int gNormalTexture;
-	unsigned int gAlbedoTexture;
-	unsigned int depthRBO;
+	unsigned int gBufferFBO = 0;
+	unsigned int gPositionTexture = 0;
+	unsigned int gNormalTexture = 0;
+	unsigned int gAlbedoTexture = 0;
+	unsigned int depthRBO = 0;
 
-	unsigned int ssaoFBO;
-	unsigned int ssaoColorTexture;
-	unsigned int ssaoBlurTexture;
-	unsigned int ssaoBlurFBO;
+	unsigned int ssaoFBO = 0;
+	unsigned int ssaoColorTexture = 0;
+	unsigned int ssaoBlurTexture = 0;
+	unsigned int ssaoBlurFBO = 0;
 
-	unsigned int noiseTexture;
+	unsigned int noiseTexture = 0;
 };
 
 #endif

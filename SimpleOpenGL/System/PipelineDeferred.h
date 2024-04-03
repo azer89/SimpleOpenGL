@@ -41,16 +41,16 @@ private:
 		const char* lightingFragmentShader
 	);
 
-	std::unique_ptr<Shader> gBufferShader;
-	std::unique_ptr<Shader> lightingShader;
+	std::unique_ptr<Shader> gBufferShader = {};
+	std::unique_ptr<Shader> lightingShader = {};
 
-	unsigned int gBuffer;
-	unsigned int gPosition;
-	unsigned int gNormal;
-	unsigned int gAlbedoSpec;
+	unsigned int gBuffer = {};
+	unsigned int gPosition = {};
+	unsigned int gNormal = {};
+	unsigned int gAlbedoSpec = {};
 
-	unsigned int rboDepth;
-	unsigned int quadVAO;
+	unsigned int rboDepth = {};
+	unsigned int quadVAO = {};
 };
 
 #endif
