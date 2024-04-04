@@ -2,10 +2,9 @@
 #include "AppSettings.h"
 
 // Set GLM_FORCE_DEPTH_ZERO_TO_ONE in the preprocessor
-#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
 
 #include <iostream>
-
 
 Camera::Camera(glm::vec3 position, glm::vec3 up, float yaw, float pitch) : 
 	Position(position),

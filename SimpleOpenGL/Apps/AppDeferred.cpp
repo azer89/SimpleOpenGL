@@ -5,6 +5,8 @@
 
 #include <memory>
 
+#include "glm/gtc/matrix_transform.hpp"
+
 int AppDeferred::MainLoop()
 {
 	glEnable(GL_DEPTH_TEST);

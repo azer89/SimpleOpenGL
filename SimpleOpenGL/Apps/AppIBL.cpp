@@ -7,6 +7,8 @@
 #include "Shape.h"
 #include "Light.h"
 
+#include "glm/gtc/matrix_transform.hpp"
+
 int AppIBL::MainLoop()
 {
 	glEnable(GL_DEPTH_TEST);

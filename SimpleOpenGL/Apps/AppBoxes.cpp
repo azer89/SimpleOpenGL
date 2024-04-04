@@ -5,9 +5,7 @@
 #include "AppSettings.h"
 #include "XMLReader.h"
 
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
+#include "glm/gtc/matrix_transform.hpp"
 
 #include <iostream>
 

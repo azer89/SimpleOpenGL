@@ -3,6 +3,8 @@
 #include "PipelineDeferred.h"
 #include "Utility.h"
 
+#include "glm/gtc/matrix_transform.hpp"
+
 #include <memory>
 
 int AppDeferredSponza::MainLoop()

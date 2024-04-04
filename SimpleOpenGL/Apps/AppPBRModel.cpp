@@ -4,6 +4,8 @@
 #include "Light.h"
 #include "Shape.h"
 
+#include "glm/gtc/matrix_transform.hpp"
+
 int AppPBRModel::MainLoop()
 {
 	glEnable(GL_DEPTH_TEST);

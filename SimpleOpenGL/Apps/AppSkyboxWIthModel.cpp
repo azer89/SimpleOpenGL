@@ -5,6 +5,8 @@
 #include "AppSettings.h"
 #include "Shape.h"
 
+#include "glm/gtc/matrix_transform.hpp"
+
 int AppSkyboxWithModel::MainLoop()
 {
 	glEnable(GL_DEPTH_TEST);
