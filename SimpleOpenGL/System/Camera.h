@@ -51,8 +51,8 @@ public:
 
 	Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch);
 
-	glm::mat4 GetProjectionMatrix() const;
-	glm::mat4 GetViewMatrix() const;
+	[[nodiscard]] glm::mat4 GetProjectionMatrix() const;
+	[[nodiscard]] glm::mat4 GetViewMatrix() const;
 
 	void ProcessKeyboard(CameraMovement direction, float deltaTime);
 	void ProcessMouseMovement(float xoffset, float yoffset, bool constrainPitch = true);
