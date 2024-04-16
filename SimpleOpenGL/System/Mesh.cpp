@@ -18,17 +18,6 @@ Mesh::Mesh(std::vector<Vertex>&& _vertices,
 	SetupMesh();
 }
 
-// Constructor
-Mesh::Mesh(const std::vector<Vertex>& _vertices, 
-	const std::vector<unsigned int>& _indices, 
-	const std::unordered_map<TextureType, Texture>& _textures) :
-	vertices(_vertices),
-	indices(_indices),
-	textureMap(_textures)
-{
-	SetupMesh();
-}
-
 void Mesh::Delete()
 {
 	glDeleteVertexArrays(1, &VAO);

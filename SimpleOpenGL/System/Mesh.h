@@ -14,20 +14,13 @@
 
 struct Vertex
 {
-	// Position
-	glm::vec3 Position;
-	// Normal
-	glm::vec3 Normal;
-	// TexCoords
-	glm::vec2 TexCoords;
-	// Tangent
-	glm::vec3 Tangent;
-	// Bitangent
-	glm::vec3 Bitangent;
-	// Bone indexes which will influence this vertex
-	int m_BoneIDs[MAX_BONE_INFLUENCE];
-	// Weights from each bone
-	float m_Weights[MAX_BONE_INFLUENCE];
+	glm::vec3 Position; // Position
+	glm::vec3 Normal; // Normal
+	glm::vec2 TexCoords; // TexCoords
+	glm::vec3 Tangent; // Tangent
+	glm::vec3 Bitangent; // Bitangent
+	int m_BoneIDs[MAX_BONE_INFLUENCE]; // Bone indexes which will influence this vertex
+	float m_Weights[MAX_BONE_INFLUENCE]; // Weights from each bone
 };
 
 class Mesh
@@ -49,10 +42,6 @@ public:
 		std::vector<Vertex>&& vertices, 
 		std::vector<unsigned int>&& indices, 
 		std::unordered_map<TextureType, Texture>&& textures);
-	Mesh(
-		const std::vector<Vertex>& vertices, 
-		const std::vector<unsigned int>& indices, 
-		const std::unordered_map<TextureType, Texture>& textures);
 
 	void AddTextureIfEmpty(TextureType tType, const std::string& filePath);
 
