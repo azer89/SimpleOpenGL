@@ -64,12 +64,12 @@ private:
 
 	void RenderQuad();
 
-	std::vector<glm::vec3> ssaoKernel = {};
+	std::vector<glm::vec3> ssaoKernel{};
 
-	std::unique_ptr<Shader> shaderGeometry = {};
-	std::unique_ptr<Shader> shaderLighting = {};
-	std::unique_ptr<Shader> shaderSSAO = {};
-	std::unique_ptr<Shader> shaderBlur = {};
+	std::unique_ptr<Shader> shaderGeometry{};
+	std::unique_ptr<Shader> shaderLighting{};
+	std::unique_ptr<Shader> shaderSSAO{};
+	std::unique_ptr<Shader> shaderBlur{};
 
 	unsigned int quadVAO = 0;
 

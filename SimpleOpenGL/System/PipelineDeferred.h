@@ -41,8 +41,8 @@ private:
 		const char* lightingFragmentShader
 	);
 
-	std::unique_ptr<Shader> gBufferShader = {};
-	std::unique_ptr<Shader> lightingShader = {};
+	std::unique_ptr<Shader> gBufferShader{};
+	std::unique_ptr<Shader> lightingShader{};
 
 	unsigned int gBuffer = 0;
 	unsigned int gPosition = 0;

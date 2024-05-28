@@ -38,7 +38,7 @@ protected:
 
 private:
 	GLFWwindow* glfwWindow = nullptr;
-	std::string glslVersion = {};
+	std::string glslVersion{};
 
 protected:
 	// Camera
