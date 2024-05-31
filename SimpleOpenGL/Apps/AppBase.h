@@ -37,12 +37,12 @@ protected:
 	void ProcessInput();
 
 private:
-	GLFWwindow* glfwWindow = nullptr;
+	GLFWwindow* glfwWindow{};
 	std::string glslVersion{};
 
 protected:
 	// Camera
-	std::unique_ptr<Camera> camera = nullptr;
+	std::unique_ptr<Camera> camera{};
 	float mouseLastX = 0.f;
 	float mouseLastY = 0.f;
 	bool mouseFirstUse = true;
