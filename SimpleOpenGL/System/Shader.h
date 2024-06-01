@@ -41,8 +41,8 @@ public:
 
 private:
 	void CheckCompileErrors(unsigned int shader, ObjectType objectType);
-	unsigned int CreateShaderProgram(const char* source, GLenum shaderType);
-	std::string LoadTextFile(const char* filePath);
+	[[nodiscard]] unsigned int CreateShaderProgram(const char* source, GLenum shaderType);
+	[[nodiscard]] std::string LoadTextFile(const char* filePath);
 };
 
 #endif
