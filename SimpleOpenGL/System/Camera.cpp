@@ -74,13 +74,13 @@ void Camera::ProcessKeyboard(CameraMovement direction, float deltaTime)
 }
 
 // Processes input received from a mouse input system. Expects the offset value in both the x and y direction.
-void Camera::ProcessMouseMovement(float xoffset, float yoffset, bool constrainPitch)
+void Camera::ProcessMouseMovement(float xOffset, float yOffset, bool constrainPitch)
 {
-	xoffset *= MouseSensitivity;
-	yoffset *= MouseSensitivity;
+	xOffset *= MouseSensitivity;
+	yOffset *= MouseSensitivity;
 
-	Yaw += xoffset;
-	Pitch += yoffset;
+	Yaw += xOffset;
+	Pitch += yOffset;
 
 	// Make sure that when pitch is out of bounds, screen doesn't get flipped
 	if (constrainPitch)
