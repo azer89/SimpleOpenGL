@@ -32,7 +32,7 @@ int AppShadowMapping::MainLoop()
 	// Light
 	constexpr float lightY = 6.0f;
 	constexpr float lightRadius = 5.0f;
-	constexpr float lightSpeed = 0.5f;
+	constexpr float lightSpeed = 0.1f;
 	float lightTimer = 0.0f;
 	bool moveLight = true;
 	Light light(glm::vec3(0.f), glm::vec3(1.f));
@@ -123,8 +123,6 @@ int AppShadowMapping::MainLoop()
 			ImGui::SliderInt("Specular", &specularPower, 2, 128);
 
 			ImGui::End();
-
-			ImGui::ShowDemoWindow();
 
 			ImGui::Render();
 			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
