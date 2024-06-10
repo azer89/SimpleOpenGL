@@ -18,7 +18,7 @@
 int main()
 {
 	// You can change the demo by selecting a class from the list above
-	AppIBL app;
+	AppShadowMapping app;
 
 	auto returnValue = app.MainLoop();
 	

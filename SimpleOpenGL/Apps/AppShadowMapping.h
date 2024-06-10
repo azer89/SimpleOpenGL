@@ -12,7 +12,7 @@ public:
 
 private:
 	void InitScene();
-	void RenderScene(const Shader& shader);
+	void RenderScene(const Shader& shader) const;
 
 private:
 	std::unique_ptr<Model> renderModel;

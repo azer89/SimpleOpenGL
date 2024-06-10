@@ -136,7 +136,7 @@ int AppShadowMapping::MainLoop()
 	return 0;
 }
 
-void AppShadowMapping::RenderScene(const Shader& shader)
+void AppShadowMapping::RenderScene(const Shader& shader) const
 {
 	glm::mat4 model = glm::mat4(1.0f);
 	shader.SetMat4("model", model);
