@@ -16,7 +16,7 @@ public:
 
 public:
 	Light(glm::vec3 position, glm::vec3 color, bool debugShow = true, float debugRadius = 0.1f);
-	void Render(const Shader& shader);
+	void Render(const Shader& shader) const;
 
 private:
 	bool shouldRender;

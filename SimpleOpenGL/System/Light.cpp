@@ -14,7 +14,7 @@ Light::Light(glm::vec3 position, glm::vec3 color, bool debugShow, float debugRad
 	}
 }
 
-void Light::Render(const Shader& shader)
+void Light::Render(const Shader& shader) const
 {
 	if (!shouldRender)
 	{
