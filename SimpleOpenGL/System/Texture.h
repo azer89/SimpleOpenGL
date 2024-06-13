@@ -29,9 +29,9 @@ public:
 
 	void Bind(unsigned int textureUnit);
 
-	[[nodiscard]] unsigned int GetID();
-	[[nodiscard]] TextureType GetType();
-	[[nodiscard]] const char* GetName();
+	[[nodiscard]] unsigned int GetID() const;
+	[[nodiscard]] TextureType GetType() const;
+	[[nodiscard]] const char* GetName() const;
 };
 
 #endif

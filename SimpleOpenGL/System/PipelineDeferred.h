@@ -24,7 +24,7 @@ public:
 	void Blit();
 
 	// Get G-Buffer shader
-	[[nodiscard]] Shader* GetGBufferShader()
+	[[nodiscard]] Shader* GetGBufferShader() const
 	{
 		if (gBufferShader == nullptr)
 		{

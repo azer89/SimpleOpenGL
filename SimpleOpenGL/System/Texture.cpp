@@ -34,17 +34,17 @@ Texture::~Texture()
 {
 }
 
-unsigned int Texture::GetID()
+unsigned int Texture::GetID() const
 {
 	return id;
 }
 
-TextureType Texture::GetType()
+TextureType Texture::GetType() const
 {
 	return textureType;
 }
 
-const char* Texture::GetName()
+const char* Texture::GetName() const
 {
 	return textureName.c_str();
 }

@@ -28,7 +28,7 @@ public:
 	// 4
 	void RenderComposite();
 
-	[[nodiscard]] Shader* GetMainShader() { return mainShader.get(); }
+	[[nodiscard]] Shader* GetMainShader() const { return mainShader.get(); }
 
 private:
 	void InitQuad();
