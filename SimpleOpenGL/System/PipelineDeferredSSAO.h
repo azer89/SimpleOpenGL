@@ -39,7 +39,7 @@ public:
 		const glm::vec3& cameraPosition);
 	void Blit();
 
-	[[nodiscard]] Shader* GetGeometryShader()
+	[[nodiscard]] Shader* GetGeometryShader() const
 	{
 		if (shaderGeometry == nullptr)
 		{
