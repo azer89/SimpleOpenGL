@@ -194,26 +194,26 @@ void AppBase::FrameBufferSizeCallback(GLFWwindow* window, int width, int height)
 	glViewport(0, 0, width, height);
 }
 
-void AppBase::MouseCallback(GLFWwindow* window, double xposIn, double yposIn)
+void AppBase::MouseCallback(GLFWwindow* window, double xPosIn, double yPosIn)
 {
 	if (!mousePressLeft)
 	{
 		return;
 	}
 
-	float xpos = static_cast<float>(xposIn);
-	float ypos = static_cast<float>(yposIn);
+	float xpos = static_cast<float>(xPosIn);
+	float ypos = static_cast<float>(yPosIn);
 	if (mouseFirstUse)
 	{
 		mouseLastX = xpos;
 		mouseLastY = ypos;
 		mouseFirstUse = false;
 	}
-	float xoffset = xpos - mouseLastX;
-	float yoffset = mouseLastY - ypos; // reversed since y-coordinates go from bottom to top
+	float xOffset = xpos - mouseLastX;
+	float yOffset = mouseLastY - ypos; // reversed since y-coordinates go from bottom to top
 	mouseLastX = xpos;
 	mouseLastY = ypos;
-	camera->ProcessMouseMovement(xoffset, yoffset);
+	camera->ProcessMouseMovement(xOffset, yOffset);
 }
 
 void AppBase::MouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
@@ -234,9 +234,9 @@ void AppBase::MouseButtonCallback(GLFWwindow* window, int button, int action, in
 	}
 }
 
-void AppBase::ScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
+void AppBase::ScrollCallback(GLFWwindow* window, double xOffset, double yOffset)
 {
-	camera->ProcessMouseScroll(static_cast<float>(yoffset));
+	camera->ProcessMouseScroll(static_cast<float>(yOffset));
 }
 
 void AppBase::KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)

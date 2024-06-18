@@ -17,9 +17,9 @@ public:
 
 protected:
 	void FrameBufferSizeCallback(GLFWwindow* window, int width, int height);
-	void MouseCallback(GLFWwindow* window, double xpos, double ypos);
+	void MouseCallback(GLFWwindow* window, double xPosIn, double yPosIn);
 	void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
-	void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset);
+	void ScrollCallback(GLFWwindow* window, double xOffset, double yOffset);
 	void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 	
 	void InitIMGUI();
