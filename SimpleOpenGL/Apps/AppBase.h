@@ -19,22 +19,22 @@ protected:
 	void FrameBufferSizeCallback(GLFWwindow* window, int width, int height);
 	void MouseCallback(GLFWwindow* window, double xPosIn, double yPosIn);
 	void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
-	void ScrollCallback(GLFWwindow* window, double xOffset, double yOffset);
+	void ScrollCallback(GLFWwindow* window, double xOffset, double yOffset) const;
 	void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 	
 	void InitIMGUI();
 	void InitGLFW();
-	void InitGlad();
+	void InitGlad() const;
 	void InitCamera();
 	void InitTiming();
-	int GLFWWindowShouldClose();
-	void SwapBuffers();
-	void Terminate();
+	int GLFWWindowShouldClose() const;
+	void SwapBuffers() const;
+	void Terminate() const;
 
 	void ProcessLoop(glm::vec4 clearColor, GLbitfield mask);
 	void PollEvents();
 	void ProcessTiming();
-	void ProcessInput();
+	void ProcessInput() const;
 
 private:
 	GLFWwindow* glfwWindow{};

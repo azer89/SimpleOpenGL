@@ -104,7 +104,7 @@ void AppBase::InitIMGUI()
 	ImGui_ImplOpenGL3_Init(glslVersion.c_str());
 }
 
-void AppBase::InitGlad()
+void AppBase::InitGlad() const
 {
 	// GLAD
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
@@ -142,7 +142,7 @@ void AppBase::InitTiming()
 	lastFrame = 0.0f;
 }
 
-int AppBase::GLFWWindowShouldClose()
+int AppBase::GLFWWindowShouldClose() const
 {
 	return glfwWindowShouldClose(glfwWindow);
 }
@@ -155,7 +155,7 @@ void AppBase::ProcessTiming()
 	lastFrame = currentFrame;
 }
 
-void AppBase::SwapBuffers()
+void AppBase::SwapBuffers() const
 {
 	// GLFW: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 	glfwSwapBuffers(glfwWindow);
@@ -176,7 +176,7 @@ void AppBase::ProcessLoop(glm::vec4 clearColor, GLbitfield mask)
 	glClear(mask);
 }
 
-void AppBase::Terminate()
+void AppBase::Terminate() const
 {
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplGlfw_Shutdown();
@@ -201,18 +201,18 @@ void AppBase::MouseCallback(GLFWwindow* window, double xPosIn, double yPosIn)
 		return;
 	}
 
-	float xpos = static_cast<float>(xPosIn);
-	float ypos = static_cast<float>(yPosIn);
+	const float xPos = static_cast<float>(xPosIn);
+	const float yPos = static_cast<float>(yPosIn);
 	if (mouseFirstUse)
 	{
-		mouseLastX = xpos;
-		mouseLastY = ypos;
+		mouseLastX = xPos;
+		mouseLastY = yPos;
 		mouseFirstUse = false;
 	}
-	float xOffset = xpos - mouseLastX;
-	float yOffset = mouseLastY - ypos; // reversed since y-coordinates go from bottom to top
-	mouseLastX = xpos;
-	mouseLastY = ypos;
+	const float xOffset = xPos - mouseLastX;
+	const float yOffset = mouseLastY - yPos; // reversed since y-coordinates go from bottom to top
+	mouseLastX = xPos;
+	mouseLastY = yPos;
 	camera->ProcessMouseMovement(xOffset, yOffset);
 }
 
@@ -234,7 +234,7 @@ void AppBase::MouseButtonCallback(GLFWwindow* window, int button, int action, in
 	}
 }
 
-void AppBase::ScrollCallback(GLFWwindow* window, double xOffset, double yOffset)
+void AppBase::ScrollCallback(GLFWwindow* window, double xOffset, double yOffset) const
 {
 	camera->ProcessMouseScroll(static_cast<float>(yOffset));
 }
@@ -249,7 +249,7 @@ void AppBase::KeyCallback(GLFWwindow* window, int key, int scancode, int action,
 }
 
 // Process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
-void AppBase::ProcessInput()
+void AppBase::ProcessInput() const
 {
 	if (glfwGetKey(glfwWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 	{
