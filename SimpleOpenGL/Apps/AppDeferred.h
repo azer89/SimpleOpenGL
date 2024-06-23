@@ -24,15 +24,15 @@ private:
 private:
 
 	// Scene
-	std::unique_ptr<Model> foxModel;
-	std::unique_ptr<Texture> grassTexture;
-	unsigned int planeVAO = 0;
+	std::unique_ptr<Model> foxModel{};
+	std::unique_ptr<Texture> grassTexture{};
+	unsigned int planeVAO{};
 
 	// Lights
-	std::unique_ptr<Shader> lightSphereShader;
-	std::vector<Light> lights;
-	std::vector<float> lightAngles;
-	std::vector<float> lightRadii;
+	std::unique_ptr<Shader> lightSphereShader{};
+	std::vector<Light> lights{};
+	std::vector<float> lightAngles{};
+	std::vector<float> lightRadii{};
 };
 
 #endif

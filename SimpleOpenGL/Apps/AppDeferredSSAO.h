@@ -23,13 +23,13 @@ private:
 
 private:
 	// Scene
-	std::unique_ptr<Model> sponzaModel;
+	std::unique_ptr<Model> sponzaModel{};
 
 	// Lights
-	std::unique_ptr<Shader> lightSphereShader;
-	std::vector<Light> lights;
-	std::vector<float> lightAngles;
-	std::vector<float> lightRadii;
+	std::unique_ptr<Shader> lightSphereShader{};
+	std::vector<Light> lights{};
+	std::vector<float> lightAngles{};
+	std::vector<float> lightRadii{};
 };
 
 #endif
