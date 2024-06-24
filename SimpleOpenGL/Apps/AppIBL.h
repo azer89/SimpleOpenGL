@@ -14,7 +14,7 @@ public:
 
 private:
 	// Debugging purpose
-	std::unique_ptr<Shader> simpleCubeShader;
+	std::unique_ptr<Shader> simpleCubeShader{};
 	void InitDebugCubes();
 	void RenderDebugCubes(const Cube& cube, const PipelineIBL& ibl);
 
