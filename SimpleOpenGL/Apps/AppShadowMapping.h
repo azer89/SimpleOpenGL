@@ -15,10 +15,10 @@ private:
 	void RenderScene(const Shader& shader) const;
 
 private:
-	std::unique_ptr<Model> renderModel;
+	std::unique_ptr<Model> renderModel{};
 
-	unsigned int planeVAO = 0;
-	unsigned int planeVBO = 0;
+	unsigned int planeVAO{};
+	unsigned int planeVBO{};
 };
 
 #endif
