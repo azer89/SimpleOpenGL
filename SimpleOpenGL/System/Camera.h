@@ -24,24 +24,24 @@ class Camera
 {
 public:
 	// Attributes
-	glm::vec3 Position;
-	glm::vec3 Front;
-	glm::vec3 Up;
-	glm::vec3 Right;
-	glm::vec3 WorldUp;
+	glm::vec3 Position{};
+	glm::vec3 Front{};
+	glm::vec3 Up{};
+	glm::vec3 Right{};
+	glm::vec3 WorldUp{};
 
 	// Euler Angles
-	float Yaw;
-	float Pitch;
+	float Yaw{};
+	float Pitch{};
 
 	// Options
-	float MovementSpeed;
-	float MouseSensitivity;
-	float Zoom;
+	float MovementSpeed{};
+	float MouseSensitivity{};
+	float Zoom{};
 
 private:
-	glm::mat4 projectionMatrix;
-	glm::mat4 viewMatrix;
+	glm::mat4 projectionMatrix{};
+	glm::mat4 viewMatrix{};
 
 public:
 	Camera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f), 
