@@ -49,12 +49,13 @@ public:
 	void Draw(const Shader& shader, bool skipTexture);
 
 private:
-	// Render data 
-	unsigned int VBO;
-	unsigned int EBO;
-
 	// Initializes all the buffer objects/arrays
 	void SetupMesh();
+
+private:
+	// Render data 
+	unsigned int VBO{};
+	unsigned int EBO{};
 };
 
 #endif

@@ -15,9 +15,9 @@ class Model
 {
 private:
 	// Model data 
-	std::unordered_map<std::string, Texture> textureMap; // key is the filename
-	std::vector<Mesh> meshes;
-	std::string directory;
+	std::unordered_map<std::string, Texture> textureMap{}; // key is the filename
+	std::vector<Mesh> meshes{};
+	std::string directory{};
 
 public:
 	// Constructor, expects a filepath to a 3D model.
