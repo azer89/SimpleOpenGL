@@ -35,24 +35,24 @@ private:
 	void RenderQuad();
 
 private:
-	std::unique_ptr<Shader> mainShader;
-	std::unique_ptr<Shader> shaderBlur;
-	std::unique_ptr<Shader> shaderFinal;
+	std::unique_ptr<Shader> mainShader{};
+	std::unique_ptr<Shader> shaderBlur{};
+	std::unique_ptr<Shader> shaderFinal{};
 
-	unsigned blurIteration;
+	unsigned blurIteration{};
 
 	// First pass
-	unsigned int hdrFBO;
-	unsigned int colorBuffers[2];
+	unsigned int hdrFBO{};
+	unsigned int colorBuffers[2]{};
 
 	// Blur pass
-	bool horizontal;
-	unsigned int pingpongFBO[2];
-	unsigned int pingpongColorbuffers[2];
+	bool horizontal{};
+	unsigned int pingpongFBO[2]{};
+	unsigned int pingpongColorbuffers[2]{};
 
 	// Full screen quad
-	unsigned int quadVAO = 0;
-	unsigned int quadVBO;
+	unsigned int quadVAO{};
+	unsigned int quadVBO{};
 };
 
 #endif
