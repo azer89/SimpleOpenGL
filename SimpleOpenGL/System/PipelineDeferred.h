@@ -44,13 +44,13 @@ private:
 	std::unique_ptr<Shader> gBufferShader{};
 	std::unique_ptr<Shader> lightingShader{};
 
-	unsigned int gBuffer = 0;
-	unsigned int gPosition = 0;
-	unsigned int gNormal = 0;
-	unsigned int gAlbedoSpec = 0;
+	unsigned int gBuffer{};
+	unsigned int gPosition{};
+	unsigned int gNormal{};
+	unsigned int gAlbedoSpec{};
 
-	unsigned int rboDepth = 0;
-	unsigned int quadVAO = 0;
+	unsigned int rboDepth{};
+	unsigned int quadVAO{};
 };
 
 #endif
