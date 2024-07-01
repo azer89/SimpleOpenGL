@@ -48,14 +48,14 @@ private:
 		);
 
 private:
-	int textureIndexGap;
+	int textureIndexGap{};
 
-	unsigned int diffuseCubemap;
-	unsigned int specularCubemap;
-	unsigned int brdfLUTImage;
-	unsigned int environmentCubemap;
+	unsigned int diffuseCubemap{};
+	unsigned int specularCubemap{};
+	unsigned int brdfLUTImage{};
+	unsigned int environmentCubemap{};
 
-	std::unique_ptr<Shader> pbrShader;
+	std::unique_ptr<Shader> pbrShader{};
 };
 
 #endif
