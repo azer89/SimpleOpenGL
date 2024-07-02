@@ -28,25 +28,27 @@ class Mesh
 public:
 	Mesh() = default;
 	
-	// Cleanup resource
-	void Delete();
-
-	// Mesh Data
-	std::vector<Vertex>	vertices;
-	std::vector<unsigned int> indices;
-	std::unordered_map<TextureType, Texture> textureMap;
-	unsigned int VAO;
-
 	// Constructors
 	Mesh(
 		std::vector<Vertex>&& vertices, 
 		std::vector<unsigned int>&& indices, 
 		std::unordered_map<TextureType, Texture>&& textures);
 
+	// Cleanup resource
+	void Delete();
+
 	void AddTextureIfEmpty(TextureType tType, const std::string& filePath);
 
 	// Render the mesh
 	void Draw(const Shader& shader, bool skipTexture);
+
+public:
+	// Mesh Data
+	std::vector<Vertex>	vertices{};
+	std::vector<unsigned int> indices{};
+	std::unordered_map<TextureType, Texture> textureMap{};
+	unsigned int VAO{};
+
 
 private:
 	// Initializes all the buffer objects/arrays

@@ -75,7 +75,7 @@ int AppIBL::MainLoop()
 		backgroundShader.Use();
 		backgroundShader.SetMat4("view", camera->GetViewMatrix());
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_CUBE_MAP, ibl.GetEnvironmentCubemap());
+		glBindTexture(GL_TEXTURE_CUBE_MAP, ibl.GetDiffuseCubemap());
 		cube.Draw();
 
 		// Render lights (for debugging)
