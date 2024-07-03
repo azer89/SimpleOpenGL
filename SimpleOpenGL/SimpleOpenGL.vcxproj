@@ -248,8 +248,8 @@
     <None Include="..\Shaders\GeometryShader\geom.fragment" />
     <None Include="..\Shaders\GeometryShader\geom.geometry" />
     <None Include="..\Shaders\GeometryShader\geom.vertex" />
-    <None Include="..\Shaders\IBL\background.fragment" />
-    <None Include="..\Shaders\IBL\background.vertex" />
+    <None Include="..\Shaders\IBL\skybox.fragment" />
+    <None Include="..\Shaders\IBL\skybox.vertex" />
     <None Include="..\Shaders\IBL\brdf.fragment" />
     <None Include="..\Shaders\IBL\brdf.vertex" />
     <None Include="..\Shaders\IBL\cubemap.vertex" />

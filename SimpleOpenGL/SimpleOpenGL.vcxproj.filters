@@ -402,10 +402,10 @@
     <None Include="..\Shaders\PBR\pbr_emissive.fragment">
       <Filter>Resource Files\Shaders\PBR</Filter>
     </None>
-    <None Include="..\Shaders\IBL\background.fragment">
+    <None Include="..\Shaders\IBL\skybox.fragment">
       <Filter>Resource Files\Shaders\IBL</Filter>
     </None>
-    <None Include="..\Shaders\IBL\background.vertex">
+    <None Include="..\Shaders\IBL\skybox.vertex">
       <Filter>Resource Files\Shaders\IBL</Filter>
     </None>
     <None Include="..\Shaders\IBL\cubemap.vertex">

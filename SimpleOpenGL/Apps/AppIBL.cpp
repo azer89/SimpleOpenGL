@@ -29,10 +29,10 @@ int AppIBL::MainLoop()
 
 	Model renderModel(AppSettings::ModelFolder + "Sponza//Sponza.gltf");
 
-	Shader backgroundShader("IBL//background.vertex", "IBL//background.fragment");
-	backgroundShader.Use();
-	backgroundShader.SetInt("environmentMap", 0);
-	backgroundShader.SetMat4("projection", camera->GetProjectionMatrix());
+	Shader skyboxShader("IBL//skybox.vertex", "IBL//skybox.fragment");
+	skyboxShader.Use();
+	skyboxShader.SetInt("environmentMap", 0);
+	skyboxShader.SetMat4("projection", camera->GetProjectionMatrix());
 
 	Shader lightSphereShader("Misc//light_sphere.vertex", "Misc//light_sphere.fragment");
 	std::vector<Light> lights;
@@ -72,8 +72,8 @@ int AppIBL::MainLoop()
 		renderModel.Draw(*pbrShader, skipTextureBinding);
 
 		// Render environment cubemap
-		backgroundShader.Use();
-		backgroundShader.SetMat4("view", camera->GetViewMatrix());
+		skyboxShader.Use();
+		skyboxShader.SetMat4("view", camera->GetViewMatrix());
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_CUBE_MAP, ibl.GetDiffuseCubemap());
 		cube.Draw();
