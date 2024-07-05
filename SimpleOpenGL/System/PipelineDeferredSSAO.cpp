@@ -87,7 +87,7 @@ void PipelineDeferredSSAO::Init(
 	glNamedFramebufferTexture(gBufferFBO, GL_COLOR_ATTACHMENT2, gAlbedoTexture, 0);
 	
 	// Attachments
-	unsigned int attachments[3] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
+	unsigned int attachments[3]{ GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
 	glNamedFramebufferDrawBuffers(gBufferFBO, 3, attachments);
 
 	// Depth render buffer
@@ -192,7 +192,7 @@ void PipelineDeferredSSAO::Init(
 	shaderBlur->SetInt("ssaoInput", 0);
 
 	// Plane
-	constexpr float quadVertices[] = {
+	constexpr float quadVertices[]{
 		// Positions		// Texture Coords
 		-1.0f,  1.0f, 0.0f, 0.0f, 1.0f,
 		-1.0f, -1.0f, 0.0f, 0.0f, 0.0f,

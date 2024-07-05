@@ -165,7 +165,7 @@ void AppShadowMapping::InitScene()
 	renderModel = std::make_unique<Model>(AppSettings::ModelFolder + "Zaku//scene.gltf");
 
 	// Plane
-	constexpr float planeVertices[] = {
+	constexpr float planeVertices[]{
 		// Positions			// Normals			// Texcoords
 		 25.0f, 0.0f,  25.0f,  0.0f, 1.0f, 0.0f,  25.0f,  0.0f,
 		-25.0f, 0.0f,  25.0f,  0.0f, 1.0f, 0.0f,   0.0f,  0.0f,

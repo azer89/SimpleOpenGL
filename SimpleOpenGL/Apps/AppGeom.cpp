@@ -10,7 +10,7 @@ int AppGeom::MainLoop()
 		"GeometryShader//geom.fragment", 
 		"GeometryShader//geom.geometry");
 
-	constexpr float points[] = {
+	constexpr float points[]{
 		0.0f,  0.0f, 0.0f, 1.0f, 0.0f
 	};
 	unsigned int VBO, VAO;

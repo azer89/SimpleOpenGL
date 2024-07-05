@@ -34,7 +34,7 @@ PipelineBloom::PipelineBloom(unsigned blurIteration_) :
 	}
 
 	// Tell OpenGL which color attachments we'll use (of this framebuffer) for rendering 
-	unsigned int attachments[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
+	unsigned int attachments[2]{ GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
 	glNamedFramebufferDrawBuffers(hdrFBO, 2, attachments);
 	if (glCheckNamedFramebufferStatus(hdrFBO, GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 	{
@@ -135,7 +135,7 @@ void PipelineBloom::RenderComposite()
 void PipelineBloom::InitQuad()
 {
 	// Quad
-	constexpr float quadVertices[] = {
+	constexpr float quadVertices[]{
 		// Positions		// Texture Coords
 		-1.0f,  1.0f, 0.0f, 0.0f, 1.0f,
 		-1.0f, -1.0f, 0.0f, 0.0f, 0.0f,

@@ -30,7 +30,7 @@ void PipelineDeferred::Init(
 	lightingShader->SetInt("gAlbedoSpec", 2);
 
 	// Quad
-	constexpr float quadVertices[] = {
+	constexpr float quadVertices[]{
 		// Positions		// Texture Coords
 		-1.0f,  1.0f, 0.0f, 0.0f, 1.0f,
 		-1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
@@ -83,7 +83,7 @@ void PipelineDeferred::Init(
 	glTextureStorage2D(gAlbedoSpec, numMipmaps, GL_RGBA8, AppSettings::ScreenWidth, AppSettings::ScreenHeight);
 	glNamedFramebufferTexture(gBuffer, GL_COLOR_ATTACHMENT2, gAlbedoSpec, 0);
 	
-	unsigned int attachments[3] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
+	unsigned int attachments[3]{ GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
 	glNamedFramebufferDrawBuffers(gBuffer, 3, attachments);
 	
 	// Depth render buffer

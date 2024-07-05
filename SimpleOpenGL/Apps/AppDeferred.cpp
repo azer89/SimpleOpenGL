@@ -113,7 +113,7 @@ void AppDeferred::InitScene()
 
 	// Grass plane
 	constexpr float halfWidth = 50.0f;
-	constexpr float planeVertices[] = {
+	constexpr float planeVertices[]{
 		// Positions				   // Normals			// Texcoords
 		 halfWidth, 0.0f,  halfWidth,  0.0f, 1.0f, 0.0f,  25.0f,  0.0f,
 		-halfWidth, 0.0f,  halfWidth,  0.0f, 1.0f, 0.0f,   0.0f,  0.0f,

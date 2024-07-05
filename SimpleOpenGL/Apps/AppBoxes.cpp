@@ -26,7 +26,7 @@ int AppBoxes::MainLoop()
 	texture.CreateFromImageFile(AppSettings::TextureFolder + "neco_coneco.jpg", true);
 
 	// World space positions of our cubes
-	glm::vec3 cubePositions[] = {
+	glm::vec3 cubePositions[]{
 		glm::vec3(0.0f,  0.0f,  0.0f),
 		glm::vec3(2.0f,  5.0f, -15.0f),
 		glm::vec3(-1.5f, -2.2f, -2.5f),

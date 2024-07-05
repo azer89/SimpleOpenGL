@@ -60,7 +60,7 @@ void PipelineShadowMapping::StopRenderDepth()
 void PipelineShadowMapping::InitQuad()
 {
 	// Quad (for debugging)
-	constexpr float quadVertices[] = {
+	constexpr float quadVertices[]{
 		// positions		// texture Coords
 		-1.0f,  1.0f, 0.0f, 0.0f, 1.0f,
 		-1.0f, -1.0f, 0.0f, 0.0f, 0.0f,

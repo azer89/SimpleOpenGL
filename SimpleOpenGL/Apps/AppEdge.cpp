@@ -81,7 +81,7 @@ int AppEdge::MainLoop()
 	glTextureStorage2D(gAlbedoTexture, numMipmaps, GL_RGBA8, AppSettings::ScreenWidth, AppSettings::ScreenHeight);
 	glNamedFramebufferTexture(gBufferFBO, GL_COLOR_ATTACHMENT2, gAlbedoTexture, 0);
 
-	unsigned int attachments[3] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
+	unsigned int attachments[3]{ GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
 	glNamedFramebufferDrawBuffers(gBufferFBO, 3, attachments);
 
 	// Depth render buffer
@@ -177,7 +177,7 @@ int AppEdge::MainLoop()
 void InitQuad()
 {
 	// Quad
-	constexpr float quadVertices[] = {
+	constexpr float quadVertices[]{
 		// Positions		// Texture Coords
 		-1.0f,  1.0f, 0.0f, 0.0f, 1.0f,
 		-1.0f, -1.0f, 0.0f, 0.0f, 0.0f,
