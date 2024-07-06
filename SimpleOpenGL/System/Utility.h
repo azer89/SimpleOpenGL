@@ -6,7 +6,7 @@
 namespace Utility
 {
 	template <typename T>
-	inline T RandomNumber()
+	[[nodiscard]] inline T RandomNumber()
 	{
 		static std::uniform_real_distribution<T> distribution(0.0, 1.0);
 		static std::random_device rd;
@@ -16,18 +16,18 @@ namespace Utility
 
 	// Returns a random real in [min,max)
 	template <typename T>
-	inline T RandomNumber(T min, T max)
+	[[nodiscard]] inline T RandomNumber(T min, T max)
 	{
 		return min + (max - min) * RandomNumber<T>();
 	}
 
 	template <typename T>
-	float Lerp(float a, float b, float f)
+	[[nodiscard]] float Lerp(float a, float b, float f)
 	{
 		return a + f * (b - a);
 	}
 
-	inline int NumMipmap(int width, int height)
+	[[nodiscard]] inline int NumMipmap(int width, int height)
 	{
 		return static_cast<int>(floor(log2(std::max(width, height)))) + 1;
 	}
