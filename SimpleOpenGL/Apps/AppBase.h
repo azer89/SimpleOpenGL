@@ -43,15 +43,15 @@ private:
 protected:
 	// Camera
 	std::unique_ptr<Camera> camera{};
-	float mouseLastX = 0.f;
-	float mouseLastY = 0.f;
-	bool mouseFirstUse = true;
-	bool mousePressLeft = false;
-	bool imguiShow = true;
+	float mouseLastX{ 0.f };
+	float mouseLastY{ 0.f };
+	bool mouseFirstUse{ true };
+	bool mousePressLeft{ false };
+	bool imguiShow{ true };
 
 	// Timing
-	float deltaTime = 0.0f; // Time between current frame and last frame
-	float lastFrame = 0.0f;
+	float deltaTime{ 0.0f }; // Time between current frame and last frame
+	float lastFrame{ 0.0f };
 };
 
 #endif
