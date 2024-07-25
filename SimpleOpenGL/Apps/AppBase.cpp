@@ -43,9 +43,9 @@ void AppBase::InitGLFW()
 	glfwWindow = glfwCreateWindow(AppSettings::ScreenWidth,
 		AppSettings::ScreenHeight,
 		AppSettings::ScreenTitle.c_str(),
-		NULL,
-		NULL);
-	if (glfwWindow == NULL)
+		nullptr,
+		nullptr);
+	if (glfwWindow == nullptr)
 	{
 		glfwTerminate();
 		throw std::runtime_error("Failed to create GLFW window");
@@ -150,7 +150,7 @@ int AppBase::GLFWWindowShouldClose() const
 void AppBase::ProcessTiming()
 {
 	// Per-frame time
-	float currentFrame = static_cast<float>(glfwGetTime());
+	const float currentFrame = static_cast<float>(glfwGetTime());
 	deltaTime = currentFrame - lastFrame;
 	lastFrame = currentFrame;
 }
