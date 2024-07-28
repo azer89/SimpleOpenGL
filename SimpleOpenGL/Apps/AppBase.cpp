@@ -209,8 +209,8 @@ void AppBase::MouseCallback(GLFWwindow* window, double xPosIn, double yPosIn)
 		mouseLastY = yPos;
 		mouseFirstUse = false;
 	}
-	const float xOffset = xPos - mouseLastX;
-	const float yOffset = mouseLastY - yPos; // reversed since y-coordinates go from bottom to top
+	const float xOffset{ xPos - mouseLastX };
+	const float yOffset{ mouseLastY - yPos }; // reversed since y-coordinates go from bottom to top
 	mouseLastX = xPos;
 	mouseLastY = yPos;
 	camera->ProcessMouseMovement(xOffset, yOffset);
