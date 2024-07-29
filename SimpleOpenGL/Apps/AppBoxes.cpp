@@ -26,7 +26,7 @@ int AppBoxes::MainLoop()
 	texture.CreateFromImageFile(AppSettings::TextureFolder + "neco_coneco.jpg", true);
 
 	// World space positions of our cubes
-	glm::vec3 cubePositions[]{
+	const glm::vec3 cubePositions[]{
 		glm::vec3(0.0f,  0.0f,  0.0f),
 		glm::vec3(2.0f,  5.0f, -15.0f),
 		glm::vec3(-1.5f, -2.2f, -2.5f),
@@ -40,7 +40,7 @@ int AppBoxes::MainLoop()
 	};
 
 	// Cube
-	Cube cube;
+	const Cube cube{};
 
 	// Texture
 	shader.Use();
@@ -66,7 +66,7 @@ int AppBoxes::MainLoop()
 			// Calculate the model matrix for each object and pass it to shader before drawing
 			glm::mat4 model = glm::mat4(1.0f); // Make sure to initialize matrix to identity matrix first
 			model = glm::translate(model, cubePositions[i]);
-			float angle = 20.0f * i;
+			const float angle = 20.0f * static_cast<float>(i);
 			model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
 			model = glm::scale(model, glm::vec3(0.5));
 			shader.SetMat4("model", model);
