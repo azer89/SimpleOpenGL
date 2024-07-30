@@ -26,8 +26,8 @@ int AppDeferred::MainLoop()
 			GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT
 		);
 
-		glm::mat4 projection = camera->GetProjectionMatrix();
-		glm::mat4 view = camera->GetViewMatrix();
+		const glm::mat4 projection = camera->GetProjectionMatrix();
+		const glm::mat4 view = camera->GetViewMatrix();
 
 		// 1 Geometry pass
 		pipeline.StartGeometryPass(projection, view);
@@ -57,15 +57,15 @@ void AppDeferred::InitLights()
 {
 	lightSphereShader = std::make_unique<Shader>("Misc//light_sphere.vertex", "Misc//light_sphere.fragment");
 	
-	float pi2 = glm::two_pi<float>();
+	const float pi2{ glm::two_pi<float>() };
 
 	constexpr unsigned int NR_LIGHTS = 64;
 	for (unsigned int i = 0; i < NR_LIGHTS; ++i)
 	{
-		float yPos = Utility::RandomNumber<float>(0.15f, 1.0f);
-		float radius = Utility::RandomNumber<float>(3.0f, 8.0f);
-		float rad = Utility::RandomNumber<float>(0.0f, pi2);
-		float xPos = glm::cos(rad);
+		const float yPos{ Utility::RandomNumber<float>(0.15f, 1.0f) };
+		const float radius{ Utility::RandomNumber<float>(3.0f, 8.0f) };
+		const float rad{ Utility::RandomNumber<float>(0.0f, pi2) };
+		const float xPos{ glm::cos(rad) };
 
 		glm::vec3 position(
 			glm::cos(rad) * radius,
@@ -89,11 +89,9 @@ void AppDeferred::UpdateLightPositions()
 {
 	for (unsigned int i = 0; i < lights.size(); ++i)
 	{
-		float step = deltaTime;
-
-		float yPos = lights[i].Position.y;
+		const float step{ deltaTime };
+		const float yPos{ lights[i].Position.y };
 		lightAngles[i] += step;
-
 		lights[i].Position = glm::vec3(
 			glm::cos(lightAngles[i]) * lightRadii[i],
 			yPos,
@@ -112,7 +110,7 @@ void AppDeferred::InitScene()
 	grassTexture->CreateFromImageFile(AppSettings::TextureFolder + "grass.png");
 
 	// Grass plane
-	constexpr float halfWidth = 50.0f;
+	constexpr float halfWidth{ 50.0f };
 	constexpr float planeVertices[]{
 		// Positions				   // Normals			// Texcoords
 		 halfWidth, 0.0f,  halfWidth,  0.0f, 1.0f, 0.0f,  25.0f,  0.0f,
