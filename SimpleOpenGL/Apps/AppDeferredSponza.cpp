@@ -57,14 +57,14 @@ void AppDeferredSponza::InitLights()
 {
 	lightSphereShader = std::make_unique<Shader>("Misc//light_sphere.vertex", "Misc//light_sphere.fragment");
 	
-	float pi2 = glm::two_pi<float>();
+	const float pi2 = glm::two_pi<float>();
 
-	constexpr unsigned int NR_LIGHTS = 100;
-	for (unsigned int i = 0; i < NR_LIGHTS; ++i)
+	constexpr uint32_t NR_LIGHTS{ 100 };
+	for (uint32_t i = 0; i < NR_LIGHTS; ++i)
 	{
-		float yPos = Utility::RandomNumber<float>(0.15f, 10.0f);
-		float radius = Utility::RandomNumber<float>(0.0f, 20.0f);
-		float rad = Utility::RandomNumber<float>(0.0f, pi2);
+		const float yPos = Utility::RandomNumber<float>(0.15f, 10.0f);
+		const float radius = Utility::RandomNumber<float>(0.0f, 20.0f);
+		const float rad = Utility::RandomNumber<float>(0.0f, pi2);
 		float xPos = glm::cos(rad);
 
 		glm::vec3 position(
@@ -89,13 +89,11 @@ void AppDeferredSponza::InitLights()
 
 void AppDeferredSponza::UpdateLightPositions()
 {
-	for (unsigned int i = 0; i < lights.size(); ++i)
+	for (uint32_t i = 0; i < lights.size(); ++i)
 	{
-		float step = deltaTime * 0.5f;
-
-		float yPos = lights[i].Position.y;
+		const float step = deltaTime * 0.5f;
+		const float yPos = lights[i].Position.y;
 		lightAngles[i] += step;
-
 		lights[i].Position = glm::vec3(
 			glm::cos(lightAngles[i]) * lightRadii[i],
 			yPos,
@@ -114,15 +112,15 @@ void AppDeferredSponza::RenderLights()
 	lightSphereShader->Use();
 	lightSphereShader->SetMat4("projection", camera->GetProjectionMatrix());
 	lightSphereShader->SetMat4("view", camera->GetViewMatrix());
-	for (unsigned int i = 0; i < lights.size(); ++i)
+	for (Light& light : lights)
 	{
-		lights[i].Render(*lightSphereShader);
+		light.Render(*lightSphereShader);
 	}
 }
 
 void AppDeferredSponza::RenderScene(const Shader& shader)
 {
-	glm::mat4 model = glm::mat4(1.0f);
+	const glm::mat4 model = glm::mat4(1.0f);
 	shader.SetMat4("model", model);
 	sponzaModel->Draw(shader);
 }
