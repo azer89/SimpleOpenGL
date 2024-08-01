@@ -17,8 +17,8 @@ int AppDeferredSSAO::MainLoop()
 	InitScene();
 	InitLights();
 
-	int noiseSize = 4;
-	int kernelSize = 64;
+	constexpr int noiseSize = 4;
+	constexpr int kernelSize = 64;
 	float radius = 0.5f;
 	float bias = 0.025f;
 
@@ -107,14 +107,13 @@ void AppDeferredSSAO::InitLights()
 {
 	lightSphereShader = std::make_unique<Shader>("Misc//light_sphere.vertex", "Misc//light_sphere.fragment");
 
-	float pi2 = glm::two_pi<float>();
-
-	const int NR_LIGHTS = 200;
-	for (unsigned int i = 0; i < NR_LIGHTS; ++i)
+	const float pi2 = glm::two_pi<float>();
+	constexpr uint32_t NR_LIGHTS = 200;
+	for (uint32_t i = 0; i < NR_LIGHTS; ++i)
 	{
-		float yPos = Utility::RandomNumber<float>(0.15f, 10.0f);
-		float radius = Utility::RandomNumber<float>(5.0f, 15.0f);
-		float rad = Utility::RandomNumber<float>(0.0f, pi2);
+		const float yPos = Utility::RandomNumber<float>(0.15f, 10.0f);
+		const float radius = Utility::RandomNumber<float>(5.0f, 15.0f);
+		const float rad = Utility::RandomNumber<float>(0.0f, pi2);
 		float xPos = glm::cos(rad);
 
 		glm::vec3 position(
@@ -153,11 +152,9 @@ void AppDeferredSSAO::UpdateLightPositions()
 {
 	for (unsigned int i = 0; i < lights.size(); ++i)
 	{
-		float step = deltaTime * 0.2f;
-
-		float yPos = lights[i].Position.y;
+		const float step = deltaTime * 0.2f;
+		const float yPos = lights[i].Position.y;
 		lightAngles[i] += step;
-
 		lights[i].Position = glm::vec3(
 			glm::cos(lightAngles[i]) * lightRadii[i],
 			yPos,
