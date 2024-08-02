@@ -21,11 +21,11 @@ int AppEdge::MainLoop()
 	// Configure global opengl state
 	glEnable(GL_DEPTH_TEST);
 
-	Shader gShader("Edge//g_buffer.vertex", "Edge//g_buffer.fragment");
+	const Shader gShader("Edge//g_buffer.vertex", "Edge//g_buffer.fragment");
 
 	InitQuad();
 
-	Shader compositeShader("Edge//composite.vertex", "Edge//composite.fragment");
+	const Shader compositeShader("Edge//composite.vertex", "Edge//composite.fragment");
 	compositeShader.Use();
 	compositeShader.SetInt("gPosition", 0);
 	compositeShader.SetInt("gNormal", 1);
@@ -46,7 +46,7 @@ int AppEdge::MainLoop()
 	glCreateFramebuffers(1, &gBufferFBO);
 	glBindFramebuffer(GL_FRAMEBUFFER, gBufferFBO);
 
-	const int numMipmaps = 1;
+	constexpr int numMipmaps = 1;
 
 	// Position
 	unsigned int gPositionTexture;
@@ -81,7 +81,7 @@ int AppEdge::MainLoop()
 	glTextureStorage2D(gAlbedoTexture, numMipmaps, GL_RGBA8, AppSettings::ScreenWidth, AppSettings::ScreenHeight);
 	glNamedFramebufferTexture(gBufferFBO, GL_COLOR_ATTACHMENT2, gAlbedoTexture, 0);
 
-	unsigned int attachments[3]{ GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
+	constexpr uint32_t attachments[3]{ GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
 	glNamedFramebufferDrawBuffers(gBufferFBO, 3, attachments);
 
 	// Depth render buffer
