@@ -25,16 +25,16 @@ int AppIBL::MainLoop()
 
 	InitDebugCubes();
 
-	Cube cube;
+	const Cube cube{};
 
 	Model renderModel(AppSettings::ModelFolder + "Sponza//Sponza.gltf");
 
-	Shader skyboxShader("IBL//skybox.vertex", "IBL//skybox.fragment");
+	const Shader skyboxShader("IBL//skybox.vertex", "IBL//skybox.fragment");
 	skyboxShader.Use();
 	skyboxShader.SetInt("environmentMap", 0);
 	skyboxShader.SetMat4("projection", camera->GetProjectionMatrix());
 
-	Shader lightSphereShader("Misc//light_sphere.vertex", "Misc//light_sphere.fragment");
+	const Shader lightSphereShader("Misc//light_sphere.vertex", "Misc//light_sphere.fragment");
 	std::vector<Light> lights;
 	lights.emplace_back(glm::vec3(-1.5f, 0.7f, 1.5f ), glm::vec3(1.f, 1.f, 1.f));
 	lights.emplace_back(glm::vec3(1.5f, 0.7f, 1.5f), glm::vec3(1.f, 1.f, 1.f));
@@ -60,7 +60,7 @@ int AppIBL::MainLoop()
 		ibl.BindTextures();
 		ibl.SetLights(lights);
 
-		Shader* pbrShader = ibl.GetPBRShader();
+		const Shader* pbrShader = ibl.GetPBRShader();
 
 		// Render
 		glm::mat4 model = glm::mat4(1.0f);
@@ -68,7 +68,7 @@ int AppIBL::MainLoop()
 		//rotation += deltaTime * 0.2f;
 		pbrShader->SetMat4("model", model);
 		pbrShader->SetMat3("normalMatrix", glm::transpose(glm::inverse(glm::mat3(model))));
-		const bool skipTextureBinding = false;
+		constexpr bool skipTextureBinding = false;
 		renderModel.Draw(*pbrShader, skipTextureBinding);
 
 		// Render environment cubemap
