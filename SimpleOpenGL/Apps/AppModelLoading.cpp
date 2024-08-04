@@ -13,13 +13,13 @@ int AppModelLoading::MainLoop()
 	// Configure global opengl state
 	glEnable(GL_DEPTH_TEST);
 
-	Cube cube;
+	const Cube cube{};
 
 	Shader mainShader("ModelLoading//model_loading.vertex", "ModelLoading//model_loading.fragment");
-	Shader lightCubeShader("Misc//light_cube.vertex", "Misc//light_cube.fragment");
-	Model obj(AppSettings::ModelFolder + "adamHead//adamHead.gltf");
+	const Shader lightCubeShader("Misc//light_cube.vertex", "Misc//light_cube.fragment");
+	Model obj(AppSettings::ModelFolder + "Tachikoma//Tachikoma.gltf");
 
-	glm::vec3 lightPos(0.0f, 0.5f, 5.0f);
+	const glm::vec3 lightPos(0.0f, 0.5f, 5.0f);
 
 	auto modelRotation = 0.0f;
 
