@@ -8,14 +8,14 @@ int AppPBRTextured::MainLoop()
 {
 	glEnable(GL_DEPTH_TEST);
 
-	Shader shader("PBR//pbr.vertex", "PBR//pbr.fragment");
+	const Shader shader("PBR//pbr.vertex", "PBR//pbr.fragment");
 
-	glm::mat4 projection = camera->GetProjectionMatrix();
+	const glm::mat4 projection = camera->GetProjectionMatrix();
 	shader.Use();
 	shader.SetMat4("projection", projection);
 	InitScene();
 
-	std::vector<Light> lights;
+	std::vector<Light> lights{};
 	lights.emplace_back(glm::vec3(0.0f, 0.0f, 10.0f), glm::vec3(150.0f, 150.0f, 150.0f));
 
 	while (!GLFWWindowShouldClose())
@@ -59,8 +59,8 @@ void AppPBRTextured::InitScene()
 
 void AppPBRTextured::RenderScene(const Shader& shader)
 {
-	glm::mat4 model = glm::mat4(1.0f);
+	const glm::mat4 model = glm::mat4(1.0f);
 	shader.SetMat4("model", model);
-	bool skipTextureBinding = false;
+	constexpr bool skipTextureBinding = false;
 	dragonModel->Draw(shader, skipTextureBinding);
 }
