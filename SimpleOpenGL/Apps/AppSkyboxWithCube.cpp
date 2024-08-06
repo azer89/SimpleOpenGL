@@ -10,13 +10,13 @@ int AppSkyboxWithCube::MainLoop()
 {
 	glEnable(GL_DEPTH_TEST);
 
-	Cube cube;
+	const Cube cube{};
 
-	Texture cubeTexture;
+	Texture cubeTexture{};
 	cubeTexture.CreateFromImageFile(AppSettings::TextureFolder + "neco_coneco.jpg", true);
 
-	Texture skyboxTexture;
-	std::vector<std::string> files
+	Texture skyboxTexture{};
+	const std::vector<std::string> files
 	{
 		"right.png",
 		"left.png",
@@ -27,9 +27,9 @@ int AppSkyboxWithCube::MainLoop()
 	};
 	skyboxTexture.CreateCubeMap(files, AppSettings::TextureFolder + "skybox_blue_space//");
 
-	Shader cubeShader("Cubemap//cube.vertex", "Cubemap//cube.fragment");
-	Shader mainShader("Cubemap//blinn_phong_skybox.vertex", "Cubemap//blinn_phong_skybox.fragment");
-	Shader skyboxShader("Cubemap//skybox.vertex", "Cubemap//skybox.fragment");
+	const Shader cubeShader("Cubemap//cube.vertex", "Cubemap//cube.fragment");
+	const Shader mainShader("Cubemap//blinn_phong_skybox.vertex", "Cubemap//blinn_phong_skybox.fragment");
+	const Shader skyboxShader("Cubemap//skybox.vertex", "Cubemap//skybox.fragment");
 
 	cubeShader.Use();
 	cubeShader.SetInt("skybox", 0);
@@ -37,9 +37,6 @@ int AppSkyboxWithCube::MainLoop()
 
 	skyboxShader.Use();
 	skyboxShader.SetInt("skybox", 0);
-
-	glm::vec3 lightPos(0.0f, 1.5f, 1.5f);
-	auto modelRotation = 0.0f;
 
 	while (!GLFWWindowShouldClose())
 	{
