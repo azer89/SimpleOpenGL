@@ -71,7 +71,7 @@ void Model::LoadModel(std::string const& path)
 }
 
 // Processes a node in a recursive fashion. Processes each individual mesh located at the node and repeats this process on its children nodes (if any).
-void Model::ProcessNode(aiNode* node, const aiScene* scene, const glm::mat4& parentTransform)
+void Model::ProcessNode(const aiNode* node, const aiScene* scene, const glm::mat4& parentTransform)
 {
 	glm::mat4 nodeTransform = mat4_cast(node->mTransformation);
 	glm::mat4 totalTransform = parentTransform * nodeTransform;
@@ -92,7 +92,7 @@ void Model::ProcessNode(aiNode* node, const aiScene* scene, const glm::mat4& par
 	}
 }
 
-Mesh Model::ProcessMesh(aiMesh* mesh, const aiScene* scene, const glm::mat4& transform)
+Mesh Model::ProcessMesh(const aiMesh* mesh, const aiScene* scene, const glm::mat4& transform)
 {
 	// Data to fill
 	std::vector<Vertex> vertices;

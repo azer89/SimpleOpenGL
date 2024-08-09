@@ -18,7 +18,7 @@ Mesh::Mesh(std::vector<Vertex>&& _vertices,
 	SetupMesh();
 }
 
-void Mesh::Delete()
+void Mesh::Delete() const
 {
 	glDeleteVertexArrays(1, &VAO);
 	glDeleteBuffers(1, &VBO);
@@ -69,10 +69,10 @@ void Mesh::SetupMesh()
 {
 	// DSA
 	glCreateBuffers(1, &VBO);
-	glNamedBufferStorage(VBO, sizeof(Vertex) * vertices.size(), &vertices[0], GL_DYNAMIC_STORAGE_BIT);
+	glNamedBufferStorage(VBO, sizeof(Vertex) * vertices.size(), vertices.data(), GL_DYNAMIC_STORAGE_BIT);
 	
 	glCreateBuffers(1, &EBO);
-	glNamedBufferStorage(EBO, sizeof(unsigned int) * indices.size(),  &indices[0], GL_DYNAMIC_STORAGE_BIT);
+	glNamedBufferStorage(EBO, sizeof(unsigned int) * indices.size(),  indices.data(), GL_DYNAMIC_STORAGE_BIT);
 
 	glCreateVertexArrays(1, &VAO);
 	glVertexArrayVertexBuffer(VAO, 0, VBO, 0, sizeof(Vertex));

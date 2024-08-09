@@ -36,9 +36,9 @@ private:
 	void LoadModel(std::string const& path);
 
 	// Processes a node in a recursive fashion. Processes each individual mesh located at the node and repeats this process on its children nodes (if any).
-	void ProcessNode(aiNode* node, const aiScene* scene, const glm::mat4& parentTransform);
+	void ProcessNode(const aiNode* node, const aiScene* scene, const glm::mat4& parentTransform);
 
-	Mesh ProcessMesh(aiMesh* mesh, const aiScene* scene, const glm::mat4& transform);
+	Mesh ProcessMesh(const aiMesh* mesh, const aiScene* scene, const glm::mat4& transform);
 };
 
 #endif

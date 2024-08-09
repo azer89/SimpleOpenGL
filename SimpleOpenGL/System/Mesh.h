@@ -35,7 +35,7 @@ public:
 		std::unordered_map<TextureType, Texture>&& textures);
 
 	// Cleanup resource
-	void Delete();
+	void Delete() const;
 
 	void AddTextureIfEmpty(TextureType tType, const std::string& filePath);
 
