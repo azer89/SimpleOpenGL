@@ -8,7 +8,6 @@
 #include "TextureMapper.h"
 
 #include <string>
-#include <fstream>
 #include <sstream>
 #include <iostream>
 #include <map>
@@ -73,15 +72,15 @@ void Model::LoadModel(std::string const& path)
 // Processes a node in a recursive fashion. Processes each individual mesh located at the node and repeats this process on its children nodes (if any).
 void Model::ProcessNode(const aiNode* node, const aiScene* scene, const glm::mat4& parentTransform)
 {
-	glm::mat4 nodeTransform = mat4_cast(node->mTransformation);
-	glm::mat4 totalTransform = parentTransform * nodeTransform;
+	const glm::mat4 nodeTransform = mat4_cast(node->mTransformation);
+	const glm::mat4 totalTransform = parentTransform * nodeTransform;
 
 	// Process each mesh located at the current node
 	for (unsigned int i = 0; i < node->mNumMeshes; ++i)
 	{
 		// The node object only contains indices to index the actual objects in the scene. 
 		// The scene contains all the data, node is just to keep stuff organized (like relations between nodes).
-		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
+		const aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
 		
 		meshes.push_back(ProcessMesh(mesh, scene, totalTransform));
 	}
@@ -182,5 +181,5 @@ Mesh Model::ProcessMesh(const aiMesh* mesh, const aiScene* scene, const glm::mat
 		}
 	}
 
-	return Mesh(std::move(vertices), std::move(indices), std::move(textures));
+	return { std::move(vertices), std::move(indices), std::move(textures) };
 }
