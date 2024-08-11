@@ -14,7 +14,7 @@ PipelineBloom::PipelineBloom(unsigned blurIteration_) :
 	InitQuad();
 
 	// Set up Bloom pipeline
-	const int numMipmaps = 1;
+	constexpr int numMipmaps = 1;
 
 	// Configure (floating point) framebuffers
 	glCreateFramebuffers(1, &hdrFBO);
@@ -34,7 +34,7 @@ PipelineBloom::PipelineBloom(unsigned blurIteration_) :
 	}
 
 	// Tell OpenGL which color attachments we'll use (of this framebuffer) for rendering 
-	unsigned int attachments[2]{ GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
+	constexpr unsigned int attachments[2]{ GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
 	glNamedFramebufferDrawBuffers(hdrFBO, 2, attachments);
 	if (glCheckNamedFramebufferStatus(hdrFBO, GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 	{
@@ -52,7 +52,7 @@ PipelineBloom::PipelineBloom(unsigned blurIteration_) :
 	// Ping-pong-framebuffer for blurring
 	glCreateFramebuffers(2, pingpongFBO);
 	glCreateTextures(GL_TEXTURE_2D, 2, pingpongColorbuffers);
-	for (unsigned int i = 0; i < 2; i++)
+	for (uint32_t i = 0; i < 2; i++)
 	{
 		glTextureParameteri(pingpongColorbuffers[i], GL_TEXTURE_MAX_LEVEL, numMipmaps - 1);
 		glTextureParameteri(pingpongColorbuffers[i], GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -84,7 +84,7 @@ void PipelineBloom::StartFirstPass(
 	const glm::mat4& view,
 	const glm::vec3& cameraPosition,
 	const glm::vec3& lightPosition
-)
+) const
 {
 	// First pass
 	glBindFramebuffer(GL_FRAMEBUFFER, hdrFBO);
@@ -97,7 +97,7 @@ void PipelineBloom::StartFirstPass(
 }
 
 // 2
-void PipelineBloom::EndFirstPass()
+void PipelineBloom::EndFirstPass() const
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
@@ -158,7 +158,7 @@ void PipelineBloom::InitQuad()
 	glVertexArrayAttribBinding(quadVAO, 1, 0);
 }
 
-void PipelineBloom::RenderQuad()
+void PipelineBloom::RenderQuad() const
 {
 	glBindVertexArray(quadVAO);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);

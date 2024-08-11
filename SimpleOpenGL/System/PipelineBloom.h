@@ -17,10 +17,10 @@ public:
 		const glm::mat4& projection, 
 		const glm::mat4& view,
 		const glm::vec3& cameraPosition,
-		const glm::vec3& lightPosition);
+		const glm::vec3& lightPosition) const;
 	
 	// 2
-	void EndFirstPass();
+	void EndFirstPass() const;
 	
 	// 3
 	void StartBlurPass();
@@ -32,7 +32,7 @@ public:
 
 private:
 	void InitQuad();
-	void RenderQuad();
+	void RenderQuad() const;
 
 private:
 	std::unique_ptr<Shader> mainShader{};
