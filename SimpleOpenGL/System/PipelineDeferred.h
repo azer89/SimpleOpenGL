@@ -18,10 +18,10 @@ public:
 	);
 
 	// Call these in order
-	void StartGeometryPass(const glm::mat4& projection, const glm::mat4& view);
-	void EndGeometryPass();
-	void StartLightingPass(const std::vector<Light>& lights, const glm::vec3& cameraPosition);
-	void Blit();
+	void StartGeometryPass(const glm::mat4& projection, const glm::mat4& view) const;
+	void EndGeometryPass() const;
+	void StartLightingPass(const std::vector<Light>& lights, const glm::vec3& cameraPosition) const;
+	void Blit() const;
 
 	// Get G-Buffer shader
 	[[nodiscard]] Shader* GetGBufferShader() const

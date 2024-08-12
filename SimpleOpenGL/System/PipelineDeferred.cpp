@@ -53,7 +53,7 @@ void PipelineDeferred::Init(
 	glVertexArrayAttribBinding(quadVAO, 0, 0);
 	glVertexArrayAttribBinding(quadVAO, 1, 0);
 
-	const int numMipmaps = 1;
+	constexpr int numMipmaps = 1;
 
 	// G-buffer
 	glCreateFramebuffers(1, &gBuffer);
@@ -83,7 +83,7 @@ void PipelineDeferred::Init(
 	glTextureStorage2D(gAlbedoSpec, numMipmaps, GL_RGBA8, AppSettings::ScreenWidth, AppSettings::ScreenHeight);
 	glNamedFramebufferTexture(gBuffer, GL_COLOR_ATTACHMENT2, gAlbedoSpec, 0);
 	
-	unsigned int attachments[3]{ GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
+	constexpr uint32_t attachments[3]{ GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
 	glNamedFramebufferDrawBuffers(gBuffer, 3, attachments);
 	
 	// Depth render buffer
@@ -99,7 +99,7 @@ void PipelineDeferred::Init(
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void PipelineDeferred::StartGeometryPass(const glm::mat4& projection, const glm::mat4& view)
+void PipelineDeferred::StartGeometryPass(const glm::mat4& projection, const glm::mat4& view) const
 {
 	// 1 Geometry pass
 	glBindFramebuffer(GL_FRAMEBUFFER, gBuffer);
@@ -109,12 +109,12 @@ void PipelineDeferred::StartGeometryPass(const glm::mat4& projection, const glm:
 	gBufferShader->SetMat4("view", view);
 }
 
-void PipelineDeferred::EndGeometryPass() 
+void PipelineDeferred::EndGeometryPass() const
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void PipelineDeferred::StartLightingPass(const std::vector<Light>& lights, const glm::vec3& cameraPosition)
+void PipelineDeferred::StartLightingPass(const std::vector<Light>& lights, const glm::vec3& cameraPosition) const
 {
 	// 2 Lighting Pass
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -130,7 +130,7 @@ void PipelineDeferred::StartLightingPass(const std::vector<Light>& lights, const
 	constexpr float quadratic = 1.8f;
 	lightingShader->SetFloat("linear", linear);
 	lightingShader->SetFloat("quadratic", quadratic);
-	for (unsigned int i = 0; i < lights.size(); ++i)
+	for (size_t i = 0; i < lights.size(); ++i)
 	{
 		lightingShader->SetVec3("lights[" + std::to_string(i) + "].Position", lights[i].Position);
 		lightingShader->SetVec3("lights[" + std::to_string(i) + "].Color", lights[i].Color);
@@ -141,7 +141,7 @@ void PipelineDeferred::StartLightingPass(const std::vector<Light>& lights, const
 	glBindVertexArray(0);
 }
 
-void PipelineDeferred::Blit() 
+void PipelineDeferred::Blit() const
 {
 	// 3 Copy content of geometry's depth buffer to default framebuffer's depth buffer
 	glBlitNamedFramebuffer(
