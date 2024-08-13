@@ -54,7 +54,7 @@ void PipelineDeferredSSAO::Init(
 	glCreateFramebuffers(1, &gBufferFBO);
 	glBindFramebuffer(GL_FRAMEBUFFER, gBufferFBO); // Needed because we are not fully DSA
 	
-	const int numMipmaps = 1;
+	constexpr uint32_t numMipmaps = 1;
 	
 	// Position
 	glCreateTextures(GL_TEXTURE_2D, 1, &gPositionTexture);
@@ -87,7 +87,7 @@ void PipelineDeferredSSAO::Init(
 	glNamedFramebufferTexture(gBufferFBO, GL_COLOR_ATTACHMENT2, gAlbedoTexture, 0);
 	
 	// Attachments
-	unsigned int attachments[3]{ GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
+	constexpr uint32_t attachments[3]{ GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
 	glNamedFramebufferDrawBuffers(gBufferFBO, 3, attachments);
 
 	// Depth render buffer
@@ -136,7 +136,7 @@ void PipelineDeferredSSAO::Init(
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	// Sample kernel
-	float kernelSizeF = static_cast<float>(kernelSize);
+	const float kernelSizeF = static_cast<float>(kernelSize);
 	for (int i = 0; i < kernelSize; ++i)
 	{
 		glm::vec3 sample(Utility::RandomNumber<float>(-1.0f, 1.0f),
@@ -153,15 +153,15 @@ void PipelineDeferredSSAO::Init(
 	}
 
 	// Noise texture
-	std::vector<glm::vec3> ssaoNoise;
 	const int noiseSizeSq = noiseSize * noiseSize;
+	std::vector<glm::vec3> ssaoNoise(noiseSizeSq);
 	for (int i = 0; i < noiseSizeSq; ++i)
 	{
 		glm::vec3 noise(
 			Utility::RandomNumber<float>() * 2.0 - 1.0,
 			Utility::RandomNumber<float>() * 2.0 - 1.0,
 			0.0f);
-		ssaoNoise.push_back(noise);
+		ssaoNoise[i] = noise;
 	}
 
 	glCreateTextures(GL_TEXTURE_2D, 1, &noiseTexture);
@@ -216,7 +216,7 @@ void PipelineDeferredSSAO::StartGeometryPass(const glm::mat4& projection, const 
 	// 1 Geometry pass: render scene's geometry/color data into G buffer
 	glBindFramebuffer(GL_FRAMEBUFFER, gBufferFBO);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glm::mat4 model = glm::mat4(1.0f);
+	const glm::mat4 model = glm::mat4(1.0f);
 	shaderGeometry->Use();
 	shaderGeometry->SetMat4("projection", projection);
 	shaderGeometry->SetMat4("view", view);
@@ -280,8 +280,8 @@ void PipelineDeferredSSAO::StartLightingPass(const std::vector<Light>& lights,
 	}
 
 	// Attenuation parameters
-	const float linear = 2.9f;
-	const float quadratic = 3.8f;
+	constexpr float linear = 2.9f;
+	constexpr float quadratic = 3.8f;
 	shaderLighting->SetFloat("linear", linear);
 	shaderLighting->SetFloat("quadratic", quadratic);
 	shaderLighting->SetVec3("viewPos", cameraPosition);
