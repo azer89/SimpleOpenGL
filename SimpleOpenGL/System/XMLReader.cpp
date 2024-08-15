@@ -29,17 +29,17 @@ void XMLReader::LoadSettings()
 {
 	XMLDocument doc;
 	std::cout << "Parsing XML file: " << AppSettings::XMLFilePath << '\n';
-	auto eResult = doc.LoadFile(AppSettings::XMLFilePath.c_str());
+	const auto eResult = doc.LoadFile(AppSettings::XMLFilePath.c_str());
 	if (eResult != XML_SUCCESS)
 	{
 		std::cerr << "Cannot find XML file: " << AppSettings::XMLFilePath << '\n';
 	}
 
 	// Root
-	auto root = doc.FirstChild();
+	const auto root = doc.FirstChild();
 
 	// General settings
-	auto general_parent = root->FirstChildElement("General");
+	const auto general_parent = root->FirstChildElement("General");
 	AppSettings::ScreenWidth = GetInt(general_parent->FirstChildElement("ScreenWidth"));
 	AppSettings::ScreenHeight = GetInt(general_parent->FirstChildElement("ScreenHeight"));
 	AppSettings::ScreenTitle = GetString(general_parent->FirstChildElement("ScreenTitle"));
