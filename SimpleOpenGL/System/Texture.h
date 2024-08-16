@@ -1,8 +1,6 @@
 #ifndef TEXTURE
 #define TEXTURE
 
-#include "glad/glad.h"
-
 #include <string>
 #include <vector>
 
@@ -11,11 +9,11 @@
 class Texture
 {
 private:
-	unsigned int id;
+	unsigned int id{};
 
 	// These two are only for loading glTF, otherwise they are empty
-	TextureType textureType;
-	std::string textureName;
+	TextureType textureType{};
+	std::string textureName{};
 
 public:
 	Texture();

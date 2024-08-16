@@ -6,10 +6,6 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
-#define STBI_MSC_SECURE_CRT
-#define STB_IMAGE_WRITE_IMPLEMENTATION
-#include "stb_image_write.h"
-
 #include <iostream>
 
 Texture::Texture() :
@@ -24,9 +20,9 @@ Texture::Texture(const std::string& fullFilePath)
 }
 
 Texture::Texture(TextureType texType, const std::string& texName) :
+	id(GL_INVALID_VALUE),
 	textureType(texType),
-	textureName(texName),
-	id(GL_INVALID_VALUE)
+	textureName(texName)
 {
 }
 
@@ -57,9 +53,9 @@ void Texture::CreateFromImageFile(const std::string& fullFilePath, bool flipVert
 	uint8_t* data = stbi_load(fullFilePath.c_str(), &width, &height, nullptr, STBI_rgb_alpha);
 	if (data)
 	{
-		GLenum clamp = GL_REPEAT;
-		int numMipmaps = Utility::NumMipmap(width, height);
-		int maxAnisotropy = 16;
+		constexpr GLenum clamp = GL_REPEAT;
+		constexpr int maxAnisotropy = 16;
+		const int numMipmaps = Utility::NumMipmap(width, height);
 		
 		// DSA
 		glCreateTextures(GL_TEXTURE_2D, 1, &id);
@@ -121,14 +117,14 @@ void Texture::CreateDepthMap(unsigned int width, unsigned int height)
 	// DSA
 	glCreateTextures(GL_TEXTURE_2D, 1, &id);
 
-	const int numMipmaps = 1;
+	constexpr int numMipmaps = 1;
 	glTextureParameteri(id, GL_TEXTURE_MAX_LEVEL, numMipmaps - 1);
 	
 	glTextureParameteri(id, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTextureParameteri(id, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTextureStorage2D(id, numMipmaps, GL_DEPTH_COMPONENT24, width, height);
 	
-	const GLfloat border[]{ 1.0, 1.0, 1.0, 1.0 };
+	constexpr GLfloat border[]{ 1.0, 1.0, 1.0, 1.0 };
 	glTextureParameterfv(id, GL_TEXTURE_BORDER_COLOR, border);
 	glTextureParameteri(id, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
 	glTextureParameteri(id, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
@@ -139,12 +135,12 @@ void Texture::CreateCubeMap(const std::vector<std::string>& files, const std::st
 	// DSA
 	glCreateTextures(GL_TEXTURE_CUBE_MAP, 1, &id);
 
-	const int numMipmaps = 1;
+	constexpr int numMipmaps = 1;
 	glTextureParameteri(id, GL_TEXTURE_MAX_LEVEL, numMipmaps - 1);
 
 	stbi_set_flip_vertically_on_load(false);
 	int width, height;
-	for (int i = 0; i < files.size(); ++i)
+	for (uint32_t i = 0; i < files.size(); ++i)
 	{
 		auto filePath = directory + files[i];
 		uint8_t* data = stbi_load(filePath.c_str(), &width, &height, nullptr, STBI_rgb_alpha);
