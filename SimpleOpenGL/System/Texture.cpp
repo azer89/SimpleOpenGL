@@ -90,7 +90,7 @@ void Texture::CreateFromHDRFile(const std::string& fullFilePath)
 	if (data)
 	{
 		// DSA
-		const int numMipmaps = Utility::NumMipmap(width, height);;
+		const int numMipmaps = Utility::NumMipmap(width, height);
 
 		glCreateTextures(GL_TEXTURE_2D, 1, &id);
 		glTextureStorage2D(id, numMipmaps, GL_RGB32F, width, height);
@@ -122,7 +122,7 @@ void Texture::CreateDepthMap(unsigned int width, unsigned int height)
 	
 	glTextureParameteri(id, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTextureParameteri(id, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTextureStorage2D(id, numMipmaps, GL_DEPTH_COMPONENT24, width, height);
+	glTextureStorage2D(id, numMipmaps, GL_DEPTH_COMPONENT24, static_cast<int>(width), static_cast<int>(height));
 	
 	constexpr GLfloat border[]{ 1.0, 1.0, 1.0, 1.0 };
 	glTextureParameterfv(id, GL_TEXTURE_BORDER_COLOR, border);
@@ -154,7 +154,16 @@ void Texture::CreateCubeMap(const std::vector<std::string>& files, const std::st
 		if (data)
 		{
 			// Upload the data
-			glTextureSubImage3D(id, 0, 0, 0, i, width, height, 1, GL_RGBA, GL_UNSIGNED_BYTE, data);
+			glTextureSubImage3D(id,
+				0,
+				0,
+				0,
+				static_cast<int>(i),
+				width,
+				height,
+				1,
+				GL_RGBA,
+				GL_UNSIGNED_BYTE, data);
 		}
 		else
 		{
