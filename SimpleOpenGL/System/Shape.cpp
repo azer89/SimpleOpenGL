@@ -13,10 +13,10 @@ Sphere::Sphere()
 	glGenBuffers(1, &vbo);
 	glGenBuffers(1, &ebo);
 
-	std::vector<glm::vec3> positions;
-	std::vector<glm::vec2> uv;
-	std::vector<glm::vec3> normals;
-	std::vector<unsigned int> indices;
+	std::vector<glm::vec3> positions{};
+	std::vector<glm::vec2> uv{};
+	std::vector<glm::vec3> normals{};
+	std::vector<unsigned int> indices{};
 
 	constexpr unsigned int X_SEGMENTS = 64;
 	constexpr unsigned int Y_SEGMENTS = 64;
@@ -25,11 +25,11 @@ Sphere::Sphere()
 	{
 		for (unsigned int y = 0; y <= Y_SEGMENTS; ++y)
 		{
-			float xSegment = (float)x / (float)X_SEGMENTS;
-			float ySegment = (float)y / (float)Y_SEGMENTS;
-			float xPos = std::cos(xSegment * 2.0f * PI) * std::sin(ySegment * PI);
-			float yPos = std::cos(ySegment * PI);
-			float zPos = std::sin(xSegment * 2.0f * PI) * std::sin(ySegment * PI);
+			const float xSegment = static_cast<float>(x) / static_cast<float>(X_SEGMENTS);
+			const float ySegment = static_cast<float>(y) / static_cast<float>(Y_SEGMENTS);
+			const float xPos = std::cos(xSegment * 2.0f * PI) * std::sin(ySegment * PI);
+			const float yPos = std::cos(ySegment * PI);
+			const float zPos = std::sin(xSegment * 2.0f * PI) * std::sin(ySegment * PI);
 
 			positions.push_back(glm::vec3(xPos, yPos, zPos));
 			uv.push_back(glm::vec2(xSegment, ySegment));
@@ -66,13 +66,13 @@ Sphere::Sphere()
 		data.push_back(positions[i].x);
 		data.push_back(positions[i].y);
 		data.push_back(positions[i].z);
-		if (normals.size() > 0)
+		if (!normals.empty())
 		{
 			data.push_back(normals[i].x);
 			data.push_back(normals[i].y);
 			data.push_back(normals[i].z);
 		}
-		if (uv.size() > 0)
+		if (!uv.empty())
 		{
 			data.push_back(uv[i].x);
 			data.push_back(uv[i].y);
@@ -80,9 +80,9 @@ Sphere::Sphere()
 	}
 	glBindVertexArray(VAO);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof(float), &data[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof(float), data.data(), GL_STATIC_DRAW);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), indices.data(), GL_STATIC_DRAW);
 	unsigned int stride = (3 + 2 + 3) * sizeof(float);
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride, (void*)0);
@@ -104,7 +104,7 @@ void Sphere::Draw() const
 
 Cube::Cube()
 {
-	std::vector<float> vertices{
+	const std::vector<float> vertices{
 		// Back face
 		-1.0f, -1.0f, -1.0f,  0.0f,  0.0f, -1.0f, 0.0f, 0.0f, // bottom-left
 		 1.0f,  1.0f, -1.0f,  0.0f,  0.0f, -1.0f, 1.0f, 1.0f, // top-right
@@ -178,7 +178,7 @@ void Cube::Draw() const
 
 Quad::Quad()
 {
-	std::vector<float> data = GetQuadData();
+	const std::vector<float> data = GetQuadData();
 	SetUpVAOVBO(data);
 }
 Quad::Quad(float rotation, glm::vec3 rotationAxis)
@@ -190,7 +190,7 @@ Quad::Quad(float rotation, glm::vec3 rotationAxis)
 
 	for (unsigned int i = 0; i < 6; ++i)
 	{
-		unsigned int index = i * 8;
+		const unsigned int index = i * 8;
 		glm::vec4 vertex(data[index], data[index + 1], data[index + 2], 0.f);
 		glm::vec4 normal(data[index + 3], data[index + 4], data[index + 5], 0.f);
 
