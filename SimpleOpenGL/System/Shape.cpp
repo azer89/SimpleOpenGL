@@ -31,9 +31,9 @@ Sphere::Sphere()
 			const float yPos = std::cos(ySegment * PI);
 			const float zPos = std::sin(xSegment * 2.0f * PI) * std::sin(ySegment * PI);
 
-			positions.push_back(glm::vec3(xPos, yPos, zPos));
-			uv.push_back(glm::vec2(xSegment, ySegment));
-			normals.push_back(glm::vec3(xPos, yPos, zPos));
+			positions.emplace_back(xPos, yPos, zPos);
+			uv.emplace_back(xSegment, ySegment);
+			normals.emplace_back(xPos, yPos, zPos);
 		}
 	}
 
@@ -83,7 +83,7 @@ Sphere::Sphere()
 	glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof(float), data.data(), GL_STATIC_DRAW);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), indices.data(), GL_STATIC_DRAW);
-	unsigned int stride = (3 + 2 + 3) * sizeof(float);
+	constexpr int stride = (3 + 2 + 3) * sizeof(float);
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride, (void*)0);
 	glEnableVertexAttribArray(1);
@@ -235,7 +235,7 @@ void Quad::SetUpVAOVBO(const std::vector<float>& vertices)
 
 	glBindVertexArray(0);
 }
-std::vector<float> Quad::GetQuadData()
+std::vector<float> Quad::GetQuadData() const
 {
 	return
 	{
