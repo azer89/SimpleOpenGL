@@ -14,21 +14,21 @@ Shader::Shader(const char* vertexFilename,
 	ID = glCreateProgram();
 
 	// Retrieve the vertex/fragment source code from filePath
-	auto vsFullFilepath = AppSettings::ShaderFolder + vertexFilename;
-	auto vertexCode = LoadTextFile(vsFullFilepath.c_str());
-	auto vertex = CreateShaderProgram(vertexCode.c_str(), GL_VERTEX_SHADER);
+	const auto vsFullFilepath = AppSettings::ShaderFolder + vertexFilename;
+	const auto vertexCode = LoadTextFile(vsFullFilepath.c_str());
+	const auto vertex = CreateShaderProgram(vertexCode.c_str(), GL_VERTEX_SHADER);
 	glAttachShader(ID, vertex);
 
-	auto fsFullFilepath = AppSettings::ShaderFolder + fragmentFilename;
-	auto fragmentCode = LoadTextFile(fsFullFilepath.c_str());
-	auto fragment = CreateShaderProgram(fragmentCode.c_str(), GL_FRAGMENT_SHADER);
+	const auto fsFullFilepath = AppSettings::ShaderFolder + fragmentFilename;
+	const auto fragmentCode = LoadTextFile(fsFullFilepath.c_str());
+	const auto fragment = CreateShaderProgram(fragmentCode.c_str(), GL_FRAGMENT_SHADER);
 	glAttachShader(ID, fragment);
 
 	if (geometryFilename)
 	{
-		auto gFullFilepath = AppSettings::ShaderFolder + geometryFilename;
-		auto geomCode = LoadTextFile(gFullFilepath.c_str());
-		auto geom = CreateShaderProgram(geomCode.c_str(), GL_GEOMETRY_SHADER);
+		const auto gFullFilepath = AppSettings::ShaderFolder + geometryFilename;
+		const auto geomCode = LoadTextFile(gFullFilepath.c_str());
+		const auto geom = CreateShaderProgram(geomCode.c_str(), GL_GEOMETRY_SHADER);
 		glAttachShader(ID, geom);
 	}
 
@@ -45,7 +45,7 @@ void Shader::Use() const
 	glUseProgram(ID);
 }
 
-void Shader::Delete()
+void Shader::Delete() const
 {
 	glDeleteProgram(ID);
 }
@@ -90,7 +90,7 @@ void Shader::SetVec4(const std::string& name, const glm::vec4& value) const
 	glUniform4fv(glGetUniformLocation(ID, name.c_str()), 1, &value[0]);
 }
 
-void Shader::SetVec4(const std::string& name, float x, float y, float z, float w)
+void Shader::SetVec4(const std::string& name, float x, float y, float z, float w) const
 {
 	glUniform4f(glGetUniformLocation(ID, name.c_str()), x, y, z, w);
 }
@@ -113,8 +113,8 @@ void Shader::SetMat4(const std::string& name, const glm::mat4& mat) const
 unsigned int Shader::CreateShaderProgram(const char* source, GLenum shaderType)
 {
 	// Create shader
-	unsigned int shader = glCreateShader(shaderType);
-	glShaderSource(shader, 1, &source, NULL);
+	const unsigned int shader = glCreateShader(shaderType);
+	glShaderSource(shader, 1, &source, nullptr);
 	glCompileShader(shader);
 
 	// Check for shader compile errors
@@ -128,7 +128,7 @@ std::string Shader::LoadTextFile(const char* filePath)
 	const char whitespace = ' ';
 	const std::string includeIdentifier = "#include ";
 
-	std::string shaderCode = "";
+	std::string shaderCode{};
 	std::ifstream file(filePath);
 
 	if (!file.is_open())
@@ -141,7 +141,7 @@ std::string Shader::LoadTextFile(const char* filePath)
 	{
 		if (lineBuffer.find(includeIdentifier) != lineBuffer.npos)
 		{
-			std::size_t index = lineBuffer.find_last_of(whitespace);
+			const std::size_t index = lineBuffer.find_last_of(whitespace);
 			std::string includeFullPath = AppSettings::ShaderFolder + lineBuffer.substr(index + 1);
 			shaderCode += LoadTextFile(includeFullPath.c_str());
 		}
