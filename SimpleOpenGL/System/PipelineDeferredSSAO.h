@@ -35,7 +35,7 @@ public:
 	);
 	void StartBlurPass();
 	void StartLightingPass(const std::vector<Light>& lights, 
-		const glm::mat4& cameraview,
+		const glm::mat4& cameraView,
 		const glm::vec3& cameraPosition);
 	void Blit();
 
@@ -71,20 +71,20 @@ private:
 	std::unique_ptr<Shader> shaderSSAO{};
 	std::unique_ptr<Shader> shaderBlur{};
 
-	unsigned int quadVAO = 0;
+	unsigned int quadVAO{};
 
-	unsigned int gBufferFBO = 0;
-	unsigned int gPositionTexture = 0;
-	unsigned int gNormalTexture = 0;
-	unsigned int gAlbedoTexture = 0;
-	unsigned int depthRBO = 0;
+	unsigned int gBufferFBO{};
+	unsigned int gPositionTexture{};
+	unsigned int gNormalTexture{};
+	unsigned int gAlbedoTexture{};
+	unsigned int depthRBO{};
 
-	unsigned int ssaoFBO = 0;
-	unsigned int ssaoColorTexture = 0;
-	unsigned int ssaoBlurTexture = 0;
-	unsigned int ssaoBlurFBO = 0;
+	unsigned int ssaoFBO{};
+	unsigned int ssaoColorTexture{};
+	unsigned int ssaoBlurTexture{};
+	unsigned int ssaoBlurFBO{};
 
-	unsigned int noiseTexture = 0;
+	unsigned int noiseTexture{};
 };
 
 #endif

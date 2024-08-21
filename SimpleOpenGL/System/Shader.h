@@ -15,7 +15,7 @@ enum class ObjectType : uint8_t
 class Shader
 {
 public:
-	unsigned int ID;
+	unsigned int ID{};
 
 public:
 	Shader(const char* vertexFilename,

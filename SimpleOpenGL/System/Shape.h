@@ -27,7 +27,7 @@ public:
 	void Draw() const override;
 
 private:
-	unsigned int indexCount;
+	unsigned int indexCount{};
 };
 
 class Cube : Shape

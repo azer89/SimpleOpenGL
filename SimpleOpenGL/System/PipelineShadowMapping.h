@@ -28,21 +28,21 @@ private:
 
 private:
 	// Data
-	glm::mat4 lightSpaceMatrix;
+	glm::mat4 lightSpaceMatrix{};
 
-	std::unique_ptr<Shader> depthShader;
-	std::unique_ptr<Shader> debugShader;
+	std::unique_ptr<Shader> depthShader{};
+	std::unique_ptr<Shader> debugShader{};
 
-	int depthWidth;
-	int depthHeight;
-	std::unique_ptr<Texture> depthTexture;
-	unsigned int depthFBO;
+	int depthWidth{};
+	int depthHeight{};
+	std::unique_ptr<Texture> depthTexture{};
+	unsigned int depthFBO{};
 
-	float nearPlane;
-	float farPlane;
+	float nearPlane{};
+	float farPlane{};
 
-	unsigned int quadVAO = 0;
-	unsigned int quadVBO = 0;
+	unsigned int quadVAO{};
+	unsigned int quadVBO{};
 };
 
 #endif
