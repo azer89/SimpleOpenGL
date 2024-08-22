@@ -19,7 +19,7 @@ int AppBoxes::MainLoop()
 	glEnable(GL_DEPTH_TEST);
 
 	// Shader programs
-	Shader shader("Misc//camera.vertex", "Misc//camera.fragment");
+	const Shader shader("Misc//camera.vertex", "Misc//camera.fragment");
 
 	// Texture
 	Texture texture;
