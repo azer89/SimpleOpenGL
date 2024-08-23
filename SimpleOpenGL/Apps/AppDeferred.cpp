@@ -11,7 +11,7 @@ int AppDeferred::MainLoop()
 {
 	glEnable(GL_DEPTH_TEST);
 	
-	PipelineDeferred pipeline(
+	const PipelineDeferred pipeline(
 		"Deferred//deferred_g_buffer.vertex", "Deferred//deferred_g_buffer.fragment",
 		"Deferred//deferred_lighting.vertex", "Deferred//deferred_lighting.fragment"
 	);
@@ -59,8 +59,8 @@ void AppDeferred::InitLights()
 	
 	const float pi2{ glm::two_pi<float>() };
 
-	constexpr unsigned int NR_LIGHTS = 64;
-	for (unsigned int i = 0; i < NR_LIGHTS; ++i)
+	constexpr uint32_t NR_LIGHTS = 64;
+	for (uint32_t i = 0; i < NR_LIGHTS; ++i)
 	{
 		const float yPos{ Utility::RandomNumber<float>(0.15f, 1.0f) };
 		const float radius{ Utility::RandomNumber<float>(3.0f, 8.0f) };
@@ -87,7 +87,7 @@ void AppDeferred::InitLights()
 
 void AppDeferred::UpdateLightPositions()
 {
-	for (unsigned int i = 0; i < lights.size(); ++i)
+	for (uint32_t i = 0; i < lights.size(); ++i)
 	{
 		const float step{ deltaTime };
 		const float yPos{ lights[i].Position.y };
@@ -136,18 +136,18 @@ void AppDeferred::InitScene()
 	glBindVertexArray(0);
 }
 
-void AppDeferred::RenderLights()
+void AppDeferred::RenderLights() const
 {
 	lightSphereShader->Use();
 	lightSphereShader->SetMat4("projection", camera->GetProjectionMatrix());
 	lightSphereShader->SetMat4("view", camera->GetViewMatrix());
-	for (Light& light : lights)
+	for (const Light& light : lights)
 	{
 		light.Render(*lightSphereShader);
 	}
 }
 
-void AppDeferred::RenderScene(const Shader& shader)
+void AppDeferred::RenderScene(const Shader& shader) const
 {
 	glm::mat4 model = glm::mat4(1.0f);
 	model = glm::translate(model, glm::vec3(2.0f, 0.0f, 1.0f));
