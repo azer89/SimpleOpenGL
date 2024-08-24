@@ -11,7 +11,7 @@ int AppDeferredSponza::MainLoop()
 {
 	glEnable(GL_DEPTH_TEST);
 	
-	PipelineDeferred pipeline(
+	const PipelineDeferred pipeline(
 		"Deferred//deferred_g_buffer.vertex", "Deferred//deferred_g_buffer.fragment",
 		"Deferred//deferred_lighting.vertex", "Deferred//deferred_lighting.fragment"
 	);
@@ -39,7 +39,7 @@ int AppDeferredSponza::MainLoop()
 		UpdateLightPositions();
 		pipeline.StartLightingPass(lights, camera->Position);
 
-		// 3 Copy content of geometry's depth buffer to default framebuffer's depth buffer
+		// 3 Copy content of geometry's depth buffer to default depth buffer
 		pipeline.Blit();
 
 		// Render lights
@@ -107,18 +107,18 @@ void AppDeferredSponza::InitScene()
 	sponzaModel = std::make_unique<Model>(AppSettings::ModelFolder + "Sponza//Sponza.gltf");
 }
 
-void AppDeferredSponza::RenderLights()
+void AppDeferredSponza::RenderLights() const
 {
 	lightSphereShader->Use();
 	lightSphereShader->SetMat4("projection", camera->GetProjectionMatrix());
 	lightSphereShader->SetMat4("view", camera->GetViewMatrix());
-	for (Light& light : lights)
+	for (const Light& light : lights)
 	{
 		light.Render(*lightSphereShader);
 	}
 }
 
-void AppDeferredSponza::RenderScene(const Shader& shader)
+void AppDeferredSponza::RenderScene(const Shader& shader) const
 {
 	const glm::mat4 model = glm::mat4(1.0f);
 	shader.SetMat4("model", model);

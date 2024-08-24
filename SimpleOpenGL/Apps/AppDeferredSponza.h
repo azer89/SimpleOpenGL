@@ -18,8 +18,8 @@ private:
 
 	void UpdateLightPositions();
 
-	void RenderScene(const Shader& shader);
-	void RenderLights();
+	void RenderScene(const Shader& shader) const;
+	void RenderLights() const;
 
 private:
 
