@@ -15,11 +15,11 @@ public:
 
 private:
 	void InitScene();
-	void RenderScene(const Shader& shader);
-
-	void InitLights();
-	void RenderLights();
 	void UpdateLightPositions();
+	void InitLights();
+	void RenderLights() const;
+	void RenderScene(const Shader& shader) const;
+	
 
 private:
 	// Scene

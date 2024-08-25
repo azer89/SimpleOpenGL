@@ -3,7 +3,6 @@
 #include "Utility.h"
 #include "PipelineDeferredSSAO.h"
 
-#include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "glm/gtc/matrix_transform.hpp"
@@ -94,7 +93,7 @@ void AppDeferredSSAO::InitScene()
 	sponzaModel = std::make_unique<Model>(AppSettings::ModelFolder + "Sponza//Sponza.gltf");
 }
 
-void AppDeferredSSAO::RenderScene(const Shader& shader)
+void AppDeferredSSAO::RenderScene(const Shader& shader) const
 {
 	glm::mat4 model = glm::mat4(1.0f);
 	model = glm::translate(model, glm::vec3(8.0f, 0.0f, 1.0f));
@@ -137,12 +136,12 @@ void AppDeferredSSAO::InitLights()
 	lightSphereShader->SetFloat("radius", 0.2f);
 }
 
-void AppDeferredSSAO::RenderLights()
+void AppDeferredSSAO::RenderLights() const
 {
 	lightSphereShader->Use();
 	lightSphereShader->SetMat4("projection", camera->GetProjectionMatrix());
 	lightSphereShader->SetMat4("view", camera->GetViewMatrix());
-	for (Light& light : lights)
+	for (const Light& light : lights)
 	{
 		light.Render(*lightSphereShader);
 	}
