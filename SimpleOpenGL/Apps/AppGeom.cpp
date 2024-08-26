@@ -5,7 +5,7 @@ int AppGeom::MainLoop()
 {
 	glEnable(GL_DEPTH_TEST);
 
-	Shader shader(
+	const Shader shader(
 		"GeometryShader//geom.vertex", 
 		"GeometryShader//geom.fragment", 
 		"GeometryShader//geom.geometry");

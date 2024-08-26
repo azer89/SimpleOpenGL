@@ -12,8 +12,8 @@
 
 unsigned int quadVAO;
 unsigned int quadVBO;
-void InitQuad();
 
+void InitQuad();
 void RenderQuad();
 
 int AppEdge::MainLoop()
