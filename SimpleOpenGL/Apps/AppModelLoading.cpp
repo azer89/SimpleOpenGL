@@ -15,7 +15,7 @@ int AppModelLoading::MainLoop()
 
 	const Cube cube{};
 
-	Shader mainShader("ModelLoading//model_loading.vertex", "ModelLoading//model_loading.fragment");
+	const Shader mainShader("ModelLoading//model_loading.vertex", "ModelLoading//model_loading.fragment");
 	const Shader lightCubeShader("Misc//light_cube.vertex", "Misc//light_cube.fragment");
 	Model obj(AppSettings::ModelFolder + "Tachikoma//Tachikoma.gltf");
 

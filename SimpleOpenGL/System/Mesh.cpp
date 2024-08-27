@@ -45,16 +45,14 @@ void Mesh::Draw(const Shader& shader, bool skipTexture)
 		for (unsigned int i = 0; i < TextureMapper::NUM_TEXTURE_TYPE; ++i) // Iterate over TextureType elements
 		{
 			TextureType tType = static_cast<TextureType>(i + 1); // Casting
-
-			if (!textureMap.contains(tType))
+			auto it = textureMap.find(tType);
+			if(it == textureMap.end())
 			{
 				continue;
 			}
-
-			Texture& texture = textureMap[tType];
 			std::string name = TextureMapper::GetTextureString(tType) + "1";
-
 			glUniform1i(glGetUniformLocation(shader.ID, name.c_str()), i);
+			const auto& texture = it->second;
 			glBindTextureUnit(i, texture.GetID()); // DSA
 		}
 	}

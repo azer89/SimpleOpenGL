@@ -35,7 +35,7 @@ int AppIBL::MainLoop()
 	skyboxShader.SetMat4("projection", camera->GetProjectionMatrix());
 
 	const Shader lightSphereShader("Misc//light_sphere.vertex", "Misc//light_sphere.fragment");
-	std::vector<Light> lights;
+	std::vector<Light> lights{};
 	lights.emplace_back(glm::vec3(-1.5f, 0.7f, 1.5f ), glm::vec3(1.f, 1.f, 1.f));
 	lights.emplace_back(glm::vec3(1.5f, 0.7f, 1.5f), glm::vec3(1.f, 1.f, 1.f));
 	lights.emplace_back(glm::vec3(-1.5f, 0.7f, -1.5f), glm::vec3(1.f, 1.f, 1.f));
@@ -82,7 +82,7 @@ int AppIBL::MainLoop()
 		lightSphereShader.Use();
 		lightSphereShader.SetMat4("projection", camera->GetProjectionMatrix());
 		lightSphereShader.SetMat4("view", camera->GetViewMatrix());
-		for (auto& l : lights)
+		for (const auto& l : lights)
 		{
 			//l.Render(lightSphereShader);
 		}
@@ -117,7 +117,7 @@ void AppIBL::InitDebugCubes()
 	simpleCubeShader->SetInt("skybox", 0);
 }
 
-void AppIBL::RenderDebugCubes(const Cube& cube, const PipelineIBL& ibl)
+void AppIBL::RenderDebugCubes(const Cube& cube, const PipelineIBL& ibl) const
 {
 	simpleCubeShader->Use();
 	simpleCubeShader->SetMat4("projection", camera->GetProjectionMatrix());
