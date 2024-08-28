@@ -65,7 +65,7 @@ void AppPBRModel::InitScene()
 	renderModel3 = std::make_unique<Model>(AppSettings::ModelFolder + "SciFiHelmet//SciFiHelmet.gltf");
 }
 
-void AppPBRModel::RenderScene(const Shader& shader)
+void AppPBRModel::RenderScene(const Shader& shader) const
 {
 	bool skipTextureBinding = false;
 

@@ -27,7 +27,7 @@ public:
 	~Model();
 
 	// Draws the model, and thus all its meshes
-	void Draw(const Shader& shader, bool skipTexture = false);
+	void Draw(const Shader& shader, bool skipTexture = false) const;
 
 	void AddTextureIfEmpty(TextureType tType, const std::string& filePath);
 

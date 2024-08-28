@@ -40,7 +40,7 @@ public:
 	void AddTextureIfEmpty(TextureType tType, const std::string& filePath);
 
 	// Render the mesh
-	void Draw(const Shader& shader, bool skipTexture);
+	void Draw(const Shader& shader, bool skipTexture) const;
 
 public:
 	// Mesh Data

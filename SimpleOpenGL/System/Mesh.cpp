@@ -37,7 +37,7 @@ void Mesh::AddTextureIfEmpty(TextureType tType, const std::string& filePath)
 }
 
 // Render the mesh
-void Mesh::Draw(const Shader& shader, bool skipTexture)
+void Mesh::Draw(const Shader& shader, bool skipTexture) const
 {
 	if (!skipTexture)
 	{

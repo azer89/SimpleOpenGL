@@ -41,9 +41,9 @@ void Model::AddTextureIfEmpty(TextureType tType, const std::string& filePath)
 }
 
 // Draws the model, and thus all its meshes
-void Model::Draw(const Shader& shader, bool skipTexture)
+void Model::Draw(const Shader& shader, bool skipTexture) const
 {
-	for (Mesh& mesh : meshes)
+	for (const Mesh& mesh : meshes)
 	{
 		mesh.Draw(shader, skipTexture);
 	}
