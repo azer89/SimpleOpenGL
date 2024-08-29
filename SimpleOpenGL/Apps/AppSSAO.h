@@ -15,7 +15,7 @@ public:
 
 private:
 	void InitScene();
-	void RenderScene(const Shader& shader);
+	void RenderScene(const Shader& shader) const;
 
 	void InitLights();
 	void RenderLights();

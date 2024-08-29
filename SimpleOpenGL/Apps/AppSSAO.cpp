@@ -90,7 +90,7 @@ void AppSSAO::InitScene()
 	renderModel = std::make_unique<Model>(AppSettings::ModelFolder + "UnicornGundam//UnicornGundam.gltf");
 }
 
-void AppSSAO::RenderScene(const Shader& shader)
+void AppSSAO::RenderScene(const Shader& shader) const
 {
 	glm::mat4 model = glm::mat4(1.0f);
 	/*model = glm::translate(model, glm::vec3(8.0f, 0.0f, 1.0f));
