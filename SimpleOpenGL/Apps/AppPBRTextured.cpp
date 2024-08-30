@@ -57,7 +57,7 @@ void AppPBRTextured::InitScene()
 	dragonModel->AddTextureIfEmpty(TextureType::EMISSIVE, AppSettings::TextureFolder + "Black1x1.png");
 }
 
-void AppPBRTextured::RenderScene(const Shader& shader)
+void AppPBRTextured::RenderScene(const Shader& shader) const
 {
 	const glm::mat4 model = glm::mat4(1.0f);
 	shader.SetMat4("model", model);
