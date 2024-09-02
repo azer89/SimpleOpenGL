@@ -26,33 +26,33 @@ public:
 	void StartBlurPass();
 	
 	// 4
-	void RenderComposite();
+	void RenderComposite() const;
 
-	[[nodiscard]] Shader* GetMainShader() const { return mainShader.get(); }
+	[[nodiscard]] Shader* GetMainShader() const { return mainShader_.get(); }
 
 private:
 	void InitQuad();
 	void RenderQuad() const;
 
 private:
-	std::unique_ptr<Shader> mainShader{};
-	std::unique_ptr<Shader> shaderBlur{};
-	std::unique_ptr<Shader> shaderFinal{};
+	std::unique_ptr<Shader> mainShader_{};
+	std::unique_ptr<Shader> shaderBlur_{};
+	std::unique_ptr<Shader> shaderFinal_{};
 
-	unsigned blurIteration{};
+	uint32_t blurIteration_{};
 
 	// First pass
-	unsigned int hdrFBO{};
-	unsigned int colorBuffers[2]{};
+	uint32_t hdrFBO_{};
+	uint32_t colorBuffers_[2]{};
 
 	// Blur pass
-	bool horizontal{};
-	unsigned int pingpongFBO[2]{};
-	unsigned int pingpongColorbuffers[2]{};
+	bool horizontal_{};
+	uint32_t pingpongFBO_[2]{};
+	uint32_t pingpongColorbuffers_[2]{};
 
 	// Full screen quad
-	unsigned int quadVAO{};
-	unsigned int quadVBO{};
+	uint32_t quadVAO_{};
+	uint32_t quadVBO_{};
 };
 
 #endif

@@ -4,11 +4,11 @@
 #include <iostream>
 
 PipelineBloom::PipelineBloom(unsigned blurIteration_) :
-	blurIteration(blurIteration_)
+	blurIteration_(blurIteration_)
 {
-	mainShader = std::make_unique<Shader>("Bloom//first_pass.vertex", "Bloom//first_pass.fragment");
-	shaderBlur = std::make_unique<Shader>("Bloom//blur.vertex", "Bloom//blur.fragment");
-	shaderFinal = std::make_unique<Shader>("Bloom//final.vertex", "Bloom//final.fragment");
+	mainShader_ = std::make_unique<Shader>("Bloom//first_pass.vertex", "Bloom//first_pass.fragment");
+	shaderBlur_ = std::make_unique<Shader>("Bloom//blur.vertex", "Bloom//blur.fragment");
+	shaderFinal_ = std::make_unique<Shader>("Bloom//final.vertex", "Bloom//final.fragment");
 
 	// Quad
 	InitQuad();
@@ -17,26 +17,26 @@ PipelineBloom::PipelineBloom(unsigned blurIteration_) :
 	constexpr int numMipmaps = 1;
 
 	// Configure (floating point) framebuffers
-	glCreateFramebuffers(1, &hdrFBO);
-	glBindFramebuffer(GL_FRAMEBUFFER, hdrFBO);
+	glCreateFramebuffers(1, &hdrFBO_);
+	glBindFramebuffer(GL_FRAMEBUFFER, hdrFBO_);
 	// Create 2 floating point color buffers (1 for normal rendering, other for brightness threshold values)
-	glCreateTextures(GL_TEXTURE_2D, 2, colorBuffers);
+	glCreateTextures(GL_TEXTURE_2D, 2, colorBuffers_);
 	for (unsigned int i = 0; i < 2; i++)
 	{
-		glTextureParameteri(colorBuffers[i], GL_TEXTURE_MAX_LEVEL, numMipmaps - 1);
-		glTextureParameteri(colorBuffers[i], GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTextureParameteri(colorBuffers[i], GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTextureParameteri(colorBuffers[i], GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-		glTextureParameteri(colorBuffers[i], GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-		glTextureStorage2D(colorBuffers[i], numMipmaps, GL_RGBA16F, AppSettings::ScreenWidth, AppSettings::ScreenHeight);
+		glTextureParameteri(colorBuffers_[i], GL_TEXTURE_MAX_LEVEL, numMipmaps - 1);
+		glTextureParameteri(colorBuffers_[i], GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTextureParameteri(colorBuffers_[i], GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTextureParameteri(colorBuffers_[i], GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTextureParameteri(colorBuffers_[i], GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		glTextureStorage2D(colorBuffers_[i], numMipmaps, GL_RGBA16F, AppSettings::ScreenWidth, AppSettings::ScreenHeight);
 		// Attach texture to framebuffer
-		glNamedFramebufferTexture(hdrFBO, GL_COLOR_ATTACHMENT0 + i, colorBuffers[i], 0);
+		glNamedFramebufferTexture(hdrFBO_, GL_COLOR_ATTACHMENT0 + i, colorBuffers_[i], 0);
 	}
 
 	// Tell OpenGL which color attachments we'll use (of this framebuffer) for rendering 
 	constexpr unsigned int attachments[2]{ GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
-	glNamedFramebufferDrawBuffers(hdrFBO, 2, attachments);
-	if (glCheckNamedFramebufferStatus(hdrFBO, GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+	glNamedFramebufferDrawBuffers(hdrFBO_, 2, attachments);
+	if (glCheckNamedFramebufferStatus(hdrFBO_, GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 	{
 		std::cerr << "Framebuffer not complete!\n";
 	}
@@ -45,37 +45,37 @@ PipelineBloom::PipelineBloom(unsigned blurIteration_) :
 	unsigned int rboDepth;
 	glCreateRenderbuffers(1, &rboDepth);
 	glNamedRenderbufferStorage(rboDepth, GL_DEPTH_COMPONENT, AppSettings::ScreenWidth, AppSettings::ScreenHeight);
-	glNamedFramebufferRenderbuffer(hdrFBO, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, rboDepth);
+	glNamedFramebufferRenderbuffer(hdrFBO_, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, rboDepth);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	// Ping-pong-framebuffer for blurring
-	glCreateFramebuffers(2, pingpongFBO);
-	glCreateTextures(GL_TEXTURE_2D, 2, pingpongColorbuffers);
+	glCreateFramebuffers(2, pingpongFBO_);
+	glCreateTextures(GL_TEXTURE_2D, 2, pingpongColorbuffers_);
 	for (uint32_t i = 0; i < 2; i++)
 	{
-		glTextureParameteri(pingpongColorbuffers[i], GL_TEXTURE_MAX_LEVEL, numMipmaps - 1);
-		glTextureParameteri(pingpongColorbuffers[i], GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTextureParameteri(pingpongColorbuffers[i], GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTextureParameteri(pingpongColorbuffers[i], GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE); // we clamp to the edge as the blur filter would otherwise sample repeated texture values!
-		glTextureParameteri(pingpongColorbuffers[i], GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-		glTextureStorage2D(pingpongColorbuffers[i], numMipmaps, GL_RGBA16F, AppSettings::ScreenWidth, AppSettings::ScreenHeight);
+		glTextureParameteri(pingpongColorbuffers_[i], GL_TEXTURE_MAX_LEVEL, numMipmaps - 1);
+		glTextureParameteri(pingpongColorbuffers_[i], GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTextureParameteri(pingpongColorbuffers_[i], GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTextureParameteri(pingpongColorbuffers_[i], GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE); // we clamp to the edge as the blur filter would otherwise sample repeated texture values!
+		glTextureParameteri(pingpongColorbuffers_[i], GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		glTextureStorage2D(pingpongColorbuffers_[i], numMipmaps, GL_RGBA16F, AppSettings::ScreenWidth, AppSettings::ScreenHeight);
 
-		glNamedFramebufferTexture(pingpongFBO[i], GL_COLOR_ATTACHMENT0, pingpongColorbuffers[i], 0);
+		glNamedFramebufferTexture(pingpongFBO_[i], GL_COLOR_ATTACHMENT0, pingpongColorbuffers_[i], 0);
 
 		// Check if framebuffers are complete
-		if (glCheckNamedFramebufferStatus(pingpongFBO[i], GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+		if (glCheckNamedFramebufferStatus(pingpongFBO_[i], GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 		{
 			std::cerr << "Framebuffer not complete!\n";
 		}
 	}
 
 	// Shader
-	shaderBlur->Use();
-	shaderBlur->SetInt("image", 0);
-	shaderFinal->Use();
-	shaderFinal->SetInt("scene", 0);
-	shaderFinal->SetInt("bloomBlur", 1);
+	shaderBlur_->Use();
+	shaderBlur_->SetInt("image", 0);
+	shaderFinal_->Use();
+	shaderFinal_->SetInt("scene", 0);
+	shaderFinal_->SetInt("bloomBlur", 1);
 }
 
 // 1
@@ -87,13 +87,13 @@ void PipelineBloom::StartFirstPass(
 ) const
 {
 	// First pass
-	glBindFramebuffer(GL_FRAMEBUFFER, hdrFBO);
+	glBindFramebuffer(GL_FRAMEBUFFER, hdrFBO_);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	mainShader->Use();
-	mainShader->SetMat4("projection", projection);
-	mainShader->SetMat4("view", view);
-	mainShader->SetVec3("viewPos", cameraPosition);
-	mainShader->SetVec3("lightPos", lightPosition);
+	mainShader_->Use();
+	mainShader_->SetMat4("projection", projection);
+	mainShader_->SetMat4("view", view);
+	mainShader_->SetVec3("viewPos", cameraPosition);
+	mainShader_->SetVec3("lightPos", lightPosition);
 }
 
 // 2
@@ -106,29 +106,29 @@ void PipelineBloom::EndFirstPass() const
 void PipelineBloom::StartBlurPass()
 {
 	// Blur pass
-	horizontal = true;
-	shaderBlur->Use();
-	for (unsigned int i = 0; i < blurIteration; i++)
+	horizontal_ = true;
+	shaderBlur_->Use();
+	for (unsigned int i = 0; i < blurIteration_; i++)
 	{
-		glBindFramebuffer(GL_FRAMEBUFFER, pingpongFBO[horizontal]);
-		shaderBlur->SetInt("horizontal", horizontal);
+		glBindFramebuffer(GL_FRAMEBUFFER, pingpongFBO_[horizontal_]);
+		shaderBlur_->SetInt("horizontal", horizontal_);
 		glBindTextureUnit(0,
 			i == 0 ?
-			colorBuffers[1] :
-			pingpongColorbuffers[!horizontal]);  // bind texture of other framebuffer (or scene if first iteration)
+			colorBuffers_[1] :
+			pingpongColorbuffers_[!horizontal_]);  // bind texture of other framebuffer (or scene if first iteration)
 		RenderQuad();
-		horizontal = !horizontal;
+		horizontal_ = !horizontal_;
 	}
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 // 4
-void PipelineBloom::RenderComposite()
+void PipelineBloom::RenderComposite() const
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	shaderFinal->Use();
-	glBindTextureUnit(0, colorBuffers[0]);
-	glBindTextureUnit(1, pingpongColorbuffers[!horizontal]);
+	shaderFinal_->Use();
+	glBindTextureUnit(0, colorBuffers_[0]);
+	glBindTextureUnit(1, pingpongColorbuffers_[!horizontal_]);
 	RenderQuad();
 }
 
@@ -143,24 +143,24 @@ void PipelineBloom::InitQuad()
 		 1.0f, -1.0f, 0.0f, 1.0f, 0.0f,
 	};
 
-	glCreateBuffers(1, &quadVBO);
-	glNamedBufferStorage(quadVBO, sizeof(quadVertices), &quadVertices, GL_DYNAMIC_STORAGE_BIT);
-	glCreateVertexArrays(1, &quadVAO);
-	glVertexArrayVertexBuffer(quadVAO, 0, quadVBO, 0, 5 * sizeof(float));
+	glCreateBuffers(1, &quadVBO_);
+	glNamedBufferStorage(quadVBO_, sizeof(quadVertices), &quadVertices, GL_DYNAMIC_STORAGE_BIT);
+	glCreateVertexArrays(1, &quadVAO_);
+	glVertexArrayVertexBuffer(quadVAO_, 0, quadVBO_, 0, 5 * sizeof(float));
 
-	glEnableVertexArrayAttrib(quadVAO, 0);
-	glEnableVertexArrayAttrib(quadVAO, 1);
+	glEnableVertexArrayAttrib(quadVAO_, 0);
+	glEnableVertexArrayAttrib(quadVAO_, 1);
 
-	glVertexArrayAttribFormat(quadVAO, 0, 3, GL_FLOAT, GL_FALSE, 0);
-	glVertexArrayAttribFormat(quadVAO, 1, 2, GL_FLOAT, GL_FALSE, 3 * sizeof(float));
+	glVertexArrayAttribFormat(quadVAO_, 0, 3, GL_FLOAT, GL_FALSE, 0);
+	glVertexArrayAttribFormat(quadVAO_, 1, 2, GL_FLOAT, GL_FALSE, 3 * sizeof(float));
 
-	glVertexArrayAttribBinding(quadVAO, 0, 0);
-	glVertexArrayAttribBinding(quadVAO, 1, 0);
+	glVertexArrayAttribBinding(quadVAO_, 0, 0);
+	glVertexArrayAttribBinding(quadVAO_, 1, 0);
 }
 
 void PipelineBloom::RenderQuad() const
 {
-	glBindVertexArray(quadVAO);
+	glBindVertexArray(quadVAO_);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	glBindVertexArray(0);
 }

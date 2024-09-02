@@ -47,7 +47,7 @@ int AppBloom::MainLoop()
 		glm::mat4 model = glm::mat4(1.0f);
 		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
 		model = glm::rotate(model, modelRotation, glm::vec3(0.0f, 1.0f, 0.0f));
-		Shader* mainShader = pipeline.GetMainShader();
+		const Shader* mainShader = pipeline.GetMainShader();
 		mainShader->SetMat4("model", model);
 		obj.Draw(*mainShader);
 
