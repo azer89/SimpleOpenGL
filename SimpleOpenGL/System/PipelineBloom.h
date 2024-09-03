@@ -6,6 +6,7 @@
 #include "glm/glm.hpp"
 
 #include <memory>
+#include <array>
 
 class PipelineBloom
 {
@@ -43,12 +44,12 @@ private:
 
 	// First pass
 	uint32_t hdrFBO_{};
-	uint32_t colorBuffers_[2]{};
+	std::array<uint32_t, 2> colorBuffers_{};
 
 	// Blur pass
 	bool horizontal_{};
-	uint32_t pingpongFBO_[2]{};
-	uint32_t pingpongColorbuffers_[2]{};
+	std::array<uint32_t, 2> pingpongFBO_{};
+	std::array<uint32_t, 2> pingpongColorbuffers_{};
 
 	// Full screen quad
 	uint32_t quadVAO_{};

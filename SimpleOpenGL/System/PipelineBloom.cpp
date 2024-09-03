@@ -20,7 +20,7 @@ PipelineBloom::PipelineBloom(unsigned blurIteration_) :
 	glCreateFramebuffers(1, &hdrFBO_);
 	glBindFramebuffer(GL_FRAMEBUFFER, hdrFBO_);
 	// Create 2 floating point color buffers (1 for normal rendering, other for brightness threshold values)
-	glCreateTextures(GL_TEXTURE_2D, 2, colorBuffers_);
+	glCreateTextures(GL_TEXTURE_2D, 2, colorBuffers_.data());
 	for (unsigned int i = 0; i < 2; i++)
 	{
 		glTextureParameteri(colorBuffers_[i], GL_TEXTURE_MAX_LEVEL, numMipmaps - 1);
@@ -50,8 +50,8 @@ PipelineBloom::PipelineBloom(unsigned blurIteration_) :
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	// Ping-pong-framebuffer for blurring
-	glCreateFramebuffers(2, pingpongFBO_);
-	glCreateTextures(GL_TEXTURE_2D, 2, pingpongColorbuffers_);
+	glCreateFramebuffers(2, pingpongFBO_.data());
+	glCreateTextures(GL_TEXTURE_2D, 2, pingpongColorbuffers_.data());
 	for (uint32_t i = 0; i < 2; i++)
 	{
 		glTextureParameteri(pingpongColorbuffers_[i], GL_TEXTURE_MAX_LEVEL, numMipmaps - 1);
