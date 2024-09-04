@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-PipelineBloom::PipelineBloom(unsigned blurIteration_) :
+PipelineBloom::PipelineBloom(uint32_t blurIteration_) :
 	blurIteration_(blurIteration_)
 {
 	mainShader_ = std::make_unique<Shader>("Bloom//first_pass.vertex", "Bloom//first_pass.fragment");
@@ -21,7 +21,7 @@ PipelineBloom::PipelineBloom(unsigned blurIteration_) :
 	glBindFramebuffer(GL_FRAMEBUFFER, hdrFBO_);
 	// Create 2 floating point color buffers (1 for normal rendering, other for brightness threshold values)
 	glCreateTextures(GL_TEXTURE_2D, 2, colorBuffers_.data());
-	for (unsigned int i = 0; i < 2; i++)
+	for (uint32_t i = 0; i < 2; i++)
 	{
 		glTextureParameteri(colorBuffers_[i], GL_TEXTURE_MAX_LEVEL, numMipmaps - 1);
 		glTextureParameteri(colorBuffers_[i], GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -34,7 +34,7 @@ PipelineBloom::PipelineBloom(unsigned blurIteration_) :
 	}
 
 	// Tell OpenGL which color attachments we'll use (of this framebuffer) for rendering 
-	constexpr unsigned int attachments[2]{ GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
+	constexpr uint32_t attachments[2]{ GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
 	glNamedFramebufferDrawBuffers(hdrFBO_, 2, attachments);
 	if (glCheckNamedFramebufferStatus(hdrFBO_, GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 	{
@@ -42,7 +42,7 @@ PipelineBloom::PipelineBloom(unsigned blurIteration_) :
 	}
 
 	// Create and attach depth buffer (renderbuffer)
-	unsigned int rboDepth;
+	uint32_t rboDepth{};
 	glCreateRenderbuffers(1, &rboDepth);
 	glNamedRenderbufferStorage(rboDepth, GL_DEPTH_COMPONENT, AppSettings::ScreenWidth, AppSettings::ScreenHeight);
 	glNamedFramebufferRenderbuffer(hdrFBO_, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, rboDepth);
@@ -108,7 +108,7 @@ void PipelineBloom::StartBlurPass()
 	// Blur pass
 	horizontal_ = true;
 	shaderBlur_->Use();
-	for (unsigned int i = 0; i < blurIteration_; i++)
+	for (uint32_t i = 0; i < blurIteration_; i++)
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, pingpongFBO_[horizontal_]);
 		shaderBlur_->SetInt("horizontal", horizontal_);

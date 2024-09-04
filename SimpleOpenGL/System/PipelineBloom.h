@@ -11,7 +11,7 @@
 class PipelineBloom
 {
 public:
-	PipelineBloom(unsigned blurIteration_);
+	PipelineBloom(uint32_t blurIteration_);
 
 	// 1
 	void StartFirstPass(
