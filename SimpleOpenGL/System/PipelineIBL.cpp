@@ -51,8 +51,8 @@ void PipelineIBL::Init(
 	pbrShader->SetInt("brdfLUT", textureIndexGap + 2);
 
 	// PBR setup framebuffer
-	unsigned int captureFBO;
-	unsigned int captureRBO;
+	uint32_t captureFBO{};
+	uint32_t captureRBO{};
 
 	glCreateFramebuffers(1, &captureFBO);
 	glBindFramebuffer(GL_FRAMEBUFFER, captureFBO);
@@ -95,7 +95,7 @@ void PipelineIBL::Init(
 
 	glViewport(0, 0, environmentCubeSize, environmentCubeSize); // Don't forget to configure the viewport to the capture dimensions.
 	glBindFramebuffer(GL_FRAMEBUFFER, captureFBO);
-	for (unsigned int i = 0; i < captureViews.size(); ++i)
+	for (uint32_t i = 0; i < captureViews.size(); ++i)
 	{
 		equirectangularToCubemapShader.SetMat4("view", captureViews[i]);
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, environmentCubemap, 0);
@@ -130,7 +130,7 @@ void PipelineIBL::Init(
 
 	glViewport(0, 0, diffuseCubeSize, diffuseCubeSize); // don't forget to configure the viewport to the capture dimensions.
 	glBindFramebuffer(GL_FRAMEBUFFER, captureFBO);
-	for (unsigned int i = 0; i < captureViews.size(); ++i)
+	for (uint32_t i = 0; i < captureViews.size(); ++i)
 	{
 		irradianceShader.SetMat4("view", captureViews[i]);
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, diffuseCubemap, 0);
@@ -159,7 +159,7 @@ void PipelineIBL::Init(
 
 	glBindFramebuffer(GL_FRAMEBUFFER, captureFBO);
 	constexpr unsigned int maxMipLevels = 5;
-	for (unsigned int mip = 0; mip < maxMipLevels; ++mip)
+	for (uint32_t mip = 0; mip < maxMipLevels; ++mip)
 	{
 		// Resize framebuffer according to mip-level size.
 		const int mipWidth = static_cast<int>(specularCubeSize * std::pow(0.5, mip));
