@@ -24,11 +24,11 @@ public:
 	void SetCameraData(
 		const glm::mat4& cameraProjectionMatrix, 
 		const glm::mat4& cameraViewMatrix, 
-		const glm::vec3& cameraPosition);
-	void SetLights(const std::vector<Light>& lights);
-	void BindTextures();
+		const glm::vec3& cameraPosition) const;
+	void SetLights(const std::vector<Light>& lights) const;
+	void BindTextures() const;
 
-	[[nodiscard]] Shader* GetPBRShader() { return pbrShader.get(); }
+	[[nodiscard]] Shader* GetPBRShader() const { return pbrShader.get(); }
 
 	[[nodiscard]] unsigned int GetEnvironmentCubemap() const { return environmentCubemap; }
 

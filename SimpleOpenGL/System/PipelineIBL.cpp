@@ -158,7 +158,7 @@ void PipelineIBL::Init(
 	glBindTextureUnit(0, environmentCubemap);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, captureFBO);
-	constexpr unsigned int maxMipLevels = 5;
+	constexpr uint32_t maxMipLevels = 5;
 	for (uint32_t mip = 0; mip < maxMipLevels; ++mip)
 	{
 		// Resize framebuffer according to mip-level size.
@@ -168,9 +168,9 @@ void PipelineIBL::Init(
 		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, mipWidth, mipHeight);
 		glViewport(0, 0, mipWidth, mipHeight);
 
-		const float roughness = (float)mip / (float)(maxMipLevels - 1);
+		const float roughness = static_cast<float>(mip) / static_cast<float>(maxMipLevels - 1);
 		prefilterShader.SetFloat("roughness", roughness);
-		for (unsigned int i = 0; i < captureViews.size(); ++i)
+		for (uint32_t i = 0; i < captureViews.size(); ++i)
 		{
 			prefilterShader.SetMat4("view", captureViews[i]);
 			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, specularCubemap, mip);
@@ -203,7 +203,10 @@ void PipelineIBL::Init(
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void PipelineIBL::SetCameraData(const glm::mat4& cameraProjectionMatrix, const glm::mat4& cameraViewMatrix, const glm::vec3& cameraPosition)
+void PipelineIBL::SetCameraData(
+	const glm::mat4& cameraProjectionMatrix,
+	const glm::mat4& cameraViewMatrix,
+	const glm::vec3& cameraPosition) const
 {
 	pbrShader->Use();
 	pbrShader->SetMat4("projection", cameraProjectionMatrix);
@@ -211,17 +214,17 @@ void PipelineIBL::SetCameraData(const glm::mat4& cameraProjectionMatrix, const g
 	pbrShader->SetVec3("camPos", cameraPosition);
 }
 
-void PipelineIBL::SetLights(const std::vector<Light>& lights)
+void PipelineIBL::SetLights(const std::vector<Light>& lights) const
 {
 	pbrShader->Use();
-	for (unsigned int i = 0; i < lights.size(); ++i)
+	for (uint32_t i = 0; i < lights.size(); ++i)
 	{
 		pbrShader->SetVec3("lightPositions[" + std::to_string(i) + "]", lights[i].Position);
 		pbrShader->SetVec3("lightColors[" + std::to_string(i) + "]", lights[i].Color);
 	}
 }
 
-void PipelineIBL::BindTextures()
+void PipelineIBL::BindTextures() const
 {
 	// Bind pre-computed IBL data
 	glBindTextureUnit(textureIndexGap, diffuseCubemap);
