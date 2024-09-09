@@ -35,9 +35,9 @@ void PipelineShadowMapping::StartRenderDepth(float nearPlane_, float farPlane_, 
 	nearPlane = nearPlane_;
 	farPlane = farPlane_;
 
-	glm::mat4 lightProjection =
+	const glm::mat4 lightProjection =
 		glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, nearPlane,farPlane);
-	glm::mat4 lightView =
+	const glm::mat4 lightView =
 		glm::lookAt(lightPosition, target, glm::vec3(0.0, 1.0, 0.0));
 	lightSpaceMatrix = lightProjection * lightView;
 
